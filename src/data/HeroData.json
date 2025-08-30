@@ -1,0 +1,50 @@
+[
+  {
+    "id": "welcome",
+    "title": "EXPLORE. ESCAPE. EXPERIENCE",
+    "subtitle": "Discover unforgettable experiences with Safari Sutra - where travel dreams become reality.",
+    "image": "https://images.unsplash.com/photo-1554629947-334ff61d85dc?fm=jpg&q=60&w=1000",
+    "buttonText": "Start Your Journey",
+    "buttonLink": "#destinations"
+  },
+  {
+    "id": "vietnam",
+    "title": "TIMELESS VIETNAM",
+    "subtitle": "Where ancient history and buzzing modern life blend over bowls of pho and stunning landscapes.",
+    "image": "https://images.unsplash.com/photo-1526139334526-f591a54b477c?fm=jpg&q=60&w=1000",
+    "buttonText": "Explore Vietnam",
+    "buttonLink": "/destination/14/Vietnam"
+  },
+  {
+    "id": "maldives",
+    "title": "PARADISE FOUND: MALDIVES",
+    "subtitle": "White sands. Turquoise waters. Overwater bungalows. Enough said.",
+    "image": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?fm=jpg&q=60&w=1000",
+    "buttonText": "Discover Maldives",
+    "buttonLink": "/destination/13/Maldives"
+  },
+  {
+    "id": "ladakh",
+    "title": "MYSTICAL LADAKH",
+    "subtitle": "Where rugged adventure meets serene spirituality. Buckle up—this is the roof of the world calling.",
+    "image": "https://images.unsplash.com/photo-1593118845043-359e5f628214?q=80&w=2070&auto=format&fit=crop",
+    "buttonText": "Explore Ladakh",
+    "buttonLink": "/destination/7/Ladakh"
+  },
+  {
+    "id": "rajasthan",
+    "title": "ROYAL RAJASTHAN",
+    "subtitle": "Where history whispers through palace walls and desert winds carry tales of valor.",
+    "image": "https://images.pexels.com/photos/925069/pexels-photo-925069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "buttonText": "Discover Rajasthan",
+    "buttonLink": "/destination/4/Rajasthan"
+  },
+  {
+    "id": "bali",
+    "title": "ENCHANTING BALI",
+    "subtitle": "The Island of Gods, where jungle retreats, surf breaks, and temple ceremonies coexist in harmony.",
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800",
+    "buttonText": "Discover Bali",
+    "buttonLink": "/destination/12/Bali"
+  }
+]
