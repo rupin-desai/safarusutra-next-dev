@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://thesafarisutra.com/sitemap.xml
+
+# Prevent crawling of admin areas if they exist in the future
+Disallow: /admin/
+Disallow: /wp-admin/

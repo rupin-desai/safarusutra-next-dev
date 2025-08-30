@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Safari Sutra Notification</title>
+  <style type="text/css">
+    /* Base styles with Gmail compatibility */
+    body {
+      margin: 0;
+      padding: 0;
+      -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+    }
+    
+    table, td {
+      border-collapse: collapse;
+      mso-table-lspace: 0pt;
+      mso-table-rspace: 0pt;
+    }
+    
+    img {
+      -ms-interpolation-mode: bicubic;
+      border: 0;
+      height: auto;
+      line-height: 100%;
+      outline: none;
+      text-decoration: none;
+      max-width: 100%;
+    }
+    
+    p {
+      display: block;
+      margin: 13px 0;
+    }
+  </style>
+</head>
+<body style="background-color: #f8f8f8; font-family: Arial, Helvetica, sans-serif; margin: 0; padding: 0; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8f8f8;">
+    <tr>
+      <td align="center" style="padding: 20px 10px;">
+        <!-- Email Container -->
+        <table border="0" cellpadding="0" cellspacing="0" width="600" style="background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+          <!-- Header with Dark Overlay + Background Image (Gmail-compatible) -->
+          <tr>
+            <td align="center" style="position: relative; padding: 0;">
+              <!-- Background with overlay - using table background image with cell background color for overlay -->
+              <table border="0" cellpadding="0" cellspacing="0" width="100%" background="https://images.unsplash.com/photo-1554629947-334ff61d85dc?fm=jpg&q=60&w=800" style="background-position: center; background-repeat: no-repeat; background-size: cover;">
+                <tr>
+                  <td align="center" style="background-color: rgba(0, 0, 0, 0.65); padding: 60px 24px 40px;">
+                    <!-- Logo in black container -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="220" style="background-color: #000000; border-radius: 8px;">
+                      <tr>
+                        <td align="center" style="padding: 15px;">
+                          <img src="https://safarisutra-dev.netlify.app/logos/logo.png" alt="Safari Sutra Logo" width="200" style="display: block; border: 0;" />
+                        </td>
+                      </tr>
+                    </table>
+                    
+                    <!-- Header Text -->
+                    <h1 style="color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 24px; font-weight: 600; margin: 24px 0 12px 0;">{{subject}}</h1>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Request Details -->
+          <tr>
+            <td style="padding: 36px 24px; background-color: #ffffff;">
+              <h2 style="color: #066959; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 600; margin-top: 0; margin-bottom: 16px;">Request Details</h2>
+              
+              <div style="background-color: #f9f9f9; border-radius: 12px; padding: 20px; margin-bottom: 24px; border-left: 4px solid #F89B21;">
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Name:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0 0 16px 0; color: #333; line-height: 1.4;">{{from_name}}</p>
+                
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Email:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0 0 16px 0; color: #333; line-height: 1.4;">{{from_email}}</p>
+                
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Phone:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0 0 16px 0; color: #333; line-height: 1.4;">{{phone}}</p>
+
+                <!-- Job application fields - will only display if values exist -->
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Position:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0 0 16px 0; color: #333; line-height: 1.4;">{{position}}</p>
+                
+                <!-- B2B fields - will only display if values exist -->
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Company:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0 0 16px 0; color: #333; line-height: 1.4;">{{company_name}}</p>
+                
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Business Type:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0 0 16px 0; color: #333; line-height: 1.4;">{{business_type}}</p>
+                
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #666; margin-bottom: 4px;">Message:</p>
+                <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; margin: 0; color: #333; line-height: 1.4;">{{message}}</p>
+              </div>
+            </td>
+          </tr>
+          
+          <!-- Next Steps -->
+          <tr>
+            <td style="padding: 0 24px 36px 24px; background-color: #ffffff;">
+              <h2 style="color: #066959; font-family: Arial, Helvetica, sans-serif; font-size: 18px; font-weight: 600; margin-top: 0; margin-bottom: 16px;">Next Steps</h2>
+              
+              <p style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; line-height: 1.5; color: #333;">Please review this request and respond within 48 hours. You can directly reply to this email to contact the sender.</p>
+              
+              <!-- CTA Button - Gmail Compatible Button -->
+              <table border="0" cellpadding="0" cellspacing="0" align="center" style="margin-top: 20px;">
+                <tr>
+                  <td align="center" bgcolor="#F89B21" style="border-radius: 50px;">
+                    <!-- The actual link -->
+                    <a href="mailto:{{from_email}}" target="_blank" style="color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 16px; font-weight: 500; text-decoration: none; padding: 12px 30px; border: 1px solid #F89B21; display: inline-block; border-radius: 50px;">
+                      Reply to Request
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- Footer -->
+          <tr>
+            <td style="background-color: #066959; color: white; padding: 24px; text-align: center; font-size: 14px;">
+              <!-- Social Links -->
+              <table border="0" cellpadding="0" cellspacing="0" align="center">
+                <tr>
+                  <td style="padding: 0 8px;">
+                    <a href="https://www.facebook.com/profile.php?id=61560936836457" target="_blank" style="text-decoration: none;">
+                      <img src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-facebook-circle-512.png" width="24" height="24" alt="Facebook" style="display: inline-block; border: 0;">
+                    </a>
+                  </td>
+                  <td style="padding: 0 8px;">
+                    <a href="https://www.instagram.com/safarisutra/" target="_blank" style="text-decoration: none;">
+                      <img src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-instagram-circle-512.png" width="24" height="24" alt="Instagram" style="display: inline-block; border: 0;">
+                    </a>
+                  </td>
+                  <td style="padding: 0 8px;">
+                    <a href="https://x.com/SafariSutra" target="_blank" style="text-decoration: none;">
+                      <img src="https://cdn4.iconfinder.com/data/icons/social-media-icons-the-circle-set/48/twitter_circle-512.png" width="24" height="24" alt="Twitter" style="display: inline-block; border: 0;">
+                    </a>
+                  </td>
+                  <td style="padding: 0 8px;">
+                    <a href="https://www.linkedin.com/company/103599001" target="_blank" style="text-decoration: none;">
+                      <img src="https://cdn4.iconfinder.com/data/icons/social-messaging-ui-color-shapes-2-free/128/social-linkedin-circle-512.png" width="24" height="24" alt="LinkedIn" style="display: inline-block; border: 0;">
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              
+              <!-- Contact Info -->
+              <p style="font-family: Arial, Helvetica, sans-serif; line-height: 1.5; margin: 16px 0;">
+                Email: <a href="mailto:hello@safarisutra.com" style="color: white; text-decoration: underline;">hello@safarisutra.com</a><br>
+                Phone: <a href="tel:+919967572970" style="color: white; text-decoration: underline;">+91 9967572970</a><br>
+                Address: WeWork, Chromium, Powai, Mumbai, Maharashtra 400059
+              </p>
+              
+              <!-- Copyright -->
+              <p style="font-family: Arial, Helvetica, sans-serif; margin: 10px 0 0 0;">© {{current_year}} Safari Sutra. All rights reserved.</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
