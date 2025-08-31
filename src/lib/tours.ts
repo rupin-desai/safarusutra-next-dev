@@ -20,6 +20,8 @@ async function loadData(): Promise<Tour[]> {
     if (Array.isArray(parsed)) return parsed;
     return [];
   } catch (err) {
+    // log the error so the variable is used and the warning is resolved
+    console.error("Failed to load tours.json:", err);
     // fallback: empty list if file missing or invalid
     return [];
   }

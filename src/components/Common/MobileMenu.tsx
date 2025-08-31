@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, Variants } from "framer-motion";
 import { X, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";
 import SSButton from "../UI/SSButton";
+import Image from "next/image";
 
 interface MobileMenuProps {
   isOpen: boolean;
@@ -111,8 +112,8 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, toggleMenu, isLegalPage
           </motion.button>
 
           <motion.div className="flex flex-col items-center mx-auto" variants={linkVariants}>
-            <Link href="/" onClick={toggleMenu}>
-              <img src="/logos/logo.svg" alt="SafariSutra" className="h-16 w-16" width={64} height={64} />
+            <Link href="/" onClick={toggleMenu} className="flex flex-col items-center">
+              <Image src="/logos/logo.svg" alt="SafariSutra" className="h-16 w-16" width={64} height={64} unoptimized />
               <span className="text-xs font-extralight tracking-widest mt-1 text-gray-800 text-center">SAFARI SUTRA</span>
             </Link>
           </motion.div>

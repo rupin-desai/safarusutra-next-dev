@@ -108,7 +108,7 @@ type ContactFormData = {
 };
 
 type ContactFormProps = {
-  onSubmit: (data: ContactFormData) => Promise<any>;
+  onSubmit: (data: ContactFormData) => Promise<unknown>;
 };
 
 // Create separate form component to isolate renders
@@ -216,6 +216,21 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
     return newErrors;
   }, [formData]);
 
+  // small helper to safely extract a message from unknown errors
+  const getErrorMessage = (error: unknown): string => {
+    if (!error) return "An unknown error occurred.";
+    if (typeof error === "string") return error;
+    if (error instanceof Error) return error.message;
+    // try to read a message property safely
+    try {
+      const maybeObj = error as { message?: unknown };
+      if (typeof maybeObj.message === "string") return maybeObj.message;
+    } catch {
+      /* ignore */
+    }
+    return "An unexpected error occurred.";
+  };
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
@@ -245,9 +260,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         setTimeout(() => {
           setIsSuccess(false);
         }, 5000);
-      } catch (error: any) {
+      } catch (error: unknown) {
         setIsSubmitting(false);
-        setSubmitError(error?.message || "Failed to send message. Please try again.");
+        setSubmitError(getErrorMessage(error) || "Failed to send message. Please try again.");
 
         setTimeout(() => {
           setSubmitError(null);
@@ -267,7 +282,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
       >
         <CheckCircle size={48} className="text-green-500 mx-auto mb-4" />
         <h3 className="text-xl font-semibold text-green-800 mb-2">Message Sent!</h3>
-        <p className="text-green-700">Thank you for contacting us. We'll get back to you shortly.</p>
+        <p className="text-green-700">Thank you for contacting us. We&apos;ll get back to you shortly.</p>
       </motion.div>
     );
   }
@@ -386,6 +401,7 @@ const ContactInfo: React.FC = () => (
     {/* Logo for desktop - only visible on md screens and up */}
     <motion.div className="hidden md:flex flex-col items-center mb-10" variants={logoVariants}>
       <div className="bg-white p-3 rounded-xl shadow-md mb-2">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logos/logo.svg" alt="SafariSutra" className="h-10 md:h-16 w-auto" />
       </div>
       <p className="font-thin text-center tracking-wide">SAFARI SUTRA</p>
@@ -429,7 +445,7 @@ const ContactInfo: React.FC = () => (
           <p className="hover:underline transition-all">
             <a href="mailto:hello@safarisutra.com">hello@safarisutra.com</a>
           </p>
-          <p className="text-sm italic">We reply faster than you can say "chalo nikalte hain!"</p>
+          <p className="text-sm italic">We reply faster than you can say &quot;chalo nikalte hain!&quot;</p>
         </div>
       </div>
     </div>
@@ -460,8 +476,9 @@ const ContactCard: React.FC = () => {
     try {
       const response = await sendContactEmail(formData);
       return response;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error in form submission:", error);
+      // rethrow after logging, preserve original type
       throw error;
     }
   }, []);

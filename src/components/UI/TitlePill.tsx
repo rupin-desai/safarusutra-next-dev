@@ -1,23 +1,45 @@
 import React from "react";
 
-/**
- * TitlePill component
- * @param {object} props
- * @param {React.ReactNode} props.icon - Icon component (e.g. <SomeIcon />)
- * @param {string} props.text - Text to display
- * @param {string} [props.color="#066959"] - Tailwind or hex color for text and border
- * @param {string} [props.className] - Extra classes
- */
-const TitlePill = ({ icon, text, color = "#066959", className = "" }) => {
+type TitlePillProps = {
+  icon?: React.ReactNode;
+  text: string;
+  color?: string;
+  className?: string;
+};
+
+const TitlePill: React.FC<TitlePillProps> = ({ icon, text, color = "#066959", className = "" }) => {
+  // Only build an 8-digit hex (with alpha) when a 3/6 hex is passed.
+  // For rgb(...) we'll convert to rgba(..., 0.08). For CSS vars or other strings, skip background.
+  let background: string | undefined;
+
+  const hex6 = /^#([A-Fa-f0-9]{6})$/;
+  const hex3 = /^#([A-Fa-f0-9]{3})$/;
+  const rgb = /^rgb\(\s*([0-9]+\s*,\s*[0-9]+\s*,\s*[0-9]+)\s*\)$/;
+
+  if (hex6.test(color)) {
+    background = `${color}15`; // append alpha in hex (approx 8% opacity)
+  } else if (hex3.test(color)) {
+    const short = color.slice(1).split("").map((c) => c + c).join("");
+    background = `#${short}15`;
+  } else if (rgb.test(color)) {
+    background = color.replace(rgb, "rgba($1, 0.08)");
+  } else {
+    background = undefined;
+  }
+
+  const style: React.CSSProperties = {
+    color,
+    ...(background ? { background } : {}),
+  };
+
   return (
     <span
-      className={`inline-flex items-center px-4 py-1 rounded-full font-semibold text-sm gap-2`}
-      style={{
-        color,
-        background: `${color}15`, // 3% opacity for subtle bg
-      }}
+      className={`inline-flex items-center px-4 py-1 rounded-full font-semibold text-sm gap-2 ${className}`}
+      style={style}
+      role="status"
+      aria-label={text}
     >
-      <span className="flex items-center">{icon}</span>
+      {icon ? <span className="flex items-center" aria-hidden="true">{icon}</span> : null}
       <span>{text}</span>
     </span>
   );

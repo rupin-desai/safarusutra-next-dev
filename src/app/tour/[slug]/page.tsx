@@ -4,7 +4,8 @@ import { getAllTours, getTourBySlug } from "@/lib/tours";
 
 export async function generateStaticParams() {
   const tours = (await getAllTours()) ?? [];
-  return tours.map((t: any) => ({ slug: t.slug }));
+  // use a narrow inline type instead of `any`
+  return tours.map((t: { slug: string }) => ({ slug: t.slug }));
 }
 
 export default async function TourPage({ params }: { params: { slug: string } }) {

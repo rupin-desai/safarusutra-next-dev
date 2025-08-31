@@ -35,13 +35,13 @@ export const sendContactEmail = async (formData) => {
 
     console.log("Sending email with params:", templateParams);
 
-    const response = await emailjs.send(
+    const result = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
       templateParams
     );
 
-    console.log("Email sent successfully:", response);
+    console.log("Email sent successfully:", result);
     return {
       success: true,
       message: "Thank you! Your message has been sent successfully.",
@@ -78,7 +78,7 @@ export const sendNewsletterEmail = async (email) => {
       current_year: new Date().getFullYear(), // Add current year for email template
     };
 
-    const response = await emailjs.send(
+    await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       "newsletter_template_id", // You'll need to create this template
       templateParams

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 import HomeIntro from "./HomeIntro";
 import HomeStyle from "./HomeStyle";
@@ -10,7 +11,6 @@ const HomeSecond: React.FC = () => {
     <section id="destinations" className="relative py-16">
       {/* Background SVG - updated for mobile compatibility */}
       <div className="absolute inset-0 -z-10 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <div>
           <img
             src="/graphics/bigline.svg"

@@ -26,32 +26,6 @@ const overlayVariants: Variants = {
   },
 };
 
-const topStarVariants: Variants = {
-  initial: {
-    opacity: 0,
-    scale: 0,
-    transform: "translate3d(0px, 0px, 0px) rotate(0deg)",
-  },
-  animate: {
-    opacity: 1,
-    scale: 1,
-    transform: "translate3d(0px, 0px, 0px) rotate(0deg)",
-    transition: { type: "spring", stiffness: 300, damping: 20, delay: 0.2 },
-  },
-};
-
-const bottomStarVariants: Variants = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(-20px, 20px, 0px) rotate(0deg)",
-  },
-  animate: {
-    opacity: 0.6,
-    transform: "translate3d(0px, 0px, 0px) rotate(0deg)",
-    transition: { type: "spring", stiffness: 300, damping: 20, delay: 0.3 },
-  },
-};
-
 const headingVariants: Variants = {
   initial: {
     opacity: 0,
@@ -186,12 +160,7 @@ const HomeNewsletter: React.FC = () => {
               initial={{ opacity: 0, scale: 0 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.3 }}
-              transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 20,
-                delay: 0.2,
-              }}
+              transition={{ ...springConfig, delay: 0.2 }}
             >
               <motion.img
                 src="/graphics/star.svg"
@@ -216,14 +185,14 @@ const HomeNewsletter: React.FC = () => {
               className="text-3xl md:text-5xl font-semibold mb-4 font-family-baloo text-white"
               variants={headingVariants}
             >
-              Let's Get You Moving
+              Let&apos;s Get You Moving
             </motion.h2>
 
             <motion.p
               className="text-lg md:text-xl font-light text-white mb-8"
               variants={paragraphVariants}
             >
-              Got a destination in mind? We'll make it happen.
+              Got a destination in mind? We&apos;ll make it happen.
             </motion.p>
 
             <motion.form
@@ -284,12 +253,7 @@ const HomeNewsletter: React.FC = () => {
             initial={{ opacity: 0, x: -20, y: 20 }}
             whileInView={{ opacity: 0.6, x: 0, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 20,
-              delay: 0.3,
-            }}
+            transition={{ ...springConfig, delay: 0.3 }}
           >
             <motion.img
               src="/graphics/star2.svg"

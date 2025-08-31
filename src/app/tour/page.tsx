@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { getAllTours } from "@/lib/tours"; // see: src/lib/tours.ts
+import type { Tour } from "@/lib/tours";
+
+type TourSummary = Pick<Tour, "slug" | "title" | "excerpt">;
 
 export const metadata = {
   title: "Tours — Safari Sutra",
@@ -7,7 +10,7 @@ export const metadata = {
 };
 
 export default async function TourIndexPage() {
-  const tours = (await getAllTours?.()) ?? [];
+  const tours: TourSummary[] = (await getAllTours?.()) ?? [];
 
   return (
     <main className="max-w-4xl mx-auto p-8">
@@ -17,7 +20,7 @@ export default async function TourIndexPage() {
         <p>No tours found.</p>
       ) : (
         <ul className="space-y-4">
-          {tours.map((t: any) => (
+          {tours.map((t) => (
             <li key={t.slug} className="border p-4 rounded">
               <h2 className="text-xl font-semibold">
                 <Link href={`/tour/${t.slug}`} className="text-blue-600 hover:underline">

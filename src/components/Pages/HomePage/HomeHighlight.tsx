@@ -3,7 +3,7 @@
 import React, { useRef } from "react";
 import { Instagram } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
-import { motion, Variants } from "framer-motion";
+import { motion, Variants, TargetAndTransition, Transition } from "framer-motion";
 import InstagramEmbed from "@/components/UI/InstagramEmbed";
 
 const titleVariants: Variants = {
@@ -43,33 +43,33 @@ const rightColumnVariants: Variants = {
   },
 };
 
-const mobileLeftVariants: Variants = {
-  initial: { opacity: 0, transform: "translate3d(-30px, 0px, 0px)" },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-      delay: 0.2,
-    },
-  },
-};
+// const mobileLeftVariants: Variants = {
+//   initial: { opacity: 0, transform: "translate3d(-30px, 0px, 0px)" },
+//   animate: {
+//     opacity: 1,
+//     transform: "translate3d(0px, 0px, 0px)",
+//     transition: {
+//       type: "spring",
+//       stiffness: 300,
+//       damping: 20,
+//       delay: 0.2,
+//     },
+//   },
+// };
 
-const mobileRightVariants: Variants = {
-  initial: { opacity: 0, transform: "translate3d(30px, 0px, 0px)" },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-      delay: 0.3,
-    },
-  },
-};
+// const mobileRightVariants: Variants = {
+//   initial: { opacity: 0, transform: "translate3d(30px, 0px, 0px)" },
+//   animate: {
+//     opacity: 1,
+//     transform: "translate3d(0px, 0px, 0px)",
+//     transition: {
+//       type: "spring",
+//       stiffness: 300,
+//       damping: 20,
+//       delay: 0.3,
+//     },
+//   },
+// };
 
 const followVariants: Variants = {
   initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
@@ -86,17 +86,23 @@ const followVariants: Variants = {
 };
 
 // add a typed variant that reuses rightColumnVariants but injects an extra delay
-const rightColumnDelayedVariants: Variants = {
-  initial: rightColumnVariants.initial,
-  animate: {
-    // cast to any to avoid Variant/TargetResolver typing conflicts when merging transition
-    ...((rightColumnVariants.animate as any) || {}),
-    transition: {
-      ...(((rightColumnVariants.animate as any)?.transition) || {}),
-      delay: (((rightColumnVariants.animate as any)?.transition?.delay) ?? 0) + 0.4,
+const rightColumnDelayedVariants: Variants = (() => {
+  const baseAnimate = rightColumnVariants.animate as TargetAndTransition | undefined;
+  const baseTransition = (baseAnimate?.transition as Transition) || {};
+
+  const delayedTransition: Transition = {
+    ...baseTransition,
+    delay: (typeof baseTransition.delay === "number" ? baseTransition.delay : 0) + 0.4,
+  };
+
+  return {
+    initial: rightColumnVariants.initial,
+    animate: {
+      ...(baseAnimate || {}),
+      transition: delayedTransition,
     },
-  },
-};
+  } as Variants;
+})();
 
 const HomeHighlight: React.FC = () => {
   const sectionRef = useRef<HTMLElement | null>(null);

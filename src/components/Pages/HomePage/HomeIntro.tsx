@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowLeft, ArrowRight, MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
@@ -10,7 +10,9 @@ import SSButton from "../../UI/SSButton";
 
 type Package = {
   id: number;
-  [key: string]: any;
+  title?: string;
+  slug?: string;
+  [key: string]: unknown;
 };
 
 const packageDetails: Package[] = (packageDetailsRaw as unknown) as Package[];
@@ -173,20 +175,20 @@ const HomeIntro: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsProp }) =
     setFeaturedIds(shuffled.slice(0, Math.min(5, shuffled.length)));
   }, [featuredIdsProp]);
 
-  const getIndex = (idx: number) => {
+  const getIndex = useCallback((idx: number) => {
     const len = featuredIds.length || 1;
     return ((idx % len) + len) % len;
-  };
+  }, [featuredIds]);
 
   // derive featuredTours from ids using packageDetails.json
   const featuredTours = featuredIds
     .map((id) => packageDetails.find((p) => String(p.id) === String(id)))
     .filter(Boolean) as unknown as Tour[]; // cast to Tour[] (title is optional now)
 
-  // auto navigation helper
-  const autoNext = () => {
+  // auto navigation helper (stable reference so effects can depend on it)
+  const autoNext = useCallback(() => {
     setActiveIndex((prev) => getIndex(prev + 1));
-  };
+  }, [getIndex]);
 
   useEffect(() => {
     if (featuredIds.length === 0) return;
@@ -212,7 +214,7 @@ const HomeIntro: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsProp }) =
         pauseTimerRef.current = null;
       }
     };
-  }, [featuredIds, isPaused]);
+  }, [featuredIds, isPaused, autoNext]);
 
   if (featuredIds.length === 0 || featuredTours.length === 0) {
     return null;
@@ -261,7 +263,6 @@ const HomeIntro: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsProp }) =
         viewport={{ once: true, amount: 0.3 }}
         variants={decorativeElementsVariants}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <motion.img
           src="/graphics/linearrow.svg"
           alt=""
@@ -286,7 +287,6 @@ const HomeIntro: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsProp }) =
             ease: "easeInOut",
           }}
         />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
         <motion.img
           src="/graphics/plane.svg"
           alt=""

@@ -2,8 +2,8 @@
 
 import React from "react";
 import { motion, Variants } from "framer-motion";
-import HomeBlog from "./HomeBlog";
-import HomeNewsletter from "./HomeNewsletter";
+// import HomeBlog from "./HomeBlog";
+// import HomeNewsletter from "./HomeNewsletter";
 import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 
 // Animation variants defined outside component

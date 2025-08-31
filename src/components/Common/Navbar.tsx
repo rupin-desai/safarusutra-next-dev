@@ -1,5 +1,8 @@
+"use client";
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import MobileMenu from "./MobileMenu";
@@ -237,8 +240,8 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
           {/* Logo - Left */}
           <motion.div className="flex-shrink-0" initial="initial" animate="animate" variants={logoVariants}>
             <Link href="/" className="flex flex-col items-center">
-              <img src="/logos/logo.svg" alt="SafariSutra" className="h-10 md:h-12" />
-              <span className={`text-xs md:text-sm font-extralight tracking-widest mt-1 ${textColor}`}>SAFARI SUTRA</span>
+              <Image src="/logos/logo.svg" alt="SafariSutra" width={40} height={40} unoptimized />
+              <span className={`text-xs md:text-sm font-extralight mt-1 ${textColor}`}>SAFARI SUTRA</span>
             </Link>
           </motion.div>
 

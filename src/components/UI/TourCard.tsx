@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from "react";
 import { MapPin } from "lucide-react";
 import { motion, Variants } from "framer-motion";

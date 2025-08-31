@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Newspaper, ArrowRight, ArrowLeft } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import Image from "next/image";
 
 type BlogPost = {
   id: number;
@@ -186,12 +187,13 @@ export default function HomeBlog(): React.ReactElement {
                   className="bg-white rounded-xl shadow-md overflow-hidden flex-shrink-0 transition-transform hover:-translate-y-2 duration-300"
                 >
                   <div className="h-48 overflow-hidden">
-                    <img
+                    <Image
                       src={`${post.image}?w=600&fit=crop&crop=entropy&auto=format&q=80`}
                       alt={post.title}
                       className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
+                      width={600}
+                      height={192}
+                      unoptimized
                     />
                   </div>
                   <div className="p-6">

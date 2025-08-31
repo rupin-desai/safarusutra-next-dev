@@ -37,14 +37,6 @@ const getRandomizedHeroData = (data: Slide[]) => {
 
 const randomizedSlides = getRandomizedHeroData(heroData);
 
-// pre-load images early
-(() => {
-  randomizedSlides.forEach((s) => {
-    const i = new Image();
-    i.src = s.image;
-  });
-})();
-
 const desktopVariants: Variants = {
   enter: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
   center: {
