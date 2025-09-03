@@ -1,6 +1,5 @@
 import React from "react";
 import HomeHero from "../components/Pages/HomePage/HomeHero";
-import HomeIntro from "../components/Pages/HomePage/HomeIntro";
 import HomeSecond from "../components/Pages/HomePage/HomeSecond";
 import HomeThird from "../components/Pages/HomePage/HomeThird";
 
@@ -30,7 +29,6 @@ export default function HomePage() {
   return (
     <>
       <HomeHero />
-      <HomeIntro />
       <HomeSecond />
       <HomeThird />
     </>

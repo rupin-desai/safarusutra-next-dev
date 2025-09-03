@@ -1,4 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import React from "react";
 import { MapPin } from "lucide-react";
 import { motion, Variants } from "framer-motion";
@@ -10,15 +11,14 @@ import { generateTourBookingInquiry } from "@/utils/contact.utils";
 export type Tour = {
   id: number;
   image?: string;
-  title?: string; // made optional to match incoming Package data
+  title?: string;
   route?: string;
   price?: number;
   attractions?: unknown[];
   duration?: string;
-  [key: string]: any;
+  [key: string]: unknown;
 };
 
-// Updated card variants with both hover and initial states (typed)
 const cardVariants: Variants = {
   initial: {
     transform: "translate3d(0px, 0px, 0px)",
@@ -61,14 +61,18 @@ interface TourCardProps {
 const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const router = useRouter();
 
-  const formattedPrice = typeof tour.price === "number" ? `₹${tour.price.toLocaleString()}` : "₹24,999";
-  const attractionCount = tour.attractions?.length ?? 0;
+  const formattedPrice =
+    typeof tour.price === "number" ? `₹${tour.price.toLocaleString()}` : "₹24,999";
+  const attractionCount = (Array.isArray(tour.attractions) && tour.attractions.length) || 0;
   const durationDays = tour.duration ? String(tour.duration).split(" ")[0] : "N/A";
-  const titleSlug = createSlug(tour.title ?? String(tour.id));
+  const titleSlug = createSlug((tour.title ?? String(tour.id)) as string);
   const displayTitle = extractTitle(tour.title);
 
+  // Accessible ids for sr-only headings
+  const titleId = `tour-title-${tour.id}`;
+  const routeId = `tour-route-${tour.id}`;
+
   const handleBookNow = () => {
-    // contact.utils.js is untyped JS -> assert the returned shape to avoid TS errors
     const result = generateTourBookingInquiry(tour) as { subject?: string; message?: string };
     const subject = result.subject ?? "";
     const message = result.message ?? "";
@@ -80,17 +84,28 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
   return (
     <motion.div
+      role="article"
+      aria-labelledby={titleId}
+      aria-describedby={routeId}
       className="relative h-[500px] max-w-[400px] mx-auto rounded-2xl overflow-hidden shadow-lg group"
       initial="initial"
       whileHover="hover"
       animate="initial"
       variants={cardVariants}
     >
+      {/* Screen-reader only headings for SEO / accessibility */}
+      <h2 id={titleId} className="sr-only">
+        {displayTitle || `Tour ${tour.id}`}
+      </h2>
+      <h3 id={routeId} className="sr-only">
+        {tour.route || ""}
+      </h3>
+
       <div className="absolute inset-0 w-full h-full">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={tour.image ?? "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"}
-          alt={tour.title}
+          alt={tour.title ?? `Tour ${tour.id}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
       </div>
@@ -101,9 +116,9 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
       <div className="absolute top-0 left-0 right-0 z-20">
         <div className="mx-3 mt-3 p-3">
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 font-family-baloo line-clamp-2">
+          <h4 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 font-family-baloo line-clamp-2">
             {displayTitle}
-          </h3>
+          </h4>
           <div className="flex items-center text-white/90 text-sm">
             <MapPin size={16} className="mr-1 flex-shrink-0" />
             <p className="truncate">{tour.route}</p>
