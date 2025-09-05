@@ -1,13 +1,13 @@
 /**
  * Utility function to navigate to contact page, scroll to form, and autofill fields
  *
- * @param {Object} options - Configuration options
- * @param {Function} options.navigate - React Router's navigate function
- * @param {string} options.subject - Subject line to autofill
- * @param {string} options.message - Message body to autofill
- * @param {number} options.delay - Delay in ms before scrolling (default: 800)
- * @param {string} options.behavior - Scroll behavior (default: "smooth")
- * @param {string} options.formId - ID of the contact form element (default: "contact-form")
+ * @param {Object} options
+ * @param {(path: string) => void} options.navigate - navigation function (next/router or similar)
+ * @param {string} [options.subject]
+ * @param {string} [options.message]
+ * @param {number} [options.delay=800]
+ * @param {string} [options.behavior="smooth"]
+ * @param {string} [options.formId="contact-form"]
  * @returns {void}
  */
 export const navigateToContactForm = ({
@@ -23,24 +23,29 @@ export const navigateToContactForm = ({
     return;
   }
 
-  // Store form data in localStorage instead of sessionStorage for better mobile support
-  if (subject) {
-    localStorage.setItem("contactFormSubject", subject);
-  }
+  // Store form data in localStorage (safer across navigations)
+  try {
+    if (subject) {
+      localStorage.setItem("contactFormSubject", subject);
+    }
 
-  if (message) {
-    localStorage.setItem("contactFormMessage", message);
-  }
+    if (message) {
+      localStorage.setItem("contactFormMessage", message);
+    }
 
-  // Set a flag that we should scroll to form
-  localStorage.setItem("scrollToContactForm", "true");
-  localStorage.setItem("contactFormScrollBehavior", behavior);
+    // Set a flag that we should scroll to form
+    localStorage.setItem("scrollToContactForm", "true");
+    localStorage.setItem("contactFormScrollBehavior", behavior);
+  } catch (err) {
+    // ignore storage errors on SSR or strict privacy modes
+    // eslint-disable-next-line no-console
+    console.warn("Could not access localStorage:", err);
+  }
 
   // Navigate to contact page
   navigate("/contact");
 
-  // On mobile, we'll rely on useEffect in ContactCard component to handle the scrolling
-  // The timeout here is for desktop browsers
+  // Try to scroll after a short delay (desktop fallback)
   setTimeout(() => {
     scrollToContactForm(formId, behavior);
   }, delay);
@@ -49,18 +54,24 @@ export const navigateToContactForm = ({
 /**
  * Helper function to scroll to contact form
  *
- * @param {string} formId - ID of the form element to scroll to
- * @param {string} behavior - Scroll behavior (smooth or auto)
+ * @param {string} [formId="contact-form"]
+ * @param {string} [behavior="smooth"]
+ * @returns {void}
  */
-export const scrollToContactForm = (
-  formId = "contact-form",
-  behavior = "smooth"
-) => {
-  const contactForm = document.getElementById(formId);
-  if (contactForm) {
-    contactForm.scrollIntoView({ behavior });
-  } else {
-    console.warn(`Contact form with ID "${formId}" not found`);
+export const scrollToContactForm = (formId = "contact-form", behavior = "smooth") => {
+  try {
+    const contactForm = document.getElementById(formId);
+    if (contactForm) {
+      contactForm.scrollIntoView({ behavior });
+    } else {
+      // element not found — caller may handle via effect on contact page
+      // eslint-disable-next-line no-console
+      console.warn(`Contact form with ID "${formId}" not found`);
+    }
+  } catch (err) {
+    // ignore errors when called in non-browser context
+    // eslint-disable-next-line no-console
+    console.warn("scrollToContactForm error:", err);
   }
 };
 
@@ -68,8 +79,8 @@ export const scrollToContactForm = (
  * Helper to generate a booking inquiry message for a tour
  *
  * @param {Object} tour - Tour object with title and other properties
- * @param {String} dateInfo - Optional date information to include in the message
- * @returns {Object} Object containing subject and message
+ * @param {string} [dateInfo=""] - Optional date information to include in the message
+ * @returns {{subject: string, message: string}}
  */
 export const generateTourBookingInquiry = (tour, dateInfo = "") => {
   if (!tour || !tour.title) {

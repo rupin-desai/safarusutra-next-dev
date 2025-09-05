@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { MapPin, Globe } from "lucide-react";
 import packageData from "@/data/Destinations.json";
 import SectionTitle from "@/components/UI/SectionTitle";
@@ -44,6 +44,7 @@ const tabsVariants: any = {
   },
 };
 
+// Make grid a parent variant so we can reliably trigger children with stagger
 const gridVariants: any = {
   initial: {
     opacity: 0,
@@ -52,6 +53,8 @@ const gridVariants: any = {
     opacity: 1,
     transition: {
       duration: 0.3,
+      staggerChildren: 0.06,
+      when: "beforeChildren",
     },
   },
 };
@@ -119,15 +122,43 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
   const getActiveTabBgColor = (tab: "domestic" | "international") =>
     tab === "domestic" ? "bg-orange-50" : "bg-green-50";
 
+  // New: observer for the grid container to reliably trigger animations
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const gridInView = useInView(gridRef, {
+    once: false,         // still observe so we can know when it enters
+    amount: 0.18,
+    margin: "-10% 0px",
+  });
+
+  // Remember if the grid has ever been in view so animations don't revert
+  const [hasBeenInView, setHasBeenInView] = useState(false);
+  useEffect(() => {
+    if (gridInView) setHasBeenInView(true);
+  }, [gridInView]);
+
+  // New: observer for the tabs selector so its animation is reliable
+  const tabRef = useRef<HTMLDivElement | null>(null);
+  const tabInView = useInView(tabRef, {
+    once: false,
+    amount: 0.18,
+    margin: "-10% 0px",
+  });
+
+  const [hasTabBeenInView, setHasTabBeenInView] = useState(false);
+  useEffect(() => {
+    if (tabInView) setHasTabBeenInView(true);
+  }, [tabInView]);
+
   return (
     <section className="overflow-hidden" ref={sectionRef}>
       {/* Animated Tab Selector - Improved Mobile Responsiveness */}
       <motion.div
         className="flex justify-center mb-12 px-3"
         initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.2 }}
+        // use remembered state so once tabs animate in they stay visible
+        animate={hasTabBeenInView ? "animate" : "initial"}
         variants={tabsVariants}
+        ref={tabRef}
       >
         <div className="inline-flex w-full max-w-md bg-gray-100 rounded-full p-1.5">
           {/* Domestic Tab Button */}
@@ -168,64 +199,59 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
         </div>
       </motion.div>
 
-      {/* Package Cards with AnimatePresence */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          {visibleTours.length > 0 ? (
-            <div className="grid-container">
-              <style jsx>{`
+      {/* Package Cards: parent controls children. Cards animate regardless of scroll */}
+      <motion.div
+        key={activeTab}
+        initial="initial"
+        // Always animate the grid so cards animate irrespective of viewport
+        animate="animate"
+        variants={gridVariants}
+      >
+        {visibleTours.length > 0 ? (
+          <div className="grid-container">
+            <style jsx>{`
+              .grid-container {
+                display: grid;
+                grid-template-columns: repeat(1, 1fr);
+                gap: 42px 42px;
+              }
+
+              @media (min-width: 768px) {
                 .grid-container {
-                  display: grid;
-                  grid-template-columns: repeat(1, 1fr);
-                  gap: 42px 42px; /* Equal horizontal and vertical gap */
+                  grid-template-columns: repeat(2, 1fr);
                 }
+              }
 
-                @media (min-width: 768px) {
-                  .grid-container {
-                    grid-template-columns: repeat(2, 1fr);
-                  }
+              @media (min-width: 1024px) {
+                .grid-container {
+                  grid-template-columns: repeat(3, 1fr);
                 }
+              }
 
-                @media (min-width: 1024px) {
-                  .grid-container {
-                    grid-template-columns: repeat(3, 1fr);
-                  }
-                }
-
-                .card-wrapper {
-                  width: 100%;
-                }
-              `}</style>
-              {visibleTours.map((tour, index) => (
-                <motion.div
-                  key={`${tour.id}-${activeTab}`}
-                  variants={cardVariants}
-                  initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true, amount: 0.1 }}
-                  custom={index}
-                  className="card-wrapper"
-                >
-                  <DestinationCard tour={tour} index={index} />
-                </motion.div>
-              ))}
-            </div>
-          ) : (
-            <motion.div
-              className="text-center py-16 text-gray-500"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              No packages available in this category.
-            </motion.div>
-          )}
-        </motion.div>
-      </AnimatePresence>
+              .card-wrapper {
+                width: 100%;
+              }
+            `}</style>
+            {visibleTours.map((tour, index) => (
+              <motion.div
+                key={`${tour.id}-${activeTab}`}
+                variants={cardVariants}
+                className="card-wrapper"
+              >
+                <DestinationCard tour={tour} index={index} />
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <motion.div
+            className="text-center py-16 text-gray-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            No packages available in this category.
+          </motion.div>
+        )}
+      </motion.div>
     </section>
   );
 };

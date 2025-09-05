@@ -156,7 +156,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
           </SSButton>
 
           <Link
-            href={`/tour/${tour.id}/${titleSlug}`}
+            href={`/tour/${titleSlug}`}
             className="flex-1 py-2 text-white text-center rounded-2xl font-medium transition-all duration-150 hover:brightness-110 hover:shadow-md active:scale-95 active:shadow-inner"
             aria-label={`View details for ${tour.title}`}
           >
