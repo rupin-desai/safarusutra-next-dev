@@ -67,12 +67,30 @@ export default function TourInclusionsPage({ params }: { params: { slug?: string
   // annotate activeTab as Tab union
   const activeTab: Tab = "inclusions";
 
+  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
+  const description = String(tour.description ?? "").slice(0, 160);
+  const canonical = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/inclusions`;
+
   return (
     <div className="bg-gray-50 min-h-screen">
       <Head>
         <title>{`${tour.title} | Safari Sutra`}</title>
-        <meta name="description" content={String(tour.description ?? "").slice(0, 160)} />
-        <link rel="canonical" href={`https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/inclusions`} />
+        <meta name="description" content={description} />
+        <meta name="keywords" content={`${tour.title}, tour inclusions, Safari Sutra`} />
+        <link rel="canonical" href={canonical} />
+
+        {/* Open Graph */}
+        <meta property="og:title" content={`${tour.title} | Safari Sutra`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:type" content="website" />
+        <meta property="og:image" content={image} />
+
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${tour.title} | Safari Sutra`} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={image} />
       </Head>
 
       <TourHero tour={tour} />

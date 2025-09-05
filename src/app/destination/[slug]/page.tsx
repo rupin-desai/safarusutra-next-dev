@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import React from "react";
 import { notFound } from "next/navigation";
 
@@ -30,25 +31,63 @@ const getDestinationsArray = (): any[] => {
 };
 
 /**
- * generateStaticParams must return only the dynamic params matching the route.
- * Route: /destination/[slug]  => return { slug }
+ * Generate metadata for each destination page based on slug.
  */
-export async function generateStaticParams() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string };
+}): Promise<Metadata> {
+  const slug = params?.slug ?? "";
+  if (!slug) {
+    return {
+      title: "Destination | Safari Sutra",
+      description: "Discover destinations and travel guides at Safari Sutra.",
+    };
+  }
+
   const destinations = getDestinationsArray();
-  if (!destinations || destinations.length === 0) return [];
-
-  const params = destinations.map((d) => {
-    const slug = d?.slug ? String(d.slug) : createSlug(String(d?.title ?? ""));
-    return { slug };
+  const destination = destinations.find((d) => {
+    const candidate = d?.slug ? String(d.slug) : createSlug(String(d?.title ?? ""));
+    return candidate === slug;
   });
 
-  // dedupe slugs
-  const seen = new Set<string>();
-  return params.filter((p) => {
-    if (seen.has(p.slug)) return false;
-    seen.add(p.slug);
-    return true;
-  });
+  if (!destination) {
+    return {
+      title: "Destination Not Found | Safari Sutra",
+      description: "The destination you are looking for could not be found.",
+    };
+  }
+
+  const id = destination.id ? String(destination.id) : "";
+  const details = (tourDetailsMap as any)[String(id)] ?? {};
+  const completeData = { ...destination, ...details };
+
+  const title = completeData.title ? `${completeData.title} | Safari Sutra` : "Destination | Safari Sutra";
+  const description =
+    completeData.metaDescription ||
+    completeData.description ||
+    completeData.caption ||
+    `Explore ${completeData.title} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
+
+  const image = completeData.heroImage || completeData.image || "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/destination/${slug}`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url,
+      images: image ? [{ url: image, alt: completeData.title ?? "Safari Sutra" }] : undefined,
+    },
+    twitter: {
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
 }
 
 /**

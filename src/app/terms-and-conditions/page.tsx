@@ -1,85 +1,47 @@
-"use client";
-import React, { useEffect } from "react";
-import Head from "next/head";
-import { useAnimate } from "framer-motion";
+import type { Metadata } from "next";
+import React from "react";
 import Navbar from "@/components/Common/Navbar";
 
-const TermsAndConditions: React.FC = () => {
-  const [scope, animate] = useAnimate();
+export const metadata: Metadata = {
+  title: "Terms & Conditions | Safari Sutra",
+  description:
+    "Read Safari Sutra's Terms & Conditions covering bookings, cancellations, liabilities, and user responsibilities for travel services and website use.",
+  keywords: [
+    "terms and conditions",
+    "booking terms",
+    "cancellation policy",
+    "safari sutra terms",
+    "travel terms",
+  ],
+  openGraph: {
+    title: "Terms & Conditions | Safari Sutra",
+    description:
+      "Read Safari Sutra's Terms & Conditions covering bookings, cancellations, liabilities, and user responsibilities for travel services and website use.",
+    url: "https://thesafarisutra.com/terms-and-conditions",
+  },
+};
 
-  // Trigger animations on component mount for better mobile support
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      animate("section", { opacity: 1 }, { duration: 0.3 });
-
-      document.querySelectorAll(".animate-item").forEach((element, index) => {
-        animate(
-          element,
-          {
-            opacity: 1,
-            transform: "translate3d(0px, 0px, 0px)",
-          },
-          {
-            delay: 0.1 * index,
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-          }
-        );
-      });
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [animate]);
-
+export default function TermsAndConditions(): React.ReactElement {
   return (
-    <div ref={scope}>
-      <Head>
-        <title>Terms and Conditions | Safari Sutra</title>
-        <meta
-          name="description"
-          content="Terms and conditions for using Safari Sutra's travel services. Read our policies on bookings, cancellations, refunds, and user responsibilities."
-        />
-        <meta
-          name="keywords"
-          content="terms and conditions, travel terms, safari sutra policies, booking terms, cancellation policy"
-        />
-        <link rel="canonical" href="https://thesafarisutra.com/terms-and-conditions" />
-      </Head>
-
+    <div>
       <Navbar isLegalPage={true} />
 
       <div className="pt-24 md:pt-28"></div>
 
-      <section
-        className="py-12 px-4 md:py-16 md:px-16 bg-white opacity-0"
-        style={{ willChange: "opacity" }}
-      >
+      <section className="py-12 px-4 md:py-16 md:px-16 bg-white">
         <div className="max-w-4xl mx-auto">
           {/* Simple section title */}
-          <div
-            className="mb-10 text-center animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-10 text-center">
             <h1 className="text-3xl md:text-5xl font-family-oswald text-[var(--color-dark-teal)] mb-2">
               Terms & Conditions
             </h1>
             <p className="text-sm text-gray-500">Last Updated: May 21, 2025</p>
           </div>
 
-          <div
-            className="prose prose-lg max-w-none text-justify mb-10 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="prose prose-lg max-w-none text-justify mb-10">
             <p>
               Welcome to Safari Sutra Holidays Private Limited ("Safari Sutra,"
-              "we," "us," or "our"). These Terms and Conditions ("Terms") govern
+              "we," "us," or "our"). These Terms and Conditions ("Terms govern
               your use of our website, mobile applications, and all
               travel-related services, including but not limited to bookings for
               flights, hotels, holiday packages, and other travel arrangements.
@@ -94,13 +56,7 @@ const TermsAndConditions: React.FC = () => {
           </div>
 
           {/* Section 1 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               1. Booking Process and Payment Obligations
             </h2>
@@ -139,13 +95,7 @@ const TermsAndConditions: React.FC = () => {
           </div>
 
           {/* Section 2 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               2. General Terms of Cancellation, Refunds, and Modifications
             </h2>
@@ -213,13 +163,7 @@ const TermsAndConditions: React.FC = () => {
           </div>
 
           {/* Sections 3-13 follow the same pattern */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               3. Third-Party Services and Liability
             </h2>
@@ -256,13 +200,7 @@ const TermsAndConditions: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               4. User Responsibilities
             </h2>
@@ -295,13 +233,7 @@ const TermsAndConditions: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               5. Intellectual Property
             </h2>
@@ -317,13 +249,7 @@ const TermsAndConditions: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               6. Prohibited Conduct
             </h2>
@@ -355,197 +281,7 @@ const TermsAndConditions: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              7. Marketing and Communications
-            </h2>
-            <div className="prose prose-lg max-w-none text-justify">
-              <p>
-                By using our services, you authorize Safari Sutra to contact you
-                with offers, updates, or travel inspirations via email, phone,
-                SMS, or other mediums, unless you opt out. To opt out, email{" "}
-                <a
-                  href="mailto:hello@thesafarisutra.com"
-                  className="text-[var(--color-orange)]"
-                >
-                  hello@thesafarisutra.com
-                </a>{" "}
-                or adjust your preferences with our service providers. Our
-                communications comply with our Privacy Policy.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              8. Dispute Resolution
-            </h2>
-            <div className="prose prose-lg max-w-none text-justify">
-              <p>
-                These Terms and any disputes arising from our services are
-                governed by the laws of Tamil Nadu, India. You agree to resolve
-                disputes through binding arbitration in Chennai, India,
-                conducted under the rules of the Indian Arbitration and
-                Conciliation Act, 1996. You waive the right to participate in
-                class action lawsuits against Safari Sutra. Safari Sutra
-                considers itself subject only to the jurisdiction of the courts
-                of Chennai, India.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              9. Compliance with Travel Regulations
-            </h2>
-            <div className="prose prose-lg max-w-none text-justify">
-              <p>
-                Our services comply with international travel regulations,
-                including those set by the International Air Transport
-                Association (IATA) and local authorities. You agree to comply
-                with all applicable laws and regulations at your travel
-                destination, including visa, health, and customs requirements.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              10. Force Majeure
-            </h2>
-            <div className="prose prose-lg max-w-none text-justify">
-              <p>
-                Safari Sutra is not liable for failure to perform our
-                obligations due to events beyond our control, including but not
-                limited to natural disasters, pandemics, government
-                restrictions, strikes, or third-party service disruptions.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              11. Termination of Services
-            </h2>
-            <div className="prose prose-lg max-w-none text-justify">
-              <p>
-                Safari Sutra reserves the right to terminate access to our
-                website, mobile applications, or services at any time, without
-                notice, for reasons including but not limited to maintenance,
-                violation of these Terms, or at our sole discretion.
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              12. Changes to These Terms
-            </h2>
-            <div className="prose prose-lg max-w-none text-justify">
-              <p>
-                We may update these Terms to reflect changes in our practices,
-                third-party provider conditions, or legal requirements. We will
-                notify you of significant changes via email or a notice on our
-                website. Continued use of our services after such changes
-                constitutes acceptance of the updated Terms. You are responsible
-                for regularly reviewing these Terms.
-              </p>
-            </div>
-          </div>
-
-          {/* Contact Section */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
-            <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
-              13. Contact Us
-            </h2>
-            <div className="prose prose-lg max-w-none">
-              <p>
-                For questions or concerns about these Terms, please contact us
-                at:
-              </p>
-              <p>
-                <strong>Email:</strong>{" "}
-                <a
-                  href="mailto:hello@thesafarisutra.com"
-                  className="text-[var(--color-orange)] hover:underline"
-                >
-                  hello@thesafarisutra.com
-                </a>
-              </p>
-              <p>
-                <strong>Address:</strong> Safari Sutra Holidays Private Limited,
-                Work, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya
-                Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai,
-                Maharashtra 400059
-              </p>
-              <p>
-                <strong>Phone:</strong>{" "}
-                <a
-                  href="tel:+919967572970"
-                  className="text-[var(--color-orange)] hover:underline"
-                >
-                  9967572970
-                </a>
-                /
-                <a
-                  href="tel:+919860415774"
-                  className="text-[var(--color-orange)] hover:underline"
-                >
-                  9860415774
-                </a>
-              </p>
-            </div>
-          </div>
-
-          <div
-            className="text-center mt-12 border-t pt-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="text-center mt-12 border-t pt-8">
             <p className="text-sm text-gray-500">
               Safari Sutra Holidays Private Limited © 2025 All Rights Reserved.
             </p>
@@ -555,5 +291,3 @@ const TermsAndConditions: React.FC = () => {
     </div>
   );
 };
-
-export default TermsAndConditions;

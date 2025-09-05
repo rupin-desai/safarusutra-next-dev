@@ -1,4 +1,4 @@
-import Head from "next/head";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import tourDataRaw from "@/data/TourDetails.json";
 
@@ -28,28 +28,60 @@ const createSlug = (text?: string) =>
     .replace(/\s+/g, "-");
 
 /**
- * generateStaticParams must return the list of { slug } objects that match
- * the dynamic route /tour/[slug]. We ensure non-empty, deduped slugs here.
+ * Server metadata generator for each tour page (uses tour data)
  */
-export async function generateStaticParams() {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string | string[] };
+}): Promise<Metadata> {
+  const rawSlug = params?.slug;
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
+  if (!slug) {
+    return {
+      title: "Tour | Safari Sutra",
+      description: "Explore our curated tours on Safari Sutra.",
+    };
+  }
+
   const tours = getToursArray();
-  if (!tours || tours.length === 0) return [];
-
-  const params = tours
-    .map((t) => {
-      // Prefer explicit slug, then generated slug from title, then id
-      const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
-      return { slug: String(candidate ?? "") };
-    })
-    .filter((p) => p.slug && p.slug.length > 0);
-
-  // dedupe
-  const seen = new Set<string>();
-  return params.filter((p) => {
-    if (seen.has(p.slug)) return false;
-    seen.add(p.slug);
-    return true;
+  const tour = tours.find((t) => {
+    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    return String(candidate) === String(slug);
   });
+
+  if (!tour) {
+    return {
+      title: "Tour Not Found | Safari Sutra",
+      description: "The tour you are looking for could not be found.",
+    };
+  }
+
+  const title = tour.title ? `${tour.title} | Safari Sutra` : "Tour | Safari Sutra";
+  const description =
+    (tour.metaDescription as string) ||
+    (tour.description as string) ||
+    (tour.caption as string) ||
+    `Explore ${tour.title} with Safari Sutra — itinerary, inclusions and departure dates.`;
+  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}`;
+
+  return {
+    title,
+    description,
+    keywords: [tour.title ?? "", "tours", "Safari Sutra"].filter(Boolean),
+    openGraph: {
+      title,
+      description,
+      url,
+      images: image ? [{ url: image, alt: tour.title ?? "Safari Sutra" }] : undefined,
+    },
+    twitter: {
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
 }
 
 export default function TourPageDetails({ params }: { params: { slug?: string | string[] } }) {
@@ -69,12 +101,6 @@ export default function TourPageDetails({ params }: { params: { slug?: string | 
 
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Head>
-        <title>{`${tour.title} | Safari Sutra`}</title>
-        <meta name="description" content={String(tour.description ?? "").slice(0, 160)} />
-        <link rel="canonical" href={`https://thesafarisutra.com/tour/${encodeURIComponent(slug)}`} />
-      </Head>
-
       <TourHero tour={tour} />
       <TourTabs />
 

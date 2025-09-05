@@ -1,69 +1,48 @@
-"use client";
-
-import React, { useEffect } from "react";
-import Head from "next/head";
-import { useAnimate } from "framer-motion";
+import type { Metadata } from "next";
+import React from "react";
 import Navbar from "@/components/Common/Navbar";
 
-const PrivacyPolicy: React.FC = () => {
-  const [scope, animate] = useAnimate();
+export const metadata: Metadata = {
+  title: "Privacy Policy | Safari Sutra",
+  description:
+    "Learn how Safari Sutra collects, uses, protects, and shares your personal information. Read our privacy policy and understand your data protection rights.",
+  keywords: [
+    "privacy policy",
+    "data protection",
+    "GDPR",
+    "CCPA",
+    "Safari Sutra privacy",
+    "travel data protection",
+  ],
+  openGraph: {
+    title: "Privacy Policy | Safari Sutra",
+    description:
+      "Learn how Safari Sutra collects, uses, protects, and shares your personal information. Read our privacy policy and understand your data protection rights.",
+    url: "https://thesafarisutra.com/privacy",
+  },
+  twitter: {
+    title: "Privacy Policy | Safari Sutra",
+    description:
+      "Learn how Safari Sutra collects, uses, protects, and shares your personal information.",
+  },
+};
 
-  // Trigger animations on component mount for better mobile support
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      // animate the main section
-      animate("section", { opacity: 1 }, { duration: 0.3 });
-
-      // Animate each item with staggered delay
-      document.querySelectorAll(".animate-item").forEach((element, index) => {
-        animate(
-          element,
-          {
-            opacity: 1,
-            transform: "translate3d(0px, 0px, 0px)",
-          },
-          {
-            delay: 0.1 * index,
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-          }
-        );
-      });
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [animate]);
-
+export default function PrivacyPolicy(): React.ReactElement {
   return (
-    <div ref={scope}>
-      <Head>
-        <title>Privacy Policy | Safari Sutra</title>
-        <meta
-          name="description"
-          content="Learn how Safari Sutra collects, uses, protects, and shares your personal information. Read our privacy policy and understand your data protection rights."
-        />
-        <meta
-          name="keywords"
-          content="privacy policy, data protection, GDPR, CCPA, safari sutra privacy, travel data protection"
-        />
-        <link rel="canonical" href="https://thesafarisutra.com/privacy" />
-      </Head>
-
-      {/* Add Navbar with isLegalPage prop */}
+    <div>
       <Navbar isLegalPage={true} />
 
       {/* Add padding-top to account for fixed navbar */}
       <div className="pt-24 md:pt-28" />
 
       <section
-        className="py-12 px-4 md:py-16 md:px-16 bg-white opacity-0"
+        className="py-12 px-4 md:py-16 md:px-16 bg-white"
         style={{ willChange: "opacity" }}
       >
         <div className="max-w-4xl mx-auto">
           {/* Simple section title */}
           <div
-            className="mb-10 text-center animate-item opacity-0"
+            className="mb-10 text-center"
             style={{
               transform: "translate3d(0px, 30px, 0px)",
               willChange: "transform, opacity",
@@ -75,13 +54,7 @@ const PrivacyPolicy: React.FC = () => {
             <p className="text-sm text-gray-500">Effective Date: May 21, 2025</p>
           </div>
 
-          <div
-            className="prose prose-lg max-w-none text-justify mb-10 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="prose prose-lg max-w-none text-justify mb-10">
             <p>
               At Safari Sutra Holidays Private Limited ("Safari Sutra," "we,"
               "us," or "our"), we are committed to protecting your privacy,
@@ -106,13 +79,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 1 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               1. What Personal Information We Collect and How We Use It
             </h2>
@@ -193,13 +160,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Continue with remaining sections using the same pattern */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h3 className="text-xl text-[var(--color-orange)] mt-6 mb-3">
               1.3 Member Profile
             </h3>
@@ -215,13 +176,7 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h3 className="text-xl text-[var(--color-orange)] mt-6 mb-3">
               1.4 Mobile App Permissions
             </h3>
@@ -253,13 +208,7 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h3 className="text-xl text-[var(--color-orange)] mt-6 mb-3">
               1.5 Online Surveys
             </h3>
@@ -275,13 +224,7 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h3 className="text-xl text-[var(--color-orange)] mt-6 mb-3">
               1.6 Promotions and Sweepstakes
             </h3>
@@ -297,13 +240,7 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h3 className="text-xl text-[var(--color-orange)] mt-6 mb-3">
               1.7 Automatic Logging of Session Data
             </h3>
@@ -321,13 +258,7 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
           {/* Section 2 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               2. Cookies
             </h2>
@@ -373,13 +304,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 3 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               3. With Whom Your Personal Information Is Shared
             </h2>
@@ -412,13 +337,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 4 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               4. How You Can Opt Out of Promotional Communications
             </h2>
@@ -457,13 +376,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 5 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               5. Safeguards to Protect Your Personal Information
             </h2>
@@ -501,13 +414,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 6 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               6. Your Data Protection Rights
             </h2>
@@ -555,13 +462,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 7 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               7. Links to Other Websites
             </h2>
@@ -577,13 +478,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 8 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               8. Data Retention
             </h2>
@@ -598,13 +493,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 9 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               9. Disclosure for Legal Reasons
             </h2>
@@ -622,13 +511,7 @@ const PrivacyPolicy: React.FC = () => {
           </div>
 
           {/* Section 10 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               10. Contact Us
             </h2>
@@ -678,13 +561,7 @@ const PrivacyPolicy: React.FC = () => {
             </div>
           </div>
 
-          <div
-            className="text-center mt-12 border-t pt-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="text-center mt-12 border-t pt-8">
             <p className="text-sm text-gray-500">
               Safari Sutra Holidays Private Limited © 2025 All Rights Reserved.
             </p>
@@ -693,6 +570,4 @@ const PrivacyPolicy: React.FC = () => {
       </section>
     </div>
   );
-};
-
-export default PrivacyPolicy;
+}
