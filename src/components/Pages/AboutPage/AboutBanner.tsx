@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { motion } from "framer-motion";
 import SSButton from "../../UI/SSButton";
@@ -15,7 +17,7 @@ const containerVariants = {
   },
 };
 
-const AboutBanner = () => {
+const AboutBanner: React.FC = () => {
   return (
     <section className="relative py-40 md:py-48 overflow-hidden">
       {/* Decorative star element */}
