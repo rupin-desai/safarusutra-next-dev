@@ -1,4 +1,4 @@
-import Head from "next/head";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import tourDataRaw from "@/data/TourDetails.json";
 
@@ -49,6 +49,60 @@ export async function generateStaticParams() {
   });
 }
 
+/**
+ * Server metadata generator — ensures meta tags (title / OG / Twitter / keywords / canonical)
+ * are available to crawlers and share previews for the inclusions subpage.
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string | string[] };
+}): Promise<Metadata> {
+  const rawSlug = params?.slug;
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
+  if (!slug) {
+    return {
+      title: "Inclusions | Safari Sutra",
+      description: "Inclusions for Safari Sutra tours.",
+    };
+  }
+
+  const tours = getToursArray();
+  const tour = tours.find((t) => {
+    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    return String(candidate) === String(slug);
+  });
+
+  if (!tour) {
+    return {
+      title: "Inclusions Not Found | Safari Sutra",
+      description: "Inclusions information for this tour could not be found.",
+    };
+  }
+
+  const pageTitle = tour.title ? `Inclusions — ${tour.title} | Safari Sutra` : "Inclusions | Safari Sutra";
+  const description = String(tour.description ?? "").slice(0, 160);
+  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/inclusions`;
+
+  return {
+    title: pageTitle,
+    description,
+    keywords: [tour.title ?? "", "inclusions", "tour", "Safari Sutra"].filter(Boolean),
+    openGraph: {
+      title: pageTitle,
+      description,
+      url,
+      images: image ? [{ url: image, alt: tour.title ?? "Safari Sutra" }] : undefined,
+    },
+    twitter: {
+      title: pageTitle,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
+
 export default function TourInclusionsPage({ params }: { params: { slug?: string | string[] } }) {
   const rawSlug = params?.slug;
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
@@ -67,33 +121,8 @@ export default function TourInclusionsPage({ params }: { params: { slug?: string
   // annotate activeTab as Tab union
   const activeTab: Tab = "inclusions";
 
-  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
-  const description = String(tour.description ?? "").slice(0, 160);
-  const canonical = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/inclusions`;
-  const pageTitle = tour.title ? `Inclusions — ${tour.title} | Safari Sutra` : "Inclusions | Safari Sutra";
-
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Head>
-        <title>{pageTitle}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={`${tour.title}, tour inclusions, Safari Sutra`} />
-        <link rel="canonical" href={canonical} />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={pageTitle} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={image} />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={pageTitle} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={image} />
-      </Head>
-
       <TourHero tour={tour} />
 
       <TourTabs initialTab={activeTab} />
