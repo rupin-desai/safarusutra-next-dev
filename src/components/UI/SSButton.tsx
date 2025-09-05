@@ -8,7 +8,8 @@ type SSButtonBase = {
   children: React.ReactNode;
   to?: string | null;
   scrollTo?: string | null;
-  variant?: "primary" | "outline";
+  // allow a "disabled" visual variant for convenience
+  variant?: "primary" | "outline" | "disabled";
   color?: string;
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -65,13 +66,16 @@ export default function SSButton({
     color === "#ffffff" ||
     (typeof color === "string" && color.includes("white"));
 
-  const base = "inline-block cursor-pointer px-8 py-3 rounded-2xl font-semibold";
+  const base = "inline-block px-8 py-3 rounded-2xl font-semibold";
+
+  const isDisabledVisual = variant === "disabled";
+  const isDisabledProp = Boolean((rest as React.ButtonHTMLAttributes<HTMLButtonElement>).disabled);
 
   let buttonStyle: React.CSSProperties = {};
 
   if (variant === "primary") {
     buttonStyle = { backgroundColor: color, color: "white" };
-  } else {
+  } else if (variant === "outline") {
     if (isWhiteColor) {
       buttonStyle = {
         backgroundColor: "transparent",
@@ -85,15 +89,25 @@ export default function SSButton({
         border: `2px solid ${color}`,
       };
     }
+  } else {
+    // disabled visual
+    buttonStyle = {
+      backgroundColor: "#E5E7EB", // gray-200
+      color: "#6B7280", // gray-500
+      border: "none",
+      cursor: "not-allowed",
+    };
   }
+
+  const extraClass = `${className} ${isDisabledVisual || isDisabledProp ? "opacity-70 cursor-not-allowed" : "cursor-pointer"}`;
 
   return (
     <motion.button
       initial="initial"
-      whileHover="hover"
-      whileTap="tap"
+      whileHover={isDisabledVisual || isDisabledProp ? undefined : "hover"}
+      whileTap={isDisabledVisual || isDisabledProp ? undefined : "tap"}
       variants={hoverVariants}
-      className={`${base} ${className}`}
+      className={`${base} ${extraClass}`}
       style={buttonStyle}
       onClick={handleClick}
       {...(rest as MotionProps & React.ButtonHTMLAttributes<HTMLButtonElement>)}
