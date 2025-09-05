@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 type Tour = {
   id: string | number;
@@ -103,16 +104,16 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
             <span>{tour.duration} trip</span>
           </div>
 
-          <a
-            href={`/destination/${tour.id}/${titleSlug}`}
+          <Link
+            href={`/destination/${titleSlug}`}
             className="mt-4 md:mt-3 xl:mt-4 inline-block w-full py-2 md:py-1.5 xl:py-2 text-white text-center rounded-lg font-medium 
-                     transition-all duration-150 
-                     hover:brightness-110 hover:shadow-md 
-                     active:scale-95 active:shadow-inner"
+                       transition-all duration-150 
+                       hover:brightness-110 hover:shadow-md 
+                       active:scale-95 active:shadow-inner"
             style={{ backgroundColor: buttonColor }}
           >
             View Details
-          </a>
+          </Link>
         </div>
       </div>
     </motion.div>

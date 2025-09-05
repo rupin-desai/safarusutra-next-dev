@@ -1,11 +1,19 @@
+"use client";
+
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { Compass } from "lucide-react";
-import SectionTitle from "../../ui/Elements/SectionTitle";
-import DestinationCard from "../../ui/Elements/DestinationCard";
+import SectionTitle from "@/components/UI/SectionTitle";
+import DestinationCard from "@/components/UI/DestinationCard";
 
-// Optimized animation variants using transform3d for better performance
-const fadeIn = {
+interface Props {
+  relatedTours?: any[];
+  currentTourId?: string | number;
+  allTours?: any[];
+}
+
+// Optimized animation variants using translate3d for better performance (cast to any)
+const fadeIn: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -21,12 +29,12 @@ const fadeIn = {
   },
 };
 
-const cardVariants = {
+const cardVariants: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
   },
-  animate: (index) => ({
+  animate: (index: number) => ({
     opacity: 1,
     transform: "translate3d(0px, 0px, 0px)",
     transition: {
@@ -39,7 +47,7 @@ const cardVariants = {
 };
 
 // Rotation animation variants
-const rotateAnimation = {
+const rotateAnimation: any = {
   animate: {
     rotate: 360,
     transition: {
@@ -51,7 +59,7 @@ const rotateAnimation = {
 };
 
 // Slightly different rotation for second star
-const rotateReverseAnimation = {
+const rotateReverseAnimation: any = {
   animate: {
     rotate: -360,
     transition: {
@@ -62,13 +70,13 @@ const rotateReverseAnimation = {
   },
 };
 
-const DestinationRelated = ({ relatedTours, currentTourId, allTours }) => {
+const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId, allTours = [] }) => {
   // Get randomly selected related tours based on current tour type (domestic/international)
-  const selectedTours = useMemo(() => {
-    if (!relatedTours || relatedTours.length === 0 || !allTours) return [];
+  const selectedTours = useMemo((): any[] => {
+    if (!relatedTours || relatedTours.length === 0 || !allTours || allTours.length === 0) return [];
 
     // Find current tour to determine if it's domestic or international
-    const currentTour = allTours.find((tour) => tour.id === currentTourId);
+    const currentTour = allTours.find((tour) => String(tour.id) === String(currentTourId));
     if (!currentTour) return relatedTours.slice(0, 3);
 
     // Check if tour is domestic (India) or international
@@ -77,11 +85,11 @@ const DestinationRelated = ({ relatedTours, currentTourId, allTours }) => {
     // Filter tours by same category (domestic/international) but exclude current tour
     const sameCategoryTours = allTours.filter(
       (tour) =>
-        tour.id !== currentTourId &&
+        String(tour.id) !== String(currentTourId) &&
         (isDomestic ? tour.location === "India" : tour.location !== "India")
     );
 
-    // Randomly select 3 tours from the same category
+    // Randomly select up to 3 tours from the same category
     return sameCategoryTours.sort(() => 0.5 - Math.random()).slice(0, 3);
   }, [relatedTours, currentTourId, allTours]);
 
@@ -93,10 +101,11 @@ const DestinationRelated = ({ relatedTours, currentTourId, allTours }) => {
       <motion.img
         src="/graphics/star2.svg"
         alt=""
-        className="absolute top-10 right-5 md:right-60 h-12 w-12 md:w-20 md:h-20 opacity-95  md:block"
+        className="absolute top-10 right-5 md:right-60 h-12 w-12 md:w-20 md:h-20 opacity-95 md:block"
         initial={{ rotate: 0 }}
         animate="animate"
         variants={rotateAnimation}
+        aria-hidden
       />
 
       {/* Second star - bottom left */}
@@ -107,6 +116,7 @@ const DestinationRelated = ({ relatedTours, currentTourId, allTours }) => {
         initial={{ rotate: 0 }}
         animate="animate"
         variants={rotateReverseAnimation}
+        aria-hidden
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -115,7 +125,7 @@ const DestinationRelated = ({ relatedTours, currentTourId, allTours }) => {
           pillText="Explore More"
           title="Similar Safari Experiences"
           color="#452F1B"
-          centered={true}
+          centered
           containerClassName="mb-12"
         />
 
@@ -128,7 +138,7 @@ const DestinationRelated = ({ relatedTours, currentTourId, allTours }) => {
         >
           {selectedTours.map((tour, index) => (
             <motion.div
-              key={tour.id}
+              key={tour.id ?? index}
               custom={index}
               variants={cardVariants}
               initial="initial"

@@ -1,12 +1,18 @@
+"use client";
+
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Share2, Check } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import SSButton from "../../ui/Buttons/SSButton";
-import { navigateToContactForm } from "../../utils/contactUtils";
+import { useRouter } from "next/navigation";
+import SSButton from "@/components/UI/SSButton";
 
-// Animation variants
-const contentFadeIn = {
+interface Props {
+  tourData: any;
+  executeScroll: (id: string) => void;
+}
+
+// Animation variants (cast to any when needed)
+const contentFadeIn: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -22,43 +28,34 @@ const contentFadeIn = {
   },
 };
 
-const DestinationSidebar = ({ tourData, executeScroll }) => {
-  const navigate = useNavigate();
+const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
+  const router = useRouter();
   const [copied, setCopied] = useState(false);
 
-  // Handle custom destination request
   const handleCustomDestination = () => {
-    navigateToContactForm({
-      navigate,
-      subject: `Custom Destination Request: ${tourData.title}`,
-      message: `I'm interested in creating a custom travel plan for ${tourData.title}. I would like to discuss my preferences and requirements for this destination.`,
-    });
+    const subject = encodeURIComponent(`Custom Destination Request: ${tourData?.title ?? ""}`);
+    const message = encodeURIComponent(
+      `I'm interested in creating a custom travel plan for ${tourData?.title ?? ""}. I would like to discuss my preferences and requirements for this destination.`
+    );
+    router.push(`/contact?subject=${subject}&message=${message}`);
   };
 
-  // Copy URL to clipboard with feedback
-  const copyToClipboard = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-
-    // Reset button text after 2 seconds
-    setTimeout(() => {
-      setCopied(false);
-    }, 2000);
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      // silent fail
+    }
   };
 
   return (
-    <div
-      className="w-full sticky"
-      style={{ top: "24px", height: "fit-content" }}
-    >
-      <motion.div
-        className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm"
-        variants={contentFadeIn}
-      >
+    <div className="w-full sticky" style={{ top: "24px", height: "fit-content" }}>
+      <motion.div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm" variants={contentFadeIn}>
         <h3 className="text-xl font-bold mb-4">On This Page</h3>
         <nav>
           <ul className="space-y-3">
-            {/* Overview link */}
             <motion.li
               initial={{ transform: "translate3d(0px, 0px, 0px)" }}
               whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
@@ -68,29 +65,24 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
                 onClick={() => executeScroll("overview")}
                 className="text-gray-700 hover:text-[var(--color-orange)] font-medium transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <span className="w-2 h-2 rounded-full bg-[var(--color-orange)]"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--color-orange)]" />
                 Overview
               </button>
             </motion.li>
 
-            {/* Attractions section with nested list */}
             <li>
               <p className="text-gray-800 font-medium mb-2 flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-[var(--color-yellow-orange)]"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--color-yellow-orange)]" />
                 Attractions
               </p>
               <ul className="space-y-2 pl-4 border-l border-gray-200 ml-1">
-                {tourData.attractions &&
-                  tourData.attractions.map((attraction, idx) => (
+                {Array.isArray(tourData?.attractions) &&
+                  tourData.attractions.map((attraction: any, idx: number) => (
                     <motion.li
                       key={idx}
                       initial={{ transform: "translate3d(0px, 0px, 0px)" }}
                       whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
-                      transition={{
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 25,
-                      }}
+                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
                     >
                       <button
                         onClick={() => executeScroll(`attraction-${idx}`)}
@@ -103,7 +95,6 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
               </ul>
             </li>
 
-            {/* Packages link */}
             <motion.li
               initial={{ transform: "translate3d(0px, 0px, 0px)" }}
               whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
@@ -113,12 +104,11 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
                 onClick={() => executeScroll("packages")}
                 className="text-gray-700 hover:text-[var(--color-orange)] font-medium transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <span className="w-2 h-2 rounded-full bg-[var(--color-dark-teal)]"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--color-dark-teal)]" />
                 Packages
               </button>
             </motion.li>
 
-            {/* Similar Tours link */}
             <motion.li
               initial={{ transform: "translate3d(0px, 0px, 0px)" }}
               whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
@@ -128,18 +118,17 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
                 onClick={() => executeScroll("similar")}
                 className="text-gray-700 hover:text-[var(--color-orange)] font-medium transition-colors flex items-center gap-2 cursor-pointer"
               >
-                <span className="w-2 h-2 rounded-full bg-[var(--color-medium-brown)]"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--color-medium-brown)]" />
                 Similar Tours
               </button>
             </motion.li>
           </ul>
         </nav>
 
-        {/* CTA Buttons Section */}
         <div className="mt-8 pt-6 border-t border-gray-200 mb-8">
           <div className="space-y-3">
             <SSButton
-              type="primary"
+              variant="primary"
               color="var(--color-orange)"
               className="w-full flex items-center justify-center gap-2"
               onClick={handleCustomDestination}
@@ -148,10 +137,9 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
             </SSButton>
 
             <SSButton
-              type="outline"
+              variant="outline"
               color="var(--color-dark-teal)"
               className="w-full flex items-center justify-center gap-2"
-              scrollTo="packages"
               onClick={() => executeScroll("packages")}
             >
               View Packages
@@ -159,33 +147,16 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
           </div>
         </div>
 
-        {/* Simplified Share section with only Copy Link button */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-bold">Share This Tour</h3>
 
-            {/* Share button with changing text */}
             <motion.button
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
-                copied
-                  ? "bg-green-100 text-green-700"
-                  : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
+                copied ? "bg-green-100 text-green-700" : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
               }`}
-              whileHover={
-                !copied
-                  ? {
-                      transform: "translate3d(0px, -2px, 0px)",
-                      transition: {
-                        type: "spring",
-                        stiffness: 500,
-                        damping: 15,
-                      },
-                    }
-                  : {}
-              }
-              whileTap={
-                !copied ? { transform: "translate3d(0px, 1px, 0px)" } : {}
-              }
+              whileHover={!copied ? ({ transform: "translate3d(0px, -2px, 0px)", transition: { type: "spring", stiffness: 500, damping: 15 } } as any) : undefined}
+              whileTap={!copied ? ({ transform: "translate3d(0px, 1px, 0px)" } as any) : undefined}
               initial={{ transform: "translate3d(0px, 0px, 0px)" }}
               onClick={copyToClipboard}
             >
@@ -205,7 +176,6 @@ const DestinationSidebar = ({ tourData, executeScroll }) => {
         </div>
       </motion.div>
 
-      {/* Toast Notification */}
       <AnimatePresence>
         {copied && (
           <motion.div

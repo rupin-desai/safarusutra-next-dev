@@ -1,11 +1,22 @@
+"use client";
+
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { MapPin } from "lucide-react";
-import SectionTitle from "../../ui/Elements/SectionTitle";
-import Illustration from "../../ui/Elements/Illustations"; // Import the Illustration component
+import SectionTitle from "../../UI/SectionTitle";
 
-// Optimized animation variants using transform3d
-const fadeIn = {
+type Attraction = {
+  title: string;
+  image: string;
+  description?: string;
+};
+
+interface Props {
+  attractions?: Attraction[] | null;
+}
+
+// Animation variants cast to any to allow translate3d/transform strings
+const fadeIn: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -21,8 +32,7 @@ const fadeIn = {
   },
 };
 
-// Title animation variants
-const titleVariant = {
+const titleVariant: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -38,8 +48,7 @@ const titleVariant = {
   },
 };
 
-// Container to stagger child animations
-const staggerContainer = {
+const staggerContainer: any = {
   animate: {
     transition: {
       staggerChildren: 0.2,
@@ -47,8 +56,7 @@ const staggerContainer = {
   },
 };
 
-// Floating animation for the illustration
-const floatingAnimation = {
+const floatingAnimation: any = {
   initial: { y: 0 },
   animate: {
     y: [-8, 8, -8],
@@ -68,24 +76,12 @@ const floatingAnimation = {
   },
 };
 
-const DestinationAttractions = ({ attractions }) => {
+const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
   if (!attractions || attractions.length === 0) return null;
 
-  // Determine if we have an odd number of attractions
   const hasOddCount = attractions.length % 2 !== 0;
 
-  // Select a random illustration and color
-  const { randomIllustration, randomColor } = useMemo(() => {
-    const illustrations = [
-      "camera",
-      "cocktail",
-      "hotAirBallon",
-      "pouch",
-      "seashell1",
-      "suitcase",
-      "umbrella",
-    ];
-
+  const { randomColor } = useMemo(() => {
     const colors = [
       "var(--color-dark-brown)",
       "var(--color-medium-brown)",
@@ -94,34 +90,24 @@ const DestinationAttractions = ({ attractions }) => {
       "var(--color-green)",
       "var(--color-dark-teal)",
     ];
-
-    const illustrationIndex = Math.floor(Math.random() * illustrations.length);
     const colorIndex = Math.floor(Math.random() * colors.length);
-
-    return {
-      randomIllustration: illustrations[illustrationIndex],
-      randomColor: colors[colorIndex],
-    };
+    return { randomColor: colors[colorIndex] };
   }, []);
 
   return (
     <section className="py-16 md:px-24" id="attractions">
       <div className="container mx-auto px-4">
         <div className="relative">
-          {/* Floating illustration positioned to the right with random color */}
-          <motion.div
-            className="absolute top-0 right-0 md:right-12 opacity-80 hidden md:block"
+          <motion.img
+            src="/graphics/illustration.svg"
+            alt=""
+            aria-hidden="true"
+            className="absolute top-0 right-0 md:right-12 hidden md:block opacity-80 pointer-events-none"
             variants={floatingAnimation}
             initial="initial"
             animate="animate"
-          >
-            <Illustration
-              name={randomIllustration}
-              size={200}
-              color={randomColor}
-              className="transform -translate-y-6 opacity-40"
-            />
-          </motion.div>
+            style={{ width: 200, height: 200, color: randomColor }}
+          />
 
           <motion.div
             initial="initial"
@@ -137,7 +123,6 @@ const DestinationAttractions = ({ attractions }) => {
               color="#066959"
               centered={true}
               containerClassName="mb-12"
-              titleSize="large" // Using the custom title size
             />
           </motion.div>
         </div>
@@ -167,21 +152,17 @@ const DestinationAttractions = ({ attractions }) => {
                   stiffness: 400,
                   damping: 15,
                 },
-              }}
+              } as any}
             >
-              {/* Background image */}
               <img
                 src={attraction.image}
                 alt={attraction.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* Dark overlay that expands on hover */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-70 group-hover:opacity-95 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-70 group-hover:opacity-95 transition-opacity duration-300" />
 
-              {/* Content container - positioned at bottom initially, moves up on hover */}
-              <div className="absolute inset-x-0 bottom-0 p-6 transform transition-all duration-500 ease-out group-hover:translate-y-[-20px]">
-                {/* Title - always visible */}
+              <div className="absolute inset-x-0 bottom-0 p-6 transform transition-all duration-500 ease-out group-hover:-translate-y-5">
                 <h3
                   className="text-2xl font-bold text-white leading-tight mb-2 transition-all duration-300 group-hover:mb-4"
                   style={{ fontFamily: "var(--font-family-baloo)" }}
@@ -189,7 +170,6 @@ const DestinationAttractions = ({ attractions }) => {
                   {attraction.title}
                 </h3>
 
-                {/* Description - appears on hover with fade-in effect */}
                 <div className="max-h-0 overflow-hidden opacity-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500">
                   <p className="text-white/90 text-base line-clamp-4">
                     {attraction.description}

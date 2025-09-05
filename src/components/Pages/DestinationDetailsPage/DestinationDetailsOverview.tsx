@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -12,8 +14,27 @@ import {
 } from "lucide-react";
 import TourSidebar from "./DestinationSidebar";
 
-// Animation variants remain unchanged
-const fadeIn = {
+type Detail = {
+  title: string;
+  description?: string;
+};
+
+type TourData = {
+  title: string;
+  rating?: number;
+  location?: string;
+  description?: string;
+  longDescription?: string;
+  details: Detail[];
+};
+
+interface Props {
+  tourData: TourData;
+  executeScroll?: (id: string) => void;
+}
+
+// Animation variants cast to any to allow translate3d/transform strings
+const fadeIn: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -29,7 +50,7 @@ const fadeIn = {
   },
 };
 
-const contentFadeIn = {
+const contentFadeIn: any = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -45,7 +66,7 @@ const contentFadeIn = {
   },
 };
 
-const staggerContainer = {
+const staggerContainer: any = {
   animate: {
     transition: {
       staggerChildren: 0.05,
@@ -54,8 +75,7 @@ const staggerContainer = {
   },
 };
 
-// Map colors for icons and titles
-const getDetailStyles = (title, index) => {
+const getDetailStyles = (title: string, index: number): string => {
   switch (title) {
     case "Best For":
       return "text-[var(--color-orange)]";
@@ -73,7 +93,7 @@ const getDetailStyles = (title, index) => {
       return "text-[var(--color-dark-teal)]";
     case "Calling Code":
       return "text-[var(--color-orange)]";
-    default:
+    default: {
       const colors = [
         "orange",
         "yellow-orange",
@@ -84,11 +104,11 @@ const getDetailStyles = (title, index) => {
       const colorIndex = index % colors.length;
       const color = colors[colorIndex];
       return `text-[var(--color-${color})]`;
+    }
   }
 };
 
-// Map icons to detail titles
-const getDetailIcon = (title, colorClass) => {
+const getDetailIcon = (title: string, colorClass: string): React.ReactElement | null => {
   switch (title) {
     case "Best For":
       return <Users size={20} className={colorClass} />;
@@ -111,15 +131,15 @@ const getDetailIcon = (title, colorClass) => {
   }
 };
 
-const DestinationDetailsOverview = ({ tourData, executeScroll }) => {
+const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }) => {
   if (!tourData) return null;
 
-  // Function to convert string with \n to JSX with line breaks
-  const formatDescription = (description) => {
-    return description.split("\n").map((line, i) => (
+  const formatDescription = (description?: string) => {
+    const lines = String(description || "").split("\n");
+    return lines.map((line, i) => (
       <React.Fragment key={i}>
         {line}
-        {i < description.split("\n").length - 1 && <br />}
+        {i < lines.length - 1 && <br />}
       </React.Fragment>
     ));
   };
@@ -134,9 +154,7 @@ const DestinationDetailsOverview = ({ tourData, executeScroll }) => {
       variants={fadeIn}
     >
       <div className="container mx-auto px-4">
-        {/* Modified layout structure for mobile responsiveness */}
         <div className="flex flex-col lg:flex-row gap-12">
-          {/* Content container - takes full width on mobile, 2/3 on desktop */}
           <div className="w-full lg:w-2/3 flex flex-col items-center lg:items-start">
             <motion.h1
               className="text-3xl md:text-4xl font-bold mb-4 text-center lg:text-left"
@@ -156,7 +174,7 @@ const DestinationDetailsOverview = ({ tourData, executeScroll }) => {
                     key={i}
                     size={18}
                     className={
-                      i < Math.floor(tourData.rating)
+                      i < Math.floor(Number(tourData.rating || 0))
                         ? "fill-[var(--color-yellow-orange)] text-[var(--color-yellow-orange)]"
                         : "text-gray-300"
                     }
@@ -164,13 +182,12 @@ const DestinationDetailsOverview = ({ tourData, executeScroll }) => {
                 ))}
               </div>
               <span className="text-sm text-gray-600">
-                {tourData.rating} ({Math.floor(tourData.rating * 20)} reviews)
+                {tourData.rating ?? "0"} ({Math.floor(Number(tourData.rating || 0) * 20)} reviews)
               </span>
               <span className="mx-3 text-gray-400">•</span>
               <span className="text-sm text-gray-600">{tourData.location}</span>
             </motion.div>
 
-            {/* Description (centered on mobile) */}
             <motion.div
               className="prose prose-lg max-w-none mb-8 text-center lg:text-left"
               variants={contentFadeIn}
@@ -179,12 +196,10 @@ const DestinationDetailsOverview = ({ tourData, executeScroll }) => {
               <p>{formatDescription(tourData.longDescription)}</p>
             </motion.div>
 
-            {/* Mobile-only sidebar - appears between description and trip details */}
             <div className="w-full lg:hidden mb-10">
-              <TourSidebar tourData={tourData} executeScroll={executeScroll} />
+              <TourSidebar tourData={tourData} executeScroll={executeScroll ?? (() => {})} />
             </div>
 
-            {/* Trip details section */}
             <motion.h2
               className="text-2xl font-bold mb-6 text-center lg:text-left self-center lg:self-start w-full"
               variants={contentFadeIn}
@@ -198,45 +213,37 @@ const DestinationDetailsOverview = ({ tourData, executeScroll }) => {
               initial="initial"
               animate="animate"
             >
-              {tourData.details.map((detail, index) => {
-                const colorClass = getDetailStyles(detail.title, index);
-                return (
-                  <motion.div
-                    key={index}
-                    className="border-b border-gray-100 pb-4"
-                    variants={contentFadeIn}
-                    whileHover={{
-                      transform: "translate3d(0px, -3px, 0px)",
-                      transition: {
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 15,
-                      },
-                    }}
-                  >
-                    {/* Center the title and icon for mobile */}
-                    <div className="flex items-center gap-2 mb-2 justify-center lg:justify-start">
-                      {getDetailIcon(detail.title, colorClass)}
-                      <h3 className={`text-lg font-bold ${colorClass}`}>
-                        {detail.title}
-                      </h3>
-                    </div>
+              {Array.isArray(tourData.details) &&
+                tourData.details.map((detail, index) => {
+                  const colorClass = getDetailStyles(detail.title, index);
+                  return (
+                    <motion.div
+                      key={index}
+                      className="border-b border-gray-100 pb-4"
+                      variants={contentFadeIn}
+                      whileHover={
+                        ({
+                          transform: "translate3d(0px, -3px, 0px)",
+                          transition: { type: "spring", stiffness: 400, damping: 15 },
+                        } as any)
+                      }
+                    >
+                      <div className="flex items-center gap-2 mb-2 justify-center lg:justify-start">
+                        {getDetailIcon(detail.title, colorClass)}
+                        <h3 className={`text-lg font-bold ${colorClass}`}>{detail.title}</h3>
+                      </div>
 
-                    {/* Center the description text for mobile */}
-                    <div className="text-gray-700 leading-relaxed text-center lg:text-left lg:pl-7">
-                      {formatDescription(detail.description)}
-                    </div>
-                  </motion.div>
-                );
-              })}
+                      <div className="text-gray-700 leading-relaxed text-center lg:text-left lg:pl-7">
+                        {formatDescription(detail.description)}
+                      </div>
+                    </motion.div>
+                  );
+                })}
             </motion.div>
-
-            {/* CTA buttons removed */}
           </div>
 
-          {/* Desktop-only sidebar - hidden on mobile */}
           <div className="hidden lg:block lg:w-1/3">
-            <TourSidebar tourData={tourData} executeScroll={executeScroll} />
+            <TourSidebar tourData={tourData} executeScroll={executeScroll ?? (() => {})} />
           </div>
         </div>
       </div>

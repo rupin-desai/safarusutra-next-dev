@@ -1,13 +1,26 @@
+"use client";
+
 import React, { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
-import { Helmet } from "react-helmet-async";
-import SectionTitle from "../../ui/Elements/SectionTitle";
-import Illustration from "../../ui/Elements/Illustations";
+import SectionTitle from "@/components/UI/SectionTitle";
 
 const PAGE_SIZE = 12;
 
-const FAQItem = ({ question, answer, isOpen, onClick, idx }) => (
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface FAQItemProps {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  onClick: () => void;
+  idx: number;
+}
+
+const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick, idx }) => (
   <div
     className="border-b border-white/10 py-5"
     itemScope
@@ -52,28 +65,31 @@ const FAQItem = ({ question, answer, isOpen, onClick, idx }) => (
   </div>
 );
 
-const containerAnim = {
+// cast variants to any to allow translate3d strings
+const containerAnim: any = {
   initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
   animate: { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
 };
 
-const listItemVariants = {
+const listItemVariants: any = {
   hidden: { opacity: 0, y: 12 },
   visible: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: 8 },
 };
 
-const DestinationFAQs = ({ faq, destinationTitle }) => {
+interface DestinationFAQsProps {
+  faq?: { items?: FAQ[] } | null;
+  destinationTitle: string;
+}
+
+const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle }) => {
   const items = faq?.items || [];
-  const [openIndex, setOpenIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(
-    Math.min(PAGE_SIZE, items.length)
-  );
+  const [openIndex, setOpenIndex] = useState<number>(0);
+  const [visibleCount, setVisibleCount] = useState<number>(Math.min(PAGE_SIZE, items.length));
 
-  const toggle = (i) => setOpenIndex(openIndex === i ? -1 : i);
+  const toggle = (i: number) => setOpenIndex(openIndex === i ? -1 : i);
 
-  const loadMore = () =>
-    setVisibleCount((v) => Math.min(items.length, v + PAGE_SIZE));
+  const loadMore = () => setVisibleCount((v) => Math.min(items.length, v + PAGE_SIZE));
 
   const showLess = () => setVisibleCount(Math.min(PAGE_SIZE, items.length));
 
@@ -107,20 +123,10 @@ const DestinationFAQs = ({ faq, destinationTitle }) => {
       itemScope
       itemType="https://schema.org/FAQPage"
     >
-      <Helmet>
-        {/* Title removed to avoid overriding the page title set by the parent/details page */}
-        <meta
-          name="description"
-          content={`Frequently asked questions about traveling to ${destinationTitle}. Everything you need to plan your trip with Safari Sutra.`}
-        />
-        <meta name="robots" content="index,follow" />
-        {typeof window !== "undefined" && (
-          <link rel="canonical" href={window.location.href} />
-        )}
-        {jsonLd && (
-          <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-        )}
-      </Helmet>
+      {/* JSON-LD for SEO */}
+      {jsonLd && (
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      )}
 
       <motion.div
         className="mx-auto max-w-6xl"
@@ -134,19 +140,12 @@ const DestinationFAQs = ({ faq, destinationTitle }) => {
           <div className="inline-flex items-center gap-2 bg-green-50 text-green-800 px-3 py-1 rounded-full text-sm font-medium">
             <HelpCircle size={16} /> FAQ
           </div>
-          <h2
-            id="destination-faq-title"
-            className="mt-4 text-2xl font-semibold text-gray-900"
-          >
+          <h2 id="destination-faq-title" className="mt-4 text-2xl font-semibold text-gray-900">
             Frequently Asked Questions about {destinationTitle}
           </h2>
           <p className="mt-3 text-gray-600">
-            Common questions travelers ask about {destinationTitle} — if you
-            need more help,{" "}
-            <a
-              href="/contact"
-              className="text-orange-500 font-medium hover:underline"
-            >
+            Common questions travelers ask about {destinationTitle} — if you need more help,{" "}
+            <a href="/contact" className="text-orange-500 font-medium hover:underline">
               contact us
             </a>
             .
@@ -157,28 +156,10 @@ const DestinationFAQs = ({ faq, destinationTitle }) => {
           className="max-w-6xl mx-auto rounded-xl p-6 md:p-8 shadow-lg relative overflow-hidden"
           style={{ backgroundColor: "#066959" }}
         >
-          <div className="absolute right-10 bottom-5 opacity-10 pointer-events-none">
-            {typeof window !== "undefined" && (
-              <Illustration
-                name="suitcase"
-                size={
-                  window.innerWidth >= 1024
-                    ? 260
-                    : window.innerWidth >= 768
-                    ? 220
-                    : 160
-                }
-                color="#FFFFFF"
-                className="w-full h-full"
-                alt=""
-              />
-            )}
-          </div>
-
           <div className="relative z-10 grid gap-4 md:gap-6 lg:grid-cols-2">
             <AnimatePresence>
               {visibleItems.map((it, idx) => {
-                const globalIndex = idx; // local index relative to visible slice
+                const globalIndex = idx;
                 return (
                   <motion.div
                     key={`faq-item-${globalIndex}`}
