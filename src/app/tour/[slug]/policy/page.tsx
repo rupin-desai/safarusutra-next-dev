@@ -1,4 +1,4 @@
-import Head from "next/head";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import tourDataRaw from "@/data/TourDetails.json";
 
@@ -24,8 +24,7 @@ const createSlug = (text?: string) =>
     .replace(/\s+/g, "-");
 
 /**
- * generateStaticParams must return the list of { slug } objects that match
- * the dynamic route /tour/[slug]/itinerary. We ensure non-empty, deduped slugs here.
+ * generateStaticParams for /tour/[slug]/policy
  */
 export async function generateStaticParams() {
   const tours = getToursArray();
@@ -46,6 +45,64 @@ export async function generateStaticParams() {
   });
 }
 
+/**
+ * Server metadata generator for each tour policy page
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string | string[] };
+}): Promise<Metadata> {
+  const rawSlug = params?.slug;
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
+  if (!slug) {
+    return {
+      title: "Tour Policy | Safari Sutra",
+      description: "Tour policies, cancellation and booking terms for Safari Sutra tours.",
+    };
+  }
+
+  const tours = getToursArray();
+  const tour = tours.find((t) => {
+    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    return String(candidate) === String(slug);
+  });
+
+  if (!tour) {
+    return {
+      title: "Tour Policy Not Found | Safari Sutra",
+      description: "Policy details for this tour could not be found.",
+    };
+  }
+
+  // Dynamic title that clearly indicates this is the policy page for the specific tour
+  const title = tour.title ? `Policy — ${tour.title} | Safari Sutra` : "Tour Policy | Safari Sutra";
+  const description =
+    (tour.metaDescription as string) ||
+    (tour.description as string) ||
+    (tour.caption as string) ||
+    `Policy details for ${tour.title} — cancellations, refunds and booking terms.`;
+  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/policy`;
+
+  return {
+    title,
+    description,
+    keywords: [tour.title ?? "", "policy", "cancellation", "refund", "Safari Sutra"].filter(Boolean),
+    openGraph: {
+      title,
+      description,
+      url,
+      images: image ? [{ url: image, alt: tour.title ?? "Safari Sutra" }] : undefined,
+    },
+    twitter: {
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
+
 export default function TourPolicyPage({ params }: { params: { slug?: string | string[] } }) {
   const rawSlug = params?.slug;
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
@@ -61,19 +118,11 @@ export default function TourPolicyPage({ params }: { params: { slug?: string | s
 
   if (!tour) return notFound();
 
-  const activeTab = "itinerary";
-
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Head>
-        <title>{`${tour.title} | Safari Sutra`}</title>
-        <meta name="description" content={String(tour.description ?? "").slice(0, 160)} />
-        <link rel="canonical" href={`https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/itinerary`} />
-      </Head>
-
       <TourHero tour={tour} />
 
-      <TourTabs initialTab={activeTab} slug={slug} />
+      <TourTabs initialTab="policy" slug={slug} />
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

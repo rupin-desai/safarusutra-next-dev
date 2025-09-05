@@ -1,4 +1,4 @@
-import Head from "next/head";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import tourDataRaw from "@/data/TourDetails.json";
 
@@ -46,6 +46,63 @@ export async function generateStaticParams() {
   });
 }
 
+/**
+ * Server metadata generator for the itinerary subpage of a tour
+ */
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug?: string | string[] };
+}): Promise<Metadata> {
+  const rawSlug = params?.slug;
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
+  if (!slug) {
+    return {
+      title: "Itinerary | Safari Sutra",
+      description: "Tour itineraries and day-by-day plans from Safari Sutra.",
+    };
+  }
+
+  const tours = getToursArray();
+  const tour = tours.find((t) => {
+    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    return String(candidate) === String(slug);
+  });
+
+  if (!tour) {
+    return {
+      title: "Itinerary Not Found | Safari Sutra",
+      description: "The itinerary you are looking for could not be found.",
+    };
+  }
+
+  const title = tour.title ? `Itinerary — ${tour.title} | Safari Sutra` : "Itinerary | Safari Sutra";
+  const description =
+    (tour.metaDescription as string) ||
+    (tour.description as string) ||
+    (tour.caption as string) ||
+    `Day-by-day itinerary for ${tour.title} by Safari Sutra.`;
+  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/itinerary`;
+
+  return {
+    title,
+    description,
+    keywords: [tour.title ?? "", "itinerary", "tour", "Safari Sutra"].filter(Boolean),
+    openGraph: {
+      title,
+      description,
+      url,
+      images: image ? [{ url: image, alt: tour.title ?? "Safari Sutra" }] : undefined,
+    },
+    twitter: {
+      title,
+      description,
+      images: image ? [image] : undefined,
+    },
+  };
+}
+
 export default function TourItineraryPage({ params }: { params: { slug?: string | string[] } }) {
   const rawSlug = params?.slug;
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
@@ -63,32 +120,8 @@ export default function TourItineraryPage({ params }: { params: { slug?: string 
 
   const activeTab = "itinerary";
 
-  const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
-  const description = String(tour.description ?? "").slice(0, 160);
-  const canonical = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/itinerary`;
-
   return (
     <div className="bg-gray-50 min-h-screen">
-      <Head>
-        <title>{`${tour.title} | Safari Sutra`}</title>
-        <meta name="description" content={description} />
-        <meta name="keywords" content={`${tour.title}, itinerary, Safari Sutra`} />
-        <link rel="canonical" href={canonical} />
-
-        {/* Open Graph */}
-        <meta property="og:title" content={`${tour.title} | Safari Sutra`} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:type" content="website" />
-        <meta property="og:image" content={image} />
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${tour.title} | Safari Sutra`} />
-        <meta name="twitter:description" content={description} />
-        <meta name="twitter:image" content={image} />
-      </Head>
-
       <TourHero tour={tour} />
 
       <TourTabs initialTab={activeTab} slug={slug} />

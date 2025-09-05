@@ -1,15 +1,8 @@
+import Head from "next/head";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import tourDataRaw from "@/data/TourDetails.json";
-
-// Import client components (they stay as children)
-import TourHero from "../../../components/Pages/TourDetailsPage/TourHero";
-import TourTabs from "../../../components/Pages/TourDetailsPage/TourTabs";
-import TourOverview from "../../../components/Pages/TourDetailsPage/TourOverview";
-import TourItinerary from "../../../components/Pages/TourDetailsPage/TourItinerary";
-import TourInclusions from "../../../components/Pages/TourDetailsPage/TourInclusions";
-import TourPolicy from "../../../components/Pages/TourDetailsPage/TourPolicy";
-import TourSidebar from "../../../components/Pages/TourDetailsPage/TourSidebar";
+import TourPageClient from "./TourPage.client";
 
 /* Normalize tour data to an array (supports both array and object shapes) */
 const getToursArray = (): any[] => {
@@ -26,6 +19,25 @@ const createSlug = (text?: string) =>
     .replace(/[^\w\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-");
+
+export async function generateStaticParams() {
+  const tours = getToursArray();
+  if (!tours || tours.length === 0) return [];
+
+  const params = tours
+    .map((t) => {
+      const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+      return { slug: String(candidate ?? "") };
+    })
+    .filter((p) => p.slug && p.slug.length > 0);
+
+  const seen = new Set<string>();
+  return params.filter((p) => {
+    if (seen.has(p.slug)) return false;
+    seen.add(p.slug);
+    return true;
+  });
+}
 
 /**
  * Server metadata generator for each tour page (uses tour data)
@@ -99,25 +111,8 @@ export default function TourPageDetails({ params }: { params: { slug?: string | 
 
   if (!tour) return notFound();
 
-  return (
-    <div className="bg-gray-50 min-h-screen">
-      <TourHero tour={tour} />
-      <TourTabs />
+  // pass serializable tour prop to client component
+  const tourProp = JSON.parse(JSON.stringify(tour));
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <TourOverview tour={tour} />
-            <TourItinerary tour={tour} />
-            <TourInclusions tour={tour} />
-            <TourPolicy tour={tour} />
-          </div>
-
-          <div className="lg:col-span-1">
-            <TourSidebar tour={tour} selectedMonth="" selectedDateRange="" />
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  return <TourPageClient tour={tourProp} />;
 }

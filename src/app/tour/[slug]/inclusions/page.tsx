@@ -70,17 +70,18 @@ export default function TourInclusionsPage({ params }: { params: { slug?: string
   const image = (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
   const description = String(tour.description ?? "").slice(0, 160);
   const canonical = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/inclusions`;
+  const pageTitle = tour.title ? `Inclusions — ${tour.title} | Safari Sutra` : "Inclusions | Safari Sutra";
 
   return (
     <div className="bg-gray-50 min-h-screen">
       <Head>
-        <title>{`${tour.title} | Safari Sutra`}</title>
+        <title>{pageTitle}</title>
         <meta name="description" content={description} />
         <meta name="keywords" content={`${tour.title}, tour inclusions, Safari Sutra`} />
         <link rel="canonical" href={canonical} />
 
         {/* Open Graph */}
-        <meta property="og:title" content={`${tour.title} | Safari Sutra`} />
+        <meta property="og:title" content={pageTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         <meta property="og:type" content="website" />
@@ -88,7 +89,7 @@ export default function TourInclusionsPage({ params }: { params: { slug?: string
 
         {/* Twitter */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${tour.title} | Safari Sutra`} />
+        <meta name="twitter:title" content={pageTitle} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={image} />
       </Head>
