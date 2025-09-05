@@ -13,6 +13,8 @@ interface Props {
   onChangeTab?: (tab: Tab) => void;
   activeTab?: Tab;
   setActiveTab?: (tab: Tab) => void;
+  // added slug prop so pages can pass the current slug (primitive only)
+  slug?: string;
 }
 
 const tabsVariants: Variants = {
@@ -29,6 +31,7 @@ const TourTabs: React.FC<Props> = ({
   onChangeTab,
   activeTab: propActiveTab,
   setActiveTab: propSetActiveTab,
+  slug: slugProp,
 }) => {
   const router = useRouter();
   const pathname = usePathname() ?? "/";
@@ -57,12 +60,14 @@ const TourTabs: React.FC<Props> = ({
 
   // parse id/slug from pathname segments to build base route
   const buildBase = () => {
+    // if page explicitly passed slug, prefer that
+    if (slugProp && slugProp.length > 0) return `/tour/${encodeURIComponent(slugProp)}`;
+
     const parts = pathname.split("/").filter(Boolean); // remove empty segments
     const tourIndex = parts.findIndex((p) => p === "tour");
     if (tourIndex === -1) return pathname; // fallback to current path
-    const id = parts[tourIndex + 1] ?? "";
-    const slug = parts[tourIndex + 2] ?? "";
-    return slug ? `/tour/${id}/${slug}` : `/tour/${id}`;
+    const next = parts[tourIndex + 1] ?? "";
+    return `/tour/${encodeURIComponent(next)}`;
   };
 
   const switchTab = (tab: Tab) => {
@@ -123,7 +128,7 @@ const TourTabs: React.FC<Props> = ({
                         className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-orange)] rounded-full"
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        transition={{ duration: 0.3, ease: [0.42, 0, 0.58, 1] }}
                       />
                     )}
                   </motion.button>
