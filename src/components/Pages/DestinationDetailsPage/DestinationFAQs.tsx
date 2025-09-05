@@ -72,9 +72,9 @@ const containerAnim: any = {
 };
 
 const listItemVariants: any = {
-  hidden: { opacity: 0, y: 12 },
-  visible: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: 8 },
+  hidden: { opacity: 0, transform: "translate3d(0px, 12px, 0px)" },
+  visible: { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
+  exit: { opacity: 0, transform: "translate3d(0px, 8px, 0px)" },
 };
 
 interface DestinationFAQsProps {

@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 type Tour = {
@@ -18,23 +17,6 @@ interface DestinationCardProps {
   isNewlyLoaded?: boolean;
 }
 
-// Animation variants (cast to any so translate3d transform strings are allowed)
-const cardVariants: any = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(0px, 30px, 0px)",
-  },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 30,
-    },
-  },
-};
-
 // Function to convert title to URL-friendly slug
 const createSlug = (title: string): string =>
   title
@@ -49,27 +31,17 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
       ? "var(--color-green)"
       : "var(--color-orange)";
 
-  // Determine animation delay for staggered effect
+  // Determine animation delay for staggered effect (still kept for inline transition if needed)
   const animationDelay = isNewlyLoaded ? 0.1 * (index % 9) : 0;
 
   // Create slug from tour title
   const titleSlug = createSlug(tour.title);
 
   return (
-    <motion.div
+    // plain div — parent motion wrapper should drive the animation
+    <div
       className="relative w-full h-[440px] md:h-[380px] xl:h-[440px] rounded-xl overflow-hidden shadow-lg group"
-      initial="initial"
-      animate="animate"
-      variants={cardVariants}
-      custom={index}
-      transition={
-        {
-          type: "spring",
-          stiffness: 300,
-          damping: 30,
-          delay: animationDelay,
-        } as any
-      }
+      style={{ transitionDelay: `${animationDelay}s` }}
     >
       {/* Background Image */}
       <img
@@ -116,7 +88,7 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
           </Link>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 };
 

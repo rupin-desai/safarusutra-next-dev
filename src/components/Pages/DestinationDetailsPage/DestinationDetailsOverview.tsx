@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef, useEffect } from "react";
+import { motion, useInView, useAnimation } from "framer-motion";
 import {
   Star,
   Users,
@@ -67,12 +67,41 @@ const contentFadeIn: any = {
 };
 
 const staggerContainer: any = {
+  initial: "initial",
   animate: {
     transition: {
       staggerChildren: 0.05,
       delayChildren: 0.1,
     },
   },
+};
+
+/* MotionSection: reliable in-view trigger using useInView + useAnimation */
+const MotionSection: React.FC<{
+  variants?: any;
+  className?: string;
+  children?: React.ReactNode;
+  threshold?: number;
+}> = ({ variants = {}, className = "", children, threshold = 0.18 }) => {
+  const ref = useRef<HTMLElement | null>(null);
+  const inView = useInView(ref, { amount: threshold });
+  const controls = useAnimation();
+
+  useEffect(() => {
+    if (inView) controls.start("animate");
+  }, [inView, controls]);
+
+  return (
+    <motion.section
+      ref={ref}
+      className={className}
+      initial="initial"
+      animate={controls}
+      variants={variants}
+    >
+      {children}
+    </motion.section>
+  );
 };
 
 const getDetailStyles = (title: string, index: number): string => {
@@ -145,13 +174,10 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
   };
 
   return (
-    <motion.div
+    <MotionSection
       className="bg-white py-12 md:py-16 px-4 md:px-16"
-      id="tour-details"
-      initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, amount: 0.2 }}
       variants={fadeIn}
+      threshold={0.22}
     >
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-12">
@@ -207,12 +233,8 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
               Trip Details
             </motion.h2>
 
-            <motion.div
-              className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 w-full"
-              variants={staggerContainer}
-              initial="initial"
-              animate="animate"
-            >
+            {/* changed to plain div so MotionSection controls propagate directly to child motion items */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 w-full">
               {Array.isArray(tourData.details) &&
                 tourData.details.map((detail, index) => {
                   const colorClass = getDetailStyles(detail.title, index);
@@ -239,7 +261,7 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
                     </motion.div>
                   );
                 })}
-            </motion.div>
+            </div>
           </div>
 
           <div className="hidden lg:block lg:w-1/3">
@@ -247,7 +269,7 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
           </div>
         </div>
       </div>
-    </motion.div>
+    </MotionSection>
   );
 };
 

@@ -42,10 +42,14 @@ const cardVariants: any = {
   }),
 };
 
+// floatingAnimation now uses transform/translate3d instead of y
 const floatingAnimation: any = {
+  initial: { transform: "translate3d(0px, 0px, 0px)" },
   animate: {
-    y: [-8, 8, -8],
-    transition: { repeat: Infinity, duration: 3, ease: "easeInOut" },
+    transform: "translate3d(0px, -8px, 0px)",
+    transition: {
+      transform: { repeat: Infinity, duration: 3, ease: "easeInOut", repeatType: "reverse" },
+    },
   },
 };
 
@@ -157,9 +161,10 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
         src="/illustrations/suitcase.svg"
         alt=""
         className="absolute top-20 right-10 md:right-20 h-16 w-16 md:w-24 md:h-24 opacity-25 hidden md:block"
-        initial={{ y: 0 }}
+        initial="initial"
         animate="animate"
         variants={floatingAnimation}
+        aria-hidden
       />
 
       <div className="container mx-auto px-4 relative z-10">

@@ -46,26 +46,24 @@ const cardVariants: any = {
   }),
 };
 
-// Rotation animation variants
+// Rotation animation variants using transform strings (no x/y)
 const rotateAnimation: any = {
+  initial: { rotate: 0 },
   animate: {
     rotate: 360,
     transition: {
-      repeat: Infinity,
-      duration: 25, // Slow rotation
-      ease: "linear",
+      rotate: { repeat: Infinity, duration: 25, ease: "linear" },
     },
   },
 };
 
-// Slightly different rotation for second star
+// Slightly different rotation for second star using transform
 const rotateReverseAnimation: any = {
+  initial: { rotate: 0 },
   animate: {
     rotate: -360,
     transition: {
-      repeat: Infinity,
-      duration: 30, // Even slower rotation in opposite direction
-      ease: "linear",
+      rotate: { repeat: Infinity, duration: 30, ease: "linear" },
     },
   },
 };
@@ -102,7 +100,7 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
         src="/graphics/star2.svg"
         alt=""
         className="absolute top-10 right-5 md:right-60 h-12 w-12 md:w-20 md:h-20 opacity-95 md:block"
-        initial={{ rotate: 0 }}
+        initial="initial"
         animate="animate"
         variants={rotateAnimation}
         aria-hidden
@@ -113,7 +111,7 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
         src="/graphics/star2.svg"
         alt=""
         className="absolute bottom-16 left-8 w-16 h-16 opacity-20 hidden md:block"
-        initial={{ rotate: 0 }}
+        initial="initial"
         animate="animate"
         variants={rotateReverseAnimation}
         aria-hidden

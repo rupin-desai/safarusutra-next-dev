@@ -16,6 +16,12 @@ interface Props {
   } | null;
 }
 
+// Animation variant using translate3d (cast to any so string transforms are allowed)
+const containerAnim: any = {
+  initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
+  whileInView: { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
+};
+
 const DestinationWhy: React.FC<Props> = ({ tour }) => {
   const router = useRouter();
 
@@ -42,10 +48,11 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
 
       <div className="relative z-10 container mx-auto px-4 text-center text-white">
         <motion.div
-          initial={{ opacity: 0, transform: "translate3d(0px, 20px, 0px)" } as any}
-          whileInView={{ opacity: 1, transform: "translate3d(0px, 0px, 0px)" } as any}
+          initial="initial"
+          whileInView="whileInView"
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
           viewport={{ once: true, amount: 0.4 }}
+          variants={containerAnim}
           className="max-w-xl mx-auto"
         >
           <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: "var(--font-family-baloo)" }}>

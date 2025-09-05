@@ -179,9 +179,9 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
       <AnimatePresence>
         {copied && (
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, transform: "translate3d(0px, 50px, 0px)" }}
+            animate={{ opacity: 1, transform: "translate3d(0px, 0px, 0px)" }}
+            exit={{ opacity: 0, transform: "translate3d(0px, 20px, 0px)" }}
             className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50"
           >
             <Check size={16} className="text-green-400" />

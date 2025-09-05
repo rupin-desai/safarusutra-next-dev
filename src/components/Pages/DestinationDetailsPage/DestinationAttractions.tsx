@@ -56,22 +56,13 @@ const staggerContainer: any = {
   },
 };
 
+// Floating animation now uses transform/translate3d (no x/y props)
 const floatingAnimation: any = {
-  initial: { y: 0 },
+  initial: { transform: "translate3d(0px, 0px, 0px) rotate(0deg)" },
   animate: {
-    y: [-8, 8, -8],
-    rotate: [-2, 2, -2],
+    transform: "translate3d(0px, -8px, 0px) rotate(-2deg)",
     transition: {
-      y: {
-        repeat: Infinity,
-        duration: 4,
-        ease: "easeInOut",
-      },
-      rotate: {
-        repeat: Infinity,
-        duration: 5,
-        ease: "easeInOut",
-      },
+      transform: { repeat: Infinity, duration: 4, ease: "easeInOut", repeatType: "reverse" },
     },
   },
 };
@@ -81,6 +72,7 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
 
   const hasOddCount = attractions.length % 2 !== 0;
 
+  // deterministic color based on attractions content to avoid SSR/CSR mismatch
   const { randomColor } = useMemo(() => {
     const colors = [
       "var(--color-dark-brown)",
@@ -90,9 +82,17 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
       "var(--color-green)",
       "var(--color-dark-teal)",
     ];
-    const colorIndex = Math.floor(Math.random() * colors.length);
+
+    // create a stable seed from attraction titles
+    const seedText = (attractions || []).map((a) => String(a.title || "")).join("|");
+    let seed = 0;
+    for (let i = 0; i < seedText.length; i++) {
+      seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
+    }
+    const colorIndex = seed % colors.length;
     return { randomColor: colors[colorIndex] };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [/* dependency intentionally stable: attractions reference */]);
 
   return (
     <section className="py-16 md:px-24" id="attractions">
@@ -106,7 +106,8 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
             variants={floatingAnimation}
             initial="initial"
             animate="animate"
-            style={{ width: 200, height: 200, color: randomColor }}
+            // use strings for width/height so SSR and CSR match exactly
+            style={{ width: "200px", height: "200px", color: randomColor, transform: "translate3d(0px, 0px, 0px) rotate(0deg)" }}
           />
 
           <motion.div
@@ -145,6 +146,7 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
               }`}
               variants={fadeIn}
               whileHover={{
+                transform: "translate3d(0px, -6px, 0px)",
                 boxShadow:
                   "0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1)",
                 transition: {
@@ -171,9 +173,7 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
                 </h3>
 
                 <div className="max-h-0 overflow-hidden opacity-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500">
-                  <p className="text-white/90 text-base line-clamp-4">
-                    {attraction.description}
-                  </p>
+                  <p className="text-white/90 text-base line-clamp-4">{attraction.description}</p>
                 </div>
               </div>
             </motion.div>
