@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import Navbar from "@/components/Common/Navbar";
 import SSButton from "@/components/UI/SSButton";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -24,8 +24,9 @@ type Slide = {
 
 const heroData: Slide[] = (heroDataRaw as unknown) as Slide[];
 
-// keep first slide static, shuffle rest
+// keep helper to optionally randomize client-side only
 const getRandomizedHeroData = (data: Slide[]) => {
+  if (!Array.isArray(data) || data.length <= 1) return data;
   const first = data[0];
   const rest = data.slice(1);
   for (let i = rest.length - 1; i > 0; i--) {
@@ -34,8 +35,6 @@ const getRandomizedHeroData = (data: Slide[]) => {
   }
   return [first, ...rest];
 };
-
-const randomizedSlides = getRandomizedHeroData(heroData);
 
 const desktopVariants: Variants = {
   enter: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
@@ -107,12 +106,30 @@ const HomeHero: React.FC = () => {
   const [autoplayPaused, setAutoplayPaused] = useState<boolean>(false);
   const [swipeDirection, setSwipeDirection] = useState<"next" | "prev">("next");
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  // client-only slides state (initialized deterministically for SSR)
+  const [clientSlides, setClientSlides] = useState<Slide[]>(() => heroData);
 
   const touchStartX = useRef<number>(0);
   const touchEndX = useRef<number>(0);
   const minSwipeDistance = 50;
 
-  const slides = randomizedSlides;
+  // shuffle / preload only on client to avoid hydration mismatch
+  useEffect(() => {
+    const shuffled = getRandomizedHeroData(heroData);
+    setClientSlides(shuffled);
+
+    const preloads: HTMLImageElement[] = [];
+    shuffled.forEach((s) => {
+      const img = new Image();
+      img.src = s.image;
+      preloads.push(img);
+    });
+    return () => {
+      preloads.length = 0;
+    };
+  }, []);
+
+  const slides = clientSlides;
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
@@ -121,44 +138,22 @@ const HomeHero: React.FC = () => {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
-  // preload current + others, small optimization
-  useEffect(() => {
-    const loaded = Array(slides.length).fill(false);
-    const preloads: HTMLImageElement[] = [];
-
-    const markLoaded = (idx: number) => {
-      loaded[idx] = true;
-    };
-
-    slides.forEach((s, idx) => {
-      const img = new Image();
-      img.onload = () => markLoaded(idx);
-      img.src = s.image;
-      preloads.push(img);
-    });
-
-    return () => {
-      // drop refs
-      preloads.length = 0;
-    };
-  }, [slides]);
-
   useEffect(() => {
     let timer: number | undefined;
     if (!autoplayPaused) {
       timer = window.setTimeout(() => {
-        setCurrentSlide((p) => (p + 1) % slides.length);
+        setCurrentSlide((p) => (p + 1) % clientSlides.length);
         setSwipeDirection("next");
       }, 5000);
     }
     return () => {
       if (timer) window.clearTimeout(timer);
     };
-  }, [currentSlide, autoplayPaused, slides.length]);
+  }, [currentSlide, autoplayPaused, clientSlides.length]);
 
   const goToSlide = useCallback(
     (index: number) => {
-      if (index > currentSlide || (currentSlide === slides.length - 1 && index === 0)) {
+      if (index > currentSlide || (currentSlide === clientSlides.length - 1 && index === 0)) {
         setSwipeDirection("next");
       } else {
         setSwipeDirection("prev");
@@ -167,18 +162,18 @@ const HomeHero: React.FC = () => {
       setAutoplayPaused(true);
       window.setTimeout(() => setAutoplayPaused(false), 5000);
     },
-    [currentSlide, slides.length]
+    [currentSlide, clientSlides.length]
   );
 
   const nextSlide = useCallback(() => {
     setSwipeDirection("next");
-    goToSlide((currentSlide + 1) % slides.length);
-  }, [currentSlide, goToSlide, slides.length]);
+    goToSlide((currentSlide + 1) % clientSlides.length);
+  }, [currentSlide, goToSlide, clientSlides.length]);
 
   const prevSlide = useCallback(() => {
     setSwipeDirection("prev");
-    goToSlide(currentSlide === 0 ? slides.length - 1 : currentSlide - 1);
-  }, [currentSlide, goToSlide, slides.length]);
+    goToSlide(currentSlide === 0 ? clientSlides.length - 1 : currentSlide - 1);
+  }, [currentSlide, goToSlide, clientSlides.length]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -206,7 +201,7 @@ const HomeHero: React.FC = () => {
 
       {/* ensure images are requested early */}
       <div style={{ display: "none", visibility: "hidden" }}>
-        {slides.map((s, i) => (
+        {clientSlides.map((s, i) => (
           // eslint-disable-next-line @next/next/no-img-element
           <img key={`pre-${i}`} src={s.image} alt="" aria-hidden="true" loading="lazy" />
         ))}
@@ -247,16 +242,16 @@ const HomeHero: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div key={`slide-${currentSlide}`} className="max-w-5xl" initial="enter" animate="center" exit="exit" variants={getActiveVariants()}>
               <motion.h1 className="text-white font-family-oswald uppercase text-4xl md:text-5xl lg:text-8xl xl:text-[6.5rem] font-bold mb-4 md:mb-6 leading-tighter" variants={getActiveVariants()}>
-                {slides[currentSlide].title}
+                {slides[currentSlide]?.title}
               </motion.h1>
 
               <motion.p className="text-white text-xl md:text-2xl mb-8 max-w-2xl" variants={getActiveVariants()}>
-                {slides[currentSlide].subtitle}
+                {slides[currentSlide]?.subtitle}
               </motion.p>
 
               <motion.div variants={getActiveVariants()}>
                 <SSButton color="var(--color-green)" to={slides[currentSlide].buttonLink} className="text-xl py-3 px-8">
-                  {slides[currentSlide].buttonText ?? "Explore"}
+                  {slides[currentSlide]?.buttonText ?? "Explore"}
                 </SSButton>
               </motion.div>
             </motion.div>

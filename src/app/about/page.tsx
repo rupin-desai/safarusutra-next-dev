@@ -21,6 +21,27 @@ export const metadata: Metadata = {
   },
 };
 
+// runtime sanity checks to surface which import is undefined during prerender
+const assertComponent = (name: string, comp: unknown) => {
+  const ok = comp && (typeof comp === "function" || typeof comp === "object");
+  if (!ok) {
+    throw new Error(
+      `AboutPage import "${name}" is undefined or not a React component. ` +
+        `Check that the file at the import path exports a default React component (default export), and verify the import path.`
+    );
+  }
+};
+
+assertComponent("HeroSection", HeroSection);
+assertComponent("AboutIntro", AboutIntro);
+assertComponent("AboutExperience", AboutExperience);
+assertComponent("AboutStats", AboutStats);
+assertComponent("AboutDifference", AboutDifference);
+assertComponent("AboutReviews", AboutReviews);
+assertComponent("AboutFAQ", AboutFAQ);
+assertComponent("AboutBanner", AboutBanner);
+assertComponent("HomeHighlight", HomeHighlight);
+
 export default function AboutPage(): React.ReactElement {
   return (
     <div>

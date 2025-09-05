@@ -12,7 +12,41 @@ import DestinationPackages from "@/components/Pages/DestinationDetailsPage/Desti
 import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/DestinationFAQs";
 
 import destinationListRaw from "@/data/DestinatonDetails.json";
+// details mapping for destinations -> tour details
 import tourDetailsMap from "@/data/TourDetails.json";
+
+export async function generateStaticParams() {
+  const raw: unknown = destinationListRaw;
+  let items: unknown[] = [];
+
+  if (Array.isArray(raw)) {
+    items = raw;
+  } else if (raw && typeof raw === "object") {
+    items = Object.values(raw as Record<string, unknown>);
+  }
+
+  const params = items
+    .map((d) => {
+      const obj = d && typeof d === "object" ? (d as Record<string, unknown>) : {};
+      const slugFromField = typeof obj.slug === "string" && obj.slug.trim().length > 0 ? obj.slug.trim() : undefined;
+      const title = typeof obj.title === "string" ? obj.title.trim() : "";
+      const slugFallback = title
+        ? title.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-")
+        : obj.id
+        ? String(obj.id)
+        : undefined;
+      const slug = slugFromField ?? slugFallback;
+      return slug ? { slug } : null;
+    })
+    .filter(Boolean) as { slug: string }[];
+
+  const seen = new Set<string>();
+  return params.filter((p) => {
+    if (seen.has(p.slug)) return false;
+    seen.add(p.slug);
+    return true;
+  });
+}
 
 /* Narrow runtime-friendly type for destination items */
 type Destination = {

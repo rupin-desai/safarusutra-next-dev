@@ -20,14 +20,15 @@ type AvailableMonth = {
   enabledDates?: DateObj[];
 };
 
-type Tour = BaseTour & {
+// Keep the base Tour shape and extend with availableDates.
+// Important: do NOT narrow `price` here — BaseTour may have number | string.
+type TourWithDates = BaseTour & {
   availableDates?: AvailableMonth[];
-  price?: number;
-  title?: string;
+  price?: number | string;
   [key: string]: unknown;
 };
 
-const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tour: Tour; selectedMonth?: string; selectedDateRange?: string }) => {
+const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tour: TourWithDates; selectedMonth?: string; selectedDateRange?: string }) => {
   const router = useRouter();
   const [copied, setCopied] = useState(false);
   const [availableMonths, setAvailableMonths] = useState<string[]>([]);

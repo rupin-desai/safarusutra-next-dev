@@ -8,8 +8,9 @@ import TourItinerary from "../../../components/Pages/TourDetailsPage/TourItinera
 import TourInclusions from "../../../components/Pages/TourDetailsPage/TourInclusions";
 import TourPolicy from "../../../components/Pages/TourDetailsPage/TourPolicy";
 import TourSidebar from "../../../components/Pages/TourDetailsPage/TourSidebar";
+import type { Tour } from "../../../components/UI/TourCard";
 
-export default function TourPageClient({ tour }: { tour: any }): React.ReactElement {
+export default function TourPageClient({ tour }: { tour: Tour }): React.ReactElement {
   return (
     <div className="bg-gray-50 min-h-screen">
       <TourHero tour={tour} />

@@ -157,18 +157,28 @@ const HomeIntroClient: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsPro
 
           <div className="flex items-center justify-center w-full h-full relative">
             <AnimatePresence initial={false}>
-              {visibleIndices.map((idx) => {
-                const position = getCardPosition(idx);
-                if (!position) return null;
-                const tour = featuredList[idx];
-                if (!tour) return null;
-                return (
-                  <motion.div key={`card-${tour.id}`} custom={idx} variants={cardVariants} initial={position} animate={position} exit={position === "right" ? "offRight" : "offLeft"} className={`absolute top-1/2 -translate-y-1/2 w-[360px] ${position === "center" ? "cursor-pointer" : ""}`} style={{ pointerEvents: position === "center" ? "auto" : "none" }}>
-                    <TourCard tour={tour} />
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+              {visibleIndices.map((idx, mapIndex) => {
+                 const position = getCardPosition(idx);
+                 if (!position) return null;
+                 const tour = featuredList[idx];
+                 if (!tour) return null;
+                 return (
+                   <motion.div
+                    // include mapIndex and activeIndex so keys are unique across renders
+                    key={`card-${String(tour.id)}-${mapIndex}-${position}-${activeIndex}`}
+                     custom={idx}
+                     variants={cardVariants}
+                     initial={position}
+                     animate={position}
+                     exit={position === "right" ? "offRight" : "offLeft"}
+                     className={`absolute top-1/2 -translate-y-1/2 w-[360px] ${position === "center" ? "cursor-pointer" : ""}`}
+                     style={{ pointerEvents: position === "center" ? "auto" : "none" }}
+                   >
+                     <TourCard tour={tour} />
+                   </motion.div>
+                 );
+               })}
+             </AnimatePresence>
           </div>
 
           <motion.button onClick={handleNext} aria-label="Next" className="absolute -right-16 top-1/2 z-30 flex items-center justify-center w-12 h-12 rounded-full bg-[var(--color-dark-teal)] text-white shadow-lg"><ArrowRight size={28} /></motion.button>

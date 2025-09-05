@@ -7,15 +7,65 @@ import TourTabs from "../../../../components/Pages/TourDetailsPage/TourTabs";
 import TourInclusions from "../../../../components/Pages/TourDetailsPage/TourInclusions";
 import TourSidebar from "../../../../components/Pages/TourDetailsPage/TourSidebar";
 
-/* Normalize tour data to an array (supports both array and object shapes) */
-const getToursArray = (): any[] => {
+// Strongly-typed Tour shape for this route (keeps fields minimal and safe)
+type Tour = {
+  id?: string | number;
+  title?: string;
+  slug?: string;
+  heroImage?: string;
+  image?: string;
+  metaDescription?: string;
+  description?: string;
+  caption?: string;
+  duration?: string;
+  price?: number | string;
+  location?: string;
+  category?: string | string[];
+  featured?: boolean;
+  relatedDestinations?: Array<string | number>;
+  [k: string]: unknown;
+};
+
+// Normalize a raw JSON entry into the Tour shape (handles various JSON shapes)
+const normalizeEntry = (entry: unknown): Tour => {
+  if (!entry || typeof entry !== "object") return {};
+  const e = entry as Record<string, unknown>;
+  const rawId = e.id ?? e.ID ?? e["packageId"] ?? e["package_id"];
+  const id = typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
+
+  const rawCategory = e.category ?? e.categories ?? e["Category"];
+  let category: string | string[] | undefined;
+  if (typeof rawCategory === "string") category = rawCategory;
+  else if (Array.isArray(rawCategory)) category = rawCategory.map((c) => (typeof c === "string" ? c : String(c)));
+  else category = undefined;
+
+  return {
+    id,
+    title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
+    slug: typeof e.slug === "string" ? e.slug : undefined,
+    heroImage: typeof e.heroImage === "string" ? e.heroImage : undefined,
+    image: typeof e.image === "string" ? e.image : undefined,
+    metaDescription: typeof e.metaDescription === "string" ? e.metaDescription : undefined,
+    description: typeof e.description === "string" ? e.description : undefined,
+    caption: typeof e.caption === "string" ? e.caption : undefined,
+    duration: typeof e.duration === "string" ? e.duration : undefined,
+    price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
+    location: typeof e.location === "string" ? e.location : undefined,
+    category,
+    featured: typeof e.featured === "boolean" ? e.featured : undefined,
+    relatedDestinations: Array.isArray(e.relatedDestinations) ? (e.relatedDestinations as Array<string | number>) : undefined,
+  } as Tour;
+};
+
+// Normalize tour data to an array (supports both array and object shapes)
+const getToursArray = (): Tour[] => {
   const raw: unknown = tourDataRaw;
-  if (Array.isArray(raw)) return raw as any[];
-  if (raw && typeof raw === "object") return Object.values(raw as Record<string, any>);
+  if (Array.isArray(raw)) return (raw as unknown[]).map(normalizeEntry);
+  if (raw && typeof raw === "object") return Object.values(raw as Record<string, unknown>).map(normalizeEntry);
   return [];
 };
 
-/* Create a safe slug fallback from title */
+// Create a safe slug fallback from title/id
 const createSlug = (text?: string) =>
   String(text ?? "")
     .toLowerCase()

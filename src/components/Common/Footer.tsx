@@ -2,6 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, Variants } from "framer-motion";
 import {
   Facebook,
@@ -196,10 +197,13 @@ const Footer = () => {
           >
             <Link href="/" className="flex flex-col items-center">
               <div className="bg-white p-3 md:p-3 rounded-xl shadow-md mb-2 md:mb-4 mx-auto">
-                <img
+                <Image
                   src="/logos/logo.svg"
                   alt="SafariSutra"
+                  width={96}
+                  height={96}
                   className="h-14 md:h-20 w-auto"
+                  priority={false}
                 />
               </div>
               <p className="text-white text-xs md:text-sm font-medium tracking-wide text-center">

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 import { MessageSquare, ChevronLeft, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
@@ -10,8 +10,6 @@ import "swiper/css/pagination";
 import SectionTitle from "../../UI/SectionTitle";
 
 // keep translate3d / transform strings — cast variants & transitions to any for TS
-import type { Variants } from "framer-motion";
-
 const sectionVariants: Variants = {
   initial: {
     opacity: 0,
@@ -56,6 +54,19 @@ const cardVariants: Variants = {
       damping: 20,
     },
   },
+};
+
+// Page-level variants and transition (typed)
+const testimonialPageVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px,20px,0px)" },
+  animate: { opacity: 1, transform: "translate3d(0px,0px,0px)" },
+  exit: { opacity: 0, transform: "translate3d(0px,-20px,0px)" },
+};
+
+const testimonialPageTransition: Transition = {
+  type: "spring",
+  stiffness: 300,
+  damping: 30,
 };
 
 const testimonialData = [
@@ -127,20 +138,21 @@ const AboutReviews: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={`testimonial-page-${testimonialPage}`}
-              initial={{ opacity: 0, transform: "translate3d(0px,20px,0px)" } as any}
-              animate={{ opacity: 1, transform: "translate3d(0px,0px,0px)" } as any}
-              exit={{ opacity: 0, transform: "translate3d(0px,-20px,0px)" } as any}
-              transition={{ type: "spring", stiffness: 300, damping: 30 } as any}
+              variants={testimonialPageVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={testimonialPageTransition}
               className="grid grid-cols-1 md:grid-cols-3 gap-10" // Increased gap from 6 to 10
             >
               {testimonialData
                 .slice(testimonialPage * 3, testimonialPage * 3 + 3)
                 .map((testimonial, index) => (
                   <motion.div
-                    initial={{ opacity: 0, transform: "translate3d(0px,30px,0px)" } as any}
-                    animate={{ opacity: 1, transform: "translate3d(0px,0px,0px)" } as any}
-                    transition={{ type: "spring", stiffness: 300, damping: 30 } as any}
                     key={`testimonial-${testimonialPage}-${index}`}
+                    variants={cardVariants}
+                    initial="initial"
+                    animate="animate"
                     className="bg-white p-5 rounded-xl flex flex-col shadow-md border-2 border-[var(--color-orange)] h-[300px]" // Reduced height from 350px to 300px
                   >
                     {/* Quote icon */}
