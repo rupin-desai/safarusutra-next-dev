@@ -1,12 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants, Transition } from "framer-motion";
 import { MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
+import Image from "next/image";
 
-// keep translate3d strings — cast to any for TS
-const sectionVariants: any = {
+/* Typed variants (use translate3d strings for GPU) */
+const sectionVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -20,7 +21,7 @@ const sectionVariants: any = {
   },
 };
 
-const titleVariants: any = {
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -36,7 +37,7 @@ const titleVariants: any = {
   },
 };
 
-const textVariants: any = {
+const textVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -53,7 +54,7 @@ const textVariants: any = {
   },
 };
 
-const balloonVariants: any = {
+const balloonVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 100px, 0px)",
@@ -74,6 +75,27 @@ const AboutIntro: React.FC = () => {
   const [balloonAnimationComplete, setBalloonAnimationComplete] =
     useState(false);
 
+  // compute typed animation props to avoid `any` casts
+  const floatingAnimate =
+    balloonAnimationComplete ? { y: [0, -30, 0], rotate: [-4, 4, -4] } : undefined;
+
+  const floatingTransition: Transition | undefined = balloonAnimationComplete
+    ? {
+        y: {
+          repeat: Infinity,
+          duration: 5,
+          ease: "easeInOut",
+          repeatType: "reverse",
+        },
+        rotate: {
+          repeat: Infinity,
+          duration: 6,
+          ease: "easeInOut",
+          repeatType: "reverse",
+        },
+      }
+    : undefined;
+
   return (
     <section
       className="py-24 px-6 md:px-12 relative overflow-hidden"
@@ -88,37 +110,15 @@ const AboutIntro: React.FC = () => {
         variants={balloonVariants}
         onAnimationComplete={() => setBalloonAnimationComplete(true)}
       >
-        {/* Inner motion div for the floating animation */}
-        <motion.div
-          animate={
-            balloonAnimationComplete
-              ? ({ y: [0, -30, 0], rotate: [-4, 4, -4] } as any)
-              : {}
-          }
-          transition={
-            balloonAnimationComplete
-              ? ({
-                  y: {
-                    repeat: Infinity,
-                    duration: 5,
-                    ease: "easeInOut",
-                    repeatType: "reverse",
-                  },
-                  rotate: {
-                    repeat: Infinity,
-                    duration: 6,
-                    ease: "easeInOut",
-                    repeatType: "reverse",
-                  },
-                } as any)
-              : {}
-          }
-        >
-          <img
+        {/* Inner motion div for the floating animation -- use next/image for optimization */}
+        <motion.div animate={floatingAnimate} transition={floatingTransition} className="relative w-full h-full">
+          <Image
             src="/graphics/balloon.svg"
             alt=""
-            className="w-full h-full"
+            fill
+            className="object-contain"
             draggable={false}
+            priority={false}
           />
         </motion.div>
       </motion.div>

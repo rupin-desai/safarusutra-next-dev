@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 
@@ -41,12 +41,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) 
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{
-              type: "spring",
-              stiffness: 300,
-              damping: 30,
-              opacity: { duration: 0.2 },
-            } as any}
+            transition={faqTransition}
             className="overflow-hidden"
           >
             <div className="pt-3 pb-1">
@@ -60,7 +55,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) 
 };
 
 // keep translate3d strings — cast to any to satisfy TS
-const sectionVariants: any = {
+const sectionVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -72,7 +67,7 @@ const sectionVariants: any = {
   },
 };
 
-const titleVariants: any = {
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -88,7 +83,7 @@ const titleVariants: any = {
   },
 };
 
-const containerVariants: any = {
+const containerVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -102,6 +97,15 @@ const containerVariants: any = {
       damping: 30,
     },
   },
+};
+
+// typed transition used by FAQ expand/collapse
+const faqTransition: Transition = {
+  type: "spring",
+  stiffness: 300,
+  damping: 30,
+  // property-specific timing
+  opacity: { duration: 0.2 },
 };
 
 const faqData: FAQ[] = [
@@ -162,8 +166,8 @@ const AboutFAQ: React.FC = () => {
             centered={true}
           />
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
-            Everything you need to know about our safari experiences. Can't find
-            what you're looking for?{" "}
+            Everything you need to know about our safari experiences. Can&#39;t find
+            what you&#39;re looking for?{' '}
             <a
               href="/contact"
               className="text-[var(--color-orange)] font-medium hover:underline"

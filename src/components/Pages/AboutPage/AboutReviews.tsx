@@ -10,7 +10,9 @@ import "swiper/css/pagination";
 import SectionTitle from "../../UI/SectionTitle";
 
 // keep translate3d / transform strings — cast variants & transitions to any for TS
-const sectionVariants: any = {
+import type { Variants } from "framer-motion";
+
+const sectionVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -24,7 +26,7 @@ const sectionVariants: any = {
   },
 };
 
-const titleVariants: any = {
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -40,7 +42,7 @@ const titleVariants: any = {
   },
 };
 
-const cardVariants: any = {
+const cardVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -115,7 +117,7 @@ const AboutReviews: React.FC = () => {
             centered={true}
           />
           <p className="text-center font-family-baloo text-xl md:text-2xl max-w-2xl mx-auto text-gray-600">
-            Don't just take our word for it. Hear from travelers who have experienced the magic of Safari Sutra firsthand.
+            Don&#39;t just take our word for it. Hear from travelers who have experienced the magic of Safari Sutra firsthand.
           </p>
         </motion.div>
 

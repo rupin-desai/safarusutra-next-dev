@@ -6,6 +6,7 @@ import { Compass } from "lucide-react";
 import CountUp from "react-countup";
 import SectionTitle from "../../UI/SectionTitle";
 import SSButton from "../../UI/SSButton";
+import Image from "next/image";
 
 // Animation variants (use Variants and translate3d strings)
 const sectionVariants: Variants = {
@@ -79,6 +80,7 @@ const DestinationDiscover: React.FC = () => {
       </style>
 
       {/* Decorative elements remain unchanged */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/graphics/star.svg"
         alt=""
@@ -90,6 +92,7 @@ const DestinationDiscover: React.FC = () => {
         aria-hidden="true"
       />
 
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/graphics/star2.svg"
         alt=""
@@ -166,11 +169,13 @@ const DestinationDiscover: React.FC = () => {
 
           {/* Image section remains unchanged */}
           <motion.div className="relative" variants={itemVariants}>
-            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl">
-              <img
+            <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl relative">
+              <Image
                 src="https://www.bornfree.org.uk/wp-content/uploads/2023/10/keyur-nandaniya-vu0gvM5he8o-unsplash-11.jpg"
                 alt="Safari experience with wildlife and guide"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                unoptimized
               />
             </div>
 

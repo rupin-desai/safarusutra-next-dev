@@ -8,13 +8,10 @@ import Navbar from "@/components/Common/Navbar";
 export default function CancellationPolicy(): React.ReactElement {
   const [scope, animate] = useAnimate();
 
-  // Trigger animations on component mount for better mobile support
   useEffect(() => {
-    // Short delay to ensure DOM is ready
     const timer = setTimeout(() => {
       animate("section", { opacity: 1 }, { duration: 0.3 });
 
-      // Animate each item with staggered delay
       document.querySelectorAll(".animate-item").forEach((element, index) => {
         animate(
           element,
@@ -81,18 +78,7 @@ export default function CancellationPolicy(): React.ReactElement {
             }}
           >
             <p>
-              Welcome to Safari Sutra Holidays Private Limited ("Safari Sutra,"
-              "we," "us," or "our"). These Terms and Conditions ("Terms") govern
-              your use of our website, mobile applications, and all
-              travel-related services, including but not limited to bookings for
-              flights, hotels, holiday packages, and other travel arrangements.
-              By accessing or using our services, you agree to be bound by these
-              Terms and the specific conditions of third-party providers (e.g.,
-              airlines, hotels, tour operators). If you do not agree with these
-              Terms, please do not use our services. These Terms do not
-              constitute a partnership or agency relationship between you and
-              Safari Sutra, and no party has authority to bind the other in any
-              way.
+              Welcome to Safari Sutra Holidays Private Limited (&quot;Safari Sutra,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). These Terms and Conditions (&quot;Terms&quot;) govern your use of our website, mobile applications, and all travel-related services, including but not limited to bookings for flights, hotels, holiday packages, and other travel arrangements. By accessing or using our services, you agree to be bound by these Terms and the specific conditions of third-party providers (e.g., airlines, hotels, tour operators). If you do not agree with these Terms, please do not use our services. These Terms do not constitute a partnership or agency relationship between you and Safari Sutra, and no party has authority to bind the other in any way.
             </p>
           </div>
 
@@ -192,7 +178,7 @@ export default function CancellationPolicy(): React.ReactElement {
                   <strong className="text-[var(--color-orange)]">
                     Non-Refundable Bookings:
                   </strong>{" "}
-                  Flights, hotels, or packages marked as "Non-Refundable" on the
+                  Flights, hotels, or packages marked as &quot;Non-Refundable&quot; on the
                   final travel vouchers or itinerary are not eligible for
                   refunds, resulting in a zero refund if canceled.
                 </li>
@@ -200,7 +186,7 @@ export default function CancellationPolicy(): React.ReactElement {
                   <strong className="text-[var(--color-orange)]">
                     Refundable Bookings:
                   </strong>{" "}
-                  For services marked as "Refundable" on the final travel
+                  For services marked as &quot;Refundable&quot; on the final travel
                   vouchers or itinerary, refunds will be processed as per the
                   specific cancellation policy outlined in the booking
                   confirmation and itinerary. Refunds may vary due to
@@ -245,8 +231,8 @@ export default function CancellationPolicy(): React.ReactElement {
                   grounded, canceled, or delayed flights), customers must
                   contact the respective airline directly. Safari Sutra is not
                   liable for such cancellations, and refunds are subject to the
-                  airline's processing timelines and policies. Similarly, for
-                  hotel cancellations, refunds are subject to the hotel's terms
+                  airline&apos;s processing timelines and policies. Similarly, for
+                  hotel cancellations, refunds are subject to the hotel&apos;s terms
                   as outlined in the itinerary.
                 </li>
                 <li>
@@ -265,7 +251,7 @@ export default function CancellationPolicy(): React.ReactElement {
                 cancellations, modifications, or disruptions beyond our control.
                 You acknowledge that third-party provider conditions may impose
                 stricter cancellation or modification policies, which take
-                precedence over Safari Sutra's terms where applicable. For
+                precedence over Safari Sutra&apos;s terms where applicable. For
                 queries or clarifications, contact{" "}
                 <a
                   href="mailto:hello@thesafarisutra.com"
@@ -593,10 +579,7 @@ export default function CancellationPolicy(): React.ReactElement {
               13. Contact Us
             </h2>
             <div className="prose prose-lg max-w-none">
-              <p>
-                For questions or concerns about these Terms, please contact us
-                at:
-              </p>
+              <p>For questions or concerns about these Terms, please contact us at:</p>
               <p>
                 <strong>Email:</strong>{" "}
                 <a
@@ -607,10 +590,7 @@ export default function CancellationPolicy(): React.ReactElement {
                 </a>
               </p>
               <p>
-                <strong>Address:</strong> Safari Sutra Holidays Private Limited,
-                Work, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya
-                Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai,
-                Maharashtra 400059
+                <strong>Address:</strong> Safari Sutra Holidays Private Limited, Work, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai, Maharashtra 400059
               </p>
               <p>
                 <strong>Phone:</strong>{" "}

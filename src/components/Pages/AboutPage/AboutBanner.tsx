@@ -1,7 +1,6 @@
-"use client";
-
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import SSButton from "../../UI/SSButton";
 
 // Animation variants updated to remove delays
@@ -17,38 +16,34 @@ const containerVariants = {
   },
 };
 
-const AboutBanner: React.FC = () => {
+const AboutBanner = () => {
   return (
     <section className="relative py-40 md:py-48 overflow-hidden">
       {/* Decorative star element */}
       <motion.div
         className="absolute top-20 right-10 md:right-40 z-10 w-14 h-14 md:w-24 md:h-24"
-        animate={{
-          rotate: 360,
-        }}
-        transition={{
-          duration: 30,
-          repeat: Infinity,
-          ease: "linear",
-        }}
+        animate={{ rotate: 360 }}
+        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+        aria-hidden
       >
-        <img
+        <Image
           src="/graphics/star.svg"
-          alt="Decorative star"
+          alt=""
+          width={96}
+          height={96}
           className="w-14 h-14 md:w-24 md:h-24"
-          width="96"
-          height="96"
         />
       </motion.div>
 
       {/* Background image with overlay - standard img tag */}
       <div className="absolute inset-0 w-full h-full z-0">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src="https://images.unsplash.com/photo-1506929562872-bb421503ef21"
           alt="Mountain landscape with stunning sunset view"
-          className="w-full h-full object-cover"
-          loading="lazy"
+          fill
+          className="object-cover"
+          priority={false}
+          unoptimized
         />
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black opacity-50"></div>

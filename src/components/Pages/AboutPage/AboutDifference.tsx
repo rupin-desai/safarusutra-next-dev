@@ -1,12 +1,12 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 
-// Animation variants (kept translate3d strings — cast to any to satisfy TS)
-const sectionVariants: any = {
+// Animation variants typed with Variants to avoid `any`
+const sectionVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -20,7 +20,7 @@ const sectionVariants: any = {
   },
 };
 
-const titleVariants: any = {
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -36,7 +36,7 @@ const titleVariants: any = {
   },
 };
 
-const featureVariants: any = {
+const featureVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 40px, 0px)",

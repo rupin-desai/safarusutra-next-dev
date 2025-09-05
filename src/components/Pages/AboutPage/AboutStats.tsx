@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useRef, useState } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants, Transition } from "framer-motion";
 import { Compass } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 import CountUp from "react-countup";
 
-// Animation variants cast to any to allow translate3d strings
-const titleVariants: any = {
+// Animation variants typed with Variants to avoid `any`
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -23,7 +23,7 @@ const titleVariants: any = {
   },
 };
 
-const rightCardVariants: any = {
+const rightCardVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(100px, 0px, 0px)",
@@ -40,7 +40,7 @@ const rightCardVariants: any = {
   },
 };
 
-const leftCardVariants: any = {
+const leftCardVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(-100px, 0px, 0px)",
@@ -57,7 +57,7 @@ const leftCardVariants: any = {
   },
 };
 
-const planeVariants: any = {
+const planeVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(100px, 0px, 0px) rotate(15deg)",
@@ -185,7 +185,6 @@ const StatCard: React.FC<StatCardProps> = ({ stat, idx, isLast }) => {
       </div>
 
       <div className={`md:w-1/2 w-full ${!isEven && "md:order-1"}`}>
-        {/* standard img instead of OptimizedImage */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={stat.img}
@@ -194,7 +193,6 @@ const StatCard: React.FC<StatCardProps> = ({ stat, idx, isLast }) => {
           width={800}
           height={600}
           loading="lazy"
-          // sizes prop removed for standard img
         />
       </div>
     </motion.div>
@@ -251,10 +249,11 @@ const AboutStats: React.FC = () => {
                     ease: "easeInOut",
                     repeatType: "reverse",
                   },
-                } as any)
-              : {}
+                } as Transition)
+              : undefined
           }
         >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/graphics/planeoutline.svg"
             alt=""

@@ -6,12 +6,24 @@ import { Compass } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
 import DestinationCard from "@/components/UI/DestinationCard";
 import type { Tour as DestinationCardTour } from "@/components/UI/DestinationCard";
-import type { Tour as SourceTour } from "@/components/UI/TourCard";
+// removed strict Tour import from TourCard to allow heterogeneous arrays
+
+/* Minimal shared tour shape used for props from different JSON sources */
+type SharedTour = {
+  id?: string | number;
+  title?: string;
+  image?: string;
+  location?: string;
+  caption?: string;
+  price?: string | number;
+  duration?: string;
+  [k: string]: unknown;
+};
 
 interface Props {
-  relatedTours?: SourceTour[];
+  relatedTours?: SharedTour[];
   currentTourId?: string | number;
-  allTours?: SourceTour[];
+  allTours?: SharedTour[];
 }
 
 // Optimized animation variants using translate3d for better performance
@@ -72,18 +84,18 @@ const rotateReverseAnimation: Variants = {
 
 const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId, allTours = [] }) => {
   // Get randomly selected related tours based on current tour type (domestic/international)
-  const selectedTours = useMemo((): SourceTour[] => {
-    if (!allTours || allTours.length === 0) return [];
+  const selectedTours = useMemo((): SharedTour[] => {
+    if (!allTours || allTours.length === 0) return (relatedTours ?? []).slice(0, 3);
 
     // Find current tour to determine if it's domestic or international
-    const currentTour = allTours.find((tour) => String(tour.id) === String(currentTourId));
+    const currentTour = allTours.find((tour) => String(tour.id ?? "") === String(currentTourId ?? ""));
     if (!currentTour) return (relatedTours ?? []).slice(0, 3);
 
     const isDomestic = String((currentTour.location ?? "")).toLowerCase() === "india";
 
     const sameCategoryTours = allTours.filter(
       (tour) =>
-        String(tour.id) !== String(currentTourId) &&
+        String(tour.id ?? "") !== String(currentTourId ?? "") &&
         (isDomestic ? String(tour.location ?? "").toLowerCase() === "india" : String(tour.location ?? "").toLowerCase() !== "india")
     );
 
@@ -145,7 +157,7 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
 
             return (
               <motion.div
-                key={tour.id ?? index}
+                key={String(tour.id ?? index)}
                 custom={index}
                 variants={cardVariants}
                 initial="initial"

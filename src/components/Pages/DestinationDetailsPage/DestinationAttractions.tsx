@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 
@@ -11,12 +11,16 @@ type Attraction = {
   description?: string;
 };
 
+// allow the prop to be unknown[] (normalized internally)
 interface Props {
-  attractions?: Attraction[] | null;
+  attractions?: unknown[] | Attraction[] | null;
 }
 
-// Animation variants cast to any to allow translate3d/transform strings
-const fadeIn: any = {
+// helper to coerce unknown to string safely
+const getString = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
+
+// typed variants (avoid `any`)
+const fadeIn: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -32,7 +36,7 @@ const fadeIn: any = {
   },
 };
 
-const titleVariant: any = {
+const titleVariant: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -48,7 +52,7 @@ const titleVariant: any = {
   },
 };
 
-const staggerContainer: any = {
+const staggerContainer: Variants = {
   animate: {
     transition: {
       staggerChildren: 0.2,
@@ -56,8 +60,7 @@ const staggerContainer: any = {
   },
 };
 
-// Floating animation now uses transform/translate3d (no x/y props)
-const floatingAnimation: any = {
+const floatingAnimation: Variants = {
   initial: { transform: "translate3d(0px, 0px, 0px) rotate(0deg)" },
   animate: {
     transform: "translate3d(0px, -8px, 0px) rotate(-2deg)",
@@ -68,11 +71,22 @@ const floatingAnimation: any = {
 };
 
 const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
-  if (!attractions || attractions.length === 0) return null;
+  // normalize incoming payload (handles Attraction[] or unknown[])
+  const attractionsList = useMemo<Attraction[]>(() => {
+    const arr = Array.isArray(attractions) ? attractions : [];
+    return arr.map((a) => {
+      const obj = a && typeof a === "object" ? (a as Record<string, unknown>) : {};
+      return {
+        title: getString(obj.title) || "Attraction",
+        image: getString(obj.image) || "/graphics/placeholder.jpg",
+        description: getString(obj.description),
+      };
+    });
+  }, [attractions]);
 
-  const hasOddCount = attractions.length % 2 !== 0;
+  // these can safely run even for empty arrays
+  const hasOddCount = attractionsList.length % 2 !== 0;
 
-  // deterministic color based on attractions content to avoid SSR/CSR mismatch
   const { randomColor } = useMemo(() => {
     const colors = [
       "var(--color-dark-brown)",
@@ -83,16 +97,16 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
       "var(--color-dark-teal)",
     ];
 
-    // create a stable seed from attraction titles
-    const seedText = (attractions || []).map((a) => String(a.title || "")).join("|");
+    const seedText = attractionsList.map((a) => String(a.title || "")).join("|");
     let seed = 0;
     for (let i = 0; i < seedText.length; i++) {
       seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
     }
     const colorIndex = seed % colors.length;
     return { randomColor: colors[colorIndex] };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [/* dependency intentionally stable: attractions reference */]);
+  }, [attractionsList]);
+
+  if (attractionsList.length === 0) return null;
 
   return (
     <section className="py-16 md:px-24" id="attractions">
@@ -106,8 +120,12 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
             variants={floatingAnimation}
             initial="initial"
             animate="animate"
-            // use strings for width/height so SSR and CSR match exactly
-            style={{ width: "200px", height: "200px", color: randomColor, transform: "translate3d(0px, 0px, 0px) rotate(0deg)" }}
+            style={{
+              width: "200px",
+              height: "200px",
+              color: randomColor,
+              transform: "translate3d(0px, 0px, 0px) rotate(0deg)",
+            }}
           />
 
           <motion.div
@@ -135,12 +153,12 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
           whileInView="animate"
           viewport={{ once: true, amount: 0.1 }}
         >
-          {attractions.map((attraction, index) => (
+          {attractionsList.map((attraction, index) => (
             <motion.div
               key={index}
               id={`attraction-${index}`}
               className={`h-[400px] rounded-xl overflow-hidden shadow-lg relative group cursor-pointer ${
-                hasOddCount && index === attractions.length - 1
+                hasOddCount && index === attractionsList.length - 1
                   ? "md:col-span-2 md:max-w-[calc(50%-1rem)] md:mx-auto"
                   : ""
               }`}
@@ -154,8 +172,9 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
                   stiffness: 400,
                   damping: 15,
                 },
-              } as any}
+              }}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={attraction.image}
                 alt={attraction.title}

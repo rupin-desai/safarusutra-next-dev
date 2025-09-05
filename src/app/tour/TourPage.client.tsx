@@ -13,10 +13,36 @@ import tourData from "@/data/TourDetails.json";
 import TourOverlay from "@/components/Pages/ToursPage/TourOverlay";
 import SSButton from "@/components/UI/SSButton";
 
-const shuffleArray = (array: any[]) => {
+/* Strongly typed utilities & domain types to avoid `any` */
+type AvailableDateMonth = { month: string; dates: Array<{ date: string; enabled?: boolean }>; [k: string]: unknown };
+export type Tour = {
+  id?: string | number;
+  title?: string;
+  route?: string;
+  description?: string;
+  category?: string | string[];
+  location?: string;
+  price?: number;
+  duration?: string;
+  availableDates?: AvailableDateMonth[];
+  locationType?: string;
+  [key: string]: unknown;
+};
+
+type CompositeFilter = {
+  type: "composite";
+  categories?: string[];
+  price?: string[];
+};
+
+type Filter = "all" | "india" | "international" | string | CompositeFilter;
+
+/* Generic shuffle to avoid `any` */
+const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
+    // swap
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
   }
   return shuffled;
@@ -26,20 +52,20 @@ export default function TourPageClient(): React.ReactElement {
   const pathname = usePathname() ?? "/";
   const isAllTours = pathname.startsWith("/tour");
 
-  const [tours, setTours] = useState<any[]>([]);
-  const [filteredTours, setFilteredTours] = useState<any[]>([]);
-  const [activeFilter, setActiveFilter] = useState<any>("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [lastAppliedFilter, setLastAppliedFilter] = useState<any>(null);
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [filteredTours, setFilteredTours] = useState<Tour[]>([]);
+  const [activeFilter, setActiveFilter] = useState<Filter>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [lastAppliedFilter, setLastAppliedFilter] = useState<Filter | null>(null);
 
   const [currentSection, setCurrentSection] = useState<string>("short");
 
   useEffect(() => {
     try {
       setIsLoading(true);
-      if (tourData && tourData.length > 0) {
-        const randomizedTours = shuffleArray(tourData);
+      if (Array.isArray(tourData) && (tourData as unknown[]).length > 0) {
+        const randomizedTours = shuffleArray<Tour>(tourData as unknown as Tour[]);
         setTours(randomizedTours);
         setFilteredTours(randomizedTours);
       } else {
@@ -57,46 +83,45 @@ export default function TourPageClient(): React.ReactElement {
   }, []);
 
   const applyFilters = useMemo(() => {
-    return (query: string, filter: any) => {
+    return (query: string, filter: Filter): Tour[] => {
       let result = [...tours];
       if (query && query.trim() !== "") {
         const lowerCaseQuery = query.toLowerCase();
-        result = result.filter((tour: any) => {
+        result = result.filter((tour: Tour) => {
           return (
-            (tour.title && tour.title.toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.route && tour.route.toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.description && tour.description.toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.title && String(tour.title).toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.route && String(tour.route).toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.description && String(tour.description).toLowerCase().includes(lowerCaseQuery)) ||
             (tour.category && String(tour.category).toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.location && tour.location.toLowerCase().includes(lowerCaseQuery))
+            (tour.location && String(tour.location).toLowerCase().includes(lowerCaseQuery))
           );
         });
       }
 
-      if (filter && typeof filter === "object" && filter.type === "composite") {
-        if (filter.categories && filter.categories.length > 0) {
-          result = result.filter((tour: any) => {
+      if (filter && typeof filter === "object" && (filter as CompositeFilter).type === "composite") {
+        const comp = filter as CompositeFilter;
+        if (comp.categories && comp.categories.length > 0) {
+          result = result.filter((tour: Tour) => {
             if (!tour.category) return false;
             const tourCategories = String(tour.category)
               .split(",")
               .map((cat) => cat.trim().toLowerCase());
-            return filter.categories.some((filterCat: string) =>
-              tourCategories.includes(filterCat.toLowerCase())
-            );
+            return comp.categories!.some((filterCat) => tourCategories.includes(filterCat.toLowerCase()));
           });
         }
 
-        if (filter.price && filter.price.length > 0) {
-          result = result.filter((tour: any) => {
-            if (!tour.price) return false;
-            return filter.price.some((priceRange: string) => {
+        if (comp.price && comp.price.length > 0) {
+          result = result.filter((tour: Tour) => {
+            if (typeof tour.price !== "number") return false;
+            return comp.price!.some((priceRange) => {
               const range = priceRange.replace(/₹/g, "").split("-");
               if (range.length === 2) {
-                const min = parseInt(range[0].replace(/,/g, ""));
-                const max = parseInt(range[1].replace(/,/g, ""));
-                return tour.price >= min && tour.price <= max;
+                const min = parseInt(range[0].replace(/,/g, ""), 10);
+                const max = parseInt(range[1].replace(/,/g, ""), 10);
+                return tour.price! >= min && tour.price! <= max;
               } else if (priceRange.includes("+")) {
-                const min = parseInt(priceRange.replace(/₹|\+|,/g, ""));
-                return tour.price >= min;
+                const min = parseInt(priceRange.replace(/₹|\+|,/g, ""), 10);
+                return tour.price! >= min;
               }
               return false;
             });
@@ -104,16 +129,17 @@ export default function TourPageClient(): React.ReactElement {
         }
       } else if (filter && filter !== "all") {
         if (filter === "india") {
-          result = result.filter((tour: any) => tour.location === "India");
+          result = result.filter((tour: Tour) => tour.location === "India");
         } else if (filter === "international") {
-          result = result.filter((tour: any) => tour.location !== "India");
+          result = result.filter((tour: Tour) => tour.location !== "India");
         } else {
-          result = result.filter((tour: any) => {
+          const f = String(filter).toLowerCase();
+          result = result.filter((tour: Tour) => {
             if (!tour.category) return false;
             return String(tour.category)
               .split(",")
               .map((cat) => cat.trim().toLowerCase())
-              .includes(String(filter).toLowerCase());
+              .includes(f);
           });
         }
       }
@@ -123,7 +149,7 @@ export default function TourPageClient(): React.ReactElement {
   }, [tours]);
 
   const handleFilterChange = useCallback(
-    (filter: any) => {
+    (filter: Filter) => {
       setActiveFilter(filter);
       setLastAppliedFilter(filter);
       const results = applyFilters(searchQuery, filter);
@@ -132,7 +158,7 @@ export default function TourPageClient(): React.ReactElement {
     [applyFilters, searchQuery]
   );
 
-  const handleSearch = (e: any) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement> | string) => {
     const query = typeof e === "string" ? e : e.target?.value ?? "";
     setSearchQuery(query);
     const filterToApply = activeFilter || lastAppliedFilter || "all";
@@ -144,29 +170,27 @@ export default function TourPageClient(): React.ReactElement {
     setCurrentSection(sectionId);
   };
 
-  const parseDaysFromDuration = (tour: any) => {
+  const parseDaysFromDuration = (tour: Tour) => {
     try {
       const d = String(tour.duration || "");
       const mDays = d.match(/(\d{1,3})\s*D\b/i);
       if (mDays) return parseInt(mDays[1], 10);
       const mNights = d.match(/(\d{1,3})\s*N\b/i);
       if (mNights) return parseInt(mNights[1], 10) + 1;
-    } catch (e) {}
+    } catch {}
     return Infinity;
   };
 
-  const hasAvailableDates = (tour: any) => {
+  const hasAvailableDates = (tour: Tour) => {
     try {
       if (!Array.isArray(tour?.availableDates)) return false;
-      return tour.availableDates.some(
-        (month: any) => Array.isArray(month.dates) && month.dates.some((d: any) => d.enabled !== false)
-      );
-    } catch (e) {
+      return tour.availableDates!.some((month) => Array.isArray((month as AvailableDateMonth).dates) && (month as AvailableDateMonth).dates.some((d) => d.enabled !== false));
+    } catch {
       return false;
     }
   };
 
-  const locationTypeOf = (tour: any) => String(tour?.locationType || "").trim().toLowerCase();
+  const locationTypeOf = (tour: Tour) => String(tour?.locationType || "").trim().toLowerCase();
 
   const shortDepartures = filteredTours.filter((t) => parseDaysFromDuration(t) <= 4 && hasAvailableDates(t));
 
@@ -192,13 +216,6 @@ export default function TourPageClient(): React.ReactElement {
     all: filteredTours.length,
   };
 
-  const pageTitle = isAllTours
-    ? "All Journeys — Every Expedition & Hidden Gem | Safari Sutra"
-    : "Explore Our Curated Tour Collection | Safari Sutra";
-
-  const pageDescription = isAllTours
-    ? "Browse every tour across Safari Sutra — curated escapes, classic itineraries and hidden gems for every traveler."
-    : "Explore our curated selection of fixed departures: mini escapes, home‑turf adventures and faraway wonders.";
 
   const pageVariants: Variants = {
     initial: { opacity: 0, y: 12 },

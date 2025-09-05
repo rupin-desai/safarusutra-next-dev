@@ -124,7 +124,7 @@ export default function HirePageClient(): React.ReactElement {
             />
 
             <p className="text-gray-700 max-w-2xl mx-auto text-center mb-12">
-              At Safari Sutra, we're always looking for passionate individuals
+              At Safari Sutra, we&#39;re always looking for passionate individuals
               who share our love for travel and creating unforgettable
               experiences. Fill out the form below to start your journey with
               us!

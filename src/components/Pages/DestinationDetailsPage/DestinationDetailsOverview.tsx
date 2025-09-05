@@ -1,16 +1,16 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { motion, useInView, useAnimation } from "framer-motion";
+import { motion, useInView, useAnimation, Variants } from "framer-motion";
 import {
-  Star,
-  Users,
-  Calendar,
-  Globe,
-  Clock,
-  Map,
-  IndianRupee,
-  Phone,
+   Star,
+   Users,
+   Calendar,
+   Globe,
+   Clock,
+   Map,
+   IndianRupee,
+   Phone,
 } from "lucide-react";
 import TourSidebar from "./DestinationSidebar";
 
@@ -33,52 +33,42 @@ interface Props {
   executeScroll?: (id: string) => void;
 }
 
-// Animation variants cast to any to allow translate3d/transform strings
-const fadeIn: any = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(0px, 20px, 0px)",
-  },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
+// Animation variants typed with Variants (avoid `any`)
+const fadeIn: Variants = {
+   initial: {
+     opacity: 0,
+     transform: "translate3d(0px, 20px, 0px)",
+   },
+   animate: {
+     opacity: 1,
+     transform: "translate3d(0px, 0px, 0px)",
+     transition: {
+       type: "spring",
+       stiffness: 300,
+       damping: 20,
+     },
+   },
 };
 
-const contentFadeIn: any = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(0px, 30px, 0px)",
-  },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
-};
-
-const staggerContainer: any = {
-  initial: "initial",
-  animate: {
-    transition: {
-      staggerChildren: 0.05,
-      delayChildren: 0.1,
-    },
-  },
+const contentFadeIn: Variants = {
+   initial: {
+     opacity: 0,
+     transform: "translate3d(0px, 30px, 0px)",
+   },
+   animate: {
+     opacity: 1,
+     transform: "translate3d(0px, 0px, 0px)",
+     transition: {
+       type: "spring",
+       stiffness: 300,
+       damping: 20,
+     },
+   },
 };
 
 /* MotionSection: reliable in-view trigger using useInView + useAnimation */
 const MotionSection: React.FC<{
-  variants?: any;
+  variants?: Variants;
   className?: string;
   children?: React.ReactNode;
   threshold?: number;
@@ -92,13 +82,7 @@ const MotionSection: React.FC<{
   }, [inView, controls]);
 
   return (
-    <motion.section
-      ref={ref}
-      className={className}
-      initial="initial"
-      animate={controls}
-      variants={variants}
-    >
+    <motion.section ref={ref} className={className} initial="initial" animate={controls} variants={variants}>
       {children}
     </motion.section>
   );
@@ -243,12 +227,10 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
                       key={index}
                       className="border-b border-gray-100 pb-4"
                       variants={contentFadeIn}
-                      whileHover={
-                        ({
-                          transform: "translate3d(0px, -3px, 0px)",
-                          transition: { type: "spring", stiffness: 400, damping: 15 },
-                        } as any)
-                      }
+                      whileHover={{
+                        transform: "translate3d(0px, -3px, 0px)",
+                        transition: { type: "spring", stiffness: 400, damping: 15 },
+                      }}
                     >
                       <div className="flex items-center gap-2 mb-2 justify-center lg:justify-start">
                         {getDetailIcon(detail.title, colorClass)}

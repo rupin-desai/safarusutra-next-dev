@@ -40,8 +40,8 @@ export default function TermsAndConditions(): React.ReactElement {
 
           <div className="prose prose-lg max-w-none text-justify mb-10">
             <p>
-              Welcome to Safari Sutra Holidays Private Limited ("Safari Sutra,"
-              "we," "us," or "our"). These Terms and Conditions ("Terms govern
+              Welcome to Safari Sutra Holidays Private Limited (&quot;Safari Sutra,&quot;
+              &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). These Terms and Conditions (&quot;Terms&quot;) govern
               your use of our website, mobile applications, and all
               travel-related services, including but not limited to bookings for
               flights, hotels, holiday packages, and other travel arrangements.
@@ -157,7 +157,7 @@ export default function TermsAndConditions(): React.ReactElement {
                 cancellations, modifications, or disruptions beyond our control.
                 You acknowledge that third-party provider conditions may impose
                 stricter cancellation or modification policies, which take
-                precedence over Safari Sutra's terms where applicable.
+                precedence over Safari Sutra&#39;s terms where applicable.
               </p>
             </div>
           </div>

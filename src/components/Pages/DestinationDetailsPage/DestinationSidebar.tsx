@@ -71,7 +71,6 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
       // keep a minimal console trace for debugging
       // using the variable avoids the "defined but never used" lint warning
       // and avoids `any` usage
-      // eslint-disable-next-line no-console
       console.error(error);
     }
   };

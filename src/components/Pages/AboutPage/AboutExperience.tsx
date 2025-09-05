@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import SSButton from "../../UI/SSButton";
 
-// Animation variants kept with translate3d strings — cast to any to satisfy TS
-const sectionVariants: any = {
+// Animation variants typed with Variants to avoid `any`
+const sectionVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -19,7 +19,7 @@ const sectionVariants: any = {
   },
 };
 
-const leftContentVariants: any = {
+const leftContentVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(-30px, 0px, 0px)",
@@ -35,7 +35,7 @@ const leftContentVariants: any = {
   },
 };
 
-const titleVariants: any = {
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -51,7 +51,7 @@ const titleVariants: any = {
   },
 };
 
-const textVariants: any = {
+const textVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -68,7 +68,7 @@ const textVariants: any = {
   },
 };
 
-const buttonVariants: any = {
+const buttonVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -85,7 +85,7 @@ const buttonVariants: any = {
   },
 };
 
-const imageVariants: any = {
+const imageVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(30px, 0px, 0px)",
@@ -145,7 +145,7 @@ const AboutExperience: React.FC = () => {
               <p className="text-lg leading-relaxed" style={{ textAlignLast: "left" }}>
                 At Safari Sutra, we craft journeys that create lasting memories
                 beyond the ordinary tourist trail. Our experiences connect you
-                intimately with Africa's breathtaking landscapes and wildlife.
+                intimately with Africa&#39;s breathtaking landscapes and wildlife.
               </p>
 
               <p className="text-lg leading-relaxed" style={{ textAlignLast: "left" }}>

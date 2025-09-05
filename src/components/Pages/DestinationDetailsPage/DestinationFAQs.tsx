@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
-import SectionTitle from "@/components/UI/SectionTitle";
 
 const PAGE_SIZE = 12;
 
@@ -65,13 +64,13 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick, id
   </div>
 );
 
-// cast variants to any to allow translate3d strings
-const containerAnim: any = {
+// typed variants using Variants
+const containerAnim: Variants = {
   initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
   animate: { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
 };
 
-const listItemVariants: any = {
+const listItemVariants: Variants = {
   hidden: { opacity: 0, transform: "translate3d(0px, 12px, 0px)" },
   visible: { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
   exit: { opacity: 0, transform: "translate3d(0px, 8px, 0px)" },
@@ -83,7 +82,9 @@ interface DestinationFAQsProps {
 }
 
 const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle }) => {
-  const items = faq?.items || [];
+  // wrap items initialization in useMemo to avoid unstable deps
+  const items = useMemo<FAQ[]>(() => (faq?.items ?? []), [faq]);
+
   const [openIndex, setOpenIndex] = useState<number>(0);
   const [visibleCount, setVisibleCount] = useState<number>(Math.min(PAGE_SIZE, items.length));
 
@@ -111,9 +112,10 @@ const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle
     };
   }, [items, destinationTitle]);
 
-  if (!items.length) return null;
+  // compute visibleItems as a hook before any early returns so hook order remains stable
+  const visibleItems = useMemo(() => items.slice(0, visibleCount), [items, visibleCount]);
 
-  const visibleItems = items.slice(0, visibleCount);
+  if (!items.length) return null;
 
   return (
     <section

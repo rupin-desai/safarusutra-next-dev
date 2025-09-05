@@ -8,16 +8,20 @@ import { useRouter } from "next/navigation";
 import SSButton from "../UI/SSButton";
 import { generateTourBookingInquiry } from "@/utils/contact.utils";
 
+// export or declare the Tour shape used by TourCard
 export type Tour = {
-  id: string | number;
-  image?: string;
+  // make `id` optional to be compatible with other module types that allow undefined
+  id?: string | number;
   title?: string;
   route?: string;
-  price?: number;
-  attractions?: unknown[];
+  description?: string;
+  category?: string | string[];
+  location?: string;
+  price?: number | string;
   duration?: string;
-  [key: string]: unknown;
-};
+  image?: string;
+  [k: string]: unknown;
+} & Record<string, unknown>;
 
 const cardVariants: Variants = {
   initial: {

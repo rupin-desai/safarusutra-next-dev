@@ -14,6 +14,22 @@ import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/Destinati
 import destinationListRaw from "@/data/DestinatonDetails.json";
 import tourDetailsMap from "@/data/TourDetails.json";
 
+/* Narrow runtime-friendly type for destination items */
+type Destination = {
+  id?: string | number;
+  title?: string;
+  slug?: string;
+  heroImage?: string;
+  image?: string;
+  metaDescription?: string;
+  description?: string;
+  caption?: string;
+  location?: string;
+  attractions?: unknown[];
+  faq?: unknown;
+  tourWhy?: unknown;
+} & Record<string, unknown>;
+
 /* Utility to create consistent simple slugs */
 const createSlug = (text: string) =>
   String(text || "")
@@ -23,10 +39,12 @@ const createSlug = (text: string) =>
     .replace(/\s+/g, "-");
 
 /* Normalize the imported JSON to an array (handles both object map and array JSON shapes) */
-const getDestinationsArray = (): any[] => {
+const getDestinationsArray = (): Destination[] => {
   const raw: unknown = destinationListRaw;
-  if (Array.isArray(raw)) return raw as any[];
-  if (raw && typeof raw === "object") return Object.values(raw as Record<string, any>);
+  if (Array.isArray(raw)) return raw as Destination[];
+  if (raw && typeof raw === "object") {
+    return Object.values(raw as Record<string, Destination>);
+  }
   return [];
 };
 
@@ -60,17 +78,34 @@ export async function generateMetadata({
   }
 
   const id = destination.id ? String(destination.id) : "";
-  const details = (tourDetailsMap as any)[String(id)] ?? {};
+  // Resolve tour details safely — TourDetails.json can be either an object map or an array
+  const rawTourDetails: unknown = tourDetailsMap;
+  let details: Record<string, unknown> = {};
+
+  if (Array.isArray(rawTourDetails)) {
+    // If it's an array, find the entry whose id matches our id (loose matching)
+    const found = (rawTourDetails as unknown[]).find((entry) => {
+      if (!entry || typeof entry !== "object") return false;
+      const e = entry as Record<string, unknown>;
+      const candidateId = e.id ?? e["Id"] ?? e["ID"] ?? e["packageId"] ?? e["package_id"];
+      return String(candidateId ?? "") === String(id);
+    });
+    details = (found && typeof found === "object" ? (found as Record<string, unknown>) : {}) ?? {};
+  } else if (rawTourDetails && typeof rawTourDetails === "object") {
+    // If it's an object map keyed by id
+    details = ((rawTourDetails as Record<string, unknown>)[String(id)] as Record<string, unknown>) ?? {};
+  } else {
+    details = {};
+  }
+
   const completeData = { ...destination, ...details };
 
-  const title = completeData.title ? `${completeData.title} | Safari Sutra` : "Destination | Safari Sutra";
+  const title = completeData.title ? `${String(completeData.title)} | Safari Sutra` : "Destination | Safari Sutra";
   const description =
-    completeData.metaDescription ||
-    completeData.description ||
-    completeData.caption ||
-    `Explore ${completeData.title} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
+    String(completeData.metaDescription || completeData.description || completeData.caption) ||
+    `Explore ${String(completeData.title)} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
 
-  const image = completeData.heroImage || completeData.image || "/logos/logo.svg";
+  const image = String(completeData.heroImage || completeData.image || "/logos/logo.svg");
   const url = `https://thesafarisutra.com/destination/${slug}`;
 
   return {
@@ -80,7 +115,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      images: image ? [{ url: image, alt: completeData.title ?? "Safari Sutra" }] : undefined,
+      images: image ? [{ url: image, alt: String(completeData.title) || "Safari Sutra" }] : undefined,
     },
     twitter: {
       title,
@@ -107,30 +142,86 @@ export default function Page({ params }: { params: { slug?: string } }) {
   if (!destination) return notFound();
 
   const id = destination.id ? String(destination.id) : "";
-  const details = (tourDetailsMap as any)[String(id)] ?? {};
+  // Resolve tour details safely — TourDetails.json can be either an object map or an array
+  const rawTourDetails: unknown = tourDetailsMap;
+  let details: Record<string, unknown> = {};
 
-  const completeData = {
+  if (Array.isArray(rawTourDetails)) {
+    // If it's an array, find the entry whose id matches our id (loose matching)
+    const found = (rawTourDetails as unknown[]).find((entry) => {
+      if (!entry || typeof entry !== "object") return false;
+      const e = entry as Record<string, unknown>;
+      const candidateId = e.id ?? e["Id"] ?? e["ID"] ?? e["packageId"] ?? e["package_id"];
+      return String(candidateId ?? "") === String(id);
+    });
+    details = (found && typeof found === "object" ? (found as Record<string, unknown>) : {}) ?? {};
+  } else if (rawTourDetails && typeof rawTourDetails === "object") {
+    // If it's an object map keyed by id
+    details = ((rawTourDetails as Record<string, unknown>)[String(id)] as Record<string, unknown>) ?? {};
+  } else {
+    details = {};
+  }
+
+  const completeData: Record<string, unknown> = {
     ...destination,
     ...details,
+  };
+
+  // normalize FAQ payload shape so it satisfies DestinationFAQsProps
+  const faqProp = (completeData.faq as { items?: { question: string; answer: string }[] } | null | undefined) ?? null;
+
+  // Normalize attractions into the shape expected by DestinationAttractions to avoid `unknown[]` -> `Attraction[]` errors
+  type AttractionLocal = { title?: string; image?: string; description?: string };
+  const getString = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
+  const attractionsProp: AttractionLocal[] = Array.isArray(completeData.attractions)
+    ? (completeData.attractions as unknown[]).map((a) => {
+        const obj = typeof a === "object" && a !== null ? (a as Record<string, unknown>) : {};
+        return {
+          title: getString(obj.title),
+          image: getString(obj.image),
+          description: getString(obj.description),
+        };
+      })
+    : [];
+
+  // Build a strongly-typed TourData shape for DestinationDetailsOverview
+  const detailsProp =
+    Array.isArray(completeData.details) && (completeData.details as unknown[]).length > 0
+      ? (completeData.details as unknown[]).map((d) => {
+          const obj = d && typeof d === "object" ? (d as Record<string, unknown>) : {};
+          return {
+            title: getString(obj.title) || "Detail",
+            description: getString(obj.description),
+          };
+        })
+      : [];
+
+  const tourDataProp = {
+    title: getString(completeData.title),
+    rating: completeData.rating != null ? Number(completeData.rating) : undefined,
+    location: getString(completeData.location),
+    description: getString(completeData.description),
+    longDescription: getString(completeData.longDescription ?? completeData.long_description),
+    details: detailsProp,
   };
 
   return (
     <div>
       <HeroSection
-        title={completeData.title}
-        backgroundImage={completeData.heroImage || completeData.image}
+        title={String(completeData.title)}
+        backgroundImage={String(completeData.heroImage || completeData.image)}
         overlay={0.4}
         titleSize="text-4xl md:text-6xl"
       />
 
-      <DestinationDetailsOverview tourData={completeData} />
+      <DestinationDetailsOverview tourData={tourDataProp} />
 
-      {completeData.tourWhy && <DestinationWhy tour={completeData} />}
+      {!!completeData.tourWhy && <DestinationWhy tour={completeData as Record<string, unknown>} />}
 
-      <DestinationAttractions attractions={completeData.attractions} />
+      <DestinationAttractions attractions={attractionsProp} />
 
       <DestinationPackages
-        destinationName={completeData.title}
+        destinationName={String(completeData.title)}
         destinationId={id ? Number(id) : undefined}
       />
 
@@ -142,7 +233,7 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
       <ContactSection />
 
-      <DestinationFAQs faq={completeData.faq} destinationTitle={completeData.title} />
+      <DestinationFAQs faq={faqProp} destinationTitle={String(completeData.title)} />
     </div>
   );
 }

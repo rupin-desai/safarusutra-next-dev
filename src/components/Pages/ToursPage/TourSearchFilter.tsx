@@ -12,8 +12,8 @@ type RawTour = {
 
 type CompositeFilter = {
   type: "composite";
-  categories: string[];
-  price: string[];
+  categories?: string[]; // optional to match other modules
+  price?: string[];     // optional to match other modules
 };
 
 type ActiveFilter = "all" | string | CompositeFilter;
