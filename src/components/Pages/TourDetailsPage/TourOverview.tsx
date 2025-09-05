@@ -1,14 +1,14 @@
+"use client";
 import React, { useState } from "react";
 import Head from "next/head";
 import { CheckCircle, MapPin, Clock, Calendar, Info, X } from "lucide-react";
 
-const TourOverview = ({
-  tour,
-  onDateSelect,
-}: {
+interface Props {
   tour: any;
-  onDateSelect: (month: string, range: string) => void;
-}) => {
+  onDateSelect?: (month: string, range: string) => void;
+}
+
+const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [selectedTooltipInfo, setSelectedTooltipInfo] = useState<{
     month: string;
@@ -101,7 +101,8 @@ const TourOverview = ({
       dateObject.enabled === false || past || (!disable20RuleForThisTour && within20);
 
     if (!disabledBecause) {
-      onDateSelect(month, dateObject.range);
+      // use a safe wrapper when raising selection events
+      if (typeof onDateSelect === "function") onDateSelect(month, dateObject.range);
 
       setSelectedTooltipInfo({
         month: month,

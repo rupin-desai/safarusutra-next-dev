@@ -1,3 +1,4 @@
+"use client";
 import React, { useState, useEffect, useRef } from "react";
 import { Share2, Phone, Check, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";

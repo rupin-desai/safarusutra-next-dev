@@ -1,11 +1,8 @@
-"use client";
-
-import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import { useParams, useRouter } from "next/navigation";
-import tourData from "@/data/TourDetails.json";
+import { notFound } from "next/navigation";
+import tourDataRaw from "@/data/TourDetails.json";
 
-// Import components (adjusted to actual workspace paths)
+// Import client components (they stay as children)
 import TourHero from "../../../components/Pages/TourDetailsPage/TourHero";
 import TourTabs from "../../../components/Pages/TourDetailsPage/TourTabs";
 import TourOverview from "../../../components/Pages/TourDetailsPage/TourOverview";
@@ -14,124 +11,87 @@ import TourInclusions from "../../../components/Pages/TourDetailsPage/TourInclus
 import TourPolicy from "../../../components/Pages/TourDetailsPage/TourPolicy";
 import TourSidebar from "../../../components/Pages/TourDetailsPage/TourSidebar";
 
-const TourPageDetails: React.FC = () => {
-  const params = useParams();
-  const router = useRouter();
+/* Normalize tour data to an array (supports both array and object shapes) */
+const getToursArray = (): any[] => {
+  const raw: unknown = tourDataRaw;
+  if (Array.isArray(raw)) return raw as any[];
+  if (raw && typeof raw === "object") return Object.values(raw as Record<string, any>);
+  return [];
+};
+
+/* Create a safe slug fallback from title */
+const createSlug = (text?: string) =>
+  String(text ?? "")
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
+/**
+ * generateStaticParams must return the list of { slug } objects that match
+ * the dynamic route /tour/[slug]. We ensure non-empty, deduped slugs here.
+ */
+export async function generateStaticParams() {
+  const tours = getToursArray();
+  if (!tours || tours.length === 0) return [];
+
+  const params = tours
+    .map((t) => {
+      // Prefer explicit slug, then generated slug from title, then id
+      const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+      return { slug: String(candidate ?? "") };
+    })
+    .filter((p) => p.slug && p.slug.length > 0);
+
+  // dedupe
+  const seen = new Set<string>();
+  return params.filter((p) => {
+    if (seen.has(p.slug)) return false;
+    seen.add(p.slug);
+    return true;
+  });
+}
+
+export default function TourPageDetails({ params }: { params: { slug?: string | string[] } }) {
   const rawSlug = params?.slug;
-  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug;
+  const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
 
-  const [tour, setTour] = useState<any | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"overview" | "itinerary" | "inclusions" | "policy">("overview");
-  const [openAccordion, setOpenAccordion] = useState<number | null>(null);
+  if (!slug) return notFound();
 
-  // Add state for selected dates
-  const [selectedMonth, setSelectedMonth] = useState<string>("");
-  const [selectedDateRange, setSelectedDateRange] = useState<string>("");
+  const tours = getToursArray();
 
-  useEffect(() => {
-    setLoading(true);
-    try {
-      // Support slug being an id, a slug string, or a numeric id encoded in slug
-      const findTour = (s?: string | null) => {
-        if (!s) return null;
-        const sLower = String(s).toLowerCase();
+  const tour = tours.find((t) => {
+    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    return String(candidate) === String(slug);
+  });
 
-        // exact id match
-        const byId = tourData.find((t: any) => String(t.id) === s);
-        if (byId) return byId;
-
-        // match by slug property on tour
-        const bySlug = tourData.find((t: any) => String(t.slug || "").toLowerCase() === sLower);
-        if (bySlug) return bySlug;
-
-        // match by title (slug-like)
-        const byTitle = tourData.find((t: any) => String(t.title || "").toLowerCase().includes(sLower));
-        if (byTitle) return byTitle;
-
-        // fallback: parse numeric prefix from slug (e.g. "123-some-title")
-        const num = parseInt(String(s).split("-")[0], 10);
-        if (!Number.isNaN(num)) {
-          const byNum = tourData.find((t: any) => Number(t.id) === num);
-          if (byNum) return byNum;
-        }
-
-        return null;
-      };
-
-      const found = findTour(slug ?? null);
-
-      if (found) {
-        setTour(found);
-      } else {
-        // redirect to destination listing if not found
-        router.push("/destination");
-      }
-    } catch (err) {
-      console.error("Error loading tour data:", err);
-      router.push("/destination");
-    } finally {
-      setLoading(false);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [slug]);
-
-  const toggleAccordion = (day: number) => {
-    setOpenAccordion((prev) => (prev === day ? null : day));
-  };
-
-  // Handler for date selection from TourOverview
-  const handleDateSelect = (month: string, dateRange: string) => {
-    setSelectedMonth(month);
-    setSelectedDateRange(dateRange);
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-orange-500" />
-      </div>
-    );
-  }
-
-  if (!tour) {
-    // Safety fallback (should have redirected already)
-    return null;
-  }
+  if (!tour) return notFound();
 
   return (
     <div className="bg-gray-50 min-h-screen">
       <Head>
         <title>{`${tour.title} | Safari Sutra`}</title>
-        <meta name="description" content={String(tour.description || "").slice(0, 160)} />
-        <link rel="canonical" href={typeof window !== "undefined" ? window.location.href : `https://thesafarisutra.com/tour/${tour.id}`} />
+        <meta name="description" content={String(tour.description ?? "").slice(0, 160)} />
+        <link rel="canonical" href={`https://thesafarisutra.com/tour/${encodeURIComponent(slug)}`} />
       </Head>
 
-      {/* Hero Section */}
       <TourHero tour={tour} />
+      <TourTabs />
 
-      {/* Navigation Tabs */}
-      <TourTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-
-      {/* Main Content */}
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Content */}
           <div className="lg:col-span-2">
-            {activeTab === "overview" && <TourOverview tour={tour} onDateSelect={handleDateSelect} />}
-            {activeTab === "itinerary" && <TourItinerary tour={tour} openAccordion={openAccordion} toggleAccordion={toggleAccordion} />}
-            {activeTab === "inclusions" && <TourInclusions tour={tour} />}
-            {activeTab === "policy" && <TourPolicy tour={tour} />}
+            <TourOverview tour={tour} />
+            <TourItinerary tour={tour} />
+            <TourInclusions tour={tour} />
+            <TourPolicy tour={tour} />
           </div>
 
-          {/* Right Sidebar */}
           <div className="lg:col-span-1">
-            <TourSidebar tour={tour} selectedMonth={selectedMonth} selectedDateRange={selectedDateRange} />
+            <TourSidebar tour={tour} selectedMonth="" selectedDateRange="" />
           </div>
         </div>
       </div>
     </div>
   );
-};
-
-export default TourPageDetails;
+}
