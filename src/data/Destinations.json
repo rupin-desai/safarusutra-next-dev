@@ -1,0 +1,1008 @@
+[
+  {
+    "id": 1,
+    "title": "Jammu & Kashmir",
+    "caption": "Where heaven meets Earth",
+    "description": "Snow-clad mountains, saffron fields, and shikara rides await your arrival.",
+    "image": "https://images.pexels.com/photos/2414433/pexels-photo-2414433.jpeg?cs=srgb&dl=pexels-photonova-2414433.jpg&fm=jpg",
+    "duration": "6-8 Days",
+    "price": "₹15,000",
+    "location": "India",
+    "rating": 4.9,
+    "highlights": ["Dal Lake", "Gulmarg", "Pahalgam", "Sonamarg"],
+    "tags": [
+      "mountains",
+      "nature",
+      "lakes",
+      "skiing",
+      "adventure",
+      "spiritual",
+      "honeymoon"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Himachal Pradesh",
+    "caption": "India's backyard of adventure",
+    "description": "Misty mountains, pine forests, and café-hopping in quaint villages—welcome to India's backyard of adventure.",
+    "image": "https://images.pexels.com/photos/28933384/pexels-photo-28933384/free-photo-of-scenic-himachal-pradesh-temple-with-mountain-views.jpeg",
+    "duration": "5-7 Days",
+    "price": "₹12,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": ["Manali", "Spiti Valley", "Dharamshala", "Paragliding"],
+    "tags": [
+      "mountains",
+      "adventure",
+      "paragliding",
+      "trekking",
+      "budget",
+      "honeymoon",
+      "nature"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Uttarakhand",
+    "caption": "Land of gods and adventure",
+    "description": "The land of gods, yoga, and untamed adventure.",
+    "image": "https://images.unsplash.com/photo-1547452377-b2ac40e02ed6?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "duration": "6 Days",
+    "price": "₹13,500",
+    "location": "India",
+    "rating": 4.7,
+    "highlights": ["Rishikesh", "Jim Corbett", "Auli", "Valley of Flowers"],
+    "tags": [
+      "mountains",
+      "spiritual",
+      "wildlife",
+      "adventure",
+      "rafting",
+      "yoga",
+      "trekking"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Rajasthan",
+    "caption": "Tales of valor and royal heritage",
+    "description": "Where history whispers through palace walls and desert winds carry tales of valor.",
+    "image": "https://images.pexels.com/photos/925069/pexels-photo-925069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "duration": "8 Days",
+    "price": "₹18,000",
+    "location": "India",
+    "rating": 4.9,
+    "highlights": ["Jaipur", "Jaisalmer", "Udaipur", "Ranthambore"],
+    "tags": [
+      "heritage",
+      "desert",
+      "culture",
+      "wildlife",
+      "luxury",
+      "history",
+      "forts"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Andhra Pradesh",
+    "caption": "Coastal charm and heritage",
+    "description": "A coastal charm where ancient temples meet pristine beaches and spicy food.",
+    "image": "https://www.hindustantimes.com/ht-img/img/2023/04/29/1600x900/abhishek-kumar-parqKQ656K8-unsplash_1682763407454_1682763497997.jpg",
+    "duration": "5 Days",
+    "price": "₹12,000",
+    "location": "India",
+    "rating": 4.6,
+    "highlights": ["Vishakhapatnam", "Araku Valley", "Tirupati", "Beaches"],
+    "tags": [
+      "beaches",
+      "temples",
+      "heritage",
+      "culture",
+      "food",
+      "budget",
+      "family"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Sikkim",
+    "caption": "Himalayan wonderland",
+    "description": "A Himalayan wonderland where clouds kiss monasteries and rhododendrons paint the hills.",
+    "image": "https://images.unsplash.com/photo-1634400001131-d04275db2076?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c2lra2ltfGVufDB8fDB8fHww",
+    "duration": "7 Days",
+    "price": "₹16,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": ["Gangtok", "North Sikkim", "Pelling", "Monasteries"],
+    "tags": [
+      "mountains",
+      "monasteries",
+      "trekking",
+      "nature",
+      "adventure",
+      "offbeat",
+      "spiritual"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Ladakh",
+    "caption": "The roof of the world",
+    "description": "Where rugged adventure meets serene spirituality. Buckle up—this is the roof of the world calling.",
+    "image": "https://images.unsplash.com/photo-1593118845043-359e5f628214?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "duration": "8 Days",
+    "price": "₹22,000",
+    "location": "India",
+    "rating": 4.9,
+    "highlights": [
+      "Pangong Lake",
+      "Nubra Valley",
+      "Leh Palace",
+      "Hemis Monastery"
+    ],
+    "tags": [
+      "mountains",
+      "adventure",
+      "lakes",
+      "monasteries",
+      "biking",
+      "camping",
+      "premium"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Lakshadweep",
+    "caption": "Untouched island paradise",
+    "description": "Untouched islands where turquoise waters, coral reefs, and barefoot luxury reign supreme.",
+    "image": "https://images.unsplash.com/photo-1572431447238-425af66a273b?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFrc2hhZHdlZXB8ZW58MHx8MHx8fDA%3D",
+    "duration": "5 Days",
+    "price": "₹25,000",
+    "location": "India",
+    "rating": 4.7,
+    "highlights": ["Kavaratti", "Agatti Island", "Bangaram", "Snorkeling"],
+    "tags": [
+      "beaches",
+      "islands",
+      "luxury",
+      "snorkeling",
+      "water sports",
+      "offbeat",
+      "honeymoon"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Tamil Nadu",
+    "caption": "Cultural tapestry",
+    "description": "A tapestry of temple towns, heritage villages, and breezy beaches waiting to be explored.",
+    "image": "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGFtaWxuYWR1fGVufDB8fDB8fHww",
+    "duration": "7 Days",
+    "price": "₹14,000",
+    "location": "India",
+    "rating": 4.6,
+    "highlights": ["Chennai", "Madurai", "Kodaikanal", "Mahabalipuram"],
+    "tags": [
+      "temples",
+      "heritage",
+      "culture",
+      "beaches",
+      "hills",
+      "family",
+      "spiritual"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Nepal",
+    "caption": "Himalayan adventure",
+    "description": "Where snow-capped giants meet ancient temples, and spirituality breathes in every stone.",
+    "image": "https://images.unsplash.com/photo-1571401835393-8c5f35328320?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fG5lcGFsfGVufDB8fDB8fHww",
+    "duration": "8 Days",
+    "price": "₹20,000",
+    "location": "Nepal",
+    "rating": 4.8,
+    "highlights": ["Kathmandu Valley", "Pokhara", "Chitwan", "Trekking"],
+    "tags": [
+      "mountains",
+      "trekking",
+      "adventure",
+      "wildlife",
+      "spiritual",
+      "budget",
+      "nature"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Bhutan",
+    "caption": "Land of happiness",
+    "description": "The land of happiness where Gross National Happiness beats GDP and monasteries cling to cliffs.",
+    "image": "https://media.cntraveler.com/photos/65ba9bed97149f39f538ac94/16:9/w_2560%2Cc_limit/Bhutan_GettyImages-620874988.jpeg",
+    "duration": "6 Days",
+    "price": "₹35,000",
+    "location": "Bhutan",
+    "rating": 4.9,
+    "highlights": ["Paro", "Tiger's Nest", "Thimphu", "Punakha"],
+    "tags": [
+      "mountains",
+      "culture",
+      "monasteries",
+      "premium",
+      "spiritual",
+      "offbeat",
+      "peaceful"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Bali",
+    "caption": "Island of Gods",
+    "description": "The Island of Gods, where jungle retreats, surf breaks, and temple ceremonies coexist in harmony.",
+    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+    "duration": "7 Days",
+    "price": "₹30,000",
+    "location": "Indonesia",
+    "rating": 4.8,
+    "highlights": ["Ubud", "Seminyak", "Uluwatu", "Sacred Temples"],
+    "tags": [
+      "beaches",
+      "temples",
+      "culture",
+      "honeymoon",
+      "yoga",
+      "luxury",
+      "surfing"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Maldives",
+    "caption": "Paradise on earth",
+    "description": "White sands. Turquoise waters. Overwater bungalows. Enough said.",
+    "image": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFsZGl2ZXN8ZW58MHx8MHx8fDA%3D",
+    "duration": "5 Days",
+    "price": "₹70,000",
+    "location": "Maldives",
+    "rating": 4.9,
+    "highlights": [
+      "Overwater Villas",
+      "Snorkeling",
+      "Island Hopping",
+      "Luxury Resorts"
+    ],
+    "tags": [
+      "beaches",
+      "luxury",
+      "honeymoon",
+      "snorkeling",
+      "islands",
+      "premium",
+      "romantic"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Vietnam",
+    "caption": "Timeless charm",
+    "description": "Where ancient history and buzzing modern life blend over bowls of pho and stunning landscapes.",
+    "image": "https://images.unsplash.com/photo-1526139334526-f591a54b477c?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8dmlldG5hbXxlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "7 Days",
+    "price": "₹28,000",
+    "location": "Vietnam",
+    "rating": 4.8,
+    "highlights": ["Hanoi", "Halong Bay", "Hoi An", "Ho Chi Minh City"],
+    "tags": [
+      "culture",
+      "history",
+      "beaches",
+      "food",
+      "adventure",
+      "budget",
+      "heritage"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Thailand",
+    "caption": "Land of smiles",
+    "description": "Temples. Tuktuks. Tropical beaches. Thailand has it all—and we're taking you there!",
+    "image": "https://images.unsplash.com/photo-1528181304800-259b08848526?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dGhhaWxhbmR8ZW58MHx8MHx8fDA%3D",
+    "duration": "8 Days",
+    "price": "₹25,000",
+    "location": "Thailand",
+    "rating": 4.7,
+    "highlights": ["Bangkok", "Chiang Mai", "Phuket", "Phi Phi Islands"],
+    "tags": [
+      "beaches",
+      "temples",
+      "nightlife",
+      "shopping",
+      "food",
+      "budget",
+      "islands"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Malaysia & Singapore",
+    "caption": "Twin jewels",
+    "description": "Twin jewels of Southeast Asia—jungle adventures, urban splendor, and culinary explosions.",
+    "image": "https://images.unsplash.com/photo-1516422641841-cd9803ab02c6?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8c2luZ2Fwb3JlJTJDJTIwc2luZ2Fwb3JlfGVufDB8fDB8fHww",
+    "duration": "9 Days",
+    "price": "₹35,000",
+    "location": "Malaysia & Singapore",
+    "rating": 4.8,
+    "highlights": ["Kuala Lumpur", "Penang", "Langkawi", "Singapore"],
+    "tags": [
+      "urban",
+      "beaches",
+      "shopping",
+      "food",
+      "family",
+      "luxury",
+      "theme parks"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Sri Lanka",
+    "caption": "Pearl of the Indian Ocean",
+    "description": "Pearl of the Indian Ocean, where tea gardens meet ancient ruins and endless coastlines.",
+    "image": "https://images.unsplash.com/photo-1566296314736-6eaac1ca0cb9?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZWxsYSUyMHNyaSUyMGxhbmthfGVufDB8fDB8fHww",
+    "duration": "8 Days",
+    "price": "₹25,000",
+    "location": "Sri Lanka",
+    "rating": 4.7,
+    "highlights": ["Colombo", "Galle", "Kandy", "Tea Country"],
+    "tags": [
+      "beaches",
+      "culture",
+      "heritage",
+      "wildlife",
+      "tea plantations",
+      "budget",
+      "family"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Andaman and Nicobar Islands",
+    "caption": "Tropical paradise of emerald waters",
+    "description": "A tropical paradise where emerald waters, coral reefs, and untouched beaches weave a spell of serenity and adventure.",
+    "image": "https://images.unsplash.com/photo-1642498232612-a837df233825?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YW5kYW1hbiUyMGFuZCUyMG5pY29iYXIlMjBpc2xhbmRzfGVufDB8fDB8fHww",
+    "duration": "5-7 Days",
+    "price": "₹18,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": [
+      "Port Blair",
+      "Havelock Island",
+      "Neil Island",
+      "Baratang Island"
+    ],
+    "tags": [
+      "beaches",
+      "islands",
+      "water sports",
+      "snorkeling",
+      "adventure",
+      "honeymoon",
+      "nature"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Goa",
+    "caption": "India's beach paradise",
+    "description": "India's beach paradise, where sun-soaked shores, vibrant nightlife, and Portuguese heritage create an irresistible vibe.",
+    "image": "https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fHww",
+    "duration": "4-7 Days",
+    "price": "₹9,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": ["Baga Beach", "Palolem Beach", "Old Goa", "Dudhsagar Falls"],
+    "tags": [
+      "beaches",
+      "nightlife",
+      "heritage",
+      "water sports",
+      "budget",
+      "party",
+      "food"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Gujarat",
+    "caption": "Tapestry of heritage & wild landscapes",
+    "description": "A vibrant tapestry of ancient heritage, colorful festivals, and wild landscapes, where tradition meets adventure.",
+    "image": "https://volzero.com/img/news/88102_banner.jpg",
+    "duration": "5-8 Days",
+    "price": "₹10,000",
+    "location": "India",
+    "rating": 4.7,
+    "highlights": [
+      "Ahmedabad",
+      "Gir National Park",
+      "Rann of Kutch",
+      "Dwarka",
+      "Somnath"
+    ],
+    "tags": [
+      "wildlife",
+      "heritage",
+      "desert",
+      "temples",
+      "culture",
+      "festivals",
+      "family"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Karnataka",
+    "caption": "Heritage, jungles & beaches",
+    "description": "A vibrant mosaic of ancient ruins, lush jungles, tech cities, and serene beaches, where heritage meets adventure.",
+    "image": "https://images.unsplash.com/photo-1659126574791-13313aa424bd?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGthcm5hdGFrYXxlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "6-9 Days",
+    "price": "₹11,000",
+    "location": "India",
+    "rating": 4.7,
+    "highlights": ["Hampi", "Mysore", "Coorg", "Gokarna", "Mangalore"],
+    "tags": [
+      "heritage",
+      "beaches",
+      "nature",
+      "coffee plantations",
+      "adventure",
+      "budget",
+      "family"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Kerala",
+    "caption": "God's Own Country",
+    "description": "God's Own Country, where backwaters, beaches, and spice-scented hills create a tapestry of tranquility and adventure.",
+    "image": "https://images.unsplash.com/photo-1593693397690-362cb9666fc2?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8a2VyYWxhfGVufDB8fDB8fHww",
+    "duration": "6-9 Days",
+    "price": "₹13,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": ["Alleppey", "Munnar", "Kovalam", "Fort Kochi"],
+    "tags": [
+      "backwaters",
+      "beaches",
+      "hills",
+      "ayurveda",
+      "houseboats",
+      "honeymoon",
+      "peaceful"
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Meghalaya",
+    "caption": "Abode of clouds & living root bridges",
+    "description": "The abode of clouds, where rolling hills, living root bridges, and cascading waterfalls create a symphony of nature.",
+    "image": "https://images.unsplash.com/photo-1593813738953-fb3c93e0769d?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWVnaGFsYXlhfGVufDB8fDB8fHww",
+    "duration": "5-8 Days",
+    "price": "₹10,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": ["Shillong", "Cherrapunji", "Mawlynnong", "Dawki"],
+    "tags": [
+      "nature",
+      "waterfalls",
+      "living root bridges",
+      "hills",
+      "offbeat",
+      "adventure",
+      "peaceful"
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Odisha",
+    "caption": "Temples, beaches & tribal heritage",
+    "description": "A soulful blend of ancient temples, pristine beaches, and tribal heritage, where spirituality and nature dance in harmony.",
+    "image": "https://images.unsplash.com/photo-1706790574525-d218c4c52b5c?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8b2Rpc2hhfGVufDB8fDB8fHww",
+    "duration": "5-8 Days",
+    "price": "₹10,000",
+    "location": "India",
+    "rating": 4.7,
+    "highlights": [
+      "Puri",
+      "Konark",
+      "Bhubaneswar",
+      "Chilika Lake",
+      "Simlipal National Park"
+    ],
+    "tags": [
+      "temples",
+      "beaches",
+      "wildlife",
+      "tribal culture",
+      "spiritual",
+      "offbeat",
+      "heritage"
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Madhya Pradesh",
+    "caption": "The heart of India.",
+    "description": "This Is Madhya Pradesh with Safari Sutra Holidays. The heart of India, where ancient forts, wildlife havens, and sacred rivers tell tales of history and wilderness.",
+    "image": "https://images.unsplash.com/photo-1606298855672-3efb63017be8?fm=jpg&q=60&w=1000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWFkaHlhJTIwcHJhZGVzaHxlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "6-8 Days",
+    "price": "₹10,000",
+    "location": "India",
+    "rating": 4.8,
+    "highlights": [
+      "Khajuraho Temples",
+      "Bandhavgarh National Park",
+      "Kanha National Park",
+      "Gwalior Fort",
+      "Orchha",
+      "Sanchi Stupa",
+      "Bhimbetka Caves"
+    ],
+    "tags": [
+      "wildlife",
+      "heritage",
+      "temples",
+      "tiger safari",
+      "history",
+      "offbeat",
+      "nature"
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Philippines",
+    "caption": "Island-hopping paradise",
+    "description": "A tropical archipelago of over 7,000 islands — pristine beaches, vibrant coral reefs, and rich cultural heritage for beach lovers, divers, culture seekers and adventurers.",
+    "image": "https://images.unsplash.com/photo-1599272585578-03bfc70032b5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8bWFuaWxhJTIwcGhpbGlwcGluZXN8ZW58MHx8MHx8fDA%3D",
+    "duration": "7-10 Days",
+    "price": "₹30,000",
+    "location": "Philippines",
+    "rating": 4.8,
+    "highlights": [
+      "Palawan (El Nido & Puerto Princesa)",
+      "Boracay (White Beach)",
+      "Cebu & Bohol (whale sharks, Chocolate Hills)",
+      "Banaue & Sagada (rice terraces & caves)"
+    ],
+    "tags": [
+      "beaches",
+      "islands",
+      "snorkeling",
+      "diving",
+      "culture",
+      "adventure",
+      "nature"
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Dubai",
+    "caption": "City of Gold & Desert Dreams",
+    "description": "A dazzling metropolis where futuristic skyscrapers, golden deserts, and Arabian charm create a playground of luxury and adventure.",
+    "image": "https://images.unsplash.com/photo-1583759604327-f9dcd23499d5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YnVyaiUyMGtoYWxpZmF8ZW58MHx8MHx8fDA%3D",
+    "duration": "4-6 Days",
+    "price": "₹25,000",
+    "location": "UAE",
+    "rating": 4.7,
+    "highlights": [
+      "Burj Khalifa & Downtown Dubai",
+      "Desert Safari & Bedouin Camp",
+      "Palm Jumeirah & JBR",
+      "Old Dubai, Souks & Abra Rides"
+    ],
+    "tags": ["luxury", "desert", "shopping", "family", "adventure", "culture"]
+  },
+  {
+    "id": 28,
+    "title": "Cambodia",
+    "caption": "Khmer wonders & river trails",
+    "description": "A land of ancient temples, lush jungles, and vibrant culture — explore Angkor’s ruins, Mekong rivers, and offbeat adventures with Safari Sutra.",
+    "image": "https://images.unsplash.com/photo-1599283787923-51b965a58b05?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Y2FtYm9kaWF8ZW58MHx8MHx8fDA%3D",
+    "duration": "5-8 Days",
+    "price": "₹20,000",
+    "location": "Cambodia",
+    "rating": 4.7,
+    "highlights": [
+      "Angkor Wat & Angkor Thom",
+      "Tonle Sap & Mekong cruises",
+      "Kampot pepper plantations",
+      "Cardamom Mountains eco-treks"
+    ],
+    "tags": [
+      "temples",
+      "culture",
+      "history",
+      "river-cruise",
+      "adventure",
+      "offbeat",
+      "nature"
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Japan",
+    "caption": "Land of the Rising Sun",
+    "description": "A mesmerizing blend of ancient traditions, futuristic cities, and serene landscapes — cherry blossoms, samurai history, and neon-lit nights.",
+    "image": "https://images.unsplash.com/photo-1579525108311-0c5730b5799d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8amFwYW4lMjB0cmF2ZWx8ZW58MHx8MHx8fDA%3D",
+    "duration": "7-10 Days",
+    "price": "₹60,000",
+    "location": "Japan",
+    "rating": 4.9,
+    "highlights": [
+      "Tokyo – neon city & street food",
+      "Kyoto – temples & traditional tea ceremonies",
+      "Hiroshima & Miyajima – peace memorials & floating torii",
+      "Hokkaido & Osaka – nature, snow festivals & culinary trails"
+    ],
+    "tags": [
+      "culture",
+      "food",
+      "cherry-blossom",
+      "temples",
+      "nature",
+      "adventure"
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Hong Kong & Macau",
+    "caption": "Neon harbors & colonial charm",
+    "description": "A dazzling duo of vibrant cityscapes and historic charm — neon-lit streets, serene temples, and glamorous casinos for city explorers, foodies, culture seekers and nightlife lovers.",
+    "image": "https://images.unsplash.com/photo-1502099530544-2b61cbaed85c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTV8fGhvbmclMjBrb25nJTIwc3RyZWV0fGVufDB8fDB8fHww",
+    "duration": "4-6 Days",
+    "price": "₹40,000",
+    "location": "Hong Kong & Macau",
+    "rating": 4.7,
+    "highlights": [
+      "Victoria Harbour & Peak views",
+      "Wong Tai Sin / Man Mo Temple visits",
+      "Mong Kok night markets",
+      "Macau casinos, Senado Square & Ruins of St. Paul’s",
+      "Lantau Island – Big Buddha & Ngong Ping"
+    ],
+    "tags": ["city", "food", "culture", "nightlife", "shopping", "heritage"]
+  },
+  {
+    "id": 31,
+    "title": "Azerbaijan",
+    "caption": "Land of Fire — Silk Road to Caucasus",
+    "description": "The Land of Fire, where ancient Silk Road heritage, futuristic cities, and rugged Caucasus landscapes create a captivating blend of East and West.",
+    "image": "https://images.unsplash.com/photo-1596306499398-8d88944a5ec4?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YXplcmJhaWphbnxlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "6-8 Days",
+    "price": "₹28,000",
+    "location": "Azerbaijan",
+    "rating": 4.7,
+    "highlights": [
+      "Icherisheher (Old City) & Maiden Tower",
+      "Flame Towers & Baku Boulevard",
+      "Gobustan rock carvings & mud volcanoes",
+      "Sheki Khan's Palace & Silk Road charm",
+      "Quba & Khinaliq mountain villages"
+    ],
+    "tags": ["heritage", "culture", "nature", "offbeat", "history", "mountains"]
+  },
+  {
+    "id": 32,
+    "title": "Turkey",
+    "caption": "Land of legends & turquoise coasts",
+    "description": "A mesmerizing crossroads of East and West — ancient ruins, vibrant bazaars, and turquoise coastlines woven into a tapestry of history and beauty.",
+    "image": "https://images.pexels.com/photos/13337127/pexels-photo-13337127.jpeg?cs=srgb&dl=pexels-soner-arkan-277045183-13337127.jpg&fm=jpg",
+    "duration": "7-10 Days",
+    "price": "₹28,000",
+    "location": "Turkey",
+    "rating": 4.8,
+    "highlights": [
+      "Istanbul — Hagia Sophia, Blue Mosque, Topkapi Palace",
+      "Cappadocia — hot air balloons & fairy chimneys",
+      "Antalya & Turquoise Coast — beaches & Lycian ruins",
+      "Ephesus & Pamukkale — Roman ruins & travertine terraces"
+    ],
+    "tags": [
+      "heritage",
+      "culture",
+      "beaches",
+      "adventure",
+      "history",
+      "nature",
+      "food"
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Australia",
+    "caption": "Outback, reefs & city thrills",
+    "description": "A land of vast outback, pristine beaches, and vibrant cities — unique wildlife, ancient cultures, and modern adventures for nature lovers and thrill seekers.",
+    "image": "https://images.unsplash.com/photo-1526958977630-bc61b30a2009?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8YXVzdHJhbGlhfGVufDB8fDB8fHww",
+    "duration": "7-12 Days",
+    "price": "₹80,000",
+    "location": "Australia",
+    "rating": 4.8,
+    "highlights": [
+      "Sydney — Opera House, Harbour Bridge, Bondi Beach",
+      "Great Barrier Reef — snorkeling & diving",
+      "Uluru & Outback — Aboriginal experiences and stargazing",
+      "Melbourne & Great Ocean Road — food, art and coastal drives"
+    ],
+    "tags": [
+      "nature",
+      "adventure",
+      "wildlife",
+      "beaches",
+      "culture",
+      "road-trip",
+      "diving"
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Greece",
+    "caption": "Islands, ruins & Mediterranean charm",
+    "description": "A timeless land of ancient ruins, sun-drenched islands, and Mediterranean charm — mythology, azure waters, and vibrant culture for an unforgettable odyssey.",
+    "image": "https://images.unsplash.com/photo-1555993539-1732b0258235?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YW5jaWVudCUyMGdyZWVjZXxlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "7-10 Days",
+    "price": "₹50,000",
+    "location": "Greece",
+    "rating": 4.8,
+    "highlights": [
+      "Athens – Acropolis & Plaka",
+      "Santorini – Oia sunsets & caldera cruises",
+      "Mykonos & Crete – nightlife & Knossos",
+      "Delphi & Meteora – oracle site & monasteries"
+    ],
+    "tags": [
+      "islands",
+      "heritage",
+      "beaches",
+      "food",
+      "culture",
+      "history",
+      "adventure"
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Oman",
+    "caption": "Land of forts, deserts & wadis",
+    "description": "A captivating blend of ancient forts, golden deserts, and turquoise wadis — Arabian hospitality, dramatic landscapes and rich heritage.",
+    "image": "https://images.unsplash.com/photo-1596445145149-f0906e6b3dd6?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fG9tYW58ZW58MHx8MHx8fDA%3D",
+    "duration": "6-8 Days",
+    "price": "₹32,000",
+    "location": "Oman",
+    "rating": 4.7,
+    "highlights": [
+      "Muscat – Sultan Qaboos Grand Mosque & Mutrah Souk",
+      "Nizwa & Jebel Akhdar – forts and mountain villages",
+      "Wahiba Sands & Wadi Shab – desert camps & emerald pools",
+      "Salalah & Ras Al Jinz – frankincense trails & turtle watching"
+    ],
+    "tags": [
+      "heritage",
+      "desert",
+      "wadis",
+      "culture",
+      "adventure",
+      "nature",
+      "offbeat"
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Russia",
+    "caption": "Tsars & Tundra",
+    "description": "A vast land of imperial grandeur, golden-domed cathedrals, and rugged wilderness — history, culture and natural beauty across sprawling cities and serene landscapes.",
+    "image": "https://images.unsplash.com/photo-1513326738677-b964603b136d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cnVzc2lhfGVufDB8fDB8fHww",
+    "duration": "7-12 Days",
+    "price": "₹45,000",
+    "location": "Russia",
+    "rating": 4.7,
+    "highlights": [
+      "Moscow – Red Square, Kremlin & Bolshoi",
+      "St. Petersburg – Hermitage & White Nights",
+      "Golden Ring – Suzdal & Vladimir",
+      "Lake Baikal & Trans‑Siberian journeys"
+    ],
+    "tags": [
+      "heritage",
+      "culture",
+      "history",
+      "nature",
+      "adventure",
+      "winter",
+      "rail"
+    ]
+  },
+  {
+    "id": 37,
+    "title": "United Kingdom",
+    "caption": "Castles, cities & countryside",
+    "description": "A captivating blend of historic castles, vibrant cities, and rolling countryside — royal heritage, modern culture and scenic beauty across England, Scotland, Wales and beyond.",
+    "image": "https://images.unsplash.com/photo-1454793147212-9e7e57e89a4f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YmlnJTIwYmVufGVufDB8fDB8fHww",
+    "duration": "6-10 Days",
+    "price": "₹75,000",
+    "location": "United Kingdom",
+    "rating": 4.8,
+    "highlights": [
+      "London – Big Ben, Tower of London & Thames cruise",
+      "Edinburgh – Castle, Royal Mile & Fringe vibes",
+      "Lake District & Cotswolds – lakes, villages & walks",
+      "Bath & Stonehenge – Roman Baths & ancient stones"
+    ],
+    "tags": [
+      "heritage",
+      "culture",
+      "castles",
+      "countryside",
+      "food",
+      "city-break",
+      "walking-tours"
+    ]
+  },
+  {
+    "id": 38,
+    "title": "United States",
+    "caption": "Cities, parks & road trips",
+    "description": "A vast land of iconic cities, stunning national parks, and diverse cultures — urban adventures, natural wonders and historic landmarks for every kind of traveler.",
+    "image": "https://images.unsplash.com/photo-1565475783696-96001eff1b45?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fHN0YXR1ZSUyMG9mJTIwbGliZXJ0eXxlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "7-14 Days",
+    "price": "₹95,000",
+    "location": "United States",
+    "rating": 4.8,
+    "highlights": [
+      "New York City – skyline, Broadway & Hudson cruise",
+      "California – Highway 1, San Francisco & Yosemite",
+      "Grand Canyon & Yellowstone – epic national parks",
+      "New Orleans & Washington, D.C. – music, history & monuments"
+    ],
+    "tags": [
+      "cities",
+      "national-parks",
+      "road-trip",
+      "culture",
+      "adventure",
+      "history",
+      "food"
+    ]
+  },
+  {
+    "id": 39,
+    "title": "France",
+    "caption": "Romance, vineyards & Riviera",
+    "description": "A timeless land of romantic cities, rolling vineyards, and Mediterranean shores — art, history and cuisine weave an enchanting tapestry of elegance and adventure.",
+    "image": "https://images.unsplash.com/photo-1565881606991-789a8dff9dbb?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZWlmZmVsJTIwdG93ZXJ8ZW58MHx8MHx8fDA%3D",
+    "duration": "6-10 Days",
+    "price": "₹65,000",
+    "location": "France",
+    "rating": 4.8,
+    "highlights": [
+      "Paris – Eiffel Tower, Louvre & Seine cruise",
+      "French Riviera – Nice, Cannes & Monaco",
+      "Provence & Loire Valley – lavender fields & chateaux",
+      "Bordeaux & Normandy – wine estates & historic D‑Day sites"
+    ],
+    "tags": [
+      "culture",
+      "food",
+      "romance",
+      "wine",
+      "history",
+      "beaches",
+      "scenic"
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Switzerland",
+    "caption": "Alpine peaks, lakes & charm",
+    "description": "A breathtaking alpine paradise where snow-capped peaks, crystal lakes, and charming villages blend with cosmopolitan cities and world-class cuisine.",
+    "image": "https://images.unsplash.com/photo-1504218727796-db522606b16f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHN3aXR6ZXJsYW5kfGVufDB8fDB8fHww",
+    "duration": "5-9 Days",
+    "price": "₹85,000",
+    "location": "Switzerland",
+    "rating": 4.9,
+    "highlights": [
+      "Zurich & Lucerne – city and lake cruises",
+      "Interlaken & Jungfrau – adventure hub",
+      "Zermatt & Matterhorn – skiing and alpine views",
+      "Geneva & Montreux – lakeside elegance and festivals"
+    ],
+    "tags": [
+      "alps",
+      "lakes",
+      "skiing",
+      "adventure",
+      "scenic",
+      "luxury",
+      "culture"
+    ]
+  },
+  {
+    "id": 41,
+    "title": "Italy",
+    "caption": "La Dolce Vita — ruins, vineyards & coast",
+    "description": "A timeless land of ancient ruins, rolling vineyards, and Mediterranean coastlines — art, history, and la dolce vita for lovers of food, culture and scenery.",
+    "image": "https://images.unsplash.com/photo-1590226053097-e2984346ceaa?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGVhbmluZyUyMHRvd2VyJTIwb2YlMjBwaXNhfGVufDB8fDB8fHww",
+    "duration": "7-10 Days",
+    "price": "₹55,000",
+    "location": "Italy",
+    "rating": 4.8,
+    "highlights": [
+      "Rome – Colosseum, Vatican & historic centre",
+      "Venice – canals, St. Mark’s & gondolas",
+      "Florence & Tuscany – Renaissance art and vineyards",
+      "Amalfi Coast & Cinque Terre – coastal villages and boat rides"
+    ],
+    "tags": [
+      "heritage",
+      "food",
+      "romance",
+      "wine",
+      "beaches",
+      "culture",
+      "scenic"
+    ]
+  },
+  {
+    "id": 42,
+    "title": "Spain",
+    "caption": "Feria, Gaudí & sunlit coasts",
+    "description": "A vibrant land of flamenco rhythms, historic landmarks, and sun-kissed beaches — Mediterranean charm, rich culture, and culinary delights for every traveler.",
+    "image": "https://images.unsplash.com/photo-1561632669-7f55f7975606?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c3BhaW58ZW58MHx8MHx8fDA%3D",
+    "duration": "7-10 Days",
+    "price": "₹52,000",
+    "location": "Spain",
+    "rating": 4.8,
+    "highlights": [
+      "Barcelona – Sagrada Familia, Park Güell & La Rambla",
+      "Madrid – Prado Museum, Royal Palace & tapas trails",
+      "Seville & Granada – Alcázar, Alhambra & flamenco",
+      "Balearic Coast – Ibiza, Mallorca & Marbella beaches"
+    ],
+    "tags": [
+      "culture",
+      "beaches",
+      "food",
+      "history",
+      "festivals",
+      "architecture",
+      "islands"
+    ]
+  },
+  {
+    "id": 43,
+    "title": "Mauritius",
+    "caption": "Tropical lagoons & Creole charm",
+    "description": "A tropical island paradise in the Indian Ocean — pristine beaches, turquoise lagoons, and vibrant Creole culture for relaxation and adventure.",
+    "image": "https://images.unsplash.com/photo-1571147558584-8490ea37d7a9?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fG1hdXJpdGl1c3xlbnwwfHwwfHx8MA%3D%3D",
+    "duration": "4-7 Days",
+    "price": "₹35,000",
+    "location": "Mauritius",
+    "rating": 4.8,
+    "highlights": [
+      "Port Louis – Caudan Waterfront & local markets",
+      "Flic en Flac & Le Morne – beaches & kitesurfing",
+      "Black River Gorges & Chamarel – hikes & waterfalls",
+      "Île aux Cerfs & Grand Baie – island hopping & sailing"
+    ],
+    "tags": [
+      "beaches",
+      "islands",
+      "snorkeling",
+      "honeymoon",
+      "culture",
+      "water-sports",
+      "nature"
+    ]
+  }
+
+]

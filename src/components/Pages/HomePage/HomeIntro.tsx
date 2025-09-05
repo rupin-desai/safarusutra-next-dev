@@ -3,7 +3,7 @@ import Link from "next/link";
 import { MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 import HomeIntroLazy from "./HomeIntro.client.lazy";
-import packageDetailsRaw from "@/data/PackageDetails.json";
+import TourDetailsRaw from "@/data/TourDetails.json";
 import type { Tour } from "../../UI/TourCard";
 
 type Package = {
@@ -17,7 +17,7 @@ type Package = {
   [key: string]: unknown;
 };
 
-const packageDetails: Package[] = (packageDetailsRaw as unknown) as Package[];
+const packageDetails: Package[] = (TourDetailsRaw as unknown) as Package[];
 
 const DEFAULT_FEATURED_IDS: number[] = [56, 57, 58, 59];
 

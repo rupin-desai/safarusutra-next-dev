@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import TourCard, { Tour } from "../../UI/TourCard";
-import packageDetailsRaw from "@/data/PackageDetails.json";
+import TourDetailsRaw from "@/data/TourDetails.json";
 import SSButton from "../../UI/SSButton";
 
 type Package = {
@@ -18,7 +18,7 @@ type Package = {
   [key: string]: unknown;
 };
 
-const packageDetails: Package[] = (packageDetailsRaw as unknown) as Package[];
+const packageDetails: Package[] = (TourDetailsRaw as unknown) as Package[];
 
 // Animation variants (keep as-is)
 const decorativeElementsVariants: Variants = {
