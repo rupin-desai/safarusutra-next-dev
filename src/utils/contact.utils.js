@@ -38,7 +38,6 @@ export const navigateToContactForm = ({
     localStorage.setItem("contactFormScrollBehavior", behavior);
   } catch (err) {
     // ignore storage errors on SSR or strict privacy modes
-    // eslint-disable-next-line no-console
     console.warn("Could not access localStorage:", err);
   }
 
@@ -65,12 +64,10 @@ export const scrollToContactForm = (formId = "contact-form", behavior = "smooth"
       contactForm.scrollIntoView({ behavior });
     } else {
       // element not found — caller may handle via effect on contact page
-      // eslint-disable-next-line no-console
       console.warn(`Contact form with ID "${formId}" not found`);
     }
   } catch (err) {
     // ignore errors when called in non-browser context
-    // eslint-disable-next-line no-console
     console.warn("scrollToContactForm error:", err);
   }
 };

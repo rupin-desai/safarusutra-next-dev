@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 type Tour = {
   id: string | number;
@@ -43,18 +44,25 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
       className="relative w-full h-[440px] md:h-[380px] xl:h-[440px] rounded-xl overflow-hidden shadow-lg group"
       style={{ transitionDelay: `${animationDelay}s` }}
     >
-      {/* Background Image */}
-      <img
-        src={tour.image}
-        alt={tour.title}
-        className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-      />
+      {/* Background Image using next/image for better LCP/optimization */}
+      <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-110">
+        <Image
+          src={tour.image}
+          alt={tour.title}
+          fill
+          className="object-cover object-center"
+          // mark priority for hero-like images to improve LCP; remove if many images on page
+          priority={index < 3}
+          // remove optimization if external domains not configured in next.config.js
+          unoptimized
+        />
+      </div>
 
       {/* Overlay for better text visibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
 
       {/* Inner Card at Bottom */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 pb-5">
+      <div className="absolute bottom-0 left-0 right-0 p-4 pb-5 z-20">
         <div className="bg-white rounded-xl shadow-[0_0_15px_rgba(0,0,0,0.2)] p-5 md:p-4 xl:p-5 transform transition-all duration-300 group-hover:-translate-y-1">
           <h3
             className="text-xl md:text-lg xl:text-xl font-bold text-gray-900 leading-tight mb-1"

@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Home } from "lucide-react";
 import Navbar from "../Common/Navbar";
 import { getBreadcrumbs } from "../utils/BreadcrumbDetails";
 
-// Animation variants defined outside component
-const titleVariants: any = {
+// Animation variants typed with framer-motion Variants
+const titleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 40px, 0px)",
@@ -26,7 +26,7 @@ const titleVariants: any = {
   },
 };
 
-const breadcrumbVariants: any = {
+const breadcrumbVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -43,45 +43,48 @@ const breadcrumbVariants: any = {
   },
 };
 
-const HeroSection: React.FC<{
+interface Breadcrumb {
+  label: string;
+  path?: string;
+  isLast?: boolean;
+}
+
+interface HeroSectionProps {
   title: string;
   backgroundImage: string;
   overlay?: number;
   titleSize?: string;
-  customBreadcrumbs?: any[] | null;
-}> = ({
+  customBreadcrumbs?: Breadcrumb[] | null;
+}
+
+const HeroSection: React.FC<HeroSectionProps> = ({
   title,
   backgroundImage,
   overlay = 0.2,
   titleSize = "text-4xl md:text-6xl lg:text-7xl",
   customBreadcrumbs = null,
 }) => {
-  // Get current pathname to generate breadcrumbs (Next.js)
   const pathname = usePathname() ?? "/";
 
-  // animation state — trigger on mount (removed useLoading dependency)
   const [animationState, setAnimationState] = useState<"initial" | "animate">(
     "initial"
   );
 
   useEffect(() => {
-    // trigger animate after mount
     const t = window.setTimeout(() => setAnimationState("animate"), 60);
     return () => window.clearTimeout(t);
   }, []);
 
-  // Use the provided background image directly
   const backgroundImageSrc = backgroundImage;
 
-  // Get breadcrumbs - either custom or generated from current path
-  const breadcrumbs = customBreadcrumbs || getBreadcrumbs(pathname);
+  // ensure typed breadcrumbs
+  const breadcrumbs: Breadcrumb[] =
+    (customBreadcrumbs ?? (getBreadcrumbs(pathname) as Breadcrumb[])) || [];
 
   return (
     <>
-      {/* Navbar is always included */}
       <Navbar />
       <section className="relative flex flex-col items-center justify-center overflow-hidden h-[40vh] pt-16">
-        {/* Background image using standard img */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -91,7 +94,6 @@ const HeroSection: React.FC<{
             loading="eager"
           />
 
-          {/* Dark overlay for better text visibility */}
           {overlay > 0 && (
             <div
               className="absolute inset-0"
@@ -101,7 +103,6 @@ const HeroSection: React.FC<{
         </div>
 
         <div className="container mx-auto px-4 z-10 text-center flex flex-col items-center justify-center">
-          {/* Animated Title - with larger size */}
           <motion.h1
             className={`text-white font-family-baloo ${titleSize} uppercase text-center font-bold z-10 drop-shadow-lg mb-4`}
             initial="initial"
@@ -111,7 +112,6 @@ const HeroSection: React.FC<{
             {title}
           </motion.h1>
 
-          {/* Breadcrumb navigation */}
           {breadcrumbs && breadcrumbs.length > 0 && (
             <motion.div
               className="bg-dark-brown py-1 px-4 rounded-lg"

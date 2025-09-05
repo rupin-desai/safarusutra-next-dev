@@ -11,6 +11,71 @@ interface Props {
   sectionCounts?: Record<string, number>;
 }
 
+/* New: strongly-typed pill style object to avoid `any` */
+interface PillStyles {
+  bg: string;
+  text: string;
+  border: string;
+  activeText: string;
+  solidBgColor: string;
+  solidAccent: string;
+}
+
+/* Create a properly typed getPillClasses -> returns PillStyles instead of `any` */
+const getPillClasses = (key?: string | null): PillStyles => {
+  const k = String(key ?? "").toLowerCase();
+  const map: Record<string, PillStyles> = {
+    short: {
+      bg: "bg-amber-50",
+      text: "text-amber-800",
+      border: "border-amber-700",
+      activeText: "text-amber-600",
+      solidBgColor: "#b45309",
+      solidAccent: "text-amber-600",
+    },
+    domestic: {
+      bg: "bg-emerald-50",
+      text: "text-emerald-800",
+      border: "border-emerald-700",
+      activeText: "text-emerald-600",
+      solidBgColor: "#047857",
+      solidAccent: "text-emerald-600",
+    },
+    international: {
+      bg: "bg-indigo-50",
+      text: "text-indigo-800",
+      border: "border-indigo-700",
+      activeText: "text-indigo-600",
+      solidBgColor: "#4f46e5",
+      solidAccent: "text-indigo-600",
+    },
+    other: {
+      bg: "bg-slate-50",
+      text: "text-slate-800",
+      border: "border-slate-700",
+      activeText: "text-slate-600",
+      solidBgColor: "#0f172a",
+      solidAccent: "text-slate-600",
+    },
+    default: {
+      bg: "bg-gray-50",
+      text: "text-gray-800",
+      border: "border-gray-700",
+      activeText: "text-gray-600",
+      solidBgColor: "#1f2937",
+      solidAccent: "text-gray-600",
+    },
+  };
+
+  return map[Object.keys(map).find((m) => k.includes(m)) || "default"];
+};
+
+interface TourOverlayProps {
+  sections?: Section[];
+  currentSection?: string | null;
+  sectionCounts?: Record<string, number>;
+}
+
 /**
  * TourOverlay
  * minimal, typed, and robust to SSR; closes on outside click; hover + tap friendly.
@@ -60,53 +125,6 @@ export default function TourOverlay({
     document.addEventListener("click", onDocClick, true);
     return () => document.removeEventListener("click", onDocClick, true);
   }, [menuOpen]);
-
-  const getPillClasses = (key?: string | null) => {
-    const k = String(key ?? "").toLowerCase();
-    const map: Record<string, any> = {
-      short: {
-        bg: "bg-amber-50",
-        text: "text-amber-800",
-        border: "border-amber-700",
-        activeText: "text-amber-600",
-        solidBgColor: "#b45309",
-        solidAccent: "text-amber-600",
-      },
-      domestic: {
-        bg: "bg-emerald-50",
-        text: "text-emerald-800",
-        border: "border-emerald-700",
-        activeText: "text-emerald-600",
-        solidBgColor: "#047857",
-        solidAccent: "text-emerald-600",
-      },
-      international: {
-        bg: "bg-indigo-50",
-        text: "text-indigo-800",
-        border: "border-indigo-700",
-        activeText: "text-indigo-600",
-        solidBgColor: "#4f46e5",
-        solidAccent: "text-indigo-600",
-      },
-      other: {
-        bg: "bg-slate-50",
-        text: "text-slate-800",
-        border: "border-slate-700",
-        activeText: "text-slate-600",
-        solidBgColor: "#0f172a",
-        solidAccent: "text-slate-600",
-      },
-      default: {
-        bg: "bg-gray-50",
-        text: "text-gray-800",
-        border: "border-gray-700",
-        activeText: "text-gray-600",
-        solidBgColor: "#1f2937",
-        solidAccent: "text-gray-600",
-      },
-    };
-    return map[Object.keys(map).find((m) => k.includes(m)) || "default"];
-  };
 
   const iconFor = (id?: string | null) => {
     const k = String(id ?? "").toLowerCase();

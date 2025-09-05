@@ -9,7 +9,7 @@ import SSButton from "../UI/SSButton";
 import { generateTourBookingInquiry } from "@/utils/contact.utils";
 
 export type Tour = {
-  id: number;
+  id: string | number;
   image?: string;
   title?: string;
   route?: string;
@@ -68,9 +68,10 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const titleSlug = createSlug((tour.title ?? String(tour.id)) as string);
   const displayTitle = extractTitle(tour.title);
 
-  // Accessible ids for sr-only headings
-  const titleId = `tour-title-${tour.id}`;
-  const routeId = `tour-route-${tour.id}`;
+  // Accessible ids for sr-only headings (ensure string)
+  const idStr = String(tour.id);
+  const titleId = `tour-title-${idStr}`;
+  const routeId = `tour-route-${idStr}`;
 
   const handleBookNow = () => {
     const result = generateTourBookingInquiry(tour) as { subject?: string; message?: string };
@@ -95,7 +96,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
     >
       {/* Screen-reader only headings for SEO / accessibility */}
       <h2 id={titleId} className="sr-only">
-        {displayTitle || `Tour ${tour.id}`}
+        {displayTitle || `Tour ${idStr}`}
       </h2>
       <h3 id={routeId} className="sr-only">
         {tour.route || ""}
@@ -105,7 +106,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={tour.image ?? "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"}
-          alt={tour.title ?? `Tour ${tour.id}`}
+          alt={tour.title ?? `Tour ${idStr}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
       </div>

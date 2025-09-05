@@ -4,11 +4,25 @@ import { Search, Filter, X, ChevronDown, ChevronUp, RefreshCw } from "lucide-rea
 import SSButton from "@/components/UI/SSButton";
 import tourDetails from "@/data/TourDetails.json";
 
+type RawTour = {
+  category?: string | string[];
+  title?: string;
+  [key: string]: unknown;
+};
+
+type CompositeFilter = {
+  type: "composite";
+  categories: string[];
+  price: string[];
+};
+
+type ActiveFilter = "all" | string | CompositeFilter;
+
 interface Props {
   searchQuery: string;
   handleSearch: (e: ChangeEvent<HTMLInputElement> | string) => void;
-  activeFilter: any;
-  handleFilterChange: (filter: any) => void;
+  activeFilter: ActiveFilter;
+  handleFilterChange: (filter: ActiveFilter) => void;
 }
 
 // Animation variants with translate3d for better performance
@@ -81,13 +95,11 @@ const tagBubbleVariants: Variants = {
 };
 
 // Dynamically extract unique categories from JSON
-const getUniqueCategories = (data: any[]): string[] => {
+const getUniqueCategories = (data: RawTour[]): string[] => {
   const set = new Set<string>();
   data.forEach((pkg) => {
     if (!pkg || !pkg.category) return;
-    const cats = Array.isArray(pkg.category)
-      ? pkg.category
-      : String(pkg.category);
+    const cats = Array.isArray(pkg.category) ? pkg.category : String(pkg.category);
     String(cats)
       .split(/[,|;]+/)
       .forEach((cat) => {
@@ -127,7 +139,7 @@ const TourSearchFilter: React.FC<Props> = ({ searchQuery, handleSearch, activeFi
 
   // Available filter options
   const availableFilters = {
-    categories: getUniqueCategories(tourDetails as any[]),
+    categories: getUniqueCategories((tourDetails as unknown) as RawTour[]),
     priceRanges: getPriceRanges(),
   };
 
@@ -167,10 +179,11 @@ const TourSearchFilter: React.FC<Props> = ({ searchQuery, handleSearch, activeFi
       setActiveFilters({ categories: [], price: [] });
     } else if (typeof activeFilter === "string") {
       setActiveFilters({ categories: [activeFilter], price: [] });
-    } else if (activeFilter && typeof activeFilter === "object" && activeFilter.type === "composite") {
+    } else if (activeFilter && typeof activeFilter === "object" && (activeFilter as CompositeFilter).type === "composite") {
+      const af = activeFilter as CompositeFilter;
       setActiveFilters({
-        categories: activeFilter.categories || [],
-        price: activeFilter.price || [],
+        categories: af.categories || [],
+        price: af.price || [],
       });
     }
 
@@ -186,7 +199,7 @@ const TourSearchFilter: React.FC<Props> = ({ searchQuery, handleSearch, activeFi
     if (isInitialMount.current) return;
     if (shouldSyncFromParent.current) return;
 
-    const determineActiveFilter = () => {
+    const determineActiveFilter = (): ActiveFilter => {
       if (activeFilters.categories.length === 0 && activeFilters.price.length === 0) {
         return "all";
       }

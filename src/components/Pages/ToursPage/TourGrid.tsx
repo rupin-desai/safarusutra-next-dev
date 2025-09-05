@@ -4,13 +4,22 @@ import TourCard from "@/components/UI/TourCard";
 import TourSectionTitle from "./TourSectionTitle";
 // keep relative import as in workspace
 import tourData from "@/data/TourDetails.json";
+import type { Tour } from "@/components/UI/TourCard";
+
+type TourItem = {
+  id?: string | number;
+  duration?: string;
+  availableDates?: unknown;
+  locationType?: string;
+  [key: string]: unknown;
+};
 
 const TourGrid = ({
   tours = null,
   onSectionChange = null,
   showOthers = true,
 }: {
-  tours?: any[] | null;
+  tours?: TourItem[] | null;
   onSectionChange?: ((id: string) => void) | null;
   showOthers?: boolean;
 }) => {
@@ -18,7 +27,7 @@ const TourGrid = ({
   const observerRef = useRef<IntersectionObserver | null>(null);
   const sectionObserverRef = useRef<IntersectionObserver | null>(null);
   const animatedCards = useRef<Set<string>>(new Set());
-  const [packagesData, setPackagesData] = useState<any[]>([]);
+  const [packagesData, setPackagesData] = useState<TourItem[]>([]);
 
   // Initialize packagesData when `tours` prop changes. Avoid depending on packagesData to prevent loops.
   useEffect(() => {
@@ -32,8 +41,8 @@ const TourGrid = ({
       if (needUpdate) {
         setPackagesData(tours);
       }
-    } else if (tourData && tourData.length > 0 && packagesData.length === 0) {
-      setPackagesData(tourData as any[]);
+    } else if (tourData && Array.isArray(tourData) && packagesData.length === 0) {
+      setPackagesData(tourData as unknown as TourItem[]);
     }
     // only re-run when `tours` changes
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -135,13 +144,13 @@ const TourGrid = ({
         (c) => !animatedCards.current.has(c.dataset.id || "")
       );
       remaining.forEach((el, i) => {
-        const idx = parseInt(el.dataset.index || String(i), 10);
+        const idxParsed = parseInt(el.dataset.index || String(i), 10);
         animatedCards.current.add(el.dataset.id || "");
         requestAnimationFrame(() =>
           animate(
             el,
             { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
-            { delay: 0.05 * i, type: "spring", stiffness: 300, damping: 22 }
+            { delay: 0.05 * idxParsed, type: "spring", stiffness: 300, damping: 22 }
           )
         );
       });
@@ -206,9 +215,9 @@ const TourGrid = ({
   }
 
   // helpers
-  const parseDaysFromDuration = (tour: any): number => {
+  const parseDaysFromDuration = (tour: TourItem): number => {
     try {
-      const d = String(tour.duration || "");
+      const d = String(tour.duration ?? "");
       const mDays = d.match(/(\d{1,3})\s*D\b/i);
       if (mDays) return parseInt(mDays[1], 10);
       const mNights = d.match(/(\d{1,3})\s*N\b/i);
@@ -217,30 +226,44 @@ const TourGrid = ({
     return Infinity;
   };
 
-  const hasAvailableDates = (tour: any): boolean => {
+  const hasAvailableDates = (tour: TourItem): boolean => {
     try {
-      if (!Array.isArray(tour?.availableDates)) return false;
-      return tour.availableDates.some((month: any) => Array.isArray(month.dates) && month.dates.some((d: any) => d.enabled !== false));
+      const available = tour.availableDates;
+      if (!Array.isArray(available)) return false;
+      const arr = available as unknown[];
+      return arr.some((month) => {
+        if (!month || typeof month !== "object") return false;
+        const monthObj = month as Record<string, unknown>;
+        const dates = monthObj.dates;
+        if (!Array.isArray(dates)) return false;
+        return (dates as unknown[]).some((d) => {
+          if (!d || typeof d !== "object") return false;
+          const dObj = d as Record<string, unknown>;
+          return dObj.enabled !== false;
+        });
+      });
     } catch {
       return false;
     }
   };
 
-  const locationTypeOf = (tour: any) => String(tour?.locationType || "").trim().toLowerCase();
+  const locationTypeOf = (tour: TourItem) => String(tour.locationType ?? "").trim().toLowerCase();
 
   const shortDepartures = packagesData.filter((t) => parseDaysFromDuration(t) <= 4 && hasAvailableDates(t));
   const domesticDepartures = packagesData.filter((t) => parseDaysFromDuration(t) > 4 && locationTypeOf(t) === "domestic" && hasAvailableDates(t));
   const internationalDepartures = packagesData.filter((t) => locationTypeOf(t) === "international" && hasAvailableDates(t));
 
-  const groupedSet = new Set([
-    ...shortDepartures.map((t) => t.id),
-    ...domesticDepartures.map((t) => t.id),
-    ...internationalDepartures.map((t) => t.id),
-  ]);
+  const groupedSet = new Set<string>(
+    [
+      ...shortDepartures.map((t) => String(t.id)),
+      ...domesticDepartures.map((t) => String(t.id)),
+      ...internationalDepartures.map((t) => String(t.id)),
+    ].filter(Boolean)
+  );
 
-  const others = packagesData.filter((t) => !groupedSet.has(t.id));
+  const others = packagesData.filter((t) => !groupedSet.has(String(t.id)));
 
-  const renderSection = (title: string, items: any[], sectionKey: string) => {
+  const renderSection = (title: string, items: TourItem[], sectionKey: string) => {
     if (!items || items.length === 0) return null;
 
     const pillMap: Record<string, string> = {
@@ -257,16 +280,19 @@ const TourGrid = ({
         <TourSectionTitle pillText={pillText} title={title} count={items.length} />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {items.map((tour, index) => {
-            const compositeKey = `${tour.id}-${sectionKey}-${index}`;
+            // Ensure the object passed to TourCard always has an id (fallback to index)
+            const tourForCard: Tour = { ...(tour as unknown as Tour), id: tour.id ?? index };
+            const idStr = String(tourForCard.id);
+            const compositeKey = `${idStr}-${sectionKey}-${index}`;
             return (
               <div
                 key={compositeKey}
                 className="tour-card-item opacity-0"
                 data-id={compositeKey}
-                data-index={index}
+                data-index={String(index)}
                 style={{ transform: "translate3d(0px, 30px, 0px)", willChange: "transform, opacity" }}
               >
-                <TourCard tour={tour} />
+                <TourCard tour={tourForCard} />
               </div>
             );
           })}
