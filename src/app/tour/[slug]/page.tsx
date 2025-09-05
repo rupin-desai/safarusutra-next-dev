@@ -25,6 +25,52 @@ const normalizeEntry = (entry: unknown): Tour => {
   else if (Array.isArray(rawCategory)) category = rawCategory.map((c) => (typeof c === "string" ? c : String(c)));
   else category = undefined;
 
+  const highlights =
+    Array.isArray(e.highlights) ? (e.highlights as unknown[]).map((h) => (typeof h === "string" ? h : String(h))) : undefined;
+
+  // map commonly used array/object fields safely
+  const gallery = Array.isArray(e.gallery) ? (e.gallery as unknown[]).map((g) => String(g ?? "")) : undefined;
+  const attractions = Array.isArray(e.attractions)
+    ? (e.attractions as unknown[]).map((a) => (typeof a === "string" ? a : String(a)))
+    : undefined;
+
+  const inclusions = Array.isArray(e.inclusions) ? (e.inclusions as unknown[]).map((v) => String(v)) : undefined;
+  const exclusions = Array.isArray(e.exclusions) ? (e.exclusions as unknown[]).map((v) => String(v)) : undefined;
+  const cancellationPolicy = Array.isArray(e.cancellationPolicy)
+    ? (e.cancellationPolicy as unknown[]).map((v) => String(v))
+    : undefined;
+
+  const itinerary = Array.isArray(e.itinerary)
+    ? (e.itinerary as unknown[]).map((it) => {
+        if (!it || typeof it !== "object") return {};
+        const o = it as Record<string, unknown>;
+        return {
+          day: typeof o.day === "number" ? o.day : typeof o.day === "string" ? Number(o.day) : undefined,
+          title: typeof o.title === "string" ? o.title : undefined,
+          description: typeof o.description === "string" ? o.description : undefined,
+          ...o,
+        };
+      })
+    : undefined;
+
+  const availableDates = Array.isArray(e.availableDates)
+    ? (e.availableDates as unknown[]).map((m) => {
+        const md = (m && typeof m === "object" ? (m as Record<string, unknown>) : {});
+        const month = md.month ? String(md.month) : "";
+        const dates = Array.isArray(md.dates)
+          ? (md.dates as unknown[]).map((d) => {
+              const dd = d && typeof d === "object" ? (d as Record<string, unknown>) : {};
+              return {
+                range: dd.range ? String(dd.range) : String(d ?? ""),
+                enabled: dd.enabled === false ? false : true,
+                ...dd,
+              };
+            })
+          : [];
+        return { month, dates };
+      })
+    : undefined;
+
   return {
     id,
     title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
@@ -36,8 +82,17 @@ const normalizeEntry = (entry: unknown): Tour => {
     caption: typeof e.caption === "string" ? e.caption : undefined,
     duration: typeof e.duration === "string" ? e.duration : undefined,
     price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
+    route: typeof e.route === "string" ? e.route : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     category,
+    highlights,
+    gallery,
+    attractions,
+    itinerary,
+    inclusions,
+    exclusions,
+    cancellationPolicy,
+    availableDates,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
     relatedDestinations: Array.isArray(e.relatedDestinations) ? (e.relatedDestinations as Array<string | number>) : undefined,
   } as Tour;
