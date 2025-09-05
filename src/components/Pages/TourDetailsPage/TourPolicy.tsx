@@ -1,32 +1,37 @@
 import React from "react";
 import Head from "next/head";
+import type { Tour as BaseTour } from "@/components/UI/TourCard";
 
-const TourPolicy = ({ tour }: { tour: any }) => {
-  // improved SEO title
+type TourWithPolicy = BaseTour & {
+  cancellationPolicy?: string[];
+  gallery?: string[];
+  description?: string;
+  id?: string | number;
+};
+
+const TourPolicy: React.FC<{ tour?: TourWithPolicy | null }> = ({ tour = null }) => {
   const metaTitle = tour?.title
     ? `${tour.title} — Cancellation Policy & Booking Terms | Safari Sutra`
     : "Cancellation Policy & Booking Terms | Safari Sutra";
 
-  // SEO values
   const metaDescription =
-    (tour?.cancellationPolicy && tour.cancellationPolicy.join(" ")) ||
+    (Array.isArray(tour?.cancellationPolicy) && tour!.cancellationPolicy!.join(" ")) ||
     tour?.description?.slice(0, 160) ||
     "Cancellation policy and important booking terms for this tour on Safari Sutra.";
 
   const origin =
-    typeof window !== "undefined" && window.location && window.location.origin
+    typeof window !== "undefined" && window.location?.origin
       ? window.location.origin
       : "https://thesafarisutra.com";
 
   const pageUrl =
     typeof window !== "undefined" && window.location
       ? `${window.location.origin}${window.location.pathname}${window.location.search || ""}`
-      : `${origin}/tour/${tour?.id || ""}/policy`;
+      : `${origin}/tour/${encodeURIComponent(String(tour?.id ?? ""))}/policy`;
 
   const ogImage =
-    (tour?.gallery && tour.gallery.length && tour.gallery[0]) || "/og-default.jpg";
+    (Array.isArray(tour?.gallery) && tour!.gallery!.length > 0 && String(tour!.gallery![0])) || "/og-default.jpg";
 
-  // JSON-LD: basic Tour + cancellation policy represented inside an OfferCatalog for discoverability
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
@@ -41,10 +46,10 @@ const TourPolicy = ({ tour }: { tour: any }) => {
     hasOfferCatalog: {
       "@type": "OfferCatalog",
       name: "Cancellation Policy",
-      itemListElement: (tour?.cancellationPolicy || []).map((p: string, i: number) => ({
+      itemListElement: (tour?.cancellationPolicy ?? []).map((p, i) => ({
         "@type": "Offer",
         name: `Cancellation rule ${i + 1}`,
-        description: p,
+        description: String(p ?? ""),
       })),
     },
   };
@@ -71,21 +76,18 @@ const TourPolicy = ({ tour }: { tour: any }) => {
 
         <meta name="robots" content="index,follow" />
 
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </Head>
 
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Cancellation Policy</h2>
 
       <ul className="space-y-2 mb-6">
-        {tour?.cancellationPolicy?.map((item: string, index: number) => (
+        {(tour?.cancellationPolicy ?? []).map((item, index) => (
           <li key={index} className="flex items-start">
             <span className="bg-orange-100 text-orange-800 w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0">
               {index + 1}
             </span>
-            <span className="text-gray-700">{item}</span>
+            <span className="text-gray-700">{String(item)}</span>
           </li>
         ))}
       </ul>

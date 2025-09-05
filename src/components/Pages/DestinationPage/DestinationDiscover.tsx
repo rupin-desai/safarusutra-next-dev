@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Compass } from "lucide-react";
 import CountUp from "react-countup";
 import SectionTitle from "../../UI/SectionTitle";
 import SSButton from "../../UI/SSButton";
 
-// Animation variants (cast to any to allow translate3d strings)
-const sectionVariants: any = {
+// Animation variants (use Variants and translate3d strings)
+const sectionVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -22,7 +22,7 @@ const sectionVariants: any = {
   },
 };
 
-const itemVariants: any = {
+const itemVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -121,22 +121,22 @@ const DestinationDiscover: React.FC = () => {
           {/* Updated text content with fun, creative approach */}
           <motion.div variants={itemVariants}>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed text-justify">
-              Think of us as your travel fairy godparents—minus the wand, plus
-              the Wi‑Fi! We don't just book trips; we craft
-              "remember-that-time-when" moments that'll have you humble-bragging
-              for years. Whether you're dreaming of selfies with elephants in
-              the wild, sipping chai with locals in hidden mountain villages, or
-              simply escaping your boss's weekly "quick catch-ups," we've got
-              you covered. And unlike those one-size-fits-all travel factories,
-              we obsess over the little details—because we know it's the
-              difference between a nice vacation and a
-              "OMG-did-that-really-happen" adventure that breaks your Instagram
-              feed!
+              Think of us as your travel fairy godparents—minus the wand, plus the
+              Wi‑Fi! We don&apos;t just book trips; we craft
+              &quot;remember-that-time-when&quot; moments that&apos;ll have you
+              humble-bragging for years. Whether you&apos;re dreaming of selfies
+              with elephants in the wild, sipping chai with locals in hidden
+              mountain villages, or simply escaping your boss&apos;s weekly
+              &quot;quick catch-ups,&quot; we&apos;ve got you covered. And unlike
+              those one-size-fits-all travel factories, we obsess over the little
+              details—because we know it&apos;s the difference between a nice
+              vacation and a &quot;OMG-did-that-really-happen&quot; adventure that
+              breaks your Instagram feed!
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mt-6">
               <SSButton to="/contact" color="var(--color-orange)">
-                Let's Make Magic Happen
+                Let&apos;s Make Magic Happen
               </SSButton>
 
               <div className="flex items-center text-sm text-gray-600">
@@ -158,7 +158,7 @@ const DestinationDiscover: React.FC = () => {
                   ))}
                 </span>
                 <span className="ml-2">
-                  Rated "Mind-Blowing" by 300+ happy travelers
+                  Rated &quot;Mind-Blowing&quot; by 300+ happy travelers
                 </span>
               </div>
             </div>

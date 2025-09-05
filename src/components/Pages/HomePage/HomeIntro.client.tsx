@@ -25,10 +25,6 @@ const decorativeElementsVariants: Variants = {
   initial: { opacity: 0, transform: "translate3d(-100px, 0px, 0px)" },
   animate: { opacity: 1, transform: "translate3d(0px, 0px, 0px)", transition: { type: "spring", stiffness: 300, damping: 20 } },
 };
-const titleVariants: Variants = {
-  initial: { opacity: 0, transform: "translate3d(0px, 30px, 0px)" },
-  animate: { opacity: 1, transform: "translate3d(0px, 0px, 0px)", transition: { type: "spring", stiffness: 300, damping: 20 } },
-};
 const desktopCarouselVariants: Variants = {
   initial: { opacity: 0, transform: "translate3d(0px, 80px, 0px)" },
   animate: { opacity: 1, transform: "translate3d(0px, 0px, 0px)", transition: { type: "spring", stiffness: 300, damping: 20, delay: 0.3 } },
@@ -39,11 +35,6 @@ const cardVariants: Variants = {
   center: { x: "0%", scale: 1, opacity: 1, zIndex: 20, transition: { type: "tween", duration: 0.5, ease: "easeInOut" } },
   right: { x: "100%", scale: 0.85, opacity: 0.5, zIndex: 10, transition: { type: "tween", duration: 0.5, ease: "easeInOut" } },
   offRight: { x: "120%", scale: 0.8, opacity: 0, zIndex: 0, transition: { type: "tween", duration: 0.5, ease: "easeInOut" } },
-};
-const mobileCardVariants: Variants = {
-  offLeft: { x: "-100%", opacity: 0, transition: { type: "tween", duration: 0.5, ease: "easeInOut" } },
-  center: { x: "0%", opacity: 1, transition: { type: "tween", duration: 0.5, ease: "easeInOut" } },
-  offRight: { x: "100%", opacity: 0, transition: { type: "tween", duration: 0.5, ease: "easeInOut" } },
 };
 
 const DEFAULT_FEATURED_IDS: number[] = [56, 57, 58, 59];
@@ -56,7 +47,8 @@ export interface HomeIntroProps {
 const HomeIntroClient: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsProp, featuredTours: featuredToursProp }) => {
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const [featuredIds, setFeaturedIds] = useState<string[]>([]);
-  const [isPaused, setIsPaused] = useState<boolean>(false);
+  // keep isPaused state but drop unused setter to silence lint
+  const [isPaused] = useState<boolean>(false);
 
   const autoplayTimerRef = useRef<number | null>(null);
   const pauseTimerRef = useRef<number | null>(null);

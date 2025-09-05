@@ -70,12 +70,6 @@ const getPillClasses = (key?: string | null): PillStyles => {
   return map[Object.keys(map).find((m) => k.includes(m)) || "default"];
 };
 
-interface TourOverlayProps {
-  sections?: Section[];
-  currentSection?: string | null;
-  sectionCounts?: Record<string, number>;
-}
-
 /**
  * TourOverlay
  * minimal, typed, and robust to SSR; closes on outside click; hover + tap friendly.

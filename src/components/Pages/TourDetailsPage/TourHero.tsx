@@ -4,9 +4,11 @@ import React from "react";
 import { ChevronRight, Home } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Common/Navbar";
 import { getBreadcrumbs } from "../../utils/BreadcrumbDetails";
+import type { Tour } from "@/components/UI/TourCard";
 
 // Animation variants for title (keep transform: translate3d)
 const titleVariants: Variants = {
@@ -44,12 +46,12 @@ const breadcrumbVariants: Variants = {
   },
 };
 
-const TourHero = ({ tour }: { tour: any }) => {
+const TourHero = ({ tour }: { tour?: Tour | null }) => {
   // Get current pathname to generate breadcrumbs
   const pathname = usePathname();
 
-  // Use tour.image directly (removed loading context / optimized image)
-  const backgroundImageSrc = tour?.image || "";
+  // Use tour.image directly (provide fallback)
+  const backgroundImageSrc = tour?.image ?? "/og-default.jpg";
 
   // Get breadcrumbs based on current path
   const breadcrumbs = getBreadcrumbs(pathname || "/");
@@ -59,16 +61,17 @@ const TourHero = ({ tour }: { tour: any }) => {
       <Navbar />
       <section className="relative flex flex-col items-center justify-center overflow-hidden h-[60vh] pt-16">
         {/* Background image */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <img
+        <div className="absolute inset-0 z-0 overflow-hidden ">
+          <Image
             src={backgroundImageSrc}
-            alt={tour?.title || ""}
+            alt={tour?.title ?? ""}
             className="w-full h-full object-cover"
-            loading="eager"
+            fill
+            priority
           />
 
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-black/60"></div>
+          <div className="absolute inset-0 bg-black/60" />
         </div>
 
         <div className="container mx-auto px-4 z-10 text-center flex flex-col items-center justify-center">
@@ -79,7 +82,7 @@ const TourHero = ({ tour }: { tour: any }) => {
             animate="animate"
             variants={titleVariants}
           >
-            {tour?.title}
+            {String(tour?.title ?? "")}
           </motion.h1>
 
           {/* Subtitle (only on md screens and up) */}
@@ -89,8 +92,7 @@ const TourHero = ({ tour }: { tour: any }) => {
             animate="animate"
             variants={titleVariants}
           >
-            {tour?.subtitle ||
-              "Experience the adventure of a lifetime with our carefully crafted tour package"}
+            {String(tour?.subtitle ?? "Experience the adventure of a lifetime with our carefully crafted tour package")}
           </motion.p>
 
           {/* Breadcrumb navigation in slate background container */}
@@ -112,13 +114,13 @@ const TourHero = ({ tour }: { tour: any }) => {
                   <React.Fragment key={index}>
                     <ChevronRight size={16} className="mx-2 text-white/70" />
                     {crumb.isLast || !crumb.path ? (
-                      <span className="text-white/80">{crumb.label}</span>
+                      <span className="text-white/80">{String(crumb.label ?? "")}</span>
                     ) : (
                       <Link
                         href={crumb.path}
                         className="hover:text-green-400 transition-colors"
                       >
-                        {crumb.label}
+                        {String(crumb.label ?? "")}
                       </Link>
                     )}
                   </React.Fragment>

@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { MapPin, Globe } from "lucide-react";
 import packageData from "@/data/Destinations.json";
-import SectionTitle from "@/components/UI/SectionTitle";
 import DestinationCard from "@/components/UI/DestinationCard";
+import type { Tour as DestinationCardTour } from "@/components/UI/DestinationCard";
 
-type PackageItem = any;
+// Narrowly typed package item instead of `any`
+type PackageItem = {
+  id: string | number;
+  location?: string;
+  title?: string;
+  image?: string;
+  [key: string]: unknown;
+};
 
 interface Props {
   filteredPackages?: PackageItem[];
 }
 
-// Animation variants (cast to any to allow translate3d strings)
-const titleVariants: any = {
+// Typed motion variants using Variants (no `any`)
+const tabsVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -28,24 +35,7 @@ const titleVariants: any = {
   },
 };
 
-const tabsVariants: any = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(0px, 30px, 0px)",
-  },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
-};
-
-// Make grid a parent variant so we can reliably trigger children with stagger
-const gridVariants: any = {
+const gridVariants: Variants = {
   initial: {
     opacity: 0,
   },
@@ -59,7 +49,7 @@ const gridVariants: any = {
   },
 };
 
-const cardVariants: any = {
+const cardVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -83,11 +73,11 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   // Use the filteredPackages prop if provided, otherwise use all packageData
-  const allPackages: PackageItem[] = filteredPackages ?? (packageData as PackageItem[]);
+  const allPackages: PackageItem[] = (filteredPackages ?? (packageData as PackageItem[])) as PackageItem[];
 
   // Define domestic and international packages
-  const domesticTours = allPackages.filter((tour) => tour.location === "India");
-  const internationalTours = allPackages.filter((tour) => tour.location !== "India");
+  const domesticTours = allPackages.filter((tour) => String(tour.location ?? "").toLowerCase() === "india");
+  const internationalTours = allPackages.filter((tour) => String(tour.location ?? "").toLowerCase() !== "india");
 
   // Fisher-Yates shuffle to randomize tours without mutating original array
   const shuffleArray = (arr: PackageItem[]) => {
@@ -122,10 +112,10 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
   const getActiveTabBgColor = (tab: "domestic" | "international") =>
     tab === "domestic" ? "bg-orange-50" : "bg-green-50";
 
-  // New: observer for the grid container to reliably trigger animations
+  // Observer for the grid container to reliably trigger animations
   const gridRef = useRef<HTMLDivElement | null>(null);
   const gridInView = useInView(gridRef, {
-    once: false,         // still observe so we can know when it enters
+    once: false,
     amount: 0.18,
     margin: "-10% 0px",
   });
@@ -136,7 +126,7 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
     if (gridInView) setHasBeenInView(true);
   }, [gridInView]);
 
-  // New: observer for the tabs selector so its animation is reliable
+  // Observer for the tabs selector so its animation is reliable
   const tabRef = useRef<HTMLDivElement | null>(null);
   const tabInView = useInView(tabRef, {
     once: false,
@@ -171,6 +161,7 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
             }`}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
+            type="button"
           >
             <MapPin size={16} className="mr-1 sm:mr-2 flex-shrink-0" />
             <span className="whitespace-nowrap">Domestic</span>
@@ -189,6 +180,7 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
             }`}
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
+            type="button"
           >
             <Globe size={16} className="mr-1 sm:mr-2 flex-shrink-0" />
             <span className="whitespace-nowrap">International</span>
@@ -203,9 +195,10 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
       <motion.div
         key={activeTab}
         initial="initial"
-        // Always animate the grid so cards animate irrespective of viewport
-        animate="animate"
+        // Use hasBeenInView so animations only trigger once they enter viewport
+        animate={hasBeenInView ? "animate" : "initial"}
         variants={gridVariants}
+        ref={gridRef}
       >
         {visibleTours.length > 0 ? (
           <div className="grid-container">
@@ -232,22 +225,28 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
                 width: 100%;
               }
             `}</style>
-            {visibleTours.map((tour, index) => (
-              <motion.div
-                key={`${tour.id}-${activeTab}`}
-                variants={cardVariants}
-                className="card-wrapper"
-              >
-                <DestinationCard tour={tour} index={index} />
-              </motion.div>
-            ))}
+            {visibleTours.map((tour, index) => {
+              // normalize to the DestinationCard's Tour shape so the component gets required non-optional fields
+              const tourProp: DestinationCardTour = {
+                id: tour.id,
+                title: String(tour.title ?? ""),
+                image: String(tour.image ?? "/graphics/placeholder.jpg"),
+                // DestinationCard's Tour type doesn't include `route`, so keep only fields it expects
+                location: String(tour.location ?? ""),
+                caption: String((tour as unknown as Record<string, unknown>).caption ?? "Unforgettable Safari Experience"),
+                price: String((tour as unknown as Record<string, unknown>).price ?? ""),
+                duration: String((tour as unknown as Record<string, unknown>).duration ?? ""),
+              };
+
+              return (
+                <motion.div key={`${String(tour.id)}-${activeTab}`} variants={cardVariants} className="card-wrapper">
+                  <DestinationCard tour={tourProp} index={index} />
+                </motion.div>
+              );
+            })}
           </div>
         ) : (
-          <motion.div
-            className="text-center py-16 text-gray-500"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-          >
+          <motion.div className="text-center py-16 text-gray-500" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             No packages available in this category.
           </motion.div>
         )}

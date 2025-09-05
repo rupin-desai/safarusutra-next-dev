@@ -46,7 +46,8 @@ const TourTabs: React.FC<Props> = ({
     ? "policy"
     : "overview";
 
-  const [localActive, setLocalActive] = useState<Tab>(propActiveTab ?? pathActive);
+  // prefer explicit prop activeTab, then initialTab, then path-derived
+  const [localActive, setLocalActive] = useState<Tab>(propActiveTab ?? initialTab ?? pathActive);
   const active = (propActiveTab ?? localActive) as Tab;
 
   useEffect(() => {

@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import SSButton from "@/components/UI/SSButton";
 
-// cast variant to any to allow translate3d string
-const bannerVariants: any = {
+// banner animation variants typed with Variants
+const bannerVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -44,17 +44,16 @@ const DestinationContactBanner: React.FC = () => {
             variants={bannerVariants}
           >
             <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-              That Wanderlust Itch? Let's Scratch It!
+              That Wanderlust Itch? Let&apos;s Scratch It!
             </h2>
             <p
               className="text-base px-6 md:px-2 md:text-xl text-white/90 mb-8 text-justify"
               style={{ textAlignLast: "center" }}
             >
-              Your dream vacation has been sitting in your 'someday' folder for
+              Your dream vacation has been sitting in your &apos;someday&apos; folder for
               too long! Our travel wizards are ready to turn your travel dreams
               into real-life adventures.
             </p>
-            {/* removed unsupported `size` prop to match SSButton props */}
             <SSButton to="/contact" color="var(--color-orange)">
               Let The Adventures Begin!
             </SSButton>

@@ -1,19 +1,21 @@
 "use client";
 
 import React, { useMemo } from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Compass } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
 import DestinationCard from "@/components/UI/DestinationCard";
+import type { Tour as DestinationCardTour } from "@/components/UI/DestinationCard";
+import type { Tour as SourceTour } from "@/components/UI/TourCard";
 
 interface Props {
-  relatedTours?: any[];
+  relatedTours?: SourceTour[];
   currentTourId?: string | number;
-  allTours?: any[];
+  allTours?: SourceTour[];
 }
 
-// Optimized animation variants using translate3d for better performance (cast to any)
-const fadeIn: any = {
+// Optimized animation variants using translate3d for better performance
+const fadeIn: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 20px, 0px)",
@@ -29,12 +31,13 @@ const fadeIn: any = {
   },
 };
 
-const cardVariants: any = {
+const cardVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
   },
-  animate: (index: number) => ({
+  // animate can be a function that receives custom (index)
+  animate: (index = 0) => ({
     opacity: 1,
     transform: "translate3d(0px, 0px, 0px)",
     transition: {
@@ -46,8 +49,8 @@ const cardVariants: any = {
   }),
 };
 
-// Rotation animation variants using transform strings (no x/y)
-const rotateAnimation: any = {
+// Rotation animation variants using Variants
+const rotateAnimation: Variants = {
   initial: { rotate: 0 },
   animate: {
     rotate: 360,
@@ -57,8 +60,7 @@ const rotateAnimation: any = {
   },
 };
 
-// Slightly different rotation for second star using transform
-const rotateReverseAnimation: any = {
+const rotateReverseAnimation: Variants = {
   initial: { rotate: 0 },
   animate: {
     rotate: -360,
@@ -70,24 +72,21 @@ const rotateReverseAnimation: any = {
 
 const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId, allTours = [] }) => {
   // Get randomly selected related tours based on current tour type (domestic/international)
-  const selectedTours = useMemo((): any[] => {
-    if (!relatedTours || relatedTours.length === 0 || !allTours || allTours.length === 0) return [];
+  const selectedTours = useMemo((): SourceTour[] => {
+    if (!allTours || allTours.length === 0) return [];
 
     // Find current tour to determine if it's domestic or international
     const currentTour = allTours.find((tour) => String(tour.id) === String(currentTourId));
-    if (!currentTour) return relatedTours.slice(0, 3);
+    if (!currentTour) return (relatedTours ?? []).slice(0, 3);
 
-    // Check if tour is domestic (India) or international
-    const isDomestic = currentTour.location === "India";
+    const isDomestic = String((currentTour.location ?? "")).toLowerCase() === "india";
 
-    // Filter tours by same category (domestic/international) but exclude current tour
     const sameCategoryTours = allTours.filter(
       (tour) =>
         String(tour.id) !== String(currentTourId) &&
-        (isDomestic ? tour.location === "India" : tour.location !== "India")
+        (isDomestic ? String(tour.location ?? "").toLowerCase() === "india" : String(tour.location ?? "").toLowerCase() !== "india")
     );
 
-    // Randomly select up to 3 tours from the same category
     return sameCategoryTours.sort(() => 0.5 - Math.random()).slice(0, 3);
   }, [relatedTours, currentTourId, allTours]);
 
@@ -95,7 +94,6 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
 
   return (
     <section className="py-16 relative overflow-hidden" id="similar">
-      {/* First star - top right */}
       <motion.img
         src="/graphics/star2.svg"
         alt=""
@@ -103,10 +101,9 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
         initial="initial"
         animate="animate"
         variants={rotateAnimation}
-        aria-hidden
+        aria-hidden={true}
       />
 
-      {/* Second star - bottom left */}
       <motion.img
         src="/graphics/star2.svg"
         alt=""
@@ -114,7 +111,7 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
         initial="initial"
         animate="animate"
         variants={rotateReverseAnimation}
-        aria-hidden
+        aria-hidden={true}
       />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -134,18 +131,31 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
           viewport={{ once: true, amount: 0.2 }}
           variants={fadeIn}
         >
-          {selectedTours.map((tour, index) => (
-            <motion.div
-              key={tour.id ?? index}
-              custom={index}
-              variants={cardVariants}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
-              <DestinationCard tour={tour} index={index} isNewlyLoaded={false} />
-            </motion.div>
-          ))}
+          {selectedTours.map((tour, index) => {
+            // normalize to DestinationCard's Tour shape to satisfy prop types
+            const cardTour: DestinationCardTour = {
+              id: tour.id as string | number,
+              title: String(tour.title ?? ""),
+              image: String(tour.image ?? "/graphics/placeholder.jpg"),
+              location: String(tour.location ?? ""),
+              caption: String(tour.caption ?? "Unforgettable Safari Experience"),
+              price: String(tour.price ?? ""),
+              duration: String(tour.duration ?? ""),
+            };
+
+            return (
+              <motion.div
+                key={tour.id ?? index}
+                custom={index}
+                variants={cardVariants}
+                initial="initial"
+                whileInView="animate"
+                viewport={{ once: true }}
+              >
+                <DestinationCard tour={cardTour} index={index} isNewlyLoaded={false} />
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </section>

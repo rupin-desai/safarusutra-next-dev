@@ -1,7 +1,8 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
+import Image from "next/image";
 import SSButton from "@/components/UI/SSButton";
 import { useRouter } from "next/navigation";
 
@@ -16,8 +17,8 @@ interface Props {
   } | null;
 }
 
-// Animation variant using translate3d (cast to any so string transforms are allowed)
-const containerAnim: any = {
+// Animation variant using translate3d (typed as Variants)
+const containerAnim: Variants = {
   initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
   whileInView: { opacity: 1, transform: "translate3d(0px, 0px, 0px)" },
 };
@@ -39,7 +40,9 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
     <section className="relative w-full py-8 md:py-12 overflow-hidden">
       <div className="absolute inset-0 z-0">
         {backgroundImage ? (
-          <img src={backgroundImage} alt={`${tour.title ?? ""} landscape`} className="w-full h-full object-cover" />
+          <div className="absolute inset-0">
+            <Image src={backgroundImage} alt={`${tour.title ?? ""} landscape`} fill className="object-cover" />
+          </div>
         ) : (
           <div className="w-full h-full bg-gray-900/40" />
         )}

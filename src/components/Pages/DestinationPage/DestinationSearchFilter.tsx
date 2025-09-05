@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Search, Filter, X, ChevronDown, ChevronUp } from "lucide-react";
 import SSButton from "../../UI/SSButton";
 
@@ -22,8 +22,8 @@ interface DestinationSearchFilterProps {
   availableFilters?: AvailableFilters;
 }
 
-// Animation variants with translate3d for better performance (cast to any)
-const filterVariants: any = {
+// Animation variants with translate3d for better performance
+const filterVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0, -10px, 0)",
@@ -44,7 +44,7 @@ const filterVariants: any = {
   },
 };
 
-const tagBubbleVariants: any = {
+const tagBubbleVariants: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0, 0, 0) scale(0.8)",
@@ -420,6 +420,12 @@ const DestinationSearchFilter: React.FC<DestinationSearchFilterProps> = ({
 const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => {
   const [isExpanded, setIsExpanded] = useState<boolean>(true);
 
+  const sectionVariants: Variants = {
+    hidden: { height: 0, opacity: 0, transform: "translate3d(0, -10px, 0)" },
+    visible: { height: "auto", opacity: 1, transform: "translate3d(0, 0, 0)" },
+    exit: { height: 0, opacity: 0, transform: "translate3d(0, -10px, 0)" },
+  };
+
   return (
     <div className="filter-section">
       <div
@@ -435,12 +441,13 @@ const FilterSection: React.FC<{ title: string; children: React.ReactNode }> = ({
         </button>
       </div>
 
-      <AnimatePresence>
+      <AnimatePresence initial={false}>
         {isExpanded && (
           <motion.div
-            initial={{ height: 0, opacity: 0, transform: "translate3d(0, -10px, 0)" } as any}
-            animate={{ height: "auto", opacity: 1, transform: "translate3d(0, 0, 0)" } as any}
-            exit={{ height: 0, opacity: 0, transform: "translate3d(0, -10px, 0)" } as any}
+            variants={sectionVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >

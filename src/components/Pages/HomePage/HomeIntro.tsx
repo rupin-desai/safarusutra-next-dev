@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 import HomeIntroLazy from "./HomeIntro.client.lazy";
@@ -75,10 +76,18 @@ export default function HomeIntro({ featuredIds: featuredIdsProp }: { featuredId
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {featuredTours.map((t) => (
             <article key={t.id}>
-              <a href={`/tour/${t.id}/${t.slug}`}>
-                <img src={t.image} alt={t.title} className="w-full h-40 object-cover" />
-                <h3>{t.title}</h3>
-              </a>
+              <Link href={`/tour/${t.id}/${t.slug}`} className="block rounded-md overflow-hidden">
+                <div className="w-full h-40 relative">
+                  <Image
+                    src={t.image ?? "/graphics/placeholder.jpg"}
+                    alt={t.title ?? `Tour ${t.id}`}
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <h3 className="mt-2 text-sm font-medium text-gray-800">{t.title}</h3>
+              </Link>
             </article>
           ))}
         </div>

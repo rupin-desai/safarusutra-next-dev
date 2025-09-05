@@ -2,9 +2,9 @@ import React, { FC } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-type Tour = {
+export type Tour = {
   id: string | number;
-  title: string;
+  title?: string;
   image: string;
   location?: string;
   caption?: string;
@@ -19,11 +19,10 @@ interface DestinationCardProps {
 }
 
 // Function to convert title to URL-friendly slug
-const createSlug = (title: string): string =>
-  title
-    .toLowerCase()
-    .replace(/[^\w ]+/g, "")
-    .replace(/ +/g, "-");
+const createSlug = (title?: string): string => {
+  const t = String(title ?? "");
+  return t.toLowerCase().replace(/[^\w ]+/g, "").replace(/ +/g, "-");
+};
 
 const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoaded = false }) => {
   // Determine button color based on location (domestic or international)
@@ -48,7 +47,7 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
       <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-110">
         <Image
           src={tour.image}
-          alt={tour.title}
+          alt={String(tour.title ?? "")}
           fill
           className="object-cover object-center"
           // mark priority for hero-like images to improve LCP; remove if many images on page
@@ -68,7 +67,7 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
             className="text-xl md:text-lg xl:text-xl font-bold text-gray-900 leading-tight mb-1"
             style={{ fontFamily: "var(--font-family-baloo)" }}
           >
-            {tour.title}
+            {String(tour.title ?? "")}
           </h3>
 
           <p
@@ -79,9 +78,9 @@ const DestinationCard: FC<DestinationCardProps> = ({ tour, index = 0, isNewlyLoa
           </p>
 
           <div className="flex items-center text-gray-600 text-sm md:text-xs xl:text-sm">
-            <span className="font-medium">From {tour.price}</span>
+            <span className="font-medium">From {String(tour.price ?? "")}</span>
             <span className="mx-2">•</span>
-            <span>{tour.duration} trip</span>
+            <span>{String(tour.duration ?? "")} trip</span>
           </div>
 
           <Link

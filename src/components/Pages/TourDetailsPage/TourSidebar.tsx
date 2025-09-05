@@ -1,69 +1,87 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { Share2, Phone, Check, Calendar } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Share2, Check, Calendar } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useRouter } from "next/navigation";
 import SSButton from "@/components/UI/SSButton";
 import { generateTourBookingInquiry } from "@/utils/contact.utils";
+import type { Tour as BaseTour } from "@/components/UI/TourCard";
 
-const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tour: any; selectedMonth?: string; selectedDateRange?: string }) => {
+type DateObj = {
+  range: string;
+  enabled?: boolean;
+  [key: string]: unknown;
+};
+
+type AvailableMonth = {
+  month: string;
+  dates: DateObj[];
+  // derived
+  enabledDates?: DateObj[];
+};
+
+type Tour = BaseTour & {
+  availableDates?: AvailableMonth[];
+  price?: number;
+  title?: string;
+  [key: string]: unknown;
+};
+
+const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tour: Tour; selectedMonth?: string; selectedDateRange?: string }) => {
   const router = useRouter();
   const [copied, setCopied] = useState(false);
   const [availableMonths, setAvailableMonths] = useState<string[]>([]);
-  const [availableDatesForMonth, setAvailableDatesForMonth] = useState<any[]>([]);
+  const [availableDatesForMonth, setAvailableDatesForMonth] = useState<DateObj[]>([]);
   const [showDateSelector, setShowDateSelector] = useState(false);
 
   // Use state for the selected values so they can be updated either from props or internal selection
-  const [internalSelectedMonth, setInternalSelectedMonth] =
-    useState<string>(selectedMonth);
-  const [internalSelectedDate, setInternalSelectedDate] =
-    useState<string>(selectedDateRange);
+  const [internalSelectedMonth, setInternalSelectedMonth] = useState<string>(selectedMonth);
+  const [internalSelectedDate, setInternalSelectedDate] = useState<string>(selectedDateRange);
 
   // typed hover transition to satisfy TS when using "spring"
   const hoverTransition = { type: "spring" as const, stiffness: 500, damping: 15 };
 
   // Initialize available months and dates if tour has availableDates
   useEffect(() => {
-    if (tour?.availableDates && tour.availableDates.length > 0) {
-      // Process all months but prepare the enabled dates
-      const processedMonths = tour.availableDates.map((month: any) => ({
-        ...month,
-        // Filter to only include enabled dates for dropdown
-        enabledDates: month.dates.filter((dateObj: any) => dateObj.enabled !== false),
-      }));
+    const months = Array.isArray(tour?.availableDates) ? tour.availableDates : [];
+    if (months.length === 0) {
+      setShowDateSelector(false);
+      setAvailableMonths([]);
+      setAvailableDatesForMonth([]);
+      return;
+    }
 
-      // Only include months that have at least one enabled date
-      const monthsWithEnabledDates = processedMonths.filter(
-        (month: any) => month.enabledDates.length > 0
-      );
+    const processedMonths: AvailableMonth[] = months.map((m) => {
+      const dates = Array.isArray(m.dates) ? m.dates : [];
+      const enabledDates = dates.filter((d) => d && (d.enabled ?? true));
+      return { ...m, dates, enabledDates };
+    });
 
-      if (monthsWithEnabledDates.length > 0) {
-        const months = monthsWithEnabledDates.map((item: any) => item.month);
-        setAvailableMonths(months);
-        setShowDateSelector(true);
+    const monthsWithEnabledDates = processedMonths.filter((m) => (m.enabledDates ?? []).length > 0);
 
-        // Default to first month if no selection from props
-        if (!internalSelectedMonth) {
-          setInternalSelectedMonth(months[0]);
-          // Get enabled dates for the first month
-          const firstMonthData = monthsWithEnabledDates.find((m: any) => m.month === months[0]);
-          if (firstMonthData) {
-            setAvailableDatesForMonth(firstMonthData.enabledDates);
-          }
-        } else {
-          // Get enabled dates for the selected month
-          const selectedMonthData = monthsWithEnabledDates.find((m: any) => m.month === internalSelectedMonth);
-          if (selectedMonthData) {
-            setAvailableDatesForMonth(selectedMonthData.enabledDates);
-          }
+    if (monthsWithEnabledDates.length > 0) {
+      const monthNames = monthsWithEnabledDates.map((m) => m.month);
+      setAvailableMonths(monthNames);
+      setShowDateSelector(true);
+
+      // Default to first month if no selection from props
+      if (!internalSelectedMonth) {
+        const first = monthNames[0];
+        setInternalSelectedMonth(first);
+        const firstMonthData = monthsWithEnabledDates.find((m) => m.month === first);
+        if (firstMonthData) {
+          setAvailableDatesForMonth(firstMonthData.enabledDates ?? []);
         }
       } else {
-        // No months with enabled dates
-        setShowDateSelector(false);
+        const selected = monthsWithEnabledDates.find((m) => m.month === internalSelectedMonth);
+        setAvailableDatesForMonth(selected?.enabledDates ?? []);
       }
     } else {
       setShowDateSelector(false);
+      setAvailableMonths([]);
+      setAvailableDatesForMonth([]);
     }
+    // only depend on tour
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tour]);
 
@@ -79,23 +97,25 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
 
   // Update available dates when month changes
   useEffect(() => {
-    if (internalSelectedMonth && tour?.availableDates) {
-      // Find the selected month data
-      const monthData = tour.availableDates.find((item: any) => item.month === internalSelectedMonth);
+    if (!internalSelectedMonth || !Array.isArray(tour?.availableDates)) {
+      return;
+    }
 
-      if (monthData) {
-        // Filter to only include enabled dates
-        const enabledDates = monthData.dates.filter((dateObj: any) => dateObj.enabled !== false);
-        setAvailableDatesForMonth(enabledDates);
+    const monthData = tour.availableDates.find((item) => item.month === internalSelectedMonth);
+    if (monthData && Array.isArray(monthData.dates)) {
+      const enabledDates = monthData.dates.filter((dateObj) => dateObj.enabled !== false);
+      setAvailableDatesForMonth(enabledDates);
 
-        // If the currently selected date isn't in the new month or is disabled, reset it
-        if (internalSelectedDate) {
-          const dateStillValid = enabledDates.some((dateObj: any) => dateObj.range === internalSelectedDate);
-          if (!dateStillValid) {
-            setInternalSelectedDate("");
-          }
+      // If the currently selected date isn't in the new month or is disabled, reset it
+      if (internalSelectedDate) {
+        const dateStillValid = enabledDates.some((dateObj) => dateObj.range === internalSelectedDate);
+        if (!dateStillValid) {
+          setInternalSelectedDate("");
         }
       }
+    } else {
+      setAvailableDatesForMonth([]);
+      setInternalSelectedDate("");
     }
   }, [internalSelectedMonth, tour, internalSelectedDate]);
 
@@ -128,8 +148,8 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
 
   // Handle custom quote request
   const handleCustomQuote = () => {
-    const subject = `Custom Quote Request: ${tour.title}`;
-    const message = `I'm interested in a custom quote for the "${tour.title}" tour. I would like to discuss specific requirements and preferences.`;
+    const subject = `Custom Quote Request: ${tour.title ?? ""}`;
+    const message = `I am interested in a custom quote for the "${tour.title ?? ""}" tour. I would like to discuss specific requirements and preferences.`;
     const params = new URLSearchParams({ subject, message });
     router.push(`/contact?${params.toString()}`);
   };
@@ -141,9 +161,10 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
       setCopied(true);
 
       // Reset button text after 2 seconds
-      setTimeout(() => {
+      const t = setTimeout(() => {
         setCopied(false);
       }, 2000);
+      return () => clearTimeout(t);
     }
   };
 
@@ -153,7 +174,7 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
         <span className="text-gray-600 text-sm">Starting from</span>
         <div className="flex items-center">
           <span className="text-3xl font-bold text-orange-500">
-            ₹{tour.price?.toLocaleString?.() ?? tour.price}
+            ₹{typeof tour?.price === "number" ? tour.price.toLocaleString() : tour?.price ?? ""}
           </span>
           <span className="text-gray-600 ml-1">per person</span>
         </div>
@@ -199,7 +220,7 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
                 className="w-full p-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
               >
                 <option value="">Select date</option>
-                {availableDatesForMonth.map((dateObj: any) => (
+                {availableDatesForMonth.map((dateObj) => (
                   <option key={dateObj.range} value={dateObj.range}>
                     {dateObj.range}
                   </option>
@@ -210,18 +231,13 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
 
           {internalSelectedDate && (
             <div className="mt-2 p-2 bg-green-50 text-green-700 text-xs rounded-md">
-              You've selected: {internalSelectedDate}, {internalSelectedMonth}
+              You have selected: {internalSelectedDate}, {internalSelectedMonth}
             </div>
           )}
         </div>
       )}
 
-      <SSButton
-        variant="primary"
-        color="var(--color-orange)"
-        className="w-full mb-3"
-        onClick={handleBookNow}
-      >
+      <SSButton variant="primary" color="var(--color-orange)" className="w-full mb-3" onClick={handleBookNow}>
         Book Now
       </SSButton>
 
@@ -230,33 +246,20 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
         Need different dates or special arrangements? We can help!
       </p>
 
-      <SSButton
-        variant="outline"
-        color="var(--color-orange)"
-        className="w-full mb-6"
-        onClick={handleCustomQuote}
-      >
+      <SSButton variant="outline" color="var(--color-orange)" className="w-full mb-6" onClick={handleCustomQuote}>
         Request Custom Quote
       </SSButton>
 
       <div className="flex justify-between mb-6">
         <motion.button
           className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
-            copied
-              ? "bg-green-100 text-green-700"
-              : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
+            copied ? "bg-green-100 text-green-700" : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
           }`}
-          whileHover={
-            !copied
-              ? {
-                  transform: "translate3d(0px, -2px, 0px)",
-                  transition: hoverTransition,
-                }
-              : {}
-          }
+          whileHover={!copied ? { transform: "translate3d(0px, -2px, 0px)", transition: hoverTransition } : {}}
           whileTap={!copied ? { transform: "translate3d(0px, 1px, 0px)" } : {}}
           initial={{ transform: "translate3d(0px, 0px, 0px)" }}
           onClick={copyToClipboard}
+          type="button"
         >
           {copied ? (
             <>
@@ -274,15 +277,8 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
 
       <div className="border-t border-gray-200 pt-6">
         <h3 className="font-bold text-gray-800 mb-3">Need Help?</h3>
-        <p className="text-gray-600 text-sm mb-3">
-          Our travel experts are ready to assist you with any questions or special requests.
-        </p>
-        <SSButton
-          variant="outline"
-          color="var(--color-orange)"
-          className="w-full flex items-center justify-center gap-2"
-          onClick={() => router.push("/contact")}
-        >
+        <p className="text-gray-600 text-sm mb-3">Our travel experts are ready to assist you with any questions or special requests.</p>
+        <SSButton variant="outline" color="var(--color-orange)" className="w-full flex items-center justify-center gap-2" onClick={() => router.push("/contact")}>
           Contact Our Team
         </SSButton>
       </div>
@@ -290,12 +286,7 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
       {/* Toast Notification */}
       <AnimatePresence>
         {copied && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50"
-          >
+          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50">
             <Check size={16} className="text-green-400" />
             <span>Link copied to clipboard!</span>
           </motion.div>

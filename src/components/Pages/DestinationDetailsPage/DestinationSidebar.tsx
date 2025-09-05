@@ -1,18 +1,29 @@
 "use client";
 
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Share2, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SSButton from "@/components/UI/SSButton";
 
+interface Attraction {
+  title?: string;
+  [key: string]: unknown;
+}
+
+interface TourData {
+  title?: string;
+  attractions?: Attraction[] | null;
+  [key: string]: unknown;
+}
+
 interface Props {
-  tourData: any;
+  tourData: TourData;
   executeScroll: (id: string) => void;
 }
 
-// Animation variants (cast to any when needed)
-const contentFadeIn: any = {
+// Animation variants (typed with Variants)
+const contentFadeIn: Variants = {
   initial: {
     opacity: 0,
     transform: "translate3d(0px, 30px, 0px)",
@@ -26,6 +37,17 @@ const contentFadeIn: any = {
       damping: 20,
     },
   },
+};
+
+// small hover/tap targets for reuse (no `any`)
+const hoverTransition = { type: "spring", stiffness: 500, damping: 25 } as const;
+const hoverMove = { x: 4, transition: hoverTransition };
+const tapMove = { y: 1 };
+
+const toastVariants: Variants = {
+  hidden: { opacity: 0, y: 50, transform: "translate3d(0px,50px,0px)" },
+  visible: { opacity: 1, y: 0, transform: "translate3d(0px,0px,0px)" },
+  exit: { opacity: 0, y: 20, transform: "translate3d(0px,20px,0px)" },
 };
 
 const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
@@ -45,22 +67,22 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch (err) {
-      // silent fail
+    } catch (error) {
+      // keep a minimal console trace for debugging
+      // using the variable avoids the "defined but never used" lint warning
+      // and avoids `any` usage
+      // eslint-disable-next-line no-console
+      console.error(error);
     }
   };
 
   return (
     <div className="w-full sticky" style={{ top: "24px", height: "fit-content" }}>
-      <motion.div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm" variants={contentFadeIn}>
+      <motion.div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm" variants={contentFadeIn} initial="initial" animate="animate">
         <h3 className="text-xl font-bold mb-4">On This Page</h3>
         <nav>
           <ul className="space-y-3">
-            <motion.li
-              initial={{ transform: "translate3d(0px, 0px, 0px)" }}
-              whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
-              transition={{ type: "spring", stiffness: 500, damping: 25 }}
-            >
+            <motion.li whileHover={hoverMove} transition={hoverTransition}>
               <button
                 onClick={() => executeScroll("overview")}
                 className="text-gray-700 hover:text-[var(--color-orange)] font-medium transition-colors flex items-center gap-2 cursor-pointer"
@@ -77,29 +99,20 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
               </p>
               <ul className="space-y-2 pl-4 border-l border-gray-200 ml-1">
                 {Array.isArray(tourData?.attractions) &&
-                  tourData.attractions.map((attraction: any, idx: number) => (
-                    <motion.li
-                      key={idx}
-                      initial={{ transform: "translate3d(0px, 0px, 0px)" }}
-                      whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
-                      transition={{ type: "spring", stiffness: 500, damping: 25 }}
-                    >
+                  tourData.attractions.map((attraction: Attraction, idx: number) => (
+                    <motion.li key={idx} whileHover={hoverMove} transition={hoverTransition}>
                       <button
                         onClick={() => executeScroll(`attraction-${idx}`)}
                         className="text-gray-600 hover:text-[var(--color-yellow-orange)] text-sm transition-colors cursor-pointer text-left block w-full"
                       >
-                        {attraction.title}
+                        {String(attraction.title ?? "")}
                       </button>
                     </motion.li>
                   ))}
               </ul>
             </li>
 
-            <motion.li
-              initial={{ transform: "translate3d(0px, 0px, 0px)" }}
-              whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
-              transition={{ type: "spring", stiffness: 500, damping: 25 }}
-            >
+            <motion.li whileHover={hoverMove} transition={hoverTransition}>
               <button
                 onClick={() => executeScroll("packages")}
                 className="text-gray-700 hover:text-[var(--color-orange)] font-medium transition-colors flex items-center gap-2 cursor-pointer"
@@ -109,11 +122,7 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
               </button>
             </motion.li>
 
-            <motion.li
-              initial={{ transform: "translate3d(0px, 0px, 0px)" }}
-              whileHover={{ transform: "translate3d(4px, 0px, 0px)" }}
-              transition={{ type: "spring", stiffness: 500, damping: 25 }}
-            >
+            <motion.li whileHover={hoverMove} transition={hoverTransition}>
               <button
                 onClick={() => executeScroll("similar")}
                 className="text-gray-700 hover:text-[var(--color-orange)] font-medium transition-colors flex items-center gap-2 cursor-pointer"
@@ -155,10 +164,11 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
               className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
                 copied ? "bg-green-100 text-green-700" : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
               }`}
-              whileHover={!copied ? ({ transform: "translate3d(0px, -2px, 0px)", transition: { type: "spring", stiffness: 500, damping: 15 } } as any) : undefined}
-              whileTap={!copied ? ({ transform: "translate3d(0px, 1px, 0px)" } as any) : undefined}
-              initial={{ transform: "translate3d(0px, 0px, 0px)" }}
+              whileHover={!copied ? { y: -2, transition: hoverTransition } : undefined}
+              whileTap={!copied ? tapMove : undefined}
+              initial={{ y: 0 }}
               onClick={copyToClipboard}
+              type="button"
             >
               {copied ? (
                 <>
@@ -178,12 +188,7 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
 
       <AnimatePresence>
         {copied && (
-          <motion.div
-            initial={{ opacity: 0, transform: "translate3d(0px, 50px, 0px)" }}
-            animate={{ opacity: 1, transform: "translate3d(0px, 0px, 0px)" }}
-            exit={{ opacity: 0, transform: "translate3d(0px, 20px, 0px)" }}
-            className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50"
-          >
+          <motion.div variants={toastVariants} initial="hidden" animate="visible" exit="exit" className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50">
             <Check size={16} className="text-green-400" />
             <span>Link copied to clipboard!</span>
           </motion.div>

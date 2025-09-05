@@ -77,8 +77,10 @@ const JoinTeamForm: React.FC = () => {
         position: "",
         message: "",
       });
-    } catch (err: any) {
-      setError(err?.message || "Something went wrong. Please try again later.");
+    } catch (err: unknown) {
+      // Narrow unknown to a usable message without using `any`
+      const message = err instanceof Error ? err.message : String(err ?? "Something went wrong. Please try again later.");
+      setError(message);
       console.error("Error submitting form:", err);
     } finally {
       setSubmitting(false);

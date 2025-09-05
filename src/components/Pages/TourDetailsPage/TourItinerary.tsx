@@ -5,7 +5,36 @@ import Head from "next/head";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ChevronDown, ChevronUp, MapPin, Clock } from "lucide-react";
 
-const TourItinerary = ({ tour }: { tour: any }) => {
+type MealFlags = {
+  breakfast?: boolean;
+  lunch?: boolean;
+  dinner?: boolean;
+  [key: string]: unknown;
+};
+
+type ItineraryDay = {
+  day?: number;
+  title?: string;
+  description?: string;
+  location?: string;
+  activities?: string[];
+  meals?: MealFlags;
+  accommodation?: string;
+  [key: string]: unknown;
+};
+
+type Tour = {
+  id?: string | number;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+  route?: string;
+  duration?: string;
+  itinerary?: ItineraryDay[];
+  [key: string]: unknown;
+};
+
+const TourItinerary: React.FC<{ tour: Tour }> = ({ tour }) => {
   const [openAccordion, setOpenAccordion] = useState<number | null>(null);
 
   const toggleAccordion = (index: number) => {
@@ -38,64 +67,50 @@ const TourItinerary = ({ tour }: { tour: any }) => {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: `${tour.title || "Tour"} - Itinerary`,
-          description:
-            tour.subtitle || tour.description || `${tour.title} itinerary`,
-          itemListElement: tour.itinerary.map((day: any, idx: number) => ({
+          description: tour.subtitle || tour.description || `${tour.title} itinerary`,
+          itemListElement: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
             "@type": "ListItem",
             position: idx + 1,
-            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${
-              day.title || ""
-            }`,
-            description: day.description || "",
+            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title ?? ""}`,
+            description: day.description ?? "",
           })),
         }
       : null;
 
-  if (!tour.itinerary || !tour.itinerary.length) {
+  if (!tour.itinerary || tour.itinerary.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
-          Tour Itinerary
-        </h2>
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Tour Itinerary</h2>
 
         <div className="flex flex-col md:flex-row md:items-center gap-3 mb-5 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-100">
           <div className="flex items-center">
             <MapPin size={16} className="text-orange-500 mr-2 flex-shrink-0" />
             <div>
               <span className="text-xs sm:text-sm text-gray-500">Route</span>
-              <p className="font-medium text-sm sm:text-base text-gray-800">
-                {tour.route || "Various destinations"}
-              </p>
+              <p className="font-medium text-sm sm:text-base text-gray-800">{tour.route || "Various destinations"}</p>
             </div>
           </div>
 
-          <div className="hidden md:block w-px h-8 bg-gray-300 mx-2"></div>
+          <div className="hidden md:block w-px h-8 bg-gray-300 mx-2" />
 
           <div className="flex items-center">
             <Clock size={16} className="text-orange-500 mr-2 flex-shrink-0" />
             <div>
               <span className="text-xs sm:text-sm text-gray-500">Duration</span>
-              <p className="font-medium text-sm sm:text-base text-gray-800">
-                {tour.duration || "N/A"}
-              </p>
+              <p className="font-medium text-sm sm:text-base text-gray-800">{tour.duration || "N/A"}</p>
             </div>
           </div>
         </div>
 
         <p className="text-gray-600 italic text-center py-6 sm:py-8 text-sm sm:text-base">
-          Detailed itinerary for this tour is currently being updated. Please
-          contact us for more information.
+          Detailed itinerary for this tour is currently being updated. Please contact us for more information.
         </p>
       </div>
     );
   }
 
-  const metaTitle = tour?.title
-    ? `${tour.title} — Day-by-Day Itinerary & Highlights | Safari Sutra`
-    : "Tour Itinerary — Day-by-Day | Safari Sutra";
-  const metaDescription =
-    (tour?.subtitle || tour?.description || "").slice(0, 160) ||
-    `${tour?.title || "Tour"} itinerary and day by day schedule.`;
+  const metaTitle = tour?.title ? `${tour.title} — Day-by-Day Itinerary & Highlights | Safari Sutra` : "Tour Itinerary — Day-by-Day | Safari Sutra";
+  const metaDescription = (tour?.subtitle || tour?.description || "").slice(0, 160) || `${tour?.title || "Tour"} itinerary and day by day schedule.`;
 
   return (
     <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
@@ -107,42 +122,36 @@ const TourItinerary = ({ tour }: { tour: any }) => {
           href={
             typeof window !== "undefined"
               ? window.location.href
-              : `https://thesafarisutra.com/tour/${tour?.id || ""}/itinerary`
+              : `https://thesafarisutra.com/tour/${tour?.id ?? ""}/itinerary`
           }
         />
         {itineraryJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itineraryJsonLd) }} />}
       </Head>
 
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
-        Tour Itinerary
-      </h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Tour Itinerary</h2>
 
       <div className="flex flex-col md:flex-row md:items-center gap-3 mb-5 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-100">
         <div className="flex items-center">
           <MapPin size={16} className="text-orange-500 mr-2 flex-shrink-0" />
           <div>
             <span className="text-xs sm:text-sm text-gray-500">Route</span>
-            <p className="font-medium text-sm sm:text-base text-gray-800">
-              {tour.route || "Various destinations"}
-            </p>
+            <p className="font-medium text-sm sm:text-base text-gray-800">{tour.route || "Various destinations"}</p>
           </div>
         </div>
 
-        <div className="hidden md:block w-px h-8 bg-gray-300 mx-2"></div>
+        <div className="hidden md:block w-px h-8 bg-gray-300 mx-2" />
 
         <div className="flex items-center">
           <Clock size={16} className="text-orange-500 mr-2 flex-shrink-0" />
           <div>
             <span className="text-xs sm:text-sm text-gray-500">Duration</span>
-            <p className="font-medium text-sm sm:text-base text-gray-800">
-              {tour.duration || "N/A"}
-            </p>
+            <p className="font-medium text-sm sm:text-base text-gray-800">{tour.duration || "N/A"}</p>
           </div>
         </div>
       </div>
 
       <div className="space-y-3 sm:space-y-4">
-        {tour.itinerary.map((day: any, index: number) => (
+        {(tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, index: number) => (
           <div key={`day-${day.day !== undefined ? day.day : index}`} className="border border-gray-200 rounded-lg overflow-hidden">
             <button
               className={`flex justify-between items-center w-full p-3 sm:p-4 text-left focus:outline-none transition-colors ${openAccordion === index ? "bg-orange-50" : "bg-white hover:bg-gray-50"}`}
@@ -172,7 +181,7 @@ const TourItinerary = ({ tour }: { tour: any }) => {
                       {day.description}
                     </p>
 
-                    {day.activities && day.activities.length > 0 && (
+                    {Array.isArray(day.activities) && day.activities.length > 0 && (
                       <div className="space-y-1 sm:space-y-2">
                         <h4 className="font-medium text-sm sm:text-base text-gray-800">Activities:</h4>
                         <ul className="list-disc pl-4 sm:pl-5 space-y-0.5 sm:space-y-1">
@@ -213,7 +222,7 @@ const TourItinerary = ({ tour }: { tour: any }) => {
       <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-orange-50 rounded-lg border border-orange-100 text-gray-700">
         <p className="font-medium text-orange-800 mb-1 sm:mb-2 text-sm sm:text-base">Important Note:</p>
         <p className="text-sm sm:text-base text-justify" style={{ textAlignLast: "left" }}>
-          Itinerary is subject to change based on local conditions, weather, and other factors. We'll do our best to adhere to the schedule but flexibility may be required.
+          Itinerary is subject to change based on local conditions, weather, and other factors. We&apos;ll do our best to adhere to the schedule but flexibility may be required.
         </p>
       </div>
     </div>

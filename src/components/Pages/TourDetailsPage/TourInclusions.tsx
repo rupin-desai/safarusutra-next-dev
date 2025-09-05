@@ -1,19 +1,24 @@
 import React from "react";
 import Head from "next/head";
 import { CheckCircle } from "lucide-react";
+import type { Tour as BaseTour } from "@/components/UI/TourCard";
 
-const TourInclusions = ({ tour }: { tour: any }) => {
-  const inclusions = tour?.inclusions ?? [];
-  const exclusions = tour?.exclusions ?? [];
+const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
+  const inclusions: string[] = Array.isArray(tour?.inclusions)
+    ? (tour!.inclusions as string[])
+    : [];
+  const exclusions: string[] = Array.isArray(tour?.exclusions)
+    ? (tour!.exclusions as string[])
+    : [];
 
   // improved SEO title
   const metaTitle = tour?.title
-    ? `${tour.title} — Inclusions & What’s Included | Safari Sutra`
-    : "Tour Inclusions — What’s Included | Safari Sutra";
+    ? `${tour.title} — Inclusions & What&apos;s Included | Safari Sutra`
+    : "Tour Inclusions — What&apos;s Included | Safari Sutra";
 
   const metaDescription =
     (inclusions.length && inclusions.slice(0, 5).join(", ")) ||
-    tour?.description?.slice(0, 160) ||
+    (typeof tour?.description === "string" ? tour.description.slice(0, 160) : undefined) ||
     "Tour inclusions and exclusions on Safari Sutra.";
 
   const origin =
@@ -92,7 +97,7 @@ const TourInclusions = ({ tour }: { tour: any }) => {
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Tour Inclusions</h2>
 
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-3">What's Included</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-3">What&apos;s Included</h3>
         <ul className="space-y-2">
           {inclusions.map((item: string, index: number) => (
             <li key={index} className="flex items-start">
@@ -107,7 +112,7 @@ const TourInclusions = ({ tour }: { tour: any }) => {
       </div>
 
       <div>
-        <h3 className="text-xl font-bold text-gray-800 mb-3">What's Not Included</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-3">What&apos;s Not Included</h3>
         <ul className="space-y-2">
           {exclusions.map((item: string, index: number) => (
             <li key={index} className="flex items-start">
