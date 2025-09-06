@@ -46,6 +46,20 @@ const normalizeEntry = (entry: unknown): Tour => {
     category = undefined;
   }
 
+  // map cancellation policy array safely
+  const cancellationPolicy = Array.isArray(e.cancellationPolicy)
+    ? (e.cancellationPolicy as unknown[]).map((item) => String(item))
+    : undefined;
+
+  // also map other policy-related fields if they exist
+  const paymentPolicy = Array.isArray(e.paymentPolicy)
+    ? (e.paymentPolicy as unknown[]).map((item) => String(item))
+    : undefined;
+
+  const bookingTerms = Array.isArray(e.bookingTerms)
+    ? (e.bookingTerms as unknown[]).map((item) => String(item))
+    : undefined;
+
   return {
     id,
     title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
@@ -56,10 +70,12 @@ const normalizeEntry = (entry: unknown): Tour => {
     description: typeof e.description === "string" ? e.description : undefined,
     caption: typeof e.caption === "string" ? e.caption : undefined,
     duration: typeof e.duration === "string" ? e.duration : undefined,
-    price:
-      typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
+    price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     category,
+    cancellationPolicy,
+    paymentPolicy,
+    bookingTerms,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
     relatedDestinations: Array.isArray(e.relatedDestinations)
       ? (e.relatedDestinations as Array<string | number>)

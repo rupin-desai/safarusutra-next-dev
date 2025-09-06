@@ -43,6 +43,24 @@ const normalizeEntry = (entry: unknown): Tour => {
     category = undefined;
   }
 
+  // map itinerary array safely
+  const itinerary = Array.isArray(e.itinerary)
+    ? (e.itinerary as unknown[]).map((it) => {
+        if (!it || typeof it !== "object") return {};
+        const o = it as Record<string, unknown>;
+        return {
+          day: typeof o.day === "number" ? o.day : typeof o.day === "string" ? Number(o.day) : undefined,
+          title: typeof o.title === "string" ? o.title : undefined,
+          description: typeof o.description === "string" ? o.description : undefined,
+          location: typeof o.location === "string" ? o.location : undefined,
+          activities: Array.isArray(o.activities) ? (o.activities as unknown[]).map(a => String(a)) : undefined,
+          accommodation: typeof o.accommodation === "string" ? o.accommodation : undefined,
+          meals: o.meals && typeof o.meals === "object" ? o.meals : undefined,
+          ...o,
+        };
+      })
+    : undefined;
+
   return {
     id,
     title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
@@ -56,6 +74,7 @@ const normalizeEntry = (entry: unknown): Tour => {
     price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     category,
+    itinerary,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
     relatedDestinations: Array.isArray(e.relatedDestinations)
       ? (e.relatedDestinations as Array<string | number>)

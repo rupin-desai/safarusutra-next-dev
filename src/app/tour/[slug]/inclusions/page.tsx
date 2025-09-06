@@ -23,6 +23,8 @@ type Tour = {
   category?: string | string[];
   featured?: boolean;
   relatedDestinations?: Array<string | number>;
+  inclusions?: string[];
+  exclusions?: string[];
   [k: string]: unknown;
 };
 
@@ -39,6 +41,15 @@ const normalizeEntry = (entry: unknown): Tour => {
   else if (Array.isArray(rawCategory)) category = rawCategory.map((c) => (typeof c === "string" ? c : String(c)));
   else category = undefined;
 
+  // map inclusions and exclusions arrays safely
+  const inclusions = Array.isArray(e.inclusions)
+    ? (e.inclusions as unknown[]).map((item) => String(item))
+    : undefined;
+
+  const exclusions = Array.isArray(e.exclusions)
+    ? (e.exclusions as unknown[]).map((item) => String(item))
+    : undefined;
+
   return {
     id,
     title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
@@ -52,6 +63,8 @@ const normalizeEntry = (entry: unknown): Tour => {
     price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     category,
+    inclusions,
+    exclusions,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
     relatedDestinations: Array.isArray(e.relatedDestinations) ? (e.relatedDestinations as Array<string | number>) : undefined,
   } as Tour;

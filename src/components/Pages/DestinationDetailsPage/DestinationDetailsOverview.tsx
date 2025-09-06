@@ -3,14 +3,14 @@
 import React, { useRef, useEffect } from "react";
 import { motion, useInView, useAnimation, Variants } from "framer-motion";
 import {
-   Star,
-   Users,
-   Calendar,
-   Globe,
-   Clock,
-   Map,
-   IndianRupee,
-   Phone,
+  Star,
+  Users,
+  Calendar,
+  Globe,
+  Clock,
+  Map,
+  IndianRupee,
+  Phone,
 } from "lucide-react";
 import TourSidebar from "./DestinationSidebar";
 
@@ -35,35 +35,21 @@ interface Props {
 
 // Animation variants typed with Variants (avoid `any`)
 const fadeIn: Variants = {
-   initial: {
-     opacity: 0,
-     transform: "translate3d(0px, 20px, 0px)",
-   },
-   animate: {
-     opacity: 1,
-     transform: "translate3d(0px, 0px, 0px)",
-     transition: {
-       type: "spring",
-       stiffness: 300,
-       damping: 20,
-     },
-   },
+  initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: { type: "spring", stiffness: 300, damping: 20 },
+  },
 };
 
 const contentFadeIn: Variants = {
-   initial: {
-     opacity: 0,
-     transform: "translate3d(0px, 30px, 0px)",
-   },
-   animate: {
-     opacity: 1,
-     transform: "translate3d(0px, 0px, 0px)",
-     transition: {
-       type: "spring",
-       stiffness: 300,
-       damping: 20,
-     },
-   },
+  initial: { opacity: 0, transform: "translate3d(0px, 30px, 0px)" },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: { type: "spring", stiffness: 300, damping: 20 },
+  },
 };
 
 /* MotionSection: reliable in-view trigger using useInView + useAnimation */
@@ -82,7 +68,13 @@ const MotionSection: React.FC<{
   }, [inView, controls]);
 
   return (
-    <motion.section ref={ref} className={className} initial="initial" animate={controls} variants={variants}>
+    <motion.section
+      ref={ref}
+      className={className}
+      initial="initial"
+      animate={controls}
+      variants={variants}
+    >
       {children}
     </motion.section>
   );
@@ -121,7 +113,10 @@ const getDetailStyles = (title: string, index: number): string => {
   }
 };
 
-const getDetailIcon = (title: string, colorClass: string): React.ReactElement | null => {
+const getDetailIcon = (
+  title: string,
+  colorClass: string
+): React.ReactElement | null => {
   switch (title) {
     case "Best For":
       return <Users size={20} className={colorClass} />;
@@ -144,7 +139,10 @@ const getDetailIcon = (title: string, colorClass: string): React.ReactElement | 
   }
 };
 
-const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }) => {
+const DestinationDetailsOverview: React.FC<Props> = ({
+  tourData,
+  executeScroll,
+}) => {
   if (!tourData) return null;
 
   const formatDescription = (description?: string) => {
@@ -192,7 +190,8 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
                 ))}
               </div>
               <span className="text-sm text-gray-600">
-                {tourData.rating ?? "0"} ({Math.floor(Number(tourData.rating || 0) * 20)} reviews)
+                {tourData.rating ?? "0"} (
+                {Math.floor(Number(tourData.rating || 0) * 20)} reviews)
               </span>
               <span className="mx-3 text-gray-400">•</span>
               <span className="text-sm text-gray-600">{tourData.location}</span>
@@ -207,7 +206,10 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
             </motion.div>
 
             <div className="w-full lg:hidden mb-10">
-              <TourSidebar tourData={tourData} executeScroll={executeScroll ?? (() => {})} />
+              <TourSidebar
+                tourData={tourData}
+                executeScroll={executeScroll ?? (() => {})}
+              />
             </div>
 
             <motion.h2
@@ -217,9 +219,9 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
               Trip Details
             </motion.h2>
 
-            {/* changed to plain div so MotionSection controls propagate directly to child motion items */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 w-full">
               {Array.isArray(tourData.details) &&
+              tourData.details.length > 0 ? (
                 tourData.details.map((detail, index) => {
                   const colorClass = getDetailStyles(detail.title, index);
                   return (
@@ -234,7 +236,9 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
                     >
                       <div className="flex items-center gap-2 mb-2 justify-center lg:justify-start">
                         {getDetailIcon(detail.title, colorClass)}
-                        <h3 className={`text-lg font-bold ${colorClass}`}>{detail.title}</h3>
+                        <h3 className={`text-lg font-bold ${colorClass}`}>
+                          {detail.title}
+                        </h3>
                       </div>
 
                       <div className="text-gray-700 leading-relaxed text-center lg:text-left lg:pl-7">
@@ -242,12 +246,20 @@ const DestinationDetailsOverview: React.FC<Props> = ({ tourData, executeScroll }
                       </div>
                     </motion.div>
                   );
-                })}
+                })
+              ) : (
+                <div className="col-span-full text-gray-500">
+                  No trip details available.
+                </div>
+              )}
             </div>
           </div>
 
           <div className="hidden lg:block lg:w-1/3">
-            <TourSidebar tourData={tourData} executeScroll={executeScroll ?? (() => {})} />
+            <TourSidebar
+              tourData={tourData}
+              executeScroll={executeScroll ?? (() => {})}
+            />
           </div>
         </div>
       </div>

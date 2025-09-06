@@ -11,42 +11,9 @@ import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 import DestinationPackages from "@/components/Pages/DestinationDetailsPage/DestinationPackages";
 import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/DestinationFAQs";
 
-import destinationListRaw from "@/data/DestinatonDetails.json";
-// details mapping for destinations -> tour details
-import tourDetailsMap from "@/data/TourDetails.json";
-
-export async function generateStaticParams() {
-  const raw: unknown = destinationListRaw;
-  let items: unknown[] = [];
-
-  if (Array.isArray(raw)) {
-    items = raw;
-  } else if (raw && typeof raw === "object") {
-    items = Object.values(raw as Record<string, unknown>);
-  }
-
-  const params = items
-    .map((d) => {
-      const obj = d && typeof d === "object" ? (d as Record<string, unknown>) : {};
-      const slugFromField = typeof obj.slug === "string" && obj.slug.trim().length > 0 ? obj.slug.trim() : undefined;
-      const title = typeof obj.title === "string" ? obj.title.trim() : "";
-      const slugFallback = title
-        ? title.toLowerCase().replace(/[^\w\s-]/g, "").replace(/\s+/g, "-")
-        : obj.id
-        ? String(obj.id)
-        : undefined;
-      const slug = slugFromField ?? slugFallback;
-      return slug ? { slug } : null;
-    })
-    .filter(Boolean) as { slug: string }[];
-
-  const seen = new Set<string>();
-  return params.filter((p) => {
-    if (seen.has(p.slug)) return false;
-    seen.add(p.slug);
-    return true;
-  });
-}
+import destinationDetailsRaw from "@/data/DestinatonDetails.json"; // per-destination details (map or array)
+import destinationsRaw from "@/data/Destinations.json"; // main array of destinations
+import tourDetailsMap from "@/data/TourDetails.json"; // optional extra mapping (kept for compatibility)
 
 /* Narrow runtime-friendly type for destination items */
 type Destination = {
@@ -74,17 +41,69 @@ const createSlug = (text: string) =>
 
 /* Normalize the imported JSON to an array (handles both object map and array JSON shapes) */
 const getDestinationsArray = (): Destination[] => {
-  const raw: unknown = destinationListRaw;
+  const raw: unknown = destinationsRaw;
   if (Array.isArray(raw)) return raw as Destination[];
-  if (raw && typeof raw === "object") {
-    return Object.values(raw as Record<string, Destination>);
-  }
+  if (raw && typeof raw === "object") return Object.values(raw as Record<string, Destination>);
   return [];
 };
 
-/**
- * Generate metadata for each destination page based on slug.
- */
+/* Resolve per-destination details (map or array) by id or slug */
+const resolveDetailsForIdOrSlug = (idOrSlug: string) => {
+  const raw: unknown = destinationDetailsRaw;
+  if (Array.isArray(raw)) {
+    // try id match first, then slug/title fallback
+    const byId = (raw as unknown[]).find((entry) => {
+      if (!entry || typeof entry !== "object") return false;
+      const e = entry as Record<string, unknown>;
+      return String(e.id ?? "") === String(idOrSlug);
+    });
+    if (byId) return (byId as Record<string, unknown>) ?? {};
+    const bySlug = (raw as unknown[]).find((entry) => {
+      if (!entry || typeof entry !== "object") return false;
+      const e = entry as Record<string, unknown>;
+      const slug = e.slug ?? (typeof e.title === "string" ? createSlug(e.title) : undefined);
+      return String(slug ?? "") === String(idOrSlug);
+    });
+    return (bySlug as Record<string, unknown>) ?? {};
+  }
+  if (raw && typeof raw === "object") {
+    const map = raw as Record<string, unknown>;
+    // direct key
+    if (map[idOrSlug]) return (map[idOrSlug] as Record<string, unknown>) ?? {};
+    // try numeric key
+    const numericKey = Object.keys(map).find((k) => String(k) === String(idOrSlug));
+    if (numericKey) return (map[numericKey] as Record<string, unknown>) ?? {};
+    // try finding by id/slug within values
+    const found = Object.values(map).find((entry) => {
+      if (!entry || typeof entry !== "object") return false;
+      const e = entry as Record<string, unknown>;
+      return String(e.id ?? e.slug ?? (typeof e.title === "string" ? createSlug(e.title) : "")) === String(idOrSlug);
+    });
+    return (found as Record<string, unknown>) ?? {};
+  }
+  return {};
+};
+
+export async function generateStaticParams() {
+  const items = getDestinationsArray();
+  const params = items
+    .map((d) => {
+      const slugFromField = typeof d.slug === "string" && d.slug.trim().length > 0 ? d.slug.trim() : undefined;
+      const title = typeof d.title === "string" ? d.title.trim() : "";
+      const slugFallback = title ? createSlug(title) : d.id ? String(d.id) : undefined;
+      const slug = slugFromField ?? slugFallback;
+      return slug ? { slug } : null;
+    })
+    .filter(Boolean) as { slug: string }[];
+
+  const seen = new Set<string>();
+  return params.filter((p) => {
+    if (seen.has(p.slug)) return false;
+    seen.add(p.slug);
+    return true;
+  });
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -99,10 +118,24 @@ export async function generateMetadata({
   }
 
   const destinations = getDestinationsArray();
-  const destination = destinations.find((d) => {
+  let destination = destinations.find((d) => {
     const candidate = d?.slug ? String(d.slug) : createSlug(String(d?.title ?? ""));
-    return candidate === slug;
+    return String(candidate) === String(slug);
   });
+
+  // fallback: try to resolve a detail entry that matches slug
+  if (!destination) {
+    const det = resolveDetailsForIdOrSlug(slug);
+    if (det && Object.keys(det).length > 0) {
+      destination = {
+        id: det.id,
+        title: String(det.title ?? det.name ?? ""),
+        slug: det.slug ?? slug,
+        description: String(det.description ?? ""),
+        image: String(det.image ?? det.heroImage ?? ""),
+      } as Destination;
+    }
+  }
 
   if (!destination) {
     return {
@@ -111,26 +144,8 @@ export async function generateMetadata({
     };
   }
 
-  const id = destination.id ? String(destination.id) : "";
-  // Resolve tour details safely — TourDetails.json can be either an object map or an array
-  const rawTourDetails: unknown = tourDetailsMap;
-  let details: Record<string, unknown> = {};
-
-  if (Array.isArray(rawTourDetails)) {
-    // If it's an array, find the entry whose id matches our id (loose matching)
-    const found = (rawTourDetails as unknown[]).find((entry) => {
-      if (!entry || typeof entry !== "object") return false;
-      const e = entry as Record<string, unknown>;
-      const candidateId = e.id ?? e["Id"] ?? e["ID"] ?? e["packageId"] ?? e["package_id"];
-      return String(candidateId ?? "") === String(id);
-    });
-    details = (found && typeof found === "object" ? (found as Record<string, unknown>) : {}) ?? {};
-  } else if (rawTourDetails && typeof rawTourDetails === "object") {
-    // If it's an object map keyed by id
-    details = ((rawTourDetails as Record<string, unknown>)[String(id)] as Record<string, unknown>) ?? {};
-  } else {
-    details = {};
-  }
+  const id = destination.id ? String(destination.id) : String(destination.slug ?? "");
+  const details = resolveDetailsForIdOrSlug(id);
 
   const completeData = { ...destination, ...details };
 
@@ -159,80 +174,129 @@ export async function generateMetadata({
   };
 }
 
-/**
- * Server page component: finds destination by slug and renders details.
- */
 export default function Page({ params }: { params: { slug?: string } }) {
   const slug = params?.slug ?? "";
   if (!slug) return notFound();
 
   const destinations = getDestinationsArray();
 
-  const destination = destinations.find((d) => {
+  // find by slug/title in primary destinations array
+  let destination = destinations.find((d) => {
     const candidate = d?.slug ? String(d.slug) : createSlug(String(d?.title ?? ""));
-    return candidate === slug;
+    return String(candidate) === String(slug);
   });
+
+  // fallback: if not found in array, try destinationDetails map/array
+  if (!destination) {
+    const det = resolveDetailsForIdOrSlug(slug);
+    if (det && Object.keys(det).length > 0) {
+      destination = {
+        id: det.id,
+        title: String(det.title ?? det.name ?? ""),
+        slug: det.slug ?? slug,
+        description: String(det.description ?? ""),
+        image: String(det.image ?? det.heroImage ?? ""),
+      } as Destination;
+    }
+  }
 
   if (!destination) return notFound();
 
-  const id = destination.id ? String(destination.id) : "";
-  // Resolve tour details safely — TourDetails.json can be either an object map or an array
-  const rawTourDetails: unknown = tourDetailsMap;
-  let details: Record<string, unknown> = {};
+  const id = destination.id ? String(destination.id) : String(destination.slug ?? "");
 
-  if (Array.isArray(rawTourDetails)) {
-    // If it's an array, find the entry whose id matches our id (loose matching)
-    const found = (rawTourDetails as unknown[]).find((entry) => {
-      if (!entry || typeof entry !== "object") return false;
-      const e = entry as Record<string, unknown>;
-      const candidateId = e.id ?? e["Id"] ?? e["ID"] ?? e["packageId"] ?? e["package_id"];
-      return String(candidateId ?? "") === String(id);
-    });
-    details = (found && typeof found === "object" ? (found as Record<string, unknown>) : {}) ?? {};
-  } else if (rawTourDetails && typeof rawTourDetails === "object") {
-    // If it's an object map keyed by id
-    details = ((rawTourDetails as Record<string, unknown>)[String(id)] as Record<string, unknown>) ?? {};
-  } else {
-    details = {};
-  }
+  // get per-destination details
+  const details = resolveDetailsForIdOrSlug(id);
+  const completeData: Record<string, unknown> = { ...destination, ...details };
 
-  const completeData: Record<string, unknown> = {
-    ...destination,
-    ...details,
+  // helpers
+  const getString = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
+  const parseRating = (v: unknown): number | undefined => {
+    if (v == null) return undefined;
+    if (typeof v === "number") return v;
+    if (typeof v === "string") {
+      const n = Number(String(v).replace(/[^\d.]/g, ""));
+      return Number.isFinite(n) ? n : undefined;
+    }
+    if (typeof v === "object") {
+      const o = v as Record<string, unknown>;
+      return parseRating(o.rating ?? o.Rating ?? o.score ?? o.value ?? o.stars);
+    }
+    return undefined;
   };
 
-  // normalize FAQ payload shape so it satisfies DestinationFAQsProps
-  const faqProp = (completeData.faq as { items?: { question: string; answer: string }[] } | null | undefined) ?? null;
+  // build detailsProp expected by DestinationDetailsOverview (Detail[])
+  const detailsObj = (details && typeof details === "object" ? (details as Record<string, unknown>) : {}) as Record<
+    string,
+    unknown
+  >;
+  const detailsProp: { title: string; description?: string }[] = [];
+  if (Array.isArray(detailsObj.details)) {
+    (detailsObj.details as unknown[]).forEach((item) => {
+      const o = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
+      const title = getString(o.title ?? o.name ?? o.label ?? "");
+      const description = getString(o.description ?? o.desc ?? o.value ?? "");
+      if (title) detailsProp.push({ title, description: description || undefined });
+    });
+  } else {
+    for (const [key, val] of Object.entries(detailsObj)) {
+      if (
+        [
+          "id",
+          "title",
+          "slug",
+          "heroImage",
+          "image",
+          "metaDescription",
+          "description",
+          "caption",
+          "location",
+          "faq",
+          "tourWhy",
+        ].includes(key)
+      )
+        continue;
+      if (val == null) continue;
+      if (typeof val === "string") {
+        const title = getString(key);
+        const description = getString(val);
+        detailsProp.push({ title, description: description || undefined });
+      } else if (typeof val === "object") {
+        const o = val as Record<string, unknown>;
+        const title = getString(o.title ?? key);
+        const description = getString(o.description ?? o.desc ?? o.value ?? "");
+        if (title) detailsProp.push({ title, description: description || undefined });
+      }
+    }
+  }
 
-  // Normalize attractions into the shape expected by DestinationAttractions to avoid `unknown[]` -> `Attraction[]` errors
+  // attractions
   type AttractionLocal = { title?: string; image?: string; description?: string };
-  const getString = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
   const attractionsProp: AttractionLocal[] = Array.isArray(completeData.attractions)
     ? (completeData.attractions as unknown[]).map((a) => {
-        const obj = typeof a === "object" && a !== null ? (a as Record<string, unknown>) : {};
+        const o = (a && typeof a === "object" ? (a as Record<string, unknown>) : {}) as Record<string, unknown>;
         return {
-          title: getString(obj.title),
-          image: getString(obj.image),
-          description: getString(obj.description),
+          title: getString(o.title),
+          image: getString(o.image),
+          description: getString(o.description),
         };
       })
     : [];
 
-  // Build a strongly-typed TourData shape for DestinationDetailsOverview
-  const detailsProp =
-    Array.isArray(completeData.details) && (completeData.details as unknown[]).length > 0
-      ? (completeData.details as unknown[]).map((d) => {
-          const obj = d && typeof d === "object" ? (d as Record<string, unknown>) : {};
-          return {
-            title: getString(obj.title) || "Detail",
-            description: getString(obj.description),
-          };
+  // try to resolve rating from merged data, details, or destinations array fallback
+  const altFromArray =
+    Array.isArray(destinationsRaw) && id
+      ? (destinationsRaw as unknown[]).find((a) => {
+          if (!a || typeof a !== "object") return false;
+          const o = a as Record<string, unknown>;
+          return String(o.id ?? "") === String(id);
         })
-      : [];
+      : undefined;
 
   const tourDataProp = {
     title: getString(completeData.title),
-    rating: completeData.rating != null ? Number(completeData.rating) : undefined,
+    rating:
+      parseRating(completeData.rating ?? completeData.Rating ?? details.rating ?? details.Rating) ??
+      parseRating(altFromArray ? (altFromArray as Record<string, unknown>).rating : undefined),
     location: getString(completeData.location),
     description: getString(completeData.description),
     longDescription: getString(completeData.longDescription ?? completeData.long_description),
@@ -254,20 +318,13 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
       <DestinationAttractions attractions={attractionsProp} />
 
-      <DestinationPackages
-        destinationName={String(completeData.title)}
-        destinationId={id ? Number(id) : undefined}
-      />
+      <DestinationPackages destinationName={String(completeData.title)} destinationId={id ? Number(id) : undefined} />
 
-      <DestinationRelated
-        relatedTours={[]}
-        currentTourId={id ? Number(id) : undefined}
-        allTours={destinations}
-      />
+      <DestinationRelated relatedTours={[]} currentTourId={id ? Number(id) : undefined} allTours={destinations} />
 
       <ContactSection />
 
-      <DestinationFAQs faq={faqProp} destinationTitle={String(completeData.title)} />
+      <DestinationFAQs faq={(completeData.faq as { items?: unknown[] } | null) ?? null} destinationTitle={String(completeData.title)} />
     </div>
   );
 }

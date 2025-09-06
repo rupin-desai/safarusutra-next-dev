@@ -153,7 +153,7 @@ const Footer = () => {
 
       {/* Coconut Tree Illustration - Right side (visible on all devices) */}
       <motion.div
-        className="absolute bottom-0 right-5 w-28 h-48 md:w-36 md:h-64 lg:w-40 lg:h-72 pointer-events-none z-0"
+        className="absolute bottom-0 md:-bottom-20 right-5 w-28 h-48 md:w-36 md:h-64 lg:w-40 lg:h-72 pointer-events-none z-0"
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}
@@ -170,7 +170,7 @@ const Footer = () => {
 
       {/* Cycle Illustration - Left side (visible only on desktop) */}
       <motion.div
-        className="absolute bottom-15 left-70 hidden md:block w-32 h-28 lg:w-52 lg:h-48 pointer-events-none z-0"
+        className="absolute bottom-8 left-70 hidden md:block w-32 h-28 lg:w-52 lg:h-48 pointer-events-none z-0"
         initial="initial"
         whileInView="animate"
         viewport={{ once: true }}
@@ -178,7 +178,7 @@ const Footer = () => {
       >
         <Illustration
           name="cycle"
-          size={120}
+          size={160}
           color="var(--color-medium-brown)"
           className="w-full h-full"
           alt="Bicycle illustration"
