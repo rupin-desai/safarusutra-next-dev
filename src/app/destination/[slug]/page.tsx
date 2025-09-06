@@ -224,6 +224,26 @@ export default function Page({ params }: { params: { slug?: string } }) {
     return undefined;
   };
 
+  // normalize FAQ into the shape DestinationFAQs expects: { items?: {question, answer}[] } | null
+  type FAQLocal = { question: string; answer: string };
+  const faqRaw = completeData.faq;
+  const faqProp: { items?: FAQLocal[] } | null =
+    faqRaw && typeof faqRaw === "object"
+      ? (() => {
+          const items = (faqRaw as Record<string, unknown>).items;
+          if (!Array.isArray(items)) return null;
+          const mapped = (items as unknown[])
+            .map((it) => {
+              const o = it && typeof it === "object" ? (it as Record<string, unknown>) : {};
+              const question = getString(o.question ?? o.q ?? "");
+              const answer = getString(o.answer ?? o.a ?? "");
+              return { question, answer };
+            })
+            .filter((x) => x.question || x.answer);
+          return mapped.length ? { items: mapped } : null;
+        })()
+      : null;
+
   // build detailsProp expected by DestinationDetailsOverview (Detail[])
   const detailsObj = (details && typeof details === "object" ? (details as Record<string, unknown>) : {}) as Record<
     string,
@@ -324,7 +344,7 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
       <ContactSection />
 
-      <DestinationFAQs faq={(completeData.faq as { items?: unknown[] } | null) ?? null} destinationTitle={String(completeData.title)} />
+      <DestinationFAQs faq={faqProp} destinationTitle={String(completeData.title)} />
     </div>
   );
 }
