@@ -13,7 +13,6 @@ import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/Destinati
 
 import destinationDetailsRaw from "@/data/DestinatonDetails.json"; // per-destination details (map or array)
 import destinationsRaw from "@/data/Destinations.json"; // main array of destinations
-import tourDetailsMap from "@/data/TourDetails.json"; // optional extra mapping (kept for compatibility)
 
 /* Narrow runtime-friendly type for destination items */
 type Destination = {

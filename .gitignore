@@ -11,6 +11,7 @@
 !.yarn/versions
 
 /src/app-backup
+/src/scripts
 # testing
 /coverage
 

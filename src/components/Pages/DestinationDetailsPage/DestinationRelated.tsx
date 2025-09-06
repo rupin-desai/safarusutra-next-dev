@@ -6,7 +6,6 @@ import { Compass } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
 import DestinationCard from "@/components/UI/DestinationCard";
 import type { Tour as DestinationCardTour } from "@/components/UI/DestinationCard";
-// removed strict Tour import from TourCard to allow heterogeneous arrays
 
 /* Minimal shared tour shape used for props from different JSON sources */
 type SharedTour = {
@@ -25,6 +24,28 @@ interface Props {
   currentTourId?: string | number;
   allTours?: SharedTour[];
 }
+
+// seeded PRNG (Park–Miller) to produce deterministic "random" ordering from a seed
+const seededRandom = (seedValue: number) => {
+  let seed = seedValue % 2147483647;
+  if (seed <= 0) seed += 2147483646;
+  return () => {
+    seed = (seed * 16807) % 2147483647;
+    return (seed - 1) / 2147483646;
+  };
+};
+
+const seededShuffle = <T,>(arr: T[], seedValue: number) => {
+  const rnd = seededRandom(seedValue);
+  const out = arr.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    const tmp = out[i];
+    out[i] = out[j];
+    out[j] = tmp;
+  }
+  return out;
+};
 
 // Optimized animation variants using translate3d for better performance
 const fadeIn: Variants = {
@@ -99,7 +120,13 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
         (isDomestic ? String(tour.location ?? "").toLowerCase() === "india" : String(tour.location ?? "").toLowerCase() !== "india")
     );
 
-    return sameCategoryTours.sort(() => 0.5 - Math.random()).slice(0, 3);
+    // derive numeric seed from currentTourId (stable)
+    const seedStr = String(currentTourId ?? String(currentTour.id ?? ""));
+    let seed = 0;
+    for (let i = 0; i < seedStr.length; i++) seed = (seed * 31 + seedStr.charCodeAt(i)) >>> 0;
+
+    // deterministically shuffle and pick first 3
+    return seededShuffle(sameCategoryTours, seed).slice(0, 3);
   }, [relatedTours, currentTourId, allTours]);
 
   if (!selectedTours || selectedTours.length === 0) return null;
