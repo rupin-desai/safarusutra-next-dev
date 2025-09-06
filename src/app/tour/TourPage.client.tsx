@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+// removed page-level framer-motion animations
 import { usePathname } from "next/navigation";
 import { Compass } from "lucide-react";
 import HeroSection from "@/components/UI/HeroSection";
@@ -216,104 +216,85 @@ export default function TourPageClient(): React.ReactElement {
     all: filteredTours.length,
   };
 
-
-  const pageVariants: Variants = {
-    initial: { opacity: 0, y: 12 },
-    enter: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] },
-    },
-    exit: { opacity: 0, y: -8, transition: { duration: 0.22, ease: [0.4, 0, 0.2, 1] } },
-  };
-
   return (
     <>
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={isAllTours ? "all-tours" : "fixed-departures"}
-          initial="initial"
-          animate="enter"
-          exit="exit"
-          variants={pageVariants}
-        >
-          <HeroSection
-            title={isAllTours ? "Tours That Make Stories" : "Ready‑To‑Go Departures"}
-            backgroundImage="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-            overlay={0.6}
-            titleSize="text-4xl md:text-5xl lg:text-6xl "
+      <div>
+        <HeroSection
+          title={isAllTours ? "Tours That Make Stories" : "Ready‑To‑Go Departures"}
+          backgroundImage="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          overlay={0.6}
+          titleSize="text-4xl md:text-5xl lg:text-6xl "
+        />
+
+        <div className="container mx-auto px-4 py-12" id="packages">
+          <SectionTitleWithIllustrations
+            icon={<Compass size={18} />}
+            pillText="Find Your Adventure"
+            title={isAllTours ? "All Journeys: Discover Every Expedition" : "Explore Our Curated Tour Collection"}
+            color="#f89b21"
+            titleSize="large"
+            containerClassName="mb-4"
           />
 
-          <div className="container mx-auto px-4 py-12" id="packages">
-            <SectionTitleWithIllustrations
-              icon={<Compass size={18} />}
-              pillText="Find Your Adventure"
-              title={isAllTours ? "All Journeys: Discover Every Expedition" : "Explore Our Curated Tour Collection"}
-              color="#f89b21"
-              titleSize="large"
-              containerClassName="mb-4"
-            />
+          <TourSearchFilter
+            searchQuery={searchQuery}
+            handleSearch={handleSearch}
+            activeFilter={activeFilter}
+            handleFilterChange={handleFilterChange}
+          />
 
-            <TourSearchFilter
-              searchQuery={searchQuery}
-              handleSearch={handleSearch}
-              activeFilter={activeFilter}
-              handleFilterChange={handleFilterChange}
-            />
-
-            {isLoading ? (
-              <div className="text-center py-12">
-                <p className="text-xl font-medium text-gray-600">Loading tours...</p>
-              </div>
-            ) : filteredTours.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-xl font-medium text-gray-600 mb-4">No tours found matching your criteria</p>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setActiveFilter("all");
-                    setFilteredTours(tours);
-                  }}
-                  className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-                  type="button"
-                >
-                  Reset Filters
-                </button>
-              </div>
-            ) : isAllTours ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-list">
-                {filteredTours.map((tour, idx) => (
-                  <div key={`${tour.id}-all-${idx}`} className="tour-card-item">
-                    <TourCard tour={tour} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <TourGrid tours={filteredTours} onSectionChange={handleSectionChange} showOthers={false} />
-            )}
-          </div>
-
-          <div className="container mx-auto px-4 pb-12">
-            <div className="flex justify-center">
-              <SSButton to={isAllTours ? "/fixed-departures" : "/tour"} variant="primary" color="var(--color-green)" className="px-6 py-3">
-                {isAllTours ? "See Fixed Departures" : "Browse All Tours"}
-              </SSButton>
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-xl font-medium text-gray-600">Loading tours...</p>
             </div>
-          </div>
-
-          {!isAllTours && (
-            <TourOverlay
-              sections={[
-                { id: "short", label: "Mini Escapes" },
-                { id: "domestic", label: "Home‑Turf Adventures" },
-                { id: "international", label: "Faraway Wonders" },
-              ]}
-              currentSection={currentSection}
-              sectionCounts={sectionCounts}
-            />
+          ) : filteredTours.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-xl font-medium text-gray-600 mb-4">No tours found matching your criteria</p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveFilter("all");
+                  setFilteredTours(tours);
+                }}
+                className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                type="button"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : isAllTours ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-list">
+              {filteredTours.map((tour, idx) => (
+                <div key={`${tour.id}-all-${idx}`} className="tour-card-item">
+                  <TourCard tour={tour} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <TourGrid tours={filteredTours} onSectionChange={handleSectionChange} showOthers={false} />
           )}
-        </motion.div>
-      </AnimatePresence>
+        </div>
+
+        <div className="container mx-auto px-4 pb-12">
+          <div className="flex justify-center">
+            <SSButton to={isAllTours ? "/fixed-departures" : "/tour"} variant="primary" color="var(--color-green)" className="px-6 py-3">
+              {isAllTours ? "See Fixed Departures" : "Browse All Tours"}
+            </SSButton>
+          </div>
+        </div>
+
+        {!isAllTours && (
+          <TourOverlay
+            sections={[
+              { id: "short", label: "Mini Escapes" },
+              { id: "domestic", label: "Home‑Turf Adventures" },
+              { id: "international", label: "Faraway Wonders" },
+            ]}
+            currentSection={currentSection}
+            sectionCounts={sectionCounts}
+          />
+        )}
+      </div>
     </>
   );
 }

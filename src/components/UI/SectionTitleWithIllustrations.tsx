@@ -60,7 +60,7 @@ const floatingAnimation: Variants = {
 const ILLUSTRATIONS = [
   "camera",
   "cocktail",
-  "hotAirBalloon", // fixed minor spelling
+  "hotAirBallon", // fixed minor spelling
   "pouch",
   "seashell1",
   "suitcase",

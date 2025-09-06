@@ -1,19 +1,21 @@
+"use client";
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import { Compass } from "lucide-react";
-import HeroSection from "../../ui/Elements/HeroSection";
-import SectionTitleWithIllustrations from "../../ui/Elements/SectionTitleWithIllustrations";
-import TourSearchFilter from "../../components/Tour/TourSearchFilter";
-import TourGrid from "../../components/Tour/TourGrid";
-import TourCard from "../../components/Tour/TourCard";
-import packageData from "../../data/packagedetails.json";
-import TourOverlay from "../../components/Tour/TourOverlay";
-import SSButton from "../../ui/Buttons/SSButton";
+import HeroSection from "@/components/UI/HeroSection";
+import SectionTitleWithIllustrations from "@/components/UI/SectionTitleWithIllustrations";
+import TourSearchFilter from "@/components/Pages/ToursPage/TourSearchFilter";
+import TourGrid from "@/components/Pages/ToursPage/TourGrid";
+import packageData from "@/data/TourDetails.json";
+import TourOverlay from "@/components/Pages/ToursPage/TourOverlay";
+import SSButton from "@/components/UI/SSButton";
+import type { Tour } from "@/app/tour/TourPage.client"; // reuse Tour type from TourPage.client
 
-// Shuffle function to randomize the tours array
-const shuffleArray = (array) => {
+type AvailableDateMonth = { month: string; dates: Array<{ date: string; enabled?: boolean }>; [k: string]: unknown };
+type CompositeFilter = { type: "composite"; categories?: string[]; price?: string[] };
+type Filter = "all" | "india" | "international" | string | CompositeFilter;
+
+/* Generic shuffle */
+const shuffleArray = <T,>(array: T[]): T[] => {
   const shuffled = [...array];
   for (let i = shuffled.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -22,84 +24,99 @@ const shuffleArray = (array) => {
   return shuffled;
 };
 
-const TourPage = () => {
-  const location = useLocation();
-  // treat both /tour and /tours as "all tours" URL variants
-  const isAllTours = location.pathname.startsWith("/tour");
-
-  const [tours, setTours] = useState([]);
-  const [filteredTours, setFilteredTours] = useState([]);
-  const [activeFilter, setActiveFilter] = useState("all");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
-  const [lastAppliedFilter, setLastAppliedFilter] = useState(null);
+const TourPage: React.FC = () => {
+  const [tours, setTours] = useState<Tour[]>([]);
+  const [filteredTours, setFilteredTours] = useState<Tour[]>([]);
+  const [activeFilter, setActiveFilter] = useState<Filter>("all");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [lastAppliedFilter, setLastAppliedFilter] = useState<Filter | null>(null);
 
   // New: current visible section id (short/domestic/international/other)
-  const [currentSection, setCurrentSection] = useState("short");
+  const [currentSection, setCurrentSection] = useState<string>("short");
 
   useEffect(() => {
     try {
       setIsLoading(true);
-      if (packageData && packageData.length > 0) {
-        const randomizedTours = shuffleArray(packageData);
+      if (Array.isArray(packageData) && (packageData as unknown[]).length > 0) {
+        const randomizedTours = shuffleArray<Tour>(packageData as unknown as Tour[]);
         setTours(randomizedTours);
         setFilteredTours(randomizedTours);
-        console.log("Tours loaded:", randomizedTours.length);
       } else {
-        console.error("Package data is empty or invalid");
+        setTours([]);
+        setFilteredTours([]);
       }
     } catch (error) {
       console.error("Error loading package data:", error);
+      setTours([]);
+      setFilteredTours([]);
     } finally {
       setIsLoading(false);
     }
   }, []);
 
-  // Memoized applyFilters function (unchanged) ...
+  // Client-side meta handling (replaces Helmet)
+  const pageTitle = "Fixed‑Date Departures — Ready‑To‑Go Tours | Safari Sutra";
+  const pageDescription =
+    "Handpicked fixed‑date departures with guaranteed departure dates — mini escapes, home‑turf adventures and faraway wonders.";
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    try {
+      document.title = pageTitle;
+      const meta = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+      if (meta) meta.content = pageDescription;
+      else {
+        const m = document.createElement("meta");
+        m.name = "description";
+        m.content = pageDescription;
+        document.head.appendChild(m);
+      }
+    } catch  {
+      // noop
+    }
+  }, []);
+
+  // Memoized applyFilters function
   const applyFilters = useMemo(() => {
-    return (query, filter) => {
-      console.log("Applying filters:", { query, filter });
+    return (query: string, filter: Filter): Tour[] => {
       let result = [...tours];
       if (query && query.trim() !== "") {
         const lowerCaseQuery = query.toLowerCase();
         result = result.filter(
           (tour) =>
-            (tour.title && tour.title.toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.route && tour.route.toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.description &&
-              tour.description.toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.category &&
-              tour.category.toLowerCase().includes(lowerCaseQuery)) ||
-            (tour.location &&
-              tour.location.toLowerCase().includes(lowerCaseQuery))
+            (tour.title && String(tour.title).toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.route && String(tour.route).toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.description && String(tour.description).toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.category && String(tour.category).toLowerCase().includes(lowerCaseQuery)) ||
+            (tour.location && String(tour.location).toLowerCase().includes(lowerCaseQuery))
         );
       }
 
-      if (filter && typeof filter === "object" && filter.type === "composite") {
-        if (filter.categories && filter.categories.length > 0) {
+      if (filter && typeof filter === "object" && (filter as CompositeFilter).type === "composite") {
+        const comp = filter as CompositeFilter;
+        if (comp.categories && comp.categories.length > 0) {
           result = result.filter((tour) => {
             if (!tour.category) return false;
-            const tourCategories = tour.category
+            const tourCategories = String(tour.category)
               .split(",")
-              .map((cat) => cat.trim().toLowerCase());
-            return filter.categories.some((filterCat) =>
-              tourCategories.includes(filterCat.toLowerCase())
-            );
+              .map((cat: string) => cat.trim().toLowerCase());
+            return comp.categories!.some((filterCat) => tourCategories.includes(filterCat.toLowerCase()));
           });
         }
 
-        if (filter.price && filter.price.length > 0) {
+        if (comp.price && comp.price.length > 0) {
           result = result.filter((tour) => {
-            if (!tour.price) return false;
-            return filter.price.some((priceRange) => {
+            if (tour.price == null || typeof tour.price !== "number") return false;
+            return comp.price!.some((priceRange) => {
               const range = priceRange.replace(/₹/g, "").split("-");
               if (range.length === 2) {
-                const min = parseInt(range[0].replace(/,/g, ""));
-                const max = parseInt(range[1].replace(/,/g, ""));
-                return tour.price >= min && tour.price <= max;
+                const min = parseInt(range[0].replace(/,/g, ""), 10);
+                const max = parseInt(range[1].replace(/,/g, ""), 10);
+                return Number(tour.price) >= min && Number(tour.price) <= max;
               } else if (priceRange.includes("+")) {
-                const min = parseInt(priceRange.replace(/₹|\+|,/g, ""));
-                return tour.price >= min;
+                const min = parseInt(priceRange.replace(/₹|\+|,/g, ""), 10);
+                return Number(tour.price) >= min;
               }
               return false;
             });
@@ -107,29 +124,25 @@ const TourPage = () => {
         }
       } else if (filter && filter !== "all") {
         if (filter === "india") {
-          result = result.filter((tour) => tour.location === "India");
+          result = result.filter((tour) => String(tour.location) === "India");
         } else if (filter === "international") {
-          result = result.filter((tour) => tour.location !== "India");
+          result = result.filter((tour) => String(tour.location) !== "India");
         } else {
-          result = result.filter(
-            (tour) =>
-              tour.category &&
-              tour.category
-                .split(",")
-                .map((cat) => cat.trim().toLowerCase())
-                .includes(filter.toLowerCase())
+          result = result.filter((tour) =>
+            String(tour.category || "")
+              .split(",")
+              .map((cat) => cat.trim().toLowerCase())
+              .includes(String(filter).toLowerCase())
           );
         }
       }
 
-      console.log("Filter results:", result.length);
       return result;
     };
   }, [tours]);
 
   const handleFilterChange = useCallback(
-    (filter) => {
-      console.log("Filter changed to:", filter);
+    (filter: Filter) => {
       setActiveFilter(filter);
       setLastAppliedFilter(filter);
       const results = applyFilters(searchQuery, filter);
@@ -138,228 +151,128 @@ const TourPage = () => {
     [applyFilters, searchQuery]
   );
 
-  const handleSearch = (e) => {
-    const query = e.target.value;
+  const handleSearch = (e: string | React.ChangeEvent<HTMLInputElement>) => {
+    const query = typeof e === "string" ? e : e.target.value;
     setSearchQuery(query);
     const filterToApply = activeFilter || lastAppliedFilter || "all";
-    const results = applyFilters(query, filterToApply);
+    const results = applyFilters(query, filterToApply as Filter);
     setFilteredTours(results);
   };
 
   // handler for section changes coming from TourGrid
-  const handleSectionChange = (sectionId) => {
+  const handleSectionChange = (sectionId: string) => {
     setCurrentSection(sectionId);
   };
 
   // --- compute section counts from filteredTours (same rules as TourGrid) ---
-  const parseDaysFromDuration = (tour) => {
+  const parseDaysFromDuration = (tour: Tour) => {
     try {
       const d = String(tour.duration || "");
       const mDays = d.match(/(\d{1,3})\s*D\b/i);
       if (mDays) return parseInt(mDays[1], 10);
       const mNights = d.match(/(\d{1,3})\s*N\b/i);
       if (mNights) return parseInt(mNights[1], 10) + 1;
-    } catch (e) {}
+    } catch {}
     return Infinity;
   };
 
-  const hasAvailableDates = (tour) => {
+  const hasAvailableDates = (tour: Tour) => {
     try {
       if (!Array.isArray(tour?.availableDates)) return false;
-      return tour.availableDates.some(
-        (month) =>
-          Array.isArray(month.dates) &&
-          month.dates.some((d) => d.enabled !== false)
-      );
-    } catch (e) {
-      return false;
+      return (tour.availableDates as AvailableDateMonth[]).some((month) => Array.isArray(month.dates) && month.dates.some((d) => d.enabled !== false));
+    } catch {
     }
   };
 
-  const locationTypeOf = (tour) =>
-    String(tour?.locationType || "")
-      .trim()
-      .toLowerCase();
+  const locationTypeOf = (tour: Tour) => String(tour?.locationType || "").trim().toLowerCase();
 
-  const shortDepartures = filteredTours.filter(
-    (t) => parseDaysFromDuration(t) <= 4 && hasAvailableDates(t)
-  );
+  const shortDepartures = filteredTours.filter((t) => parseDaysFromDuration(t) <= 4 && hasAvailableDates(t));
 
   const domesticDepartures = filteredTours.filter(
-    (t) =>
-      parseDaysFromDuration(t) > 4 &&
-      locationTypeOf(t) === "domestic" &&
-      hasAvailableDates(t)
+    (t) => parseDaysFromDuration(t) > 4 && locationTypeOf(t) === "domestic" && hasAvailableDates(t)
   );
 
-  const internationalDepartures = filteredTours.filter(
-    (t) => locationTypeOf(t) === "international" && hasAvailableDates(t)
-  );
+  const internationalDepartures = filteredTours.filter((t) => locationTypeOf(t) === "international" && hasAvailableDates(t));
 
-  const groupedSet = new Set([
-    ...shortDepartures.map((t) => t.id),
-    ...domesticDepartures.map((t) => t.id),
-    ...internationalDepartures.map((t) => t.id),
+  const groupedSet = new Set<string>([
+    ...shortDepartures.map((t) => String(t.id)),
+    ...domesticDepartures.map((t) => String(t.id)),
+    ...internationalDepartures.map((t) => String(t.id)),
   ]);
 
-  const others = filteredTours.filter((t) => !groupedSet.has(t.id));
+  const others = filteredTours.filter((t) => !groupedSet.has(String(t.id)));
 
-  // counts
-  const sectionCounts = isAllTours
-    ? { all: filteredTours.length }
-    : {
-        short: shortDepartures.length,
-        domestic: domesticDepartures.length,
-        international: internationalDepartures.length,
-        other: others.length,
-      };
-
-  // creative title for All Tours
-  const pageTitle = isAllTours
-    ? "All Journeys — Every Expedition & Hidden Gem | Safari Sutra"
-    : "Explore Our Curated Tour Collection | Safari Sutra";
-
-  const pageDescription = isAllTours
-    ? "Browse every tour across Safari Sutra — curated escapes, classic itineraries and hidden gems for every traveler."
-    : "Explore our curated selection of fixed departures: mini escapes, home‑turf adventures and faraway wonders.";
-
-  // page-level animation variants (simple and quick)
-  const pageVariants = {
-    initial: { opacity: 0, y: 12 },
-    enter: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.28, ease: "easeOut" },
-    },
-    exit: { opacity: 0, y: -8, transition: { duration: 0.22, ease: "easeIn" } },
+  // counts for overlay
+  const sectionCounts: Record<string, number> = {
+    short: shortDepartures.length,
+    domestic: domesticDepartures.length,
+    international: internationalDepartures.length,
+    other: others.length,
   };
 
   return (
     <>
-      <Helmet>
-        <title>{pageTitle}</title>
-        <meta name="description" content={pageDescription} />
-      </Helmet>
+      <div key="fixed-departures">
+        <HeroSection
+          title="Ready‑To‑Go Departures"
+          backgroundImage="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          overlay={0.6}
+          titleSize="text-4xl md:text-5xl lg:text-6xl "
+        />
 
-      <AnimatePresence mode="wait">
-        {/* key toggles when switching between /tour and /fixeddepartures to force animation both ways */}
-        <motion.div
-          key={isAllTours ? "all-tours" : "fixed-departures"}
-          initial="initial"
-          animate="enter"
-          exit="exit"
-          variants={pageVariants}
-        >
-          <HeroSection
-            title={
-              isAllTours ? "Tours That Make Stories" : "Ready‑To‑Go Departures"
-            }
-            subtitle={
-              isAllTours
-                ? "From mountain treks to beachside bliss, discover adventures that create lasting memories and Instagram-worthy moments."
-                : "Handpicked fixed‑date departures with guaranteed departure dates — book quickly and travel confidently."
-            }
-            buttonText="Find Your Next Adventure"
-            buttonColor="var(--color-orange)"
-            scrollTo="packages"
-            backgroundImage="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-            overlay={0.6}
-            titleSize="text-4xl md:text-5xl lg:text-6xl "
+        <div className="container mx-auto px-4 py-12" id="packages">
+          <SectionTitleWithIllustrations
+            icon={<Compass size={18} />}
+            pillText="Find Your Adventure"
+            title="Fixed‑Date Departures"
+            color="#f89b21"
+            titleSize="large"
+            containerClassName="mb-4"
           />
 
-          <div className="container mx-auto px-4 py-12" id="packages">
-            <SectionTitleWithIllustrations
-              icon={<Compass size={18} />}
-              pillText="Find Your Adventure"
-              title={
-                isAllTours
-                  ? "All Journeys: Discover Every Expedition"
-                  : "Explore Our Curated Tour Collection"
-              }
-              color="#f89b21"
-              titleSize="large"
-              containerClassName="mb-4"
-            />
+          <TourSearchFilter searchQuery={searchQuery} handleSearch={handleSearch} activeFilter={activeFilter} handleFilterChange={handleFilterChange} />
 
-            <TourSearchFilter
-              searchQuery={searchQuery}
-              handleSearch={handleSearch}
-              activeFilter={activeFilter}
-              handleFilterChange={handleFilterChange}
-            />
-
-            {isLoading ? (
-              <div className="text-center py-12">
-                <p className="text-xl font-medium text-gray-600">
-                  Loading tours...
-                </p>
-              </div>
-            ) : filteredTours.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-xl font-medium text-gray-600 mb-4">
-                  No tours found matching your criteria
-                </p>
-                <button
-                  onClick={() => {
-                    setSearchQuery("");
-                    setActiveFilter("all");
-                    setFilteredTours(tours);
-                  }}
-                  className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
-                >
-                  Reset Filters
-                </button>
-              </div>
-            ) : isAllTours ? (
-              // Simple single-list grid for "All Tours" URL (no section segregation)
-              <div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                id="packages-list"
-              >
-                {filteredTours.map((tour, idx) => (
-                  <div key={`${tour.id}-all-${idx}`} className="tour-card-item">
-                    <TourCard tour={tour} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              // Fixed Departures: grouped sections (no "others" removed by TourGrid prop)
-              <TourGrid
-                tours={filteredTours}
-                onSectionChange={handleSectionChange}
-                showOthers={false}
-              />
-            )}
-          </div>
-
-          {/* Bottom CTA to switch listing mode: shows opposite listing URL */}
-          <div className="container mx-auto px-4 pb-12">
-            <div className="flex justify-center">
-              <SSButton
-                to={isAllTours ? "/fixeddepartures" : "/tour"}
-                type="primary"
-                color="var(--color-green)"
-                className="px-6 py-3"
-              >
-                {isAllTours ? "See Fixed Departures" : "Browse All Tours"}
-              </SSButton>
+          {isLoading ? (
+            <div className="text-center py-12">
+              <p className="text-xl font-medium text-gray-600">Loading tours...</p>
             </div>
-          </div>
-
-          {/* Overlay only for fixeddepartures listing */}
-          {!isAllTours && (
-            <TourOverlay
-              sections={[
-                { id: "short", label: "Mini Escapes" },
-                { id: "domestic", label: "Home‑Turf Adventures" },
-                { id: "international", label: "Faraway Wonders" },
-              ]}
-              currentSection={currentSection}
-              sectionCounts={sectionCounts}
-            />
+          ) : filteredTours.length === 0 ? (
+            <div className="text-center py-12">
+              <p className="text-xl font-medium text-gray-600 mb-4">No tours found matching your criteria</p>
+              <button
+                onClick={() => {
+                  setSearchQuery("");
+                  setActiveFilter("all");
+                  setFilteredTours(tours);
+                }}
+                className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+              >
+                Reset Filters
+              </button>
+            </div>
+          ) : (
+            <TourGrid tours={filteredTours} onSectionChange={handleSectionChange} showOthers={false} />
           )}
-        </motion.div>
-      </AnimatePresence>
+        </div>
+
+        <div className="container mx-auto px-4 pb-12">
+          <div className="flex justify-center">
+            <SSButton to="/tour" variant="primary" color="var(--color-green)" className="px-6 py-3">
+              Browse All Tours
+            </SSButton>
+          </div>
+        </div>
+
+        <TourOverlay
+          sections={[
+            { id: "short", label: "Mini Escapes" },
+            { id: "domestic", label: "Home‑Turf Adventures" },
+            { id: "international", label: "Faraway Wonders" },
+          ]}
+          currentSection={currentSection}
+          sectionCounts={sectionCounts}
+        />
+      </div>
     </>
   );
 };
