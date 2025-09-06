@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { motion, Variants } from "framer-motion";
 import { MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
+import Illustration from "../../UI/Illustations"; // use local Illustration component
 
 type Attraction = {
   title: string;
@@ -61,11 +62,13 @@ const staggerContainer: Variants = {
 };
 
 const floatingAnimation: Variants = {
-  initial: { transform: "translate3d(0px, 0px, 0px) rotate(0deg)" },
+  initial: { y: 0, rotate: 0 },
   animate: {
-    transform: "translate3d(0px, -8px, 0px) rotate(-2deg)",
+    y: [-8, 8, -8],
+    rotate: [-2, 2, -2],
     transition: {
-      transform: { repeat: Infinity, duration: 4, ease: "easeInOut", repeatType: "reverse" },
+      y: { repeat: Infinity, duration: 4, ease: "easeInOut" },
+      rotate: { repeat: Infinity, duration: 5, ease: "easeInOut" },
     },
   },
 };
@@ -87,7 +90,8 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
   // these can safely run even for empty arrays
   const hasOddCount = attractionsList.length % 2 !== 0;
 
-  const { randomColor } = useMemo(() => {
+  const { randomIllustration, randomColor } = useMemo(() => {
+    const illustrations = ["camera", "cocktail", "hotAirBallon", "pouch", "seashell1", "suitcase", "umbrella"];
     const colors = [
       "var(--color-dark-brown)",
       "var(--color-medium-brown)",
@@ -97,13 +101,16 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
       "var(--color-dark-teal)",
     ];
 
+    // deterministic-ish selection based on titles
     const seedText = attractionsList.map((a) => String(a.title || "")).join("|");
     let seed = 0;
     for (let i = 0; i < seedText.length; i++) {
       seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
     }
+    const illustrationIndex = seed % illustrations.length;
     const colorIndex = seed % colors.length;
-    return { randomColor: colors[colorIndex] };
+
+    return { randomIllustration: illustrations[illustrationIndex], randomColor: colors[colorIndex] };
   }, [attractionsList]);
 
   if (attractionsList.length === 0) return null;
@@ -112,21 +119,20 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
     <section className="py-16 md:px-24" id="attractions">
       <div className="container mx-auto px-4">
         <div className="relative">
-          <motion.img
-            src="/graphics/illustration.svg"
-            alt=""
-            aria-hidden="true"
-            className="absolute top-0 right-0 md:right-12 hidden md:block opacity-80 pointer-events-none"
+          <motion.div
+            className="absolute top-0 right-0 md:right-12 opacity-80 hidden md:block"
             variants={floatingAnimation}
             initial="initial"
             animate="animate"
-            style={{
-              width: "200px",
-              height: "200px",
-              color: randomColor,
-              transform: "translate3d(0px, 0px, 0px) rotate(0deg)",
-            }}
-          />
+            aria-hidden
+          >
+            <Illustration
+              name={randomIllustration}
+              size={200}
+              color={randomColor}
+              className="transform -translate-y-6 opacity-40"
+            />
+          </motion.div>
 
           <motion.div
             initial="initial"

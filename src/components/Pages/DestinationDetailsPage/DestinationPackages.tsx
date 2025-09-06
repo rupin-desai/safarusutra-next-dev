@@ -6,9 +6,8 @@ import { useRouter } from "next/navigation";
 import SectionTitle from "@/components/UI/SectionTitle";
 import TourCard, { type Tour } from "@/components/UI/TourCard";
 import SSButton from "@/components/UI/SSButton";
-import DestinationsData from "@/data/DestinatonDetails.json";
+import ToursDataRaw from "@/data/TourDetails.json"; // use tour details as source for packages
 
-/* Narrow package item type to avoid `any` */
 type PackageItem = {
   id?: string | number;
   title?: string;
@@ -21,48 +20,19 @@ type PackageItem = {
   relatedDestinations?: (string | number)[];
 } & Record<string, unknown>;
 
-/* Animation variants typed as Variants (translate3d for smoother GPU rendering) */
 const fadeIn: Variants = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(0px, 20px, 0px)",
-  },
-  animate: {
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-    },
-  },
+  initial: { opacity: 0, transform: "translate3d(0px, 20px, 0px)" },
+  animate: { opacity: 1, transform: "translate3d(0px, 0px, 0px)", transition: { type: "spring", stiffness: 300, damping: 20 } },
 };
 
 const cardVariants: Variants = {
-  initial: {
-    opacity: 0,
-    transform: "translate3d(0px, 30px, 0px)",
-  },
-  animate: (index = 0) => ({
-    opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
-    transition: {
-      type: "spring",
-      stiffness: 300,
-      damping: 20,
-      delay: index * 0.08,
-    },
-  }),
+  initial: { opacity: 0, transform: "translate3d(0px, 30px, 0px)" },
+  animate: (index = 0) => ({ opacity: 1, transform: "translate3d(0px, 0px, 0px)", transition: { type: "spring", stiffness: 300, damping: 20, delay: index * 0.08 } }),
 };
 
 const floatingAnimation: Variants = {
   initial: { transform: "translate3d(0px, 0px, 0px)" },
-  animate: {
-    transform: "translate3d(0px, -8px, 0px)",
-    transition: {
-      transform: { repeat: Infinity, duration: 3, ease: "easeInOut", repeatType: "reverse" },
-    },
-  },
+  animate: { transform: "translate3d(0px, -8px, 0px)", transition: { transform: { repeat: Infinity, duration: 3, ease: "easeInOut", repeatType: "reverse" } } },
 };
 
 interface Props {
@@ -74,46 +44,49 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
   const router = useRouter();
 
   const destinationPackages = useMemo(() => {
-    const raw = DestinationsData as unknown;
+    const raw = ToursDataRaw as unknown;
     const allPackages = Array.isArray(raw) ? (raw as PackageItem[]) : Object.values((raw as Record<string, PackageItem>) || {});
     if (!allPackages || allPackages.length === 0) return [];
 
-    const destNameLower = String(destinationName).toLowerCase().trim();
-    const destIdNum = Number(destinationId);
+    const destNameLower = String(destinationName || "").toLowerCase().trim();
+    const destIdStr = destinationId != null ? String(destinationId) : "";
+    const destIdNum = Number.isFinite(Number(destinationId)) ? Number(destinationId) : undefined;
 
-    const escapeRegExp = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const wholeWordRegex = destNameLower ? new RegExp(`\\b${escapeRegExp(destNameLower)}\\b`, "i") : null;
+    const matchesDestination = (pkg: PackageItem) => {
+      // relatedDestinations may contain numbers or strings
+      if (Array.isArray(pkg.relatedDestinations) && destIdStr) {
+        for (const rid of pkg.relatedDestinations) {
+          if (String(rid) === destIdStr) return true;
+          if (destIdNum != null && Number(rid) === destIdNum) return true;
+        }
+      }
 
-    const related = allPackages.filter((pkg) => {
-      const destinationMatch =
-        Array.isArray(pkg.destinationNames) &&
-        pkg.destinationNames.some((dn) => String(dn).toLowerCase().trim() === destNameLower);
+      // destinationNames match by normalized string
+      if (Array.isArray(pkg.destinationNames) && destNameLower) {
+        for (const dn of pkg.destinationNames) {
+          if (String(dn).toLowerCase().trim() === destNameLower) return true;
+        }
+      }
 
-      const idMatch =
-        Array.isArray(pkg.relatedDestinations) &&
-        pkg.relatedDestinations.some((rid) => Number(rid) === destIdNum);
-
-      if (destinationMatch || idMatch) return true;
-
-      const hasExplicit =
-        (Array.isArray(pkg.destinationNames) && pkg.destinationNames.length > 0) ||
-        (Array.isArray(pkg.relatedDestinations) && pkg.relatedDestinations.length > 0);
-
-      if (!hasExplicit && wholeWordRegex) {
-        return (
-          (typeof pkg.title === "string" && wholeWordRegex.test(pkg.title)) ||
-          (typeof pkg.route === "string" && wholeWordRegex.test(pkg.route)) ||
-          (typeof pkg.description === "string" && wholeWordRegex.test(pkg.description))
-        );
+      // fallback: try matching destination name in title/route/description (word boundary)
+      if (destNameLower) {
+        const safe = (s?: unknown) => (typeof s === "string" ? s.toLowerCase() : String(s ?? "").toLowerCase());
+        const text = `${safe(pkg.title)} ${safe(pkg.route)} ${safe(pkg.description)}`;
+        const regex = new RegExp(`\\b${destNameLower.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i");
+        if (regex.test(text)) return true;
       }
 
       return false;
-    });
+    };
 
-    const seen = new Set<string | number>();
+    const related = allPackages.filter((p) => matchesDestination(p));
+
+    // dedupe by id
+    const seen = new Set<string>();
     return related.filter((p) => {
-      if (seen.has(p.id ?? "")) return false;
-      seen.add(p.id ?? "");
+      const key = String(p.id ?? "");
+      if (seen.has(key) && key !== "") return false;
+      seen.add(key);
       return true;
     });
   }, [destinationName, destinationId]);
@@ -128,22 +101,9 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
     return (
       <section className="py-16 relative overflow-hidden" id="packages">
         <div className="container mx-auto px-4 relative z-10">
-          <SectionTitle
-            icon={<PackageIcon size={16} />}
-            pillText="Custom Packages"
-            title={`${destinationName} Travel Packages`}
-            color="#F89B21"
-            centered={true}
-            containerClassName="mb-12"
-          />
+          <SectionTitle icon={<PackageIcon size={16} />} pillText="Custom Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />
 
-          <motion.div
-            className="bg-[#FBF8F3] rounded-xl p-8 md:p-12 text-center max-w-3xl mx-auto"
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.2 }}
-            variants={fadeIn}
-          >
+          <motion.div className="bg-[#FBF8F3] rounded-xl p-8 md:p-12 text-center max-w-3xl mx-auto" initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }} variants={fadeIn}>
             <motion.div className="mb-6 flex justify-center" variants={cardVariants as unknown as Variants}>
               <div className="w-16 h-16 md:w-20 md:h-20 bg-[var(--color-orange)]/10 rounded-full flex items-center justify-center">
                 <MessageCircle size={32} className="text-[var(--color-orange)]" />
@@ -171,54 +131,21 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
 
   return (
     <section className="py-16 relative overflow-hidden" id="packages">
-      <motion.img
-        src="/illustrations/suitcase.svg"
-        alt=""
-        className="absolute top-20 right-10 md:right-20 h-16 w-16 md:w-24 md:h-24 opacity-25 hidden md:block"
-        initial="initial"
-        animate="animate"
-        variants={floatingAnimation}
-        aria-hidden
-      />
+      <motion.img src="/illustrations/suitcase.svg" alt="" className="absolute top-20 right-10 md:right-20 h-16 w-16 md:w-24 md:h-24 opacity-25 hidden md:block" initial="initial" animate="animate" variants={floatingAnimation} aria-hidden />
 
       <div className="container mx-auto px-4 relative z-10">
-        <SectionTitle
-          icon={<PackageIcon size={16} />}
-          pillText="Available Packages"
-          title={`${destinationName} Travel Packages`}
-          color="#F89B21"
-          centered={true}
-          containerClassName="mb-12"
-        />
+        <SectionTitle icon={<PackageIcon size={16} />} pillText="Available Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />
 
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={fadeIn}
-        >
+        <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }} variants={fadeIn}>
           {destinationPackages.map((pkg: PackageItem, index: number) => (
-            <motion.div
-              key={pkg.id ?? index}
-              custom={index}
-              variants={cardVariants}
-              initial="initial"
-              whileInView="animate"
-              viewport={{ once: true }}
-            >
+            <motion.div key={pkg.id ?? index} custom={index} variants={cardVariants} initial="initial" whileInView="animate" viewport={{ once: true }}>
+              {/* TourCard expects a Tour shape — cast safely */}
               <TourCard tour={pkg as Tour} />
             </motion.div>
           ))}
         </motion.div>
 
-        <motion.div
-          className="mt-10 text-center flex flex-wrap justify-center gap-4"
-          variants={fadeIn}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-        >
+        <motion.div className="mt-10 text-center flex flex-wrap justify-center gap-4" variants={fadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
           <SSButton variant="primary" color="var(--color-orange)" to="/tour">
             View All Packages
           </SSButton>
