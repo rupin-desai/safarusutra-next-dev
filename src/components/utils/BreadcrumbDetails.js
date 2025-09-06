@@ -37,17 +37,17 @@ const specialRouteHandlers = {
 
   // Creative fixeddepartures breadcrumb handler
   fixeddepartures: (segments, index) => {
-    // Listing page ( /fixeddepartures )
+    // Listing page ( /fixed-departures )
     if (index === 0 && segments[0] === "fixeddepartures") {
       return {
         // creative message for listing
         label: "Fixed Departures",
-        path: "/fixeddepartures",
+        path: "/fixed-departures",
         isLast: segments.length === 1,
       };
     }
 
-    // If a numeric id follows (e.g. /fixeddepartures/123)
+    // If a numeric id follows (e.g. /fixed-departures/123)
     if (
       index === 1 &&
       segments[0] === "fixeddepartures" &&
@@ -56,12 +56,12 @@ const specialRouteHandlers = {
       const depId = segments[1];
       return {
         label: `Departure #${depId}`,
-        path: `/fixeddepartures/${depId}`,
+        path: `/fixed-departures/${depId}`,
         isLast: segments.length === 2,
       };
     }
 
-    // If slug present (e.g. /fixeddepartures/123/some-slug)
+    // If slug present (e.g. /fixed-departures/123/some-slug)
     if (index === 2 && segments[0] === "fixeddepartures") {
       const slug = segments[2]
         .split("-")
@@ -69,7 +69,7 @@ const specialRouteHandlers = {
         .join(" ");
       return {
         label: slug || "Departure Details",
-        path: `/fixeddepartures/${segments[1]}/${segments[2]}`,
+        path: `/fixed-departures/${segments[1]}/${segments[2]}`,
         isLast: true,
       };
     }

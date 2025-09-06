@@ -189,7 +189,7 @@ const HomeIntroClient: React.FC<HomeIntroProps> = ({ featuredIds: featuredIdsPro
         <div className="max-w-xl mx-auto mb-6 px-4">
           <h3 className="text-xl md:text-4xl font-family-baloo font-medium text-gray-700 mt-8 md:mt-4 mb-3">Ready for your next adventure?</h3>
         </div>
-        <SSButton to="/fixeddepartures" color="var(--color-dark-teal)" className="px-10 py-3.5 text-lg">Explore All Tours</SSButton>
+        <SSButton to="/fixed-departures" color="var(--color-dark-teal)" className="px-10 py-3.5 text-lg">Explore All Tours</SSButton>
       </div>
     </div>
   );

@@ -240,7 +240,7 @@ const Footer = () => {
               <Link href="/tour" className="text-white text-sm hover:underline whitespace-nowrap">
                 Tours
               </Link>
-              <Link href="/fixeddepartures" className="text-white text-sm hover:underline whitespace-nowrap">
+              <Link href="/fixed-departures" className="text-white text-sm hover:underline whitespace-nowrap">
                 Fixed Departures
               </Link>
               <span className="text-white text-sm">•</span>
@@ -254,7 +254,7 @@ const Footer = () => {
               <Link href="/" className="text-white hover:underline whitespace-nowrap">Home</Link>
               <Link href="/about" className="text-white hover:underline whitespace-nowrap">About</Link>
               <Link href="/destination" className="text-white hover:underline whitespace-nowrap">Destinations</Link>
-              <Link href="/fixeddepartures" className="text-white hover:underline whitespace-nowrap">Fixed Departures</Link>
+              <Link href="/fixed-departures" className="text-white hover:underline whitespace-nowrap">Fixed Departures</Link>
               <Link href="/tour" className="text-white hover:underline whitespace-nowrap">Tours</Link>
               <Link href="/hire" className="text-white hover:underline whitespace-nowrap">Hire</Link>
             </div>

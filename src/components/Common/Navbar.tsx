@@ -252,11 +252,11 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                 { href: "/", label: "Home" },
                 { href: "/about", label: "About" },
                 { href: "/destination", label: "Destinations" },
-                { href: "/fixeddepartures", label: "Tours" },
+                { href: "/fixed-departures", label: "Tours" },
                 { href: "/hire", label: "Hire" },
               ].map((link) => {
-                 if (link.href === "/fixeddepartures") {
-                   const isActive = pathname.startsWith("/fixeddepartures") || pathname.startsWith("/tour");
+                 if (link.href === "/fixed-departures") {
+                   const isActive = pathname.startsWith("/fixed-departures") || pathname.startsWith("/tour");
                    return (
                     <div
                       key={link.href}
@@ -300,7 +300,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                              }}
                              onMouseLeave={() => scheduleClose()}
                            >
-                             <Link href="/fixeddepartures" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                             <Link href="/fixed-departures" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                Fixed Departures
                              </Link>
                              <Link href="/tour" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">

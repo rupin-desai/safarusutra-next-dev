@@ -139,7 +139,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, toggleMenu, isLegalPage
           </motion.div>
 
           <motion.div variants={linkVariants} className="text-right">
-            <Link href="/fixeddepartures" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
+            <Link href="/fixed-departures" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
               Fixed Departures
             </Link>
           </motion.div>
