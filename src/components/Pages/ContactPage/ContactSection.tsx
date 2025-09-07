@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { motion, Variants } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, Variants, useInView } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
 import ContactCard from "@/components/UI/ContactCard";
@@ -17,7 +17,7 @@ const sectionVariants: Variants = {
     transition: {
       duration: 0.5,
       when: "beforeChildren",
-      staggerChildren: 0.1,
+      staggerChildren: 0.12,
     },
   },
 };
@@ -39,13 +39,16 @@ const titleVariants: Variants = {
 };
 
 const ContactSection: React.FC = () => {
+  const ref = useRef<HTMLElement | null>(null);
+  // useInView gives a consistent boolean to drive animations
+  const inView = useInView(ref, { once: true, amount: 0.25 });
+
   return (
-    <section className="py-16 px-4">
+    <section className="py-16 px-4" ref={ref}>
       <motion.div
         className="container mx-auto"
         initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.2 }}
+        animate={inView ? "animate" : "initial"}
         variants={sectionVariants}
       >
         {/* Section Title */}
