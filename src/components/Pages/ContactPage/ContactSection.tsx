@@ -5,6 +5,7 @@ import { motion, Variants } from "framer-motion";
 import { MessageSquare } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
 import ContactCard from "@/components/UI/ContactCard";
+import QueryParamHandler from "./QueryParamHandler.client"; // new import
 
 // Animation variants defined outside component
 const sectionVariants: Variants = {
@@ -56,6 +57,9 @@ const ContactSection: React.FC = () => {
             color="#066959"
           />
         </motion.div>
+
+        {/* ensure query params are handled before ContactCard mounts */}
+        <QueryParamHandler />
 
         {/* Contact Card */}
         <div className="max-w-5xl mx-auto">
