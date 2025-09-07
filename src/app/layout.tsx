@@ -4,6 +4,7 @@ import "./globals.css";
 import Footer from "@/components/Common/Footer";
 import Script from "next/script";
 import React from "react";
+import MixpanelProvider from "@/components/MixpanelProvider.client";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -97,6 +98,8 @@ fbq('track', 'PageView');`,
           />
         </noscript>
 
+        {/* mounts Mixpanel client on every page */}
+        <MixpanelProvider />
         {children}
         <Footer />
       </body>
