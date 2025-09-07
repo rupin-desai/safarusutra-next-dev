@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { motion, useInView, useAnimation, Variants } from "framer-motion";
 import {
   Star,
@@ -19,13 +19,20 @@ type Detail = {
   description?: string;
 };
 
+type Attraction = {
+  title?: string;
+  description?: string;
+  [k: string]: unknown;
+};
+
 type TourData = {
   title: string;
   rating?: number;
   location?: string;
   description?: string;
   longDescription?: string;
-  details: Detail[];
+  details?: Detail[];
+  attractions?: Attraction[] | string | null;
 };
 
 interface Props {
@@ -58,7 +65,8 @@ const MotionSection: React.FC<{
   className?: string;
   children?: React.ReactNode;
   threshold?: number;
-}> = ({ variants = {}, className = "", children, threshold = 0.18 }) => {
+  id?: string;
+}> = ({ variants = {}, className = "", children, threshold = 0.18, id }) => {
   const ref = useRef<HTMLElement | null>(null);
   const inView = useInView(ref, { amount: threshold });
   const controls = useAnimation();
@@ -69,6 +77,7 @@ const MotionSection: React.FC<{
 
   return (
     <motion.section
+      id={id}
       ref={ref}
       className={className}
       initial="initial"
@@ -143,8 +152,6 @@ const DestinationDetailsOverview: React.FC<Props> = ({
   tourData,
   executeScroll,
 }) => {
-  if (!tourData) return null;
-
   const formatDescription = (description?: string) => {
     const lines = String(description || "").split("\n");
     return lines.map((line, i) => (
@@ -155,8 +162,20 @@ const DestinationDetailsOverview: React.FC<Props> = ({
     ));
   };
 
+  const attractions: Attraction[] = useMemo(() => {
+    if (Array.isArray(tourData?.attractions)) return tourData.attractions;
+    if (typeof tourData?.attractions === "string" && tourData.attractions.trim() !== "") {
+      return [{ title: tourData.attractions }];
+    }
+    return [];
+  }, [tourData]);
+
+  // early-return after hooks so hooks run consistently
+  if (!tourData) return null;
+
   return (
     <MotionSection
+      id="overview"
       className="bg-white py-12 md:py-16 px-4 md:px-16"
       variants={fadeIn}
       threshold={0.22}
@@ -229,10 +248,6 @@ const DestinationDetailsOverview: React.FC<Props> = ({
                       key={index}
                       className="border-b border-gray-100 pb-4"
                       variants={contentFadeIn}
-                      whileHover={{
-                        transform: "translate3d(0px, -3px, 0px)",
-                        transition: { type: "spring", stiffness: 400, damping: 15 },
-                      }}
                     >
                       <div className="flex items-center gap-2 mb-2 justify-center lg:justify-start">
                         {getDetailIcon(detail.title, colorClass)}
@@ -253,6 +268,31 @@ const DestinationDetailsOverview: React.FC<Props> = ({
                 </div>
               )}
             </div>
+
+            {/* Attractions section with per-item ids and scroll-margin to account for sticky header */}
+            <section id="attractions" aria-labelledby="attractions-heading" className="mb-12 w-full" style={{ scrollMarginTop: "96px" }}>
+              <h2 id="attractions-heading" className="text-2xl font-bold mb-4">Attractions</h2>
+
+              {attractions.length > 0 ? (
+                <div className="space-y-6">
+                  {attractions.map((attr, idx) => (
+                    <article
+                      key={idx}
+                      id={`attraction-${idx}`}
+                      className="bg-white rounded-lg shadow-sm p-6 border border-gray-100"
+                      style={{ scrollMarginTop: "96px" }}
+                    >
+                      <h3 className="text-lg font-semibold mb-2">{attr.title ?? `Attraction ${idx + 1}`}</h3>
+                      {attr.description ? (
+                        <p className="text-gray-700">{String(attr.description)}</p>
+                      ) : null}
+                    </article>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-gray-500">No attractions listed for this destination.</p>
+              )}
+            </section>
           </div>
 
           <div className="hidden lg:block lg:w-1/3">

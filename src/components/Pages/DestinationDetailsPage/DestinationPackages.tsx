@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import SectionTitle from "@/components/UI/SectionTitle";
 import TourCard, { type Tour } from "@/components/UI/TourCard";
 import SSButton from "@/components/UI/SSButton";
-import ToursDataRaw from "@/data/TourDetails.json"; // use tour details as source for packages
+import ToursDataRaw from "@/data/TourDetails.json";
 
 type PackageItem = {
   id?: string | number;
@@ -53,7 +53,6 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
     const destIdNum = Number.isFinite(Number(destinationId)) ? Number(destinationId) : undefined;
 
     const matchesDestination = (pkg: PackageItem) => {
-      // relatedDestinations may contain numbers or strings
       if (Array.isArray(pkg.relatedDestinations) && destIdStr) {
         for (const rid of pkg.relatedDestinations) {
           if (String(rid) === destIdStr) return true;
@@ -61,14 +60,12 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
         }
       }
 
-      // destinationNames match by normalized string
       if (Array.isArray(pkg.destinationNames) && destNameLower) {
         for (const dn of pkg.destinationNames) {
           if (String(dn).toLowerCase().trim() === destNameLower) return true;
         }
       }
 
-      // fallback: try matching destination name in title/route/description (word boundary)
       if (destNameLower) {
         const safe = (s?: unknown) => (typeof s === "string" ? s.toLowerCase() : String(s ?? "").toLowerCase());
         const text = `${safe(pkg.title)} ${safe(pkg.route)} ${safe(pkg.description)}`;
@@ -81,7 +78,6 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
 
     const related = allPackages.filter((p) => matchesDestination(p));
 
-    // dedupe by id
     const seen = new Set<string>();
     return related.filter((p) => {
       const key = String(p.id ?? "");
@@ -99,7 +95,7 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
 
   if (!destinationPackages || destinationPackages.length === 0) {
     return (
-      <section className="py-16 relative overflow-hidden" id="packages">
+      <section className="py-16 relative overflow-hidden" id="destination-packages">
         <div className="container mx-auto px-4 relative z-10">
           <SectionTitle icon={<PackageIcon size={16} />} pillText="Custom Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />
 
@@ -130,7 +126,7 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
   }
 
   return (
-    <section className="py-16 relative overflow-hidden" id="packages">
+    <section className="py-16 relative overflow-hidden" id="destination-packages">
       <motion.img src="/illustrations/suitcase.svg" alt="" className="absolute top-20 right-10 md:right-20 h-16 w-16 md:w-24 md:h-24 opacity-25 hidden md:block" initial="initial" animate="animate" variants={floatingAnimation} aria-hidden />
 
       <div className="container mx-auto px-4 relative z-10">
@@ -139,7 +135,6 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
         <motion.div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }} variants={fadeIn}>
           {destinationPackages.map((pkg: PackageItem, index: number) => (
             <motion.div key={pkg.id ?? index} custom={index} variants={cardVariants} initial="initial" whileInView="animate" viewport={{ once: true }}>
-              {/* TourCard expects a Tour shape — cast safely */}
               <TourCard tour={pkg as Tour} />
             </motion.div>
           ))}

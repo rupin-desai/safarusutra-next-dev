@@ -10,6 +10,7 @@ import DestinationWhy from "@/components/Pages/DestinationDetailsPage/Destinatio
 import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 import DestinationPackages from "@/components/Pages/DestinationDetailsPage/DestinationPackages";
 import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/DestinationFAQs";
+import ScrollProvider from "@/components/Pages/DestinationDetailsPage/ScrollProvider.client";
 
 import destinationDetailsRaw from "@/data/DestinatonDetails.json"; // per-destination details (map or array)
 import destinationsRaw from "@/data/Destinations.json"; // main array of destinations
@@ -330,6 +331,9 @@ export default function Page({ params }: { params: { slug?: string } }) {
         overlay={0.4}
         titleSize="text-4xl md:text-6xl"
       />
+
+      {/* client helper that registers a global executeScroll without making this page a client component */}
+      <ScrollProvider />
 
       <DestinationDetailsOverview tourData={tourDataProp} />
 

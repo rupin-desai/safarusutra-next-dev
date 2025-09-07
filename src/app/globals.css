@@ -79,3 +79,16 @@ img[src="/graphics/cloud.min.svg"][src=""] ~ .cloud-layer-2 {
   from { background-position: 0 0; }
   to { background-position: 1000% 0; }
 }
+
+/* ensure smooth native fragment navigation and account for sticky header */
+html {
+  scroll-behavior: smooth;
+  /* scroll-padding-top keeps native anchor jumps below sticky headers */
+  scroll-padding-top: 96px;
+}
+
+/* also ensure per-section fallback — components already set scrollMarginTop inline,
+   but this reinforces it for any section with 'data-scroll-offset' attribute */
+section[data-scroll-offset] {
+  scroll-margin-top: 96px;
+}
