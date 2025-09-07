@@ -162,8 +162,7 @@ const SectionTitleWithIllustrations: React.FC<Props> = ({
       {/* Section title component */}
       <motion.div
         initial="initial"
-        whileInView="animate"
-        viewport={{ once: true, amount: 0.1 }}
+        animate="animate"
         variants={titleVariant}
         className="relative z-10"
       >

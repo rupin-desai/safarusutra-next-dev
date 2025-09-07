@@ -292,8 +292,7 @@ const TourSearchFilter: React.FC<Props> = ({ searchQuery, handleSearch, activeFi
     <motion.div
       className="bg-white rounded-xl shadow-md p-6 mb-12"
       initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, amount: 0.2 }}
+      animate="animate"
       variants={containerVariants}
     >
       {/* Main Search and Filter Bar */}
