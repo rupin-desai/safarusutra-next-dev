@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import tourDataRaw from "@/data/TourDetails.json";
+import React, { Suspense } from "react";
 
 import TourHero from "../../../../components/Pages/TourDetailsPage/TourHero";
 import TourTabs from "../../../../components/Pages/TourDetailsPage/TourTabs";
-import TourItinerary from "../../../../components/Pages/TourDetailsPage/TourItinerary";
+import TourItinerary from "@/components/Pages/TourDetailsPage/TourItinerary";
 import TourSidebar from "../../../../components/Pages/TourDetailsPage/TourSidebar";
 
 /* Strongly-typed Tour shape to avoid `any` */
@@ -199,16 +200,22 @@ export default function TourItineraryPage({ params }: { params: { slug?: string 
     <div className="bg-gray-50 min-h-screen">
       <TourHero tour={tour} />
 
-      <TourTabs initialTab={activeTab} slug={slug} />
+      <Suspense fallback={<div aria-hidden="true" />}>
+        <TourTabs initialTab={activeTab} slug={slug} />
+      </Suspense>
 
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            <TourItinerary tour={tour} />
+            <Suspense fallback={<div aria-hidden="true" />}>
+              <TourItinerary tour={tour} />
+            </Suspense>
           </div>
 
           <div className="lg:col-span-1">
-            <TourSidebar tour={tour} selectedMonth="" selectedDateRange="" />
+            <Suspense fallback={<div aria-hidden="true" />}>
+              <TourSidebar tour={tour} selectedMonth="" selectedDateRange="" />
+            </Suspense>
           </div>
         </div>
       </div>

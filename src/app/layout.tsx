@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Common/Footer";
 import Script from "next/script";
-import React from "react";
+import React, { Suspense } from "react";
 import MixpanelProvider from "@/components/MixpanelProvider.client";
 
 const geistSans = Geist({
@@ -98,8 +98,10 @@ fbq('track', 'PageView');`,
           />
         </noscript>
 
-        {/* mounts Mixpanel client on every page */}
-        <MixpanelProvider />
+        {/* mounts Mixpanel client on every page (wrapped in Suspense so next can SSR bail out) */}
+        <Suspense fallback={null}>
+          <MixpanelProvider />
+        </Suspense>
         {children}
         <Footer />
       </body>
