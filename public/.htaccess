@@ -74,7 +74,6 @@
   </FilesMatch>
 </IfModule>
 
-# --- Prerender to bots: serve /prerender/<path>/index.html when available ---
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -84,26 +83,20 @@
   RewriteCond %{REQUEST_FILENAME} -d
   RewriteRule ^ - [L]
 
-  # Bot user agents (case-insensitive)
-  RewriteCond %{HTTP_USER_AGENT} "(googlebot|bingbot|yahoo|baiduspider|facebookexternalhit|twitterbot|linkedinbot|slackbot|rogerbot|applebot|petalbot)" [NC]
+  # Allow Next asset folder and common static folders through
+  RewriteRule ^_next/ - [L]
+  RewriteRule ^static/ - [L]
+  RewriteRule ^assets/ - [L]
+  RewriteRule ^favicon.ico$ - [L]
+  RewriteRule ^robots.txt$ - [L]
+  RewriteRule ^sitemap.xml$ - [L]
 
-  # If prerendered file exists for the request, serve it
+  # Serve prerendered HTML for known bot user-agents when available
+  RewriteCond %{HTTP_USER_AGENT} "(googlebot|bingbot|yahoo|baiduspider|facebookexternalhit|twitterbot|linkedinbot|slackbot|applebot|petalbot)" [NC]
   RewriteCond %{DOCUMENT_ROOT}/prerender%{REQUEST_URI}/index.html -f
   RewriteRule ^(.*)$ /prerender%{REQUEST_URI}/index.html [L]
 
-  # If no prerender match, continue to SPA index (handled below)
-</IfModule>
-
-# --- SPA rewrite (keep at end) ---
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
-
-  # Allow direct access to existing files and directories (again for safety)
-  RewriteCond %{REQUEST_FILENAME} -f [OR]
-  RewriteCond %{REQUEST_FILENAME} -d
-  RewriteRule ^ - [L]
-
-  # All other requests go to index.html (SPA)
-  RewriteRule . /index.html [L]
+  # If using a static export (next export) fall back to index.html for client-side routes
+  # (This enables page refresh on dynamic routes for static hosting.)
+  RewriteRule ^ /index.html [L]
 </IfModule>

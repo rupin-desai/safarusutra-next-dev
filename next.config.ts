@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // keep existing config options if any...
+  trailingSlash: true, // <- add this
 };
 
 export default nextConfig;
