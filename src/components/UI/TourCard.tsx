@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { MapPin } from "lucide-react";
+import { MapPin, Info } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -68,7 +68,8 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const formattedPrice =
     typeof tour.price === "number" ? `₹${tour.price.toLocaleString()}` : "₹24,999";
   const attractionCount = (Array.isArray(tour.attractions) && tour.attractions.length) || 0;
-  const durationDays = tour.duration ? String(tour.duration).split(" ")[0] : "N/A";
+  // show duration exactly as provided in JSON (e.g. "3N - 4D" or "3N")
+  const durationDisplay = tour.duration ? String(tour.duration) : "N/A";
   const titleSlug = createSlug((tour.title ?? String(tour.id)) as string);
   const displayTitle = extractTitle(tour.title);
 
@@ -143,7 +144,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
             <div className="text-center">
               <p className="text-white/70 text-xs mb-1">Duration</p>
-              <p className="text-white text-base">{durationDays} Days</p>
+              <p className="text-white text-base">{durationDisplay}</p>
             </div>
 
             <div className="h-10 w-px bg-white/30" />
@@ -165,7 +166,10 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
             className="flex-1 py-2 text-white text-center rounded-2xl font-medium transition-all duration-150 hover:brightness-110 hover:shadow-md active:scale-95 active:shadow-inner"
             aria-label={`View details for ${tour.title}`}
           >
-            View Details
+            <span className="inline-flex items-center justify-center gap-2">
+              <Info size={16} className="opacity-90" />
+              <span>View Details</span>
+            </span>
           </Link>
         </div>
       </div>
