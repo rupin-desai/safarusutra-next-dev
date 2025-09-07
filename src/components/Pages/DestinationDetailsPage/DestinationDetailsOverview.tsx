@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect } from "react";
 import { motion, useInView, useAnimation, Variants } from "framer-motion";
 import {
   Star,
@@ -162,13 +162,6 @@ const DestinationDetailsOverview: React.FC<Props> = ({
     ));
   };
 
-  const attractions: Attraction[] = useMemo(() => {
-    if (Array.isArray(tourData?.attractions)) return tourData.attractions;
-    if (typeof tourData?.attractions === "string" && tourData.attractions.trim() !== "") {
-      return [{ title: tourData.attractions }];
-    }
-    return [];
-  }, [tourData]);
 
   // early-return after hooks so hooks run consistently
   if (!tourData) return null;
@@ -269,30 +262,7 @@ const DestinationDetailsOverview: React.FC<Props> = ({
               )}
             </div>
 
-            {/* Attractions section with per-item ids and scroll-margin to account for sticky header */}
-            <section id="attractions" aria-labelledby="attractions-heading" className="mb-12 w-full" style={{ scrollMarginTop: "96px" }}>
-              <h2 id="attractions-heading" className="text-2xl font-bold mb-4">Attractions</h2>
-
-              {attractions.length > 0 ? (
-                <div className="space-y-6">
-                  {attractions.map((attr, idx) => (
-                    <article
-                      key={idx}
-                      id={`attraction-${idx}`}
-                      className="bg-white rounded-lg shadow-sm p-6 border border-gray-100"
-                      style={{ scrollMarginTop: "96px" }}
-                    >
-                      <h3 className="text-lg font-semibold mb-2">{attr.title ?? `Attraction ${idx + 1}`}</h3>
-                      {attr.description ? (
-                        <p className="text-gray-700">{String(attr.description)}</p>
-                      ) : null}
-                    </article>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-gray-500">No attractions listed for this destination.</p>
-              )}
-            </section>
+        
           </div>
 
           <div className="hidden lg:block lg:w-1/3">

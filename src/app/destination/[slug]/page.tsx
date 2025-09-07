@@ -321,6 +321,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
     description: getString(completeData.description),
     longDescription: getString(completeData.longDescription ?? completeData.long_description),
     details: detailsProp,
+    // include normalized attractions so Sidebar can render the list
+    attractions: attractionsProp,
   };
 
   return (
