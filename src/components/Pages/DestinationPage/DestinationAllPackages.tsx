@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { motion, useInView, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { MapPin, Globe } from "lucide-react";
 import packageData from "@/data/Destinations.json";
 import DestinationCard from "@/components/UI/DestinationCard";
@@ -112,43 +112,14 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
   const getActiveTabBgColor = (tab: "domestic" | "international") =>
     tab === "domestic" ? "bg-orange-50" : "bg-green-50";
 
-  // Observer for the grid container to reliably trigger animations
-  const gridRef = useRef<HTMLDivElement | null>(null);
-  const gridInView = useInView(gridRef, {
-    once: false,
-    amount: 0.18,
-    margin: "-10% 0px",
-  });
-
-  // Remember if the grid has ever been in view so animations don't revert
-  const [hasBeenInView, setHasBeenInView] = useState(false);
-  useEffect(() => {
-    if (gridInView) setHasBeenInView(true);
-  }, [gridInView]);
-
-  // Observer for the tabs selector so its animation is reliable
-  const tabRef = useRef<HTMLDivElement | null>(null);
-  const tabInView = useInView(tabRef, {
-    once: false,
-    amount: 0.18,
-    margin: "-10% 0px",
-  });
-
-  const [hasTabBeenInView, setHasTabBeenInView] = useState(false);
-  useEffect(() => {
-    if (tabInView) setHasTabBeenInView(true);
-  }, [tabInView]);
-
   return (
     <section className="overflow-hidden" ref={sectionRef}>
-      {/* Animated Tab Selector - Improved Mobile Responsiveness */}
+      {/* Animated Tab Selector - always animate */}
       <motion.div
         className="flex justify-center mb-12 px-3"
         initial="initial"
-        // use remembered state so once tabs animate in they stay visible
-        animate={hasTabBeenInView ? "animate" : "initial"}
+        animate="animate"
         variants={tabsVariants}
-        ref={tabRef}
       >
         <div className="inline-flex w-full max-w-md bg-gray-100 rounded-full p-1.5">
           {/* Domestic Tab Button */}
@@ -191,14 +162,12 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
         </div>
       </motion.div>
 
-      {/* Package Cards: parent controls children. Cards animate regardless of scroll */}
+      {/* Package Cards: animate always (no viewport gating) */}
       <motion.div
         key={activeTab}
         initial="initial"
-        // Use hasBeenInView so animations only trigger once they enter viewport
-        animate={hasBeenInView ? "animate" : "initial"}
+        animate="animate"
         variants={gridVariants}
-        ref={gridRef}
       >
         {visibleTours.length > 0 ? (
           <div className="grid-container">
