@@ -38,11 +38,11 @@ const TourTabs: React.FC<Props> = ({
 
   // derive active tab from pathname if present
   const pathLower = pathname.toLowerCase();
-  const pathActive: Tab = pathLower.endsWith("/itinerary")
+  const pathActive: Tab = pathLower.endsWith("/itinerary/")
     ? "itinerary"
-    : pathLower.endsWith("/inclusions")
+    : pathLower.endsWith("/inclusions/")
     ? "inclusions"
-    : pathLower.endsWith("/policy")
+    : pathLower.endsWith("/policy/")
     ? "policy"
     : "overview";
 
