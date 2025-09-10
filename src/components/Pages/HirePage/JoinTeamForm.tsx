@@ -13,6 +13,12 @@ type FormData = {
   message: string;
 };
 
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_RE = /^\+?[0-9]{7,15}$/; // optional + and 7-15 digits
+
+type FormErrors = Partial<Record<keyof FormData, string>>;
+type Touched = Partial<Record<keyof FormData, boolean>>;
+
 const JoinTeamForm: React.FC = () => {
   const [formData, setFormData] = useState<FormData>({
     name: "",
@@ -26,6 +32,9 @@ const JoinTeamForm: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Touched>({});
+  const [attemptedSubmit, setAttemptedSubmit] = useState(false);
 
   const positions = [
     "Travel Consultant",
@@ -39,28 +48,82 @@ const JoinTeamForm: React.FC = () => {
 
   // Validate form whenever form data changes
   useEffect(() => {
+    const next: FormErrors = {};
     const { name, email, phone, position, message } = formData;
-    const isValid =
-      name.trim() !== "" &&
-      email.trim() !== "" &&
-      phone.trim() !== "" &&
-      position.trim() !== "" &&
-      message.trim() !== "";
 
-    setIsFormValid(isValid);
+    if (!name.trim()) next.name = "Full name is required.";
+    if (!email.trim()) next.email = "Email is required.";
+    else if (!EMAIL_RE.test(email.trim())) next.email = "Enter a valid email address.";
+    if (!phone.trim()) next.phone = "Phone number is required.";
+    else if (!PHONE_RE.test(phone.trim())) next.phone = "Enter a valid phone number (7-15 digits, optional +).";
+    if (!position.trim()) next.position = "Please select a position.";
+    if (!message.trim()) next.message = "Message is required.";
+
+    setErrors(next);
+    setIsFormValid(Object.keys(next).length === 0);
   }, [formData]);
+
+  // Sanitizes phone: allow digits and single leading + only
+  const sanitizePhone = (raw: string) => {
+    // remove all characters except digits and plus
+    let s = raw.replace(/[^\d+]/g, "");
+    // allow only one leading +
+    if (s.includes("+")) {
+      // move any + to start and remove other + signs
+      s = "+" + s.replace(/\+/g, "");
+      // if plus not at start, ensure it's at start
+      if (s.length > 1 && s[1] === "+") s = s.replace(/\+/g, "");
+    }
+    // finally, strip any pluses not leading
+    if (s.startsWith("+")) {
+      s = "+" + s.slice(1).replace(/\+/g, "");
+    } else {
+      s = s.replace(/\+/g, "");
+    }
+    // limit length (plus + up to 15 digits)
+    const digits = s.replace(/\+/g, "");
+    const truncatedDigits = digits.slice(0, 15);
+    return (s.startsWith("+") ? "+" : "") + truncatedDigits;
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+
+    if (name === "phone") {
+      const clean = sanitizePhone(value);
+      setFormData((prev) => ({ ...prev, phone: clean }));
+      setErrors((prev) => ({ ...prev, phone: undefined }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
+    setErrors((prev) => ({ ...prev, [name]: undefined }));
+  };
+
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setAttemptedSubmit(false);
 
-    if (!isFormValid) return;
+    if (!isFormValid) {
+      // mark that user attempted submit so errors become visible
+      setAttemptedSubmit(true);
+      // also mark all fields touched so messages show after attempted submit
+      setTouched({
+        name: true,
+        email: true,
+        phone: true,
+        position: true,
+        message: true,
+      });
+      return;
+    }
 
     setSubmitting(true);
     setError("");
@@ -77,14 +140,22 @@ const JoinTeamForm: React.FC = () => {
         position: "",
         message: "",
       });
+      setErrors({});
+      setTouched({});
+      setAttemptedSubmit(false);
     } catch (err: unknown) {
-      // Narrow unknown to a usable message without using `any`
       const message = err instanceof Error ? err.message : String(err ?? "Something went wrong. Please try again later.");
       setError(message);
       console.error("Error submitting form:", err);
     } finally {
       setSubmitting(false);
     }
+  };
+
+  // helper: should show error for a field?
+  const shouldShowError = (field: keyof FormData) => {
+    // show only after blur/touch or after an attempted submit
+    return Boolean(touched[field] || attemptedSubmit);
   };
 
   return (
@@ -122,10 +193,16 @@ const JoinTeamForm: React.FC = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name && shouldShowError("name") ? "name-error" : undefined}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
                 placeholder="Enter your full name"
                 required
               />
+              {errors.name && shouldShowError("name") && (
+                <p id="name-error" className="mt-1 text-xs text-red-600">{errors.name}</p>
+              )}
             </div>
 
             <div>
@@ -138,10 +215,16 @@ const JoinTeamForm: React.FC = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email && shouldShowError("email") ? "email-error" : undefined}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
                 placeholder="your.email@example.com"
                 required
               />
+              {errors.email && shouldShowError("email") && (
+                <p id="email-error" className="mt-1 text-xs text-red-600">{errors.email}</p>
+              )}
             </div>
           </div>
 
@@ -152,14 +235,22 @@ const JoinTeamForm: React.FC = () => {
               </label>
               <input
                 type="tel"
+                inputMode="tel"
+                pattern="\+?[0-9]*"
                 id="phone"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone && shouldShowError("phone") ? "phone-error" : undefined}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
                 placeholder="+91 98765 43210"
                 required
               />
+              {errors.phone && shouldShowError("phone") && (
+                <p id="phone-error" className="mt-1 text-xs text-red-600">{errors.phone}</p>
+              )}
             </div>
 
             <div>
@@ -171,6 +262,9 @@ const JoinTeamForm: React.FC = () => {
                 name="position"
                 value={formData.position}
                 onChange={handleChange}
+                onBlur={handleBlur}
+                aria-invalid={!!errors.position}
+                aria-describedby={errors.position && shouldShowError("position") ? "position-error" : undefined}
                 className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent appearance-none bg-white"
                 required
               >
@@ -183,6 +277,9 @@ const JoinTeamForm: React.FC = () => {
                   </option>
                 ))}
               </select>
+              {errors.position && shouldShowError("position") && (
+                <p id="position-error" className="mt-1 text-xs text-red-600">{errors.position}</p>
+              )}
             </div>
           </div>
 
@@ -195,11 +292,17 @@ const JoinTeamForm: React.FC = () => {
               name="message"
               value={formData.message}
               onChange={handleChange}
+              onBlur={handleBlur}
+              aria-invalid={!!errors.message}
+              aria-describedby={errors.message && shouldShowError("message") ? "message-error" : undefined}
               rows={4}
               className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-orange)] focus:border-transparent"
               placeholder="Tell us about your passion for travel and why you'd be a great fit..."
               required
             ></textarea>
+            {errors.message && shouldShowError("message") && (
+              <p id="message-error" className="mt-1 text-xs text-red-600">{errors.message}</p>
+            )}
           </div>
 
           {error && <div className="bg-red-50 text-red-700 px-4 py-3 rounded-md">{error}</div>}
@@ -219,7 +322,7 @@ const JoinTeamForm: React.FC = () => {
                 variant={isFormValid ? "primary" : "disabled"}
                 color="var(--color-orange)"
                 className="text-lg"
-                disabled={!isFormValid}
+                disabled={!isFormValid || submitting}
               >
                 Submit Application
               </SSButton>
