@@ -250,10 +250,10 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
             <div className="flex space-x-8">
               {[
                 { href: "/", label: "Home" },
-                { href: "/about", label: "About" },
-                { href: "/destination", label: "Destinations" },
-                { href: "/fixed-departures", label: "Tours" },
-                { href: "/hire", label: "Hire" },
+                { href: "/about/", label: "About" },
+                { href: "/destination/", label: "Destinations" },
+                { href: "/fixed-departures/", label: "Tours" },
+                { href: "/hire/", label: "Hire" },
               ].map((link) => {
                  if (link.href === "/fixed-departures") {
                    const isActive = pathname.startsWith("/fixed-departures") || pathname.startsWith("/tour");
@@ -300,10 +300,10 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                              }}
                              onMouseLeave={() => scheduleClose()}
                            >
-                             <Link href="/fixed-departures" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                             <Link href="/fixed-departures/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                Fixed Departures
                              </Link>
-                             <Link href="/tour" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                             <Link href="/tour/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
                                All Tours
                              </Link>
                            </motion.div>

@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence, Variants, Transition } from "framer-motion";
 import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
+import Link from "next/link";
 import SectionTitle from "../../UI/SectionTitle";
 
 type FAQ = {
@@ -168,12 +169,12 @@ const AboutFAQ: React.FC = () => {
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
             Everything you need to know about our safari experiences. Can&#39;t find
             what you&#39;re looking for?{' '}
-            <a
-              href="/contact"
+            <Link
+              href="/contact/"
               className="text-[var(--color-orange)] font-medium hover:underline"
             >
               Contact our team
-            </a>
+            </Link>
             .
           </p>
         </motion.div>

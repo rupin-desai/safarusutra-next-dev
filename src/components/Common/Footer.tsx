@@ -229,22 +229,22 @@ const Footer = () => {
                 Home
               </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/about" className="text-white text-sm hover:underline whitespace-nowrap">
+              <Link href="/about/" className="text-white text-sm hover:underline whitespace-nowrap">
                 About
               </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/destination" className="text-white text-sm hover:underline whitespace-nowrap">
+              <Link href="/destination/" className="text-white text-sm hover:underline whitespace-nowrap">
                 Destinations
               </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tour" className="text-white text-sm hover:underline whitespace-nowrap">
+              <Link href="/tour/" className="text-white text-sm hover:underline whitespace-nowrap">
                 Tours
               </Link>
-              <Link href="/fixed-departures" className="text-white text-sm hover:underline whitespace-nowrap">
+              <Link href="/fixed-departures/" className="text-white text-sm hover:underline whitespace-nowrap">
                 Fixed Departures
               </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/hire" className="text-white text-sm hover:underline whitespace-nowrap">
+              <Link href="/hire/" className="text-white text-sm hover:underline whitespace-nowrap">
                 Hire
               </Link>
             </div>
@@ -252,11 +252,11 @@ const Footer = () => {
             {/* Desktop links - 2 columns grid - updated with Fixed Departures + Tours (removed B2B) */}
             <div className="hidden md:grid grid-cols-2 gap-x-6 gap-y-2">
               <Link href="/" className="text-white hover:underline whitespace-nowrap">Home</Link>
-              <Link href="/about" className="text-white hover:underline whitespace-nowrap">About</Link>
-              <Link href="/destination" className="text-white hover:underline whitespace-nowrap">Destinations</Link>
-              <Link href="/fixed-departures" className="text-white hover:underline whitespace-nowrap">Fixed Departures</Link>
-              <Link href="/tour" className="text-white hover:underline whitespace-nowrap">Tours</Link>
-              <Link href="/hire" className="text-white hover:underline whitespace-nowrap">Hire</Link>
+              <Link href="/about/" className="text-white hover:underline whitespace-nowrap">About</Link>
+              <Link href="/destination/" className="text-white hover:underline whitespace-nowrap">Destinations</Link>
+              <Link href="/fixed-departures/" className="text-white hover:underline whitespace-nowrap">Fixed Departures</Link>
+              <Link href="/tour/" className="text-white hover:underline whitespace-nowrap">Tours</Link>
+              <Link href="/hire/" className="text-white hover:underline whitespace-nowrap">Hire</Link>
             </div>
           </motion.div>
 
@@ -273,21 +273,21 @@ const Footer = () => {
             </h3>
             {/* Mobile: Row with wrapping */}
             <div className="flex flex-wrap justify-center gap-3 md:hidden">
-              <Link href="/contact" className="text-white text-sm hover:underline whitespace-nowrap">Contact Us</Link>
+              <Link href="/contact/" className="text-white text-sm hover:underline whitespace-nowrap">Contact Us</Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/privacy-policy" className="text-white text-sm hover:underline whitespace-nowrap">Privacy Policy</Link>
+              <Link href="/privacy-policy/" className="text-white text-sm hover:underline whitespace-nowrap">Privacy Policy</Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/terms-and-conditions" className="text-white text-sm hover:underline whitespace-nowrap">Terms & Conditions</Link>
+              <Link href="/terms-and-conditions/" className="text-white text-sm hover:underline whitespace-nowrap">Terms & Conditions</Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/cancellation-policy" className="text-white text-sm hover:underline whitespace-nowrap">Cancellation Policy</Link>
+              <Link href="/cancellation-policy/" className="text-white text-sm hover:underline whitespace-nowrap">Cancellation Policy</Link>
             </div>
 
             {/* Desktop links - single column list */}
             <div className="hidden md:flex flex-col space-y-2">
-              <Link href="/contact" className="text-white hover:underline whitespace-nowrap">Contact Us</Link>
-              <Link href="/privacy-policy" className="text-white hover:underline whitespace-nowrap">Privacy Policy</Link>
-              <Link href="/terms-and-conditions" className="text-white hover:underline whitespace-nowrap">Terms & Conditions</Link>
-              <Link href="/cancellation-policy" className="text-white hover:underline whitespace-nowrap">Cancellation Policy</Link>
+              <Link href="/contact/" className="text-white hover:underline whitespace-nowrap">Contact Us</Link>
+              <Link href="/privacy-policy/" className="text-white hover:underline whitespace-nowrap">Privacy Policy</Link>
+              <Link href="/terms-and-conditions/" className="text-white hover:underline whitespace-nowrap">Terms & Conditions</Link>
+              <Link href="/cancellation-policy/" className="text-white hover:underline whitespace-nowrap">Cancellation Policy</Link>
             </div>
           </motion.div>
 

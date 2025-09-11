@@ -199,7 +199,7 @@ export default function HomeBlog(): React.ReactElement {
                   <div className="p-6">
                     <h3 className="text-xl font-medium mb-2 text-gray-800">{post.title}</h3>
                     <p className="text-gray-600 mb-6 text-sm">{post.subtitle}</p>
-                    <Link href={`/blog/${post.slug}`} className="inline-flex items-center font-medium text-orange-500 hover:text-orange-700 transition-colors" aria-label={`Read ${post.title}`}>
+                    <Link href={`/blog/${post.slug}/`} className="inline-flex items-center font-medium text-orange-500 hover:text-orange-700 transition-colors" aria-label={`Read ${post.title}`}>
                       Read Now <ArrowRight size={16} className="ml-2" />
                     </Link>
                   </div>

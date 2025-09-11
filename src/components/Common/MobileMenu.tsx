@@ -127,31 +127,31 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, toggleMenu, isLegalPage
           </motion.div>
 
           <motion.div variants={linkVariants} className="text-right">
-            <Link href="/about" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
+            <Link href="/about/" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
               About
             </Link>
           </motion.div>
 
           <motion.div variants={linkVariants} className="text-right">
-            <Link href="/destination" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
+            <Link href="/destination/" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
               Destinations
             </Link>
           </motion.div>
 
           <motion.div variants={linkVariants} className="text-right">
-            <Link href="/fixed-departures" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
+            <Link href="/fixed-departures/" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
               Fixed Departures
             </Link>
           </motion.div>
 
           <motion.div variants={linkVariants} className="text-right">
-            <Link href="/tour" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
+            <Link href="/tour/" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
               All Tours
             </Link>
           </motion.div>
 
           <motion.div variants={linkVariants} className="text-right">
-            <Link href="/hire" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
+            <Link href="/hire/" className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`} onClick={toggleMenu}>
               Hire
             </Link>
           </motion.div>
@@ -159,7 +159,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, toggleMenu, isLegalPage
 
         <div className="mt-auto space-y-4">
           <motion.div variants={linkVariants} className="w-full">
-            <SSButton to="/contact" variant="primary" color={isLegalPage ? "var(--color-orange)" : "var(--color-green)"} className="w-full py-3 text-center" onClick={toggleMenu}>
+            <SSButton to="/contact/" variant="primary" color={isLegalPage ? "var(--color-orange)" : "var(--color-green)"} className="w-full py-3 text-center" onClick={toggleMenu}>
               Contact Us
             </SSButton>
           </motion.div>

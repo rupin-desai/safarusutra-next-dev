@@ -12,7 +12,7 @@ export default function NotFoundPage() {
       <p className="text-lg text-slate-600 mb-6">Sorry — the page you requested was not found.</p>
       <div className="flex gap-4">
         <Link href="/" className="text-blue-600 hover:underline">Return home</Link>
-        <Link href="/contact" className="text-blue-600 hover:underline">Contact us</Link>
+        <Link href="/contact/" className="text-blue-600 hover:underline">Contact us</Link>
       </div>
     </main>
   );

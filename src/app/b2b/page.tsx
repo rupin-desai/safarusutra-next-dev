@@ -15,7 +15,7 @@ export default function B2BPage() {
         <Link href="/" className="text-blue-600 hover:underline">
           Home
         </Link>
-        <Link href="/about" className="text-blue-600 hover:underline">
+        <Link href="/about/" className="text-blue-600 hover:underline">
           About
         </Link>
       </nav>

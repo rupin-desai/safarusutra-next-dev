@@ -148,7 +148,7 @@ const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle
           </h2>
           <p className="mt-3 text-gray-600">
             Common questions travelers ask about {destinationTitle} — if you need more help,{" "}
-            <Link href="/contact" className="text-orange-500 font-medium hover:underline">
+            <Link href="/contact/" className="text-orange-500 font-medium hover:underline">
               contact us
             </Link>
             .
