@@ -1,95 +1,44 @@
-"use client";
-
-import React, { useEffect } from "react";
-import Head from "next/head";
-import { useAnimate } from "framer-motion";
+import type { Metadata } from "next";
+import React from "react";
 import Navbar from "@/components/Common/Navbar";
 
+export const metadata: Metadata = {
+  title: "Cancellation Policy | Safari Sutra",
+  description:
+    "Learn about Safari Sutra's cancellation, refund, and modification policies. Understand your rights and responsibilities when changing or cancelling your travel plans.",
+  openGraph: {
+    title: "Cancellation Policy | Safari Sutra",
+    description:
+      "Learn about Safari Sutra's cancellation, refund, and modification policies. Understand your rights and responsibilities when changing or cancelling your travel plans.",
+    url: "https://thesafarisutra.com/cancellation-policy",
+  },
+};
+
 export default function CancellationPolicy(): React.ReactElement {
-  const [scope, animate] = useAnimate();
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      animate("section", { opacity: 1 }, { duration: 0.3 });
-
-      document.querySelectorAll(".animate-item").forEach((element, index) => {
-        animate(
-          element,
-          {
-            opacity: 1,
-            transform: "translate3d(0px, 0px, 0px)",
-          },
-          {
-            delay: 0.1 * index,
-            type: "spring",
-            stiffness: 300,
-            damping: 20,
-          }
-        );
-      });
-    }, 100);
-
-    return () => clearTimeout(timer);
-  }, [animate]);
-
   return (
-    <div ref={scope}>
-      <Head>
-        <title>Cancellation Policy | Safari Sutra</title>
-        <meta
-          name="description"
-          content="Learn about Safari Sutra's cancellation, refund, and modification policies. Understand your rights and responsibilities when changing or cancelling your travel plans."
-        />
-        <meta
-          name="keywords"
-          content="cancellation policy, refund policy, travel modifications, safari sutra cancellations, travel booking cancellations"
-        />
-        <link rel="canonical" href="https://thesafarisutra.com/cancellation-policy" />
-      </Head>
-
+    <div>
       <Navbar isLegalPage={true} />
 
       <div className="pt-24 md:pt-28" />
 
-      <section
-        className="py-12 px-4 md:py-16 md:px-16 bg-white opacity-0"
-        style={{ willChange: "opacity" }}
-      >
+      <section className="py-12 px-4 md:py-16 md:px-16 bg-white" style={{ willChange: "opacity" }}>
         <div className="max-w-4xl mx-auto">
           {/* Simple section title */}
-          <div
-            className="mb-10 text-center animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-10 text-center">
             <h1 className="text-3xl md:text-5xl font-family-oswald text-[var(--color-dark-teal)] mb-2">
               Cancellation Policy
             </h1>
             <p className="text-sm text-gray-500">Last Updated: May 21, 2025</p>
           </div>
 
-          <div
-            className="prose prose-lg max-w-none text-justify mb-10 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="prose prose-lg max-w-none text-justify mb-10">
             <p>
               Welcome to Safari Sutra Holidays Private Limited (&quot;Safari Sutra,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). These Terms and Conditions (&quot;Terms&quot;) govern your use of our website, mobile applications, and all travel-related services, including but not limited to bookings for flights, hotels, holiday packages, and other travel arrangements. By accessing or using our services, you agree to be bound by these Terms and the specific conditions of third-party providers (e.g., airlines, hotels, tour operators). If you do not agree with these Terms, please do not use our services. These Terms do not constitute a partnership or agency relationship between you and Safari Sutra, and no party has authority to bind the other in any way.
             </p>
           </div>
 
           {/* Section 1 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               1. Booking Process and Payment Obligations
             </h2>
@@ -128,13 +77,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Section 2 - HIGHLIGHTED SECTION */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               2. General Terms of Cancellation, Refunds, and Modifications
             </h2>
@@ -265,13 +208,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Section 3 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               3. Third-Party Services and Liability
             </h2>
@@ -320,13 +257,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Section 4 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               4. User Responsibilities
             </h2>
@@ -365,13 +296,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Section 5 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               5. Intellectual Property
             </h2>
@@ -388,13 +313,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Section 6 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               6. Prohibited Conduct
             </h2>
@@ -427,13 +346,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Section 7 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               7. Marketing and Communications
             </h2>
@@ -460,13 +373,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Sections 8-13 */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               8. Dispute Resolution
             </h2>
@@ -484,13 +391,7 @@ export default function CancellationPolicy(): React.ReactElement {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               9. Compliance with Travel Regulations
             </h2>
@@ -505,13 +406,7 @@ export default function CancellationPolicy(): React.ReactElement {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               10. Force Majeure
             </h2>
@@ -525,13 +420,7 @@ export default function CancellationPolicy(): React.ReactElement {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               11. Termination of Services
             </h2>
@@ -545,13 +434,7 @@ export default function CancellationPolicy(): React.ReactElement {
             </div>
           </div>
 
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               12. Changes to These Terms
             </h2>
@@ -568,13 +451,7 @@ export default function CancellationPolicy(): React.ReactElement {
           </div>
 
           {/* Contact Section */}
-          <div
-            className="mb-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="mb-8">
             <h2 className="text-2xl font-family-oswald text-[var(--color-dark-teal)] mb-4">
               13. Contact Us
             </h2>
@@ -611,13 +488,7 @@ export default function CancellationPolicy(): React.ReactElement {
             </div>
           </div>
 
-          <div
-            className="text-center mt-12 border-t pt-8 animate-item opacity-0"
-            style={{
-              transform: "translate3d(0px, 30px, 0px)",
-              willChange: "transform, opacity",
-            }}
-          >
+          <div className="text-center mt-12 border-t pt-8">
             <p className="text-sm text-gray-500">
               Safari Sutra Holidays Private Limited © 2025 All Rights Reserved.
             </p>
@@ -626,4 +497,4 @@ export default function CancellationPolicy(): React.ReactElement {
       </section>
     </div>
   );
-};
+}
