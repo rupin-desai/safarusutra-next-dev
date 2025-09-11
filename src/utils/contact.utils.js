@@ -42,7 +42,7 @@ export const navigateToContactForm = ({
   }
 
   // Navigate to contact page
-  navigate("/contact");
+  navigate("/contact/");
 
   // Try to scroll after a short delay (desktop fallback)
   setTimeout(() => {

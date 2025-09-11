@@ -279,7 +279,7 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
       <div className="border-t border-gray-200 pt-6">
         <h3 className="font-bold text-gray-800 mb-3">Need Help?</h3>
         <p className="text-gray-600 text-sm mb-3">Our travel experts are ready to assist you with any questions or special requests.</p>
-        <SSButton variant="outline" color="var(--color-orange)" className="w-full flex items-center justify-center gap-2" onClick={() => router.push("/contact")}>
+        <SSButton variant="outline" color="var(--color-orange)" className="w-full flex items-center justify-center gap-2" onClick={() => router.push("/contact/")}>
           Contact Our Team
         </SSButton>
       </div>

@@ -255,8 +255,8 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                 { href: "/fixed-departures/", label: "Tours" },
                 { href: "/hire/", label: "Hire" },
               ].map((link) => {
-                 if (link.href === "/fixed-departures") {
-                   const isActive = pathname.startsWith("/fixed-departures") || pathname.startsWith("/tour");
+                 if (link.href === "/fixed-departures/") {
+                   const isActive = pathname.startsWith("/fixed-departures/") || pathname.startsWith("/tour/");
                    return (
                     <div
                       key={link.href}
@@ -325,7 +325,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
 
           {/* Contact Button - Right */}
           <motion.div className="hidden md:block" initial="initial" animate="animate" variants={contactButtonVariants}>
-            <SSButton to="/contact" variant="primary" color={isLegalPage ? "var(--color-orange)" : "var(--color-green)"} className="px-3">
+            <SSButton to="/contact/" variant="primary" color={isLegalPage ? "var(--color-orange)" : "var(--color-green)"} className="px-3">
               Contact Us
             </SSButton>
           </motion.div>

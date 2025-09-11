@@ -258,7 +258,7 @@ const FixedDeparturesPageClient: React.FC = () => {
 
         <div className="container mx-auto px-4 pb-12">
           <div className="flex justify-center">
-            <SSButton to="/tour" variant="primary" color="var(--color-green)" className="px-6 py-3">
+            <SSButton to="/tour/" variant="primary" color="var(--color-green)" className="px-6 py-3">
               Browse All Tours
             </SSButton>
           </div>

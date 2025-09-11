@@ -138,7 +138,7 @@ const DestinationDiscover: React.FC = () => {
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mt-6">
-              <SSButton to="/contact" color="var(--color-orange)">
+              <SSButton to="/contact/" color="var(--color-orange)">
                 Let&apos;s Make Magic Happen
               </SSButton>
 

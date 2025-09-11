@@ -54,7 +54,7 @@ const DestinationContactBanner: React.FC = () => {
               too long! Our travel wizards are ready to turn your travel dreams
               into real-life adventures.
             </p>
-            <SSButton to="/contact" color="var(--color-orange)">
+            <SSButton to="/contact/" color="var(--color-orange)">
               Let The Adventures Begin!
             </SSButton>
           </motion.div>

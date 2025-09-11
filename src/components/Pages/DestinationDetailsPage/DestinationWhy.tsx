@@ -69,7 +69,7 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
               Book Custom Tour
             </SSButton>
 
-            <SSButton variant="outline" color="white" to="/tour">
+            <SSButton variant="outline" color="white" to="/tour/">
               View Packages
             </SSButton>
           </div>

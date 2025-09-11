@@ -50,7 +50,7 @@ const shuffleArray = <T,>(array: T[]): T[] => {
 
 export default function TourPageClient(): React.ReactElement {
   const pathname = usePathname() ?? "/";
-  const isAllTours = pathname.startsWith("/tour");
+  const isAllTours = pathname.startsWith("/tour/");
 
   const [tours, setTours] = useState<Tour[]>([]);
   const [filteredTours, setFilteredTours] = useState<Tour[]>([]);
@@ -277,7 +277,7 @@ export default function TourPageClient(): React.ReactElement {
 
         <div className="container mx-auto px-4 pb-12">
           <div className="flex justify-center">
-            <SSButton to={isAllTours ? "/fixed-departures" : "/tour"} variant="primary" color="var(--color-green)" className="px-6 py-3">
+            <SSButton to={isAllTours ? "/fixed-departures/" : "/tour/"} variant="primary" color="var(--color-green)" className="px-6 py-3">
               {isAllTours ? "See Fixed Departures" : "Browse All Tours"}
             </SSButton>
           </div>

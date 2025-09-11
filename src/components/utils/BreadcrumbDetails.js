@@ -42,7 +42,7 @@ const specialRouteHandlers = {
       return {
         // creative message for listing
         label: "Fixed Departures",
-        path: "/fixed-departures",
+        path: "/fixed-departures/",
         isLast: segments.length === 1,
       };
     }

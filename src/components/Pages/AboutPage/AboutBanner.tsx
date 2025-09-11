@@ -102,11 +102,11 @@ const AboutBanner = () => {
             damping: 20,
           }}
         >
-          <SSButton variant="primary" color="var(--color-orange)" to="/destination">
+          <SSButton variant="primary" color="var(--color-orange)" to="/destination/">
             View Destinations
           </SSButton>
 
-          <SSButton variant="outline" color="white" to="/contact">
+          <SSButton variant="outline" color="white" to="/contact/">
             Contact Us
           </SSButton>
         </motion.div>

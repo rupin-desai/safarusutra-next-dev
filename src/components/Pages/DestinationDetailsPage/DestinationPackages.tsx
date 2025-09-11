@@ -141,7 +141,7 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
         </motion.div>
 
         <motion.div className="mt-10 text-center flex flex-wrap justify-center gap-4" variants={fadeIn} initial="initial" whileInView="animate" viewport={{ once: true }}>
-          <SSButton variant="primary" color="var(--color-orange)" to="/tour">
+          <SSButton variant="primary" color="var(--color-orange)" to="/tour/">
             View All Packages
           </SSButton>
 

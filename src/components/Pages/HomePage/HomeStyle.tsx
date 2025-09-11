@@ -409,7 +409,7 @@ const HomeStyle = () => {
       </motion.div>
 
       <motion.div className="flex justify-center mt-16 md:mt-56 lg:mt-52" initial="initial" whileInView="animate" viewport={{ once: true, amount: 0.2 }} variants={buttonVariants}>
-        <SSButton color="var(--color-green)" to="/fixed-departures" className="text-lg">
+        <SSButton color="var(--color-green)" to="/fixed-departures/" className="text-lg">
           Book your adventure now!
         </SSButton>
       </motion.div>

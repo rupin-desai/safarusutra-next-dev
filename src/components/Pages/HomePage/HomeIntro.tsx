@@ -299,7 +299,7 @@ const HomeIntro: React.FC<Props> = ({ featuredIds: featuredIdsProp }) => {
         <div className="max-w-xl mx-auto mb-6 px-4">
           <h3 className="text-xl md:text-4xl font-family-baloo font-medium text-gray-700 mt-8 md:mt-4 mb-3">Ready for your next adventure?</h3>
         </div>
-        <SSButton to="/fixed-departures" color="var(--color-dark-teal)" className="px-10 py-3.5 text-lg">
+        <SSButton to="/fixed-departures/" color="var(--color-dark-teal)" className="px-10 py-3.5 text-lg">
           Explore All Tours
         </SSButton>
       </motion.div>
