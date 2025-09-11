@@ -275,9 +275,9 @@ const Footer = () => {
             <div className="flex flex-wrap justify-center gap-3 md:hidden">
               <Link href="/contact" className="text-white text-sm hover:underline whitespace-nowrap">Contact Us</Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/privacy" className="text-white text-sm hover:underline whitespace-nowrap">Privacy Policy</Link>
+              <Link href="/privacy-policy" className="text-white text-sm hover:underline whitespace-nowrap">Privacy Policy</Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/terms" className="text-white text-sm hover:underline whitespace-nowrap">Terms & Conditions</Link>
+              <Link href="/terms-and-conditions" className="text-white text-sm hover:underline whitespace-nowrap">Terms & Conditions</Link>
               <span className="text-white text-sm">•</span>
               <Link href="/cancellation-policy" className="text-white text-sm hover:underline whitespace-nowrap">Cancellation Policy</Link>
             </div>

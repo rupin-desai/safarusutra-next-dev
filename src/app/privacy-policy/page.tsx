@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: "Privacy Policy | Safari Sutra",
     description:
       "Learn how Safari Sutra collects, uses, protects, and shares your personal information. Read our privacy policy and understand your data protection rights.",
-    url: "https://thesafarisutra.com/privacy",
+    url: "https://thesafarisutra.com/privacy-policy",
   },
   twitter: {
     title: "Privacy Policy | Safari Sutra",
