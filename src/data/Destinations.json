@@ -418,7 +418,7 @@
     "title": "Gujarat",
     "caption": "Tapestry of heritage & wild landscapes",
     "description": "A vibrant tapestry of ancient heritage, colorful festivals, and wild landscapes, where tradition meets adventure.",
-    "image": "https://volzero.com/img/news/88102_banner.jpg",
+    "image": "https://images.unsplash.com/photo-1615033321768-6eaef881fc81?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c3RhdHVlJTIwb2YlMjB1bml0eXxlbnwwfHwwfHx8MA%3D%3D",
     "duration": "5-8 Days",
     "price": "₹10,000",
     "location": "India",
@@ -1004,5 +1004,4 @@
       "nature"
     ]
   }
-
 ]

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { HelpCircle, ChevronDown, ChevronUp } from "lucide-react";
 
@@ -147,9 +148,9 @@ const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle
           </h2>
           <p className="mt-3 text-gray-600">
             Common questions travelers ask about {destinationTitle} — if you need more help,{" "}
-            <a href="/contact" className="text-orange-500 font-medium hover:underline">
+            <Link href="/contact" className="text-orange-500 font-medium hover:underline">
               contact us
-            </a>
+            </Link>
             .
           </p>
         </div>

@@ -14,14 +14,8 @@
     "location": "India",
     "category": "Nature",
     "featured": true,
-    "relatedDestinations": [
-      5,
-      6
-    ],
-    "destinationNames": [
-      "Assam",
-      "Meghalaya"
-    ],
+    "relatedDestinations": [5, 6],
+    "destinationNames": ["Assam", "Meghalaya"],
     "description": "Experience the breathtaking landscapes, unique culture, and natural wonders of Northeast India with our comprehensive 7-day tour package. From the bustling city of Guwahati to the misty hills of Shillong, the living root bridges of Cherrapunjee, the crystal clear waters of Dawki, and the wild adventures of Kaziranga National Park, this journey offers an unforgettable exploration of one of India's most beautiful regions.",
     "highlights": [
       "20+ Attractions Covered – Nohkalikai Falls, Krang Suri Falls, Double Decker Root Bridge & more",
@@ -125,17 +119,13 @@
         "day": 6,
         "title": "Shillong to Kaziranga",
         "description": "After a hearty breakfast in Shillong, we'll begin our scenic drive towards the wild and wonderful Kaziranga National Park. The route treats us to stunning valley views and dense jungles that hint at the adventures ahead. Once we arrive, we'll check into a beautiful resort surrounded by lush greenery and the sounds of nature. The rest of the day is perfect for unwinding—explore the property, enjoy some leisure activities, or simply relax and soak in the peaceful vibe.",
-        "activities": [
-          "Kaziranga National Park"
-        ]
+        "activities": ["Kaziranga National Park"]
       },
       {
         "day": 7,
         "title": "Departure Day",
         "description": "Enjoy a final breakfast in Shillong, cherishing the memories of your trip. After breakfast, drive to Guwahati and visit the sacred Maa Kamakhya Temple, one of the most revered Shakti Peethas in India. After the visit, we'll drop you at Lokpriya Gopinath Bordoloi International Airport for your onward journey. Bid farewell to the mesmerizing landscapes of Meghalaya as you head home with unforgettable experiences.",
-        "activities": [
-          "Maa Kamakhya Temple"
-        ]
+        "activities": ["Maa Kamakhya Temple"]
       }
     ],
     "inclusions": [
@@ -180,14 +170,8 @@
     "location": "India",
     "category": "Island",
     "featured": true,
-    "destinationNames": [
-      "Andaman & Nicobar",
-      "Port Blair",
-      "Havelock"
-    ],
-    "relatedDestinations": [
-      18
-    ],
+    "destinationNames": ["Andaman & Nicobar", "Port Blair", "Havelock"],
+    "relatedDestinations": [18],
     "description": "Embark on our custom Port Blair Havelock tour package, blending Port Blair’s history with Havelock’s pristine beaches. This 5-night, 6-day private adventure offers turquoise waters, coral reefs, and 24/7 support for a tropical escape.",
     "highlights": [
       "Destinations: Port Blair (2N), Havelock (2N), Port Blair (1N)",
@@ -236,37 +220,25 @@
         "day": 3,
         "title": "Ferry to Havelock & Beach Vibes",
         "description": "Ferry to Havelock Island, check in, relax at Radhanagar Beach.",
-        "activities": [
-          "Ferry Ride",
-          "Radhanagar Beach"
-        ]
+        "activities": ["Ferry Ride", "Radhanagar Beach"]
       },
       {
         "day": 4,
         "title": "Havelock’s Adventure Zone",
         "description": "Snorkeling or glass-bottom boat at Elephant Beach, visit Kalapathar Beach.",
-        "activities": [
-          "Elephant Beach",
-          "Kalapathar Beach"
-        ]
+        "activities": ["Elephant Beach", "Kalapathar Beach"]
       },
       {
         "day": 5,
         "title": "Return to Port Blair",
         "description": "Ferry back to Port Blair, visit Ross Island, Marina Park, and Aberdeen Bazaar.",
-        "activities": [
-          "Ross Island",
-          "Marina Park",
-          "Aberdeen Bazaar"
-        ]
+        "activities": ["Ross Island", "Marina Park", "Aberdeen Bazaar"]
       },
       {
         "day": 6,
         "title": "Port Blair Departure",
         "description": "Visit Chidiya Tapu, check out, and transfer to airport.",
-        "activities": [
-          "Chidiya Tapu"
-        ]
+        "activities": ["Chidiya Tapu"]
       }
     ],
     "inclusions": [
@@ -310,9 +282,7 @@
       "Havelock",
       "Neil Island"
     ],
-    "relatedDestinations": [
-      18
-    ],
+    "relatedDestinations": [18],
     "description": "Discover our custom Port Blair Havelock Neil tour package, featuring historic jails, pristine beaches, and tranquil islands. This 5-night, 6-day private adventure offers tropical bliss with 24/7 support.",
     "highlights": [
       "Destinations: Port Blair (2N), Havelock (1N), Neil Island (1N), Port Blair (1N)",
@@ -362,20 +332,13 @@
         "day": 3,
         "title": "Ferry to Havelock",
         "description": "Take a ferry to Havelock and check into a 3-star hotel. Visit Radhanagar Beach, a pristine stretch of white sand. Swim or relax by the turquoise waters. Evening free for beachside dining.",
-        "activities": [
-          "Ferry Ride",
-          "Radhanagar Beach"
-        ]
+        "activities": ["Ferry Ride", "Radhanagar Beach"]
       },
       {
         "day": 4,
         "title": "Havelock to Neil Island",
         "description": "Take a ferry to Neil Island and check into a 3-star hotel. Visit Bharatpur Beach for snorkeling or glass-bottom boat rides. Explore Laxmanpur Beach for sunset views. Enjoy a serene dinner.",
-        "activities": [
-          "Ferry Ride",
-          "Bharatpur Beach",
-          "Laxmanpur Beach"
-        ]
+        "activities": ["Ferry Ride", "Bharatpur Beach", "Laxmanpur Beach"]
       },
       {
         "day": 5,
@@ -392,9 +355,7 @@
         "day": 6,
         "title": "Port Blair Departure",
         "description": "Visit Chidiya Tapu for bird-watching. Check out and transfer to the airport, carrying island memories.",
-        "activities": [
-          "Chidiya Tapu"
-        ]
+        "activities": ["Chidiya Tapu"]
       }
     ],
     "inclusions": [
@@ -432,14 +393,8 @@
     "location": "India",
     "category": "Island",
     "featured": false,
-    "destinationNames": [
-      "Andaman & Nicobar",
-      "Port Blair",
-      "Havelock"
-    ],
-    "relatedDestinations": [
-      18
-    ],
+    "destinationNames": ["Andaman & Nicobar", "Port Blair", "Havelock"],
+    "relatedDestinations": [18],
     "description": "Dive into our custom Port Blair Havelock tour package, featuring historic sites and pristine beaches. This 6-night, 7-day private adventure offers island serenity and 24/7 support.",
     "highlights": [
       "Destinations: Port Blair (3N), Havelock (2N), Port Blair (1N)",
@@ -501,37 +456,25 @@
         "day": 4,
         "title": "Ferry to Havelock",
         "description": "Take a ferry to Havelock and check into a 3-star hotel. Visit Radhanagar Beach for its white sands. Swim or relax by the turquoise waters. Evening free for beachside dining.",
-        "activities": [
-          "Ferry Ride",
-          "Radhanagar Beach"
-        ]
+        "activities": ["Ferry Ride", "Radhanagar Beach"]
       },
       {
         "day": 5,
         "title": "Havelock’s Adventure Hub",
         "description": "Explore Elephant Beach for snorkeling or glass-bottom boat rides. Visit Kalapathar Beach for serene shores. Enjoy a leisurely afternoon by the sea. Savor an ocean-view dinner.",
-        "activities": [
-          "Elephant Beach",
-          "Kalapathar Beach"
-        ]
+        "activities": ["Elephant Beach", "Kalapathar Beach"]
       },
       {
         "day": 6,
         "title": "Return to Port Blair",
         "description": "Take a ferry back to Port Blair and check into a 3-star hotel. Visit Chidiya Tapu for bird-watching and sunset views. Evening free for Marina Park strolls.",
-        "activities": [
-          "Ferry Ride",
-          "Chidiya Tapu",
-          "Marina Park"
-        ]
+        "activities": ["Ferry Ride", "Chidiya Tapu", "Marina Park"]
       },
       {
         "day": 7,
         "title": "Port Blair Departure",
         "description": "Visit Jolly Buoy Island for coral views. Check out and transfer to the airport, carrying Andaman’s memories.",
-        "activities": [
-          "Jolly Buoy Island"
-        ]
+        "activities": ["Jolly Buoy Island"]
       }
     ],
     "inclusions": [
@@ -569,12 +512,8 @@
     "location": "India",
     "category": "Beach",
     "featured": false,
-    "destinationNames": [
-      "Goa"
-    ],
-    "relatedDestinations": [
-      19
-    ],
+    "destinationNames": ["Goa"],
+    "relatedDestinations": [19],
     "description": "Dive into our custom Goa tour package, featuring golden beaches and vibrant nightlife. This 3-night, 4-day private adventure offers coastal charm, water sports, and 24/7 support for an unforgettable escape.",
     "highlights": [
       "Destinations: Goa (3N)",
@@ -601,11 +540,7 @@
         "day": 1,
         "title": "Arrival & North Goa Vibes",
         "description": "Welcome to Goa! Check into your 3-star beachside hotel in North Goa. Kick off at Calangute Beach, the heart of Goa’s coastal buzz. Swim, sunbathe, or try jet-skiing (extra cost). Visit Fort Aguada for stunning ocean views and historical charm. Evening at Tito’s Lane for vibrant nightlife and dinner with Goan seafood.",
-        "activities": [
-          "Calangute Beach",
-          "Fort Aguada",
-          "Tito’s Lane"
-        ]
+        "activities": ["Calangute Beach", "Fort Aguada", "Tito’s Lane"]
       },
       {
         "day": 2,
@@ -633,9 +568,7 @@
         "day": 4,
         "title": "Goa Departure",
         "description": "After breakfast, visit Dudhsagar Falls for a quick photo stop (extra cost). Check out and transfer to the airport/station, carrying Goa’s beachy vibes.",
-        "activities": [
-          "Dudhsagar Falls"
-        ]
+        "activities": ["Dudhsagar Falls"]
       }
     ],
     "inclusions": [
@@ -673,12 +606,8 @@
     "location": "India",
     "category": "Beach",
     "featured": false,
-    "destinationNames": [
-      "Goa"
-    ],
-    "relatedDestinations": [
-      19
-    ],
+    "destinationNames": ["Goa"],
+    "relatedDestinations": [19],
     "description": "Immerse in our custom Goa tour package, blending beaches, heritage, and nightlife. This 4-night, 5-day private adventure offers vibrant shores and 24/7 support for an epic getaway.",
     "highlights": [
       "Destinations: Goa (4N)",
@@ -708,11 +637,7 @@
         "day": 1,
         "title": "Arrival & North Goa Buzz",
         "description": "Arrive in Goa and check into a 3-star hotel in North Goa. Hit Baga Beach for water sports like parasailing (extra cost). Visit Fort Aguada for ocean views and history. Evening at Tito’s Lane for nightlife and Goan seafood dinner.",
-        "activities": [
-          "Baga Beach",
-          "Fort Aguada",
-          "Tito’s Lane"
-        ]
+        "activities": ["Baga Beach", "Fort Aguada", "Tito’s Lane"]
       },
       {
         "day": 2,
@@ -740,19 +665,13 @@
         "day": 4,
         "title": "Goa’s Natural Wonders",
         "description": "Visit Dudhsagar Falls for its majestic cascades (extra cost). Explore Spice Plantation for a guided tour and local lunch (extra cost). Evening free to relax at Candolim Beach.",
-        "activities": [
-          "Dudhsagar Falls",
-          "Spice Plantation",
-          "Candolim Beach"
-        ]
+        "activities": ["Dudhsagar Falls", "Spice Plantation", "Candolim Beach"]
       },
       {
         "day": 5,
         "title": "Goa Departure",
         "description": "After breakfast, visit Vagator Beach for a quick photo stop. Check out and transfer to the airport/station, carrying Goa’s coastal memories.",
-        "activities": [
-          "Vagator Beach"
-        ]
+        "activities": ["Vagator Beach"]
       }
     ],
     "inclusions": [
@@ -790,13 +709,8 @@
     "location": "India",
     "category": "Beach",
     "featured": false,
-    "destinationNames": [
-      "Goa",
-      "Dudhsagar"
-    ],
-    "relatedDestinations": [
-      19
-    ],
+    "destinationNames": ["Goa", "Dudhsagar"],
+    "relatedDestinations": [19],
     "description": "Embark on our custom Goa Dudhsagar tour package, blending vibrant beaches with majestic waterfalls. This 3-night, 4-day private adventure offers coastal fun and 24/7 support.",
     "highlights": [
       "Destinations: Goa (2N), Dudhsagar (1N)",
@@ -821,11 +735,7 @@
         "day": 1,
         "title": "Arrival & North Goa Vibes",
         "description": "Arrive in Goa and check into a 3-star hotel in North Goa. Hit Baga Beach for swimming or jet-skiing (extra cost). Visit Fort Aguada for ocean views and history. Evening at Tito’s Lane for nightlife and Goan seafood dinner.",
-        "activities": [
-          "Baga Beach",
-          "Fort Aguada",
-          "Tito’s Lane"
-        ]
+        "activities": ["Baga Beach", "Fort Aguada", "Tito’s Lane"]
       },
       {
         "day": 2,
@@ -842,18 +752,13 @@
         "day": 3,
         "title": "Dudhsagar Waterfall Adventure",
         "description": "Drive to Dudhsagar Falls for its stunning cascades. Enjoy a jeep safari to the falls (extra cost). Visit a nearby Spice Plantation for a guided tour. Return to a jungle camp or hotel near Dudhsagar for dinner.",
-        "activities": [
-          "Dudhsagar Falls",
-          "Spice Plantation"
-        ]
+        "activities": ["Dudhsagar Falls", "Spice Plantation"]
       },
       {
         "day": 4,
         "title": "Departure from Dudhsagar",
         "description": "After breakfast, visit Mollem National Park for a quick nature walk. Drive back to Goa airport/station, carrying waterfall memories.",
-        "activities": [
-          "Mollem National Park"
-        ]
+        "activities": ["Mollem National Park"]
       }
     ],
     "inclusions": [
@@ -885,19 +790,14 @@
     "price": 29990,
     "image": "https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2024/10/places-to-visit-in-dandeli-Cover-840x425.jpg",
     "gallery": [
-      "https://d26dp53kz39178.cloudfront.net/media/uploads/StoriesPage/1675091546177-jonatan-lewczuk-hN7jhC_YWk0-unsplash.webp",
+      "https://images.pexels.com/photos/18759469/pexels-photo-18759469.jpeg?cs=srgb&dl=pexels-karan-mridha-17124288-18759469.jpg&fm=jpg",
       "https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fHww"
     ],
     "location": "India",
     "category": "Beach, Jungle",
     "featured": false,
-    "destinationNames": [
-      "Goa",
-      "Dandeli"
-    ],
-    "relatedDestinations": [
-      19
-    ],
+    "destinationNames": ["Goa", "Dandeli"],
+    "relatedDestinations": [19],
     "description": "Discover our custom Goa Dandeli tour package, blending Goa’s beaches with Dandeli’s jungle adventures. This 4-night, 5-day private journey offers coastal and wildlife excitement with 24/7 support.",
     "highlights": [
       "Destinations: Goa (3N), Dandeli (1N)",
@@ -926,11 +826,7 @@
         "day": 1,
         "title": "Arrival & North Goa Buzz",
         "description": "Arrive in Goa and check into a 3-star hotel in North Goa. Visit Calangute Beach for swimming or jet-skiing (extra cost). Explore Fort Aguada for ocean views. Evening at Tito’s Lane for nightlife and Goan seafood dinner.",
-        "activities": [
-          "Calangute Beach",
-          "Fort Aguada",
-          "Tito’s Lane"
-        ]
+        "activities": ["Calangute Beach", "Fort Aguada", "Tito’s Lane"]
       },
       {
         "day": 2,
@@ -958,18 +854,13 @@
         "day": 4,
         "title": "Drive to Dandeli Jungle Adventure",
         "description": "Drive to Dandeli and check into a 3-star jungle camp. Explore Dandeli Wildlife Sanctuary for a jeep safari or river rafting (extra cost). Enjoy a nature walk by the Kali River. Savor a rustic dinner.",
-        "activities": [
-          "Dandeli Wildlife Sanctuary",
-          "Kali River"
-        ]
+        "activities": ["Dandeli Wildlife Sanctuary", "Kali River"]
       },
       {
         "day": 5,
         "title": "Dandeli Departure",
         "description": "After breakfast, visit Syntheri Rocks for a quick nature stop. Drive back to Goa airport/station, carrying jungle memories.",
-        "activities": [
-          "Syntheri Rocks"
-        ]
+        "activities": ["Syntheri Rocks"]
       }
     ],
     "inclusions": [
@@ -1007,13 +898,8 @@
     "location": "India",
     "category": "Beach, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Goa",
-      "Gokarna"
-    ],
-    "relatedDestinations": [
-      19
-    ],
+    "destinationNames": ["Goa", "Gokarna"],
+    "relatedDestinations": [19],
     "description": "Experience our custom Goa Gokarna tour package, blending vibrant beaches with Gokarna’s spiritual charm. This 5-night, 6-day private adventure offers coastal bliss and 24/7 support.",
     "highlights": [
       "Destinations: Goa (3N), Gokarna (2N)",
@@ -1046,11 +932,7 @@
         "day": 1,
         "title": "Arrival & North Goa Vibes",
         "description": "Arrive in Goa and check into a 3-star hotel in North Goa. Visit Baga Beach for swimming or jet-skiing (extra cost). Explore Fort Aguada for ocean views. Evening at Tito’s Lane for nightlife and Goan seafood dinner.",
-        "activities": [
-          "Baga Beach",
-          "Fort Aguada",
-          "Tito’s Lane"
-        ]
+        "activities": ["Baga Beach", "Fort Aguada", "Tito’s Lane"]
       },
       {
         "day": 2,
@@ -1078,11 +960,7 @@
         "day": 4,
         "title": "Drive to Gokarna",
         "description": "Drive to Gokarna and check into a 3-star hotel. Visit Om Beach for its serene crescent shape. Explore Mahabaleshwar Temple for spiritual vibes. Evening at Kudle Beach for sunset dining.",
-        "activities": [
-          "Om Beach",
-          "Mahabaleshwar Temple",
-          "Kudle Beach"
-        ]
+        "activities": ["Om Beach", "Mahabaleshwar Temple", "Kudle Beach"]
       },
       {
         "day": 5,
@@ -1099,9 +977,7 @@
         "day": 6,
         "title": "Gokarna Departure",
         "description": "After breakfast, visit Mirjan Fort for a quick historical stop. Drive back to Goa airport/station, carrying coastal memories.",
-        "activities": [
-          "Mirjan Fort"
-        ]
+        "activities": ["Mirjan Fort"]
       }
     ],
     "inclusions": [
@@ -1139,14 +1015,8 @@
     "location": "India",
     "category": "Mountain",
     "featured": false,
-    "destinationNames": [
-      "Manali",
-      "Dharamshala",
-      "Himachal Pradesh"
-    ],
-    "relatedDestinations": [
-      2
-    ],
+    "destinationNames": ["Manali", "Dharamshala", "Himachal Pradesh"],
+    "relatedDestinations": [2],
     "description": "Dive into our custom Manali Dharamshala tour package, blending Manali’s snowy thrills with Dharamshala’s spiritual charm. This 4-night, 5-day private adventure from Delhi offers breathtaking landscapes and 24/7 support.",
     "highlights": [
       "Destinations: Manali (2N), Dharamshala (2N)",
@@ -1174,10 +1044,7 @@
         "day": 1,
         "title": "Delhi to Manali",
         "description": "Depart from Delhi in a private sedan for an overnight drive to Manali. Arrive and check into a cozy 3-star hotel. Relax with a stroll along Mall Road, buzzing with shops and cafes. Visit Hadimba Temple, a serene wooden shrine amidst deodars. Savor a Himachali dinner, soaking in Manali’s cool mountain air.",
-        "activities": [
-          "Mall Road",
-          "Hadimba Temple"
-        ]
+        "activities": ["Mall Road", "Hadimba Temple"]
       },
       {
         "day": 2,
@@ -1194,11 +1061,7 @@
         "day": 3,
         "title": "Manali to Dharamshala",
         "description": "Drive to Dharamshala, nestled in the Kangra Valley. Check into a 3-star hotel and visit Dalai Lama Temple for spiritual vibes. Explore McLeod Ganj’s vibrant Tibetan market. Evening at Bhagsu Falls for serene views. Savor a Tibetan dinner.",
-        "activities": [
-          "Dalai Lama Temple",
-          "McLeod Ganj",
-          "Bhagsu Falls"
-        ]
+        "activities": ["Dalai Lama Temple", "McLeod Ganj", "Bhagsu Falls"]
       },
       {
         "day": 4,
@@ -1215,9 +1078,7 @@
         "day": 5,
         "title": "Dharamshala to Delhi",
         "description": "After breakfast, visit Kangra Fort for historical insights. Depart for Delhi, arriving by evening. Bid farewell to the Himalayas with unforgettable memories.",
-        "activities": [
-          "Kangra Fort"
-        ]
+        "activities": ["Kangra Fort"]
       }
     ],
     "inclusions": [
@@ -1256,14 +1117,8 @@
     "location": "India",
     "category": "Mountain",
     "featured": false,
-    "destinationNames": [
-      "Shimla",
-      "Manali",
-      "Himachal Pradesh"
-    ],
-    "relatedDestinations": [
-      2
-    ],
+    "destinationNames": ["Shimla", "Manali", "Himachal Pradesh"],
+    "relatedDestinations": [2],
     "description": "Embark on our custom Shimla Manali tour package, blending Shimla’s colonial charm with Manali’s snowy thrills. This 5-night, 6-day private adventure from Delhi offers scenic beauty and 24/7 support.",
     "highlights": [
       "Destinations: Shimla (2N), Manali (3N)",
@@ -1293,42 +1148,25 @@
         "day": 1,
         "title": "Delhi to Shimla",
         "description": "Depart from Delhi for Shimla in a private sedan. Arrive and check into a 3-star hotel. Stroll Mall Road, buzzing with shops and colonial vibes. Visit Christ Church for its neo-Gothic charm. Explore Ridge for panoramic views. Savor a Himachali dinner, soaking in Shimla’s cool breeze.",
-        "activities": [
-          "Mall Road (Shimla)",
-          "Christ Church",
-          "Ridge"
-        ]
+        "activities": ["Mall Road (Shimla)", "Christ Church", "Ridge"]
       },
       {
         "day": 2,
         "title": "Shimla’s Colonial Charm",
         "description": "Visit Jakhoo Temple for spiritual vibes and monkey encounters. Explore Kufri for snowy trails or horse rides (extra cost). Stroll Theog for serene views. Evening free to shop on Mall Road. Enjoy a cozy dinner.",
-        "activities": [
-          "Jakhoo Temple",
-          "Kufri",
-          "Theog",
-          "Mall Road (Shimla)"
-        ]
+        "activities": ["Jakhoo Temple", "Kufri", "Theog", "Mall Road (Shimla)"]
       },
       {
         "day": 3,
         "title": "Shimla to Manali",
         "description": "Drive to Manali, nestled by the Beas River. Check into a 3-star hotel and visit Hadimba Temple, a serene wooden shrine. Stroll Mall Road for local crafts. Explore Van Vihar for nature walks. Savor a Himachali dinner.",
-        "activities": [
-          "Hadimba Temple",
-          "Mall Road (Manali)",
-          "Van Vihar"
-        ]
+        "activities": ["Hadimba Temple", "Mall Road (Manali)", "Van Vihar"]
       },
       {
         "day": 4,
         "title": "Manali’s Snowy Thrills",
         "description": "Head to Rohtang Pass for snow activities like sledging (permit extra). Visit Solang Valley for paragliding or zorbing (extra cost). Evening free to relax by Beas River. Enjoy a hearty dinner.",
-        "activities": [
-          "Rohtang Pass",
-          "Solang Valley",
-          "Beas River"
-        ]
+        "activities": ["Rohtang Pass", "Solang Valley", "Beas River"]
       },
       {
         "day": 5,
@@ -1345,9 +1183,7 @@
         "day": 6,
         "title": "Manali to Delhi",
         "description": "After breakfast, visit Naggar Castle for historical charm. Depart for Delhi, arriving by evening with Himalayan memories.",
-        "activities": [
-          "Naggar Castle"
-        ]
+        "activities": ["Naggar Castle"]
       }
     ],
     "inclusions": [
@@ -1386,14 +1222,8 @@
     "location": "India",
     "category": "Mountain",
     "featured": false,
-    "destinationNames": [
-      "Dharamshala",
-      "Dalhousie",
-      "Himachal Pradesh"
-    ],
-    "relatedDestinations": [
-      2
-    ],
+    "destinationNames": ["Dharamshala", "Dalhousie", "Himachal Pradesh"],
+    "relatedDestinations": [2],
     "description": "Experience our custom Dharamshala Dalhousie tour package, blending spiritual vibes with colonial hill charm. This 5-night, 6-day private adventure from Delhi offers serene landscapes and 24/7 support.",
     "highlights": [
       "Destinations: Dharamshala (3N), Dalhousie (2N)",
@@ -1423,10 +1253,7 @@
         "day": 1,
         "title": "Delhi to Dharamshala",
         "description": "Depart from Delhi for an overnight drive to Dharamshala. Check into a 3-star hotel and visit Dalai Lama Temple for spiritual serenity. Stroll McLeod Ganj Market for Tibetan crafts. Enjoy a Tibetan dinner, soaking in the mountain air.",
-        "activities": [
-          "Dalai Lama Temple",
-          "McLeod Ganj Market"
-        ]
+        "activities": ["Dalai Lama Temple", "McLeod Ganj Market"]
       },
       {
         "day": 2,
@@ -1443,39 +1270,25 @@
         "day": 3,
         "title": "Dharamshala’s Scenic Beauty",
         "description": "Trek to Triund for stunning mountain views (optional, extra cost). Visit Kangra Fort for historical insights. Explore Tibetan Museum for cultural stories. Evening free for McLeod Ganj cafes. Enjoy a cozy dinner.",
-        "activities": [
-          "Triund",
-          "Kangra Fort",
-          "Tibetan Museum",
-          "McLeod Ganj"
-        ]
+        "activities": ["Triund", "Kangra Fort", "Tibetan Museum", "McLeod Ganj"]
       },
       {
         "day": 4,
         "title": "Dharamshala to Dalhousie",
         "description": "Drive to Dalhousie, a charming hill station. Check into a 3-star hotel and visit Khajjiar, India’s “Mini Switzerland”. Enjoy horse riding or zorbing (extra cost). Stroll Subhash Chowk for local vibes. Savor a hilltop dinner.",
-        "activities": [
-          "Khajjiar",
-          "Subhash Chowk"
-        ]
+        "activities": ["Khajjiar", "Subhash Chowk"]
       },
       {
         "day": 5,
         "title": "Dalhousie’s Colonial Charm",
         "description": "Visit St. Francis Church for colonial architecture. Explore Dainkund Peak for panoramic views. Stroll Gandhi Chowk for shopping. Evening free to enjoy Dalhousie’s serene ambiance. Enjoy a local dinner.",
-        "activities": [
-          "St. Francis Church",
-          "Dainkund Peak",
-          "Gandhi Chowk"
-        ]
+        "activities": ["St. Francis Church", "Dainkund Peak", "Gandhi Chowk"]
       },
       {
         "day": 6,
         "title": "Dalhousie to Delhi",
         "description": "After breakfast, visit Chamera Lake for a quick photo stop. Depart for Delhi, arriving by evening with Himalayan memories.",
-        "activities": [
-          "Chamera Lake"
-        ]
+        "activities": ["Chamera Lake"]
       }
     ],
     "inclusions": [
@@ -1520,9 +1333,7 @@
       "Himachal Pradesh",
       "Punjab"
     ],
-    "relatedDestinations": [
-      2
-    ],
+    "relatedDestinations": [2],
     "description": "Discover our custom Dharamshala Dalhousie Amritsar tour package, merging Himalayan charm with Sikh heritage. This 5-night, 6-day private adventure from Delhi offers diverse experiences and 24/7 support.",
     "highlights": [
       "Destinations: Dharamshala (3N), Dalhousie (2N), Amritsar (1N)",
@@ -1556,10 +1367,7 @@
         "day": 1,
         "title": "Delhi to Dharamshala",
         "description": "Depart from Delhi for Dharamshala. Check into a 3-star hotel and visit Dalai Lama Temple for spiritual vibes. Stroll McLeod Ganj Market for Tibetan crafts. Enjoy a Tibetan dinner, embracing the Himalayan calm.",
-        "activities": [
-          "Dalai Lama Temple",
-          "McLeod Ganj Market"
-        ]
+        "activities": ["Dalai Lama Temple", "McLeod Ganj Market"]
       },
       {
         "day": 2,
@@ -1576,39 +1384,25 @@
         "day": 3,
         "title": "Dharamshala’s Scenic Wonders",
         "description": "Trek to Triund for stunning views (optional, extra cost). Visit Kangra Fort for historical insights. Explore Tibetan Museum for cultural stories. Evening free for McLeod Ganj cafes. Enjoy a cozy dinner.",
-        "activities": [
-          "Triund",
-          "Kangra Fort",
-          "Tibetan Museum",
-          "McLeod Ganj"
-        ]
+        "activities": ["Triund", "Kangra Fort", "Tibetan Museum", "McLeod Ganj"]
       },
       {
         "day": 4,
         "title": "Dharamshala to Dalhousie",
         "description": "Drive to Dalhousie and check into a 3-star hotel. Visit Khajjiar, India’s “Mini Switzerland”. Enjoy horse riding or zorbing (extra cost). Stroll Subhash Chowk for local vibes. Savor a hilltop dinner.",
-        "activities": [
-          "Khajjiar",
-          "Subhash Chowk"
-        ]
+        "activities": ["Khajjiar", "Subhash Chowk"]
       },
       {
         "day": 5,
         "title": "Dalhousie to Amritsar",
         "description": "Drive to Amritsar and check into a 3-star hotel. Visit Golden Temple for its spiritual serenity. Explore Jallianwala Bagh for historical insights. Evening at Wagah Border for the retreat ceremony. Enjoy a Punjabi dinner.",
-        "activities": [
-          "Golden Temple",
-          "Jallianwala Bagh",
-          "Wagah Border"
-        ]
+        "activities": ["Golden Temple", "Jallianwala Bagh", "Wagah Border"]
       },
       {
         "day": 6,
         "title": "Amritsar to Delhi",
         "description": "After breakfast, visit Durgiana Temple for a quick stop. Depart for Delhi, arriving by evening with spiritual memories.",
-        "activities": [
-          "Durgiana Temple"
-        ]
+        "activities": ["Durgiana Temple"]
       }
     ],
     "inclusions": [
@@ -1646,14 +1440,8 @@
     "location": "India",
     "category": "Mountain, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Dharamshala",
-      "McLeod Ganj",
-      "Himachal Pradesh"
-    ],
-    "relatedDestinations": [
-      2
-    ],
+    "destinationNames": ["Dharamshala", "McLeod Ganj", "Himachal Pradesh"],
+    "relatedDestinations": [2],
     "description": "Immerse in our custom Dharamshala McLeod Ganj tour package, blending spiritual serenity with Himalayan beauty. This 4-night, 5-day private adventure from Delhi offers calm vibes and 24/7 support.",
     "highlights": [
       "Destinations: Dharamshala (3N), McLeod Ganj (1N)",
@@ -1681,10 +1469,7 @@
         "day": 1,
         "title": "Delhi to Dharamshala",
         "description": "Depart from Delhi for Dharamshala. Check into a 3-star hotel and visit Dalai Lama Temple for spiritual calm. Stroll McLeod Ganj Market for Tibetan crafts. Enjoy a Tibetan dinner, embracing the Himalayan serenity.",
-        "activities": [
-          "Dalai Lama Temple",
-          "McLeod Ganj Market"
-        ]
+        "activities": ["Dalai Lama Temple", "McLeod Ganj Market"]
       },
       {
         "day": 2,
@@ -1701,11 +1486,7 @@
         "day": 3,
         "title": "Dharamshala’s Scenic Beauty",
         "description": "Trek to Triund for stunning mountain views (optional, extra cost). Visit Kangra Fort for historical insights. Explore Tibetan Museum for cultural stories. Evening free for Dharamshala cafes. Enjoy a cozy dinner.",
-        "activities": [
-          "Triund",
-          "Kangra Fort",
-          "Tibetan Museum"
-        ]
+        "activities": ["Triund", "Kangra Fort", "Tibetan Museum"]
       },
       {
         "day": 4,
@@ -1721,9 +1502,7 @@
         "day": 5,
         "title": "McLeod Ganj to Delhi",
         "description": "After breakfast, visit Dal Lake for a quick nature stop. Depart for Delhi, arriving by evening with Himalayan memories.",
-        "activities": [
-          "Dal Lake"
-        ]
+        "activities": ["Dal Lake"]
       }
     ],
     "inclusions": [
@@ -1771,9 +1550,7 @@
       "Himachal Pradesh",
       "Punjab"
     ],
-    "relatedDestinations": [
-      2
-    ],
+    "relatedDestinations": [2],
     "description": "Experience our custom Shimla Manali Amritsar Chandigarh tour package, blending Himalayan adventures with Sikh heritage. This 6-night, 7-day private adventure from Delhi offers vibrant experiences and 24/7 support.",
     "highlights": [
       "Destinations: Shimla (2N), Manali (2N), Amritsar (1N), Chandigarh (1N)",
@@ -1807,70 +1584,43 @@
         "day": 1,
         "title": "Delhi to Shimla",
         "description": "Depart from Delhi for Shimla in a private sedan. Arrive and check into a 3-star hotel. Stroll Mall Road, buzzing with shops and colonial vibes. Visit Christ Church for its neo-Gothic charm. Explore Ridge for panoramic views. Savor a Himachali dinner, embracing Shimla’s cool breeze.",
-        "activities": [
-          "Mall Road (Shimla)",
-          "Christ Church",
-          "Ridge"
-        ]
+        "activities": ["Mall Road (Shimla)", "Christ Church", "Ridge"]
       },
       {
         "day": 2,
         "title": "Shimla’s Colonial Charm",
         "description": "Visit Jakhoo Temple for spiritual vibes. Explore Kufri for snowy trails or horse rides (extra cost). Stroll Theog for serene views. Evening free to shop on Mall Road. Enjoy a cozy dinner.",
-        "activities": [
-          "Jakhoo Temple",
-          "Kufri",
-          "Theog",
-          "Mall Road (Shimla)"
-        ]
+        "activities": ["Jakhoo Temple", "Kufri", "Theog", "Mall Road (Shimla)"]
       },
       {
         "day": 3,
         "title": "Shimla to Manali",
         "description": "Drive to Manali, nestled by the Beas River. Check into a 3-star hotel and visit Hadimba Temple, a serene wooden shrine. Stroll Mall Road for local crafts. Explore Van Vihar for nature walks. Savor a Himachali dinner.",
-        "activities": [
-          "Hadimba Temple",
-          "Mall Road (Manali)",
-          "Van Vihar"
-        ]
+        "activities": ["Hadimba Temple", "Mall Road (Manali)", "Van Vihar"]
       },
       {
         "day": 4,
         "title": "Manali’s Snowy Thrills",
         "description": "Head to Rohtang Pass for snow activities like sledging (permit extra). Visit Solang Valley for paragliding or zorbing (extra cost). Evening free to relax by Beas River. Enjoy a hearty dinner.",
-        "activities": [
-          "Rohtang Pass",
-          "Solang Valley",
-          "Beas River"
-        ]
+        "activities": ["Rohtang Pass", "Solang Valley", "Beas River"]
       },
       {
         "day": 5,
         "title": "Manali to Amritsar",
         "description": "Drive to Amritsar and check into a 3-star hotel. Visit Golden Temple for spiritual serenity. Explore Jallianwala Bagh for historical insights. Evening at Wagah Border for the retreat ceremony. Savor a Punjabi dinner.",
-        "activities": [
-          "Golden Temple",
-          "Jallianwala Bagh",
-          "Wagah Border"
-        ]
+        "activities": ["Golden Temple", "Jallianwala Bagh", "Wagah Border"]
       },
       {
         "day": 6,
         "title": "Amritsar to Chandigarh",
         "description": "Drive to Chandigarh and check into a 3-star hotel. Visit Rock Garden for artistic sculptures. Stroll Sukhna Lake for serene views. Explore Sector 17 Market for shopping. Enjoy a Punjabi dinner.",
-        "activities": [
-          "Rock Garden",
-          "Sukhna Lake",
-          "Sector 17 Market"
-        ]
+        "activities": ["Rock Garden", "Sukhna Lake", "Sector 17 Market"]
       },
       {
         "day": 7,
         "title": "Chandigarh to Delhi",
         "description": "After breakfast, visit Rose Garden for a quick stroll. Depart for Delhi, arriving by afternoon with Himalayan and Sikh memories.",
-        "activities": [
-          "Rose Garden"
-        ]
+        "activities": ["Rose Garden"]
       }
     ],
     "inclusions": [
@@ -1909,14 +1659,8 @@
     "location": "India",
     "category": "Hill Station",
     "featured": false,
-    "destinationNames": [
-      "Ooty",
-      "Nilgiris",
-      "Tamil Nadu"
-    ],
-    "relatedDestinations": [
-      21,9
-    ],
+    "destinationNames": ["Ooty", "Nilgiris", "Tamil Nadu"],
+    "relatedDestinations": [21, 9],
     "description": "Escape the hustle of Bangalore with this 3-night Ooty tour package, perfect for nature lovers craving misty hills and serene landscapes. This private adventure includes a comfy sedan, cozy 3-star stays, and curated experiences like boating on Ooty Lake and strolling through tea estates.",
     "highlights": [
       "Destinations: Ooty (3N)",
@@ -1941,10 +1685,7 @@
         "day": 1,
         "title": "Bangalore to Ooty – Welcome to the Nilgiris",
         "description": "Kickstart your journey from Bangalore, cruising through scenic highways to Ooty, the 'Queen of Hills.' Arrive in Ooty by evening and check into your cozy 3-star hotel. Take a leisurely evening stroll along Commercial Road and visit Ooty Lake for a quick peek. Settle in for a warm dinner.",
-        "activities": [
-          "Commercial Road",
-          "Ooty Lake"
-        ]
+        "activities": ["Commercial Road", "Ooty Lake"]
       },
       {
         "day": 2,
@@ -2021,10 +1762,7 @@
       "Karnataka",
       "Tamil Nadu"
     ],
-    "relatedDestinations": [
-      9,
-      21
-    ],
+    "relatedDestinations": [9, 21],
     "description": "Embark on a 4-night adventure from Bangalore, blending Ooty’s misty hills, Mysore’s royal grandeur, and Bangalore’s urban vibe. This private Ooty Mysore Bangalore tour package offers a private sedan, 3-star stays, and iconic sights like Ooty Lake, Mysore Palace, and Lalbagh Gardens.",
     "highlights": [
       "Destinations: Ooty (2N), Mysore (1N), Bangalore (1N)",
@@ -2051,10 +1789,7 @@
         "day": 1,
         "title": "Bangalore to Ooty – Misty Hills Await",
         "description": "Start your journey from Bangalore, driving 350 km (approx. 8 hours) through scenic routes to Ooty. Check into a cozy 3-star hotel by evening. Take a quick stroll along Commercial Road, soaking in Ooty’s vibrant charm. Catch a glimpse of Ooty Lake’s serene beauty before settling in for dinner.",
-        "activities": [
-          "Commercial Road",
-          "Ooty Lake"
-        ]
+        "activities": ["Commercial Road", "Ooty Lake"]
       },
       {
         "day": 2,
@@ -2071,11 +1806,7 @@
         "day": 3,
         "title": "Ooty to Mysore – Royal Vibes",
         "description": "Post-breakfast, drive 125 km (approx. 4 hours) to Mysore. Check into a 3-star hotel and visit the majestic Mysore Palace. Stroll through the vibrant Devaraja Market for local flavors. Enjoy an evening at Brindavan Gardens, marveling at its musical fountains.",
-        "activities": [
-          "Mysore Palace",
-          "Devaraja Market",
-          "Brindavan Gardens"
-        ]
+        "activities": ["Mysore Palace", "Devaraja Market", "Brindavan Gardens"]
       },
       {
         "day": 4,
@@ -2091,9 +1822,7 @@
         "day": 5,
         "title": "Bangalore – Farewell to the City",
         "description": "After breakfast, enjoy free time to shop at Commercial Street or relax. Depart with memories of hills, heritage, and urban vibes.",
-        "activities": [
-          "Commercial Street"
-        ]
+        "activities": ["Commercial Street"]
       }
     ],
     "inclusions": [
@@ -2139,10 +1868,7 @@
       "Karnataka",
       "Tamil Nadu"
     ],
-    "relatedDestinations": [
-      9,
-      21
-    ],
+    "relatedDestinations": [9, 21],
     "description": "This 3-night private tour from Bangalore blends Ooty’s misty charm with Mysore’s royal splendor. This custom Ooty Mysore tour package includes a private sedan, 3-star stays, and iconic sights like Ooty Lake and Mysore Palace. Perfect for a quick yet vibrant getaway!",
     "highlights": [
       "Destinations: Ooty (2N), Mysore (1N)",
@@ -2165,10 +1891,7 @@
         "day": 1,
         "title": "Bangalore to Ooty – Into the Nilgiris",
         "description": "Begin your adventure from Bangalore, driving 350 km (approx. 8 hours) to Ooty’s misty hills. Check into a cozy 3-star hotel by evening. Take a short stroll on Commercial Road, soaking in Ooty’s vibrant vibe. Peek at Ooty Lake’s serene waters before a warm dinner.",
-        "activities": [
-          "Commercial Road",
-          "Ooty Lake"
-        ]
+        "activities": ["Commercial Road", "Ooty Lake"]
       },
       {
         "day": 2,
@@ -2185,11 +1908,7 @@
         "day": 3,
         "title": "Ooty to Mysore – Royal Retreat",
         "description": "Post-breakfast, drive 125 km to Mysore (approx. 4 hours). Check into a 3-star hotel and visit the iconic Mysore Palace. Explore Devaraja Market’s vibrant stalls. End with an evening at Brindavan Gardens, enchanted by its musical fountains.",
-        "activities": [
-          "Mysore Palace",
-          "Devaraja Market",
-          "Brindavan Gardens"
-        ]
+        "activities": ["Mysore Palace", "Devaraja Market", "Brindavan Gardens"]
       },
       {
         "day": 4,
@@ -2234,15 +1953,8 @@
     "location": "India",
     "category": "Hill Station",
     "featured": false,
-    "destinationNames": [
-      "Ooty",
-      "Kodaikanal",
-      "Nilgiris",
-      "Tamil Nadu"
-    ],
-    "relatedDestinations": [
-      9,21
-    ],
+    "destinationNames": ["Ooty", "Kodaikanal", "Nilgiris", "Tamil Nadu"],
+    "relatedDestinations": [9, 21],
     "description": "Discover the magic of Ooty and Kodaikanal in this 4-night private tour from Bangalore. This custom Ooty Kodaikanal tour package offers a private sedan, 3-star stays, and iconic sights like Ooty Lake and Coaker’s Walk. Perfect for a serene hill station escape!",
     "highlights": [
       "Destinations: Ooty (2N), Kodaikanal (2N)",
@@ -2268,10 +1980,7 @@
         "day": 1,
         "title": "Bangalore to Ooty – Nilgiri Bliss",
         "description": "Set off from Bangalore on a 350 km drive (approx. 8 hours) to Ooty. Check into a cozy 3-star hotel by evening. Stroll along Commercial Road, soaking in Ooty’s vibrant charm. Catch a glimpse of Ooty Lake’s serene waters before settling in for dinner.",
-        "activities": [
-          "Commercial Road",
-          "Ooty Lake"
-        ]
+        "activities": ["Commercial Road", "Ooty Lake"]
       },
       {
         "day": 2,
@@ -2288,10 +1997,7 @@
         "day": 3,
         "title": "Ooty to Kodaikanal – Princess of Hills",
         "description": "Post-breakfast, drive 250 km to Kodaikanal (approx. 7 hours). Check into a 3-star hotel and visit Coaker’s Walk for breathtaking valley views. Explore the serene Kodaikanal Lake with a quick evening boat ride. Settle in for a cozy dinner amidst misty hills.",
-        "activities": [
-          "Coaker’s Walk",
-          "Kodaikanal Lake"
-        ]
+        "activities": ["Coaker’s Walk", "Kodaikanal Lake"]
       },
       {
         "day": 4,
@@ -2347,14 +2053,8 @@
     "location": "India",
     "category": "Hill Station, Coffee, Nature",
     "featured": false,
-    "destinationNames": [
-      "Coorg",
-      "Kodagu",
-      "Karnataka"
-    ],
-    "relatedDestinations": [
-      21
-    ],
+    "destinationNames": ["Coorg", "Kodagu", "Karnataka"],
+    "relatedDestinations": [21],
     "description": "Unwind in Coorg’s lush coffee estates with this 3-night private tour from Bangalore. This custom Coorg tour package includes a private sedan, 3-star stays, and iconic sights like Abbey Falls and Dubare Elephant Camp. Perfect for a refreshing escape!",
     "highlights": [
       "Destinations: Coorg (3N)",
@@ -2377,10 +2077,7 @@
         "day": 1,
         "title": "Bangalore to Coorg – Coffee Country Calling",
         "description": "Start from Bangalore, driving 250 km (approx. 6 hours) to Coorg’s lush hills. Check into a cozy 3-star hotel by evening. Take a short walk through Madikeri’s vibrant streets, soaking in the coffee-scented air. Visit Raja’s Seat for a stunning sunset view before dinner.",
-        "activities": [
-          "Madikeri",
-          "Raja’s Seat"
-        ]
+        "activities": ["Madikeri", "Raja’s Seat"]
       },
       {
         "day": 2,
@@ -2446,14 +2143,8 @@
     "location": "India",
     "category": "Mountain, Lake, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Srinagar",
-      "Kashmir",
-      "Jammu & Kashmir"
-    ],
-    "relatedDestinations": [
-      1
-    ],
+    "destinationNames": ["Srinagar", "Kashmir", "Jammu & Kashmir"],
+    "relatedDestinations": [1],
     "description": "Embark on our custom Srinagar houseboat tour package, blending serene lakes and Mughal gardens. This 3-night, 4-day private adventure from Delhi offers Kashmir’s magic and 24/7 support.",
     "highlights": [
       "Destinations: Srinagar (2N), Srinagar Houseboat (1N)",
@@ -2477,39 +2168,25 @@
         "day": 1,
         "title": "Delhi to Srinagar",
         "description": "Fly from Delhi to Srinagar and check into a 3-star hotel. Visit Shankaracharya Temple for city views. Stroll Mughal Gardens like Shalimar Bagh for vibrant blooms. Enjoy a Kashmiri dinner, embracing Srinagar’s serene vibe.",
-        "activities": [
-          "Shankaracharya Temple",
-          "Shalimar Bagh"
-        ]
+        "activities": ["Shankaracharya Temple", "Shalimar Bagh"]
       },
       {
         "day": 2,
         "title": "Srinagar’s Lake Charm",
         "description": "Explore Dal Lake with a shikara ride (included). Visit Nishat Bagh for Mughal elegance. Stroll Chashme Shahi for royal springs. Evening free to shop for Pashmina at Lal Chowk. Savor a Kashmiri wazwan dinner.",
-        "activities": [
-          "Dal Lake",
-          "Nishat Bagh",
-          "Chashme Shahi",
-          "Lal Chowk"
-        ]
+        "activities": ["Dal Lake", "Nishat Bagh", "Chashme Shahi", "Lal Chowk"]
       },
       {
         "day": 3,
         "title": "Srinagar Houseboat Experience",
         "description": "Check into a deluxe houseboat on Dal Lake. Enjoy a shikara ride to explore floating markets. Visit Hazratbal Shrine for spiritual vibes. Relax on the houseboat, soaking in lake views. Savor a romantic Kashmiri dinner onboard.",
-        "activities": [
-          "Houseboat Stay",
-          "Floating Market",
-          "Hazratbal Shrine"
-        ]
+        "activities": ["Houseboat Stay", "Floating Market", "Hazratbal Shrine"]
       },
       {
         "day": 4,
         "title": "Srinagar to Delhi",
         "description": "After breakfast, visit Pari Mahal for a quick historical stop. Transfer to Srinagar airport for your flight to Delhi, carrying Kashmir’s memories.",
-        "activities": [
-          "Pari Mahal"
-        ]
+        "activities": ["Pari Mahal"]
       }
     ],
     "inclusions": [
@@ -2547,15 +2224,8 @@
     "location": "India",
     "category": "Mountain, Lake, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Srinagar",
-      "Pahalgam",
-      "Kashmir",
-      "Jammu & Kashmir"
-    ],
-    "relatedDestinations": [
-      1
-    ],
+    "destinationNames": ["Srinagar", "Pahalgam", "Kashmir", "Jammu & Kashmir"],
+    "relatedDestinations": [1],
     "description": "Dive into our custom Srinagar Pahalgam tour package, blending lakes, meadows, and houseboat charm. This 4-night, 5-day private adventure from Delhi offers Kashmir’s beauty and 24/7 support.",
     "highlights": [
       "Destinations: Srinagar (2N), Pahalgam (1N), Srinagar Houseboat (1N)",
@@ -2584,21 +2254,13 @@
         "day": 1,
         "title": "Delhi to Srinagar",
         "description": "Fly from Delhi to Srinagar and check into a 3-star hotel. Visit Shankaracharya Temple for city views. Stroll Mughal Gardens like Shalimar Bagh for vibrant blooms. Enjoy a Kashmiri dinner, embracing Srinagar’s serene vibe.",
-        "activities": [
-          "Shankaracharya Temple",
-          "Shalimar Bagh"
-        ]
+        "activities": ["Shankaracharya Temple", "Shalimar Bagh"]
       },
       {
         "day": 2,
         "title": "Srinagar’s Lake Charm",
         "description": "Explore Dal Lake with a shikara ride (included). Visit Nishat Bagh for Mughal elegance. Stroll Chashme Shahi for royal springs. Evening free to shop for Pashmina at Lal Chowk. Savor a Kashmiri wazwan dinner.",
-        "activities": [
-          "Dal Lake",
-          "Nishat Bagh",
-          "Chashme Shahi",
-          "Lal Chowk"
-        ]
+        "activities": ["Dal Lake", "Nishat Bagh", "Chashme Shahi", "Lal Chowk"]
       },
       {
         "day": 3,
@@ -2615,19 +2277,13 @@
         "day": 4,
         "title": "Pahalgam to Srinagar Houseboat",
         "description": "Visit Chandanwari for scenic views. Drive back to Srinagar and check into a deluxe houseboat on Dal Lake. Enjoy a shikara ride to floating markets. Relax with lake views and savor a Kashmiri dinner onboard.",
-        "activities": [
-          "Chandanwari",
-          "Houseboat Stay",
-          "Floating Market"
-        ]
+        "activities": ["Chandanwari", "Houseboat Stay", "Floating Market"]
       },
       {
         "day": 5,
         "title": "Srinagar to Delhi",
         "description": "After breakfast, visit Hazratbal Shrine for spiritual vibes. Transfer to Srinagar airport for your flight to Delhi, carrying Kashmir’s memories.",
-        "activities": [
-          "Hazratbal Shrine"
-        ]
+        "activities": ["Hazratbal Shrine"]
       }
     ],
     "inclusions": [
@@ -2674,9 +2330,7 @@
       "Kashmir",
       "Jammu & Kashmir"
     ],
-    "relatedDestinations": [
-      1
-    ],
+    "relatedDestinations": [1],
     "description": "Discover our custom Srinagar Gulmarg Pahalgam tour package, blending snowy peaks, meadows, and houseboat charm. This 5-night, 6-day private adventure from Delhi offers Kashmir’s magic and 24/7 support.",
     "highlights": [
       "Destinations: Srinagar (2N), Gulmarg (1N), Pahalgam (1N), Srinagar Houseboat (1N)",
@@ -2708,31 +2362,19 @@
         "day": 1,
         "title": "Delhi to Srinagar",
         "description": "Fly from Delhi to Srinagar and check into a 3-star hotel. Visit Shankaracharya Temple for city views. Stroll Mughal Gardens like Shalimar Bagh for vibrant blooms. Enjoy a Kashmiri dinner, soaking in Srinagar’s serene vibe.",
-        "activities": [
-          "Shankaracharya Temple",
-          "Shalimar Bagh"
-        ]
+        "activities": ["Shankaracharya Temple", "Shalimar Bagh"]
       },
       {
         "day": 2,
         "title": "Srinagar’s Lake Charm",
         "description": "Explore Dal Lake with a shikara ride (included). Visit Nishat Bagh for Mughal elegance. Stroll Chashme Shahi for royal springs. Evening free to shop for Pashmina at Lal Chowk. Savor a Kashmiri wazwan dinner.",
-        "activities": [
-          "Dal Lake",
-          "Nishat Bagh",
-          "Chashme Shahi",
-          "Lal Chowk"
-        ]
+        "activities": ["Dal Lake", "Nishat Bagh", "Chashme Shahi", "Lal Chowk"]
       },
       {
         "day": 3,
         "title": "Srinagar to Gulmarg",
         "description": "Drive to Gulmarg and check into a 3-star hotel. Ride the Gulmarg Gondola for snowy views (extra cost). Explore Outer Circle Walk for meadows. Enjoy skiing or snowboarding (extra cost). Savor a cozy Kashmiri dinner.",
-        "activities": [
-          "Gulmarg",
-          "Gulmarg Gondola",
-          "Outer Circle Walk"
-        ]
+        "activities": ["Gulmarg", "Gulmarg Gondola", "Outer Circle Walk"]
       },
       {
         "day": 4,
@@ -2749,19 +2391,13 @@
         "day": 5,
         "title": "Pahalgam to Srinagar Houseboat",
         "description": "Visit Chandanwari for scenic views. Drive to Srinagar and check into a deluxe houseboat on Dal Lake. Enjoy a shikara ride to floating markets. Relax with lake views and savor a Kashmiri dinner onboard.",
-        "activities": [
-          "Chandanwari",
-          "Houseboat Stay",
-          "Floating Market"
-        ]
+        "activities": ["Chandanwari", "Houseboat Stay", "Floating Market"]
       },
       {
         "day": 6,
         "title": "Srinagar to Delhi",
         "description": "After breakfast, visit Hazratbal Shrine for spiritual vibes. Transfer to Srinagar airport for your flight to Delhi, carrying Kashmir’s memories.",
-        "activities": [
-          "Hazratbal Shrine"
-        ]
+        "activities": ["Hazratbal Shrine"]
       }
     ],
     "inclusions": [
@@ -2806,9 +2442,7 @@
       "Kashmir",
       "Jammu & Kashmir"
     ],
-    "relatedDestinations": [
-      1
-    ],
+    "relatedDestinations": [1],
     "description": "Experience our custom Srinagar Gulmarg Pahalgam tour package, blending snowy peaks and serene valleys. This 5-night, 6-day private adventure from Delhi offers Kashmir’s charm and 24/7 support.",
     "highlights": [
       "Destinations: Srinagar (2N), Gulmarg (2N), Pahalgam (1N)",
@@ -2839,40 +2473,25 @@
         "day": 1,
         "title": "Delhi to Srinagar",
         "description": "Fly from Delhi to Srinagar and check into a 3-star hotel. Visit Shankaracharya Temple for city views. Stroll Mughal Gardens like Shalimar Bagh for vibrant blooms. Enjoy a Kashmiri dinner, soaking in Srinagar’s serene vibe.",
-        "activities": [
-          "Shankaracharya Temple",
-          "Shalimar Bagh"
-        ]
+        "activities": ["Shankaracharya Temple", "Shalimar Bagh"]
       },
       {
         "day": 2,
         "title": "Srinagar’s Lake Charm",
         "description": "Explore Dal Lake with a shikara ride (included). Visit Nishat Bagh for Mughal elegance. Stroll Chashme Shahi for royal springs. Evening free to shop for Pashmina at Lal Chowk. Savor a Kashmiri wazwan dinner.",
-        "activities": [
-          "Dal Lake",
-          "Nishat Bagh",
-          "Chashme Shahi",
-          "Lal Chowk"
-        ]
+        "activities": ["Dal Lake", "Nishat Bagh", "Chashme Shahi", "Lal Chowk"]
       },
       {
         "day": 3,
         "title": "Srinagar to Gulmarg",
         "description": "Drive to Gulmarg and check into a 3-star hotel. Ride the Gulmarg Gondola for snowy views (extra cost). Explore Outer Circle Walk for meadows. Enjoy skiing or snowboarding (extra cost). Savor a cozy Kashmiri dinner.",
-        "activities": [
-          "Gulmarg",
-          "Gulmarg Gondola",
-          "Outer Circle Walk"
-        ]
+        "activities": ["Gulmarg", "Gulmarg Gondola", "Outer Circle Walk"]
       },
       {
         "day": 4,
         "title": "Gulmarg’s Snowy Thrills",
         "description": "Visit Alpather Lake for serene views (optional trek, extra cost). Explore Strawberry Valley for scenic beauty. Enjoy snow activities like sledging (extra cost). Evening free to relax in Gulmarg’s cozy ambiance. Savor a Kashmiri dinner.",
-        "activities": [
-          "Alpather Lake",
-          "Strawberry Valley"
-        ]
+        "activities": ["Alpather Lake", "Strawberry Valley"]
       },
       {
         "day": 5,
@@ -2889,9 +2508,7 @@
         "day": 6,
         "title": "Pahalgam to Delhi",
         "description": "Visit Chandanwari for scenic views. Drive to Srinagar airport for your flight to Delhi, carrying Kashmir’s memories.",
-        "activities": [
-          "Chandanwari"
-        ]
+        "activities": ["Chandanwari"]
       }
     ],
     "inclusions": [
@@ -2937,9 +2554,7 @@
       "Kashmir",
       "Jammu & Kashmir"
     ],
-    "relatedDestinations": [
-      1
-    ],
+    "relatedDestinations": [1],
     "description": "Embark on our custom Amarnath Yatra tour package, a spiritual journey to the holy Amarnath Cave. This 4-night, 5-day private adventure from Delhi offers divine serenity and 24/7 support.",
     "highlights": [
       "Destinations: Srinagar (2N), Baltal (1N), Pahalgam (1N)",
@@ -2964,45 +2579,31 @@
         "day": 1,
         "title": "Delhi to Srinagar",
         "description": "Fly from Delhi to Srinagar and check into a 3-star hotel. Complete Amarnath Yatra registration formalities. Visit Shankaracharya Temple for blessings. Stroll Mughal Gardens like Shalimar Bagh for serene vibes. Enjoy a Kashmiri dinner, preparing for the pilgrimage.",
-        "activities": [
-          "Shankaracharya Temple",
-          "Shalimar Bagh"
-        ]
+        "activities": ["Shankaracharya Temple", "Shalimar Bagh"]
       },
       {
         "day": 2,
         "title": "Srinagar to Baltal",
         "description": "Drive to Baltal, the base camp for Amarnath Yatra, and check into a 3-star camp. Rest and acclimatize for the pilgrimage. Visit Sonamarg for scenic meadows. Attend a yatra briefing. Savor a simple dinner, readying for the trek.",
-        "activities": [
-          "Sonamarg"
-        ]
+        "activities": ["Sonamarg"]
       },
       {
         "day": 3,
         "title": "Baltal to Amarnath Cave & Pahalgam",
         "description": "Begin the Amarnath Cave trek (14 km, 6-8 hours) or opt for a helicopter ride (extra cost). Offer prayers at the sacred ice lingam. Drive to Pahalgam and check into a 3-star hotel. Relax by Lidder River. Enjoy a Kashmiri dinner.",
-        "activities": [
-          "Amarnath Cave",
-          "Lidder River"
-        ]
+        "activities": ["Amarnath Cave", "Lidder River"]
       },
       {
         "day": 4,
         "title": "Pahalgam to Srinagar",
         "description": "Visit Betaab Valley for serene meadows. Explore Aru Valley for scenic beauty. Drive back to Srinagar and check into a 3-star hotel. Evening free to shop at Lal Chowk. Savor a Kashmiri wazwan dinner.",
-        "activities": [
-          "Betaab Valley",
-          "Aru Valley",
-          "Lal Chowk"
-        ]
+        "activities": ["Betaab Valley", "Aru Valley", "Lal Chowk"]
       },
       {
         "day": 5,
         "title": "Srinagar to Delhi",
         "description": "After breakfast, visit Hazratbal Shrine for spiritual vibes. Transfer to Srinagar airport for your flight to Delhi, carrying divine memories.",
-        "activities": [
-          "Hazratbal Shrine"
-        ]
+        "activities": ["Hazratbal Shrine"]
       }
     ],
     "inclusions": [
@@ -3040,14 +2641,8 @@
     "location": "India",
     "category": "Heritage, Royal, City",
     "featured": false,
-    "destinationNames": [
-      "Jaipur",
-      "Udaipur",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Jaipur", "Udaipur", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Dive into the heart of Rajasthan with our custom Jaipur Udaipur tour package, where Jaipur’s royal forts meet Udaipur’s tranquil lakes. This 4-night, 5-day private journey offers cultural immersion, scenic drives, and 24/7 support for couples, families, or solo explorers craving a vibrant escape.",
     "highlights": [
       "Destinations: Jaipur (2N), Udaipur (2N)",
@@ -3090,21 +2685,13 @@
         "day": 2,
         "title": "Jaipur’s Royal Heritage",
         "description": "Dive deeper into Jaipur’s legacy at City Palace, showcasing Mughal-Rajput architecture. Visit Nahargarh Fort for sweeping city views. Evening vibes at Bapu Bazaar offer handicrafts and mojaris. Enjoy a cultural show with dinner at a heritage restaurant.",
-        "activities": [
-          "City Palace (Jaipur)",
-          "Nahargarh Fort",
-          "Bapu Bazaar"
-        ]
+        "activities": ["City Palace (Jaipur)", "Nahargarh Fort", "Bapu Bazaar"]
       },
       {
         "day": 3,
         "title": "Scenic Drive to Udaipur",
         "description": "After breakfast, journey to Udaipur, the Lake City. Check into a lakeside 3-star hotel and unwind at Lake Pichola, admiring Jag Mandir’s silhouette. Explore Bagore ki Haveli for a cultural dance show. Dinner features Mewari delicacies.",
-        "activities": [
-          "Lake Pichola",
-          "Jag Mandir",
-          "Bagore ki Haveli"
-        ]
+        "activities": ["Lake Pichola", "Jag Mandir", "Bagore ki Haveli"]
       },
       {
         "day": 4,
@@ -3121,9 +2708,7 @@
         "day": 5,
         "title": "Udaipur Departure",
         "description": "Post-breakfast, enjoy a quick stroll at Dudh Talai with lake views. Check out and transfer to the airport/station, carrying Rajasthan’s royal memories.",
-        "activities": [
-          "Dudh Talai"
-        ]
+        "activities": ["Dudh Talai"]
       }
     ],
     "inclusions": [
@@ -3161,13 +2746,8 @@
     "location": "India",
     "category": "Heritage, Royal, City",
     "featured": false,
-    "destinationNames": [
-      "Jaipur",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Jaipur", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Dive into the heart of Rajasthan with our custom Jaipur tour package, showcasing the Pink City’s forts, palaces, and bazaars. This 3-night, 4-day private adventure offers cultural immersion and 24/7 support for an unforgettable journey.",
     "highlights": [
       "Destinations: Jaipur (3N)",
@@ -3230,9 +2810,7 @@
         "day": 4,
         "title": "Jaipur Departure",
         "description": "After breakfast, visit Jal Mahal for a quick photo stop by the lake. Check out and transfer to the airport/station, carrying Jaipur’s royal charm.",
-        "activities": [
-          "Jal Mahal"
-        ]
+        "activities": ["Jal Mahal"]
       }
     ],
     "inclusions": [
@@ -3270,15 +2848,8 @@
     "location": "India",
     "category": "Heritage, Royal, Desert",
     "featured": false,
-    "destinationNames": [
-      "Jaipur",
-      "Jodhpur",
-      "Jaisalmer",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Jaipur", "Jodhpur", "Jaisalmer", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Embark on a custom Jaipur Jodhpur Jaisalmer tour package, blending Jaipur’s forts, Jodhpur’s blue streets, and Jaisalmer’s desert magic. This 5-night, 6-day private adventure offers royal vibes and 24/7 support.",
     "highlights": [
       "Destinations: Jaipur (2N), Jodhpur (2N), Jaisalmer (1N)",
@@ -3320,47 +2891,31 @@
         "day": 2,
         "title": "Jaipur’s Royal Charm",
         "description": "Discover City Palace’s regal architecture. Visit Nahargarh Fort for city views. Evening at Bapu Bazaar for handicrafts, followed by a cultural show and dinner.",
-        "activities": [
-          "City Palace (Jaipur)",
-          "Nahargarh Fort",
-          "Bapu Bazaar"
-        ]
+        "activities": ["City Palace (Jaipur)", "Nahargarh Fort", "Bapu Bazaar"]
       },
       {
         "day": 3,
         "title": "Drive to Jodhpur",
         "description": "Post-breakfast, drive to Jodhpur, the Blue City. Check into a 3-star hotel and visit Mehrangarh Fort. Explore Jaswant Thada’s marble cenotaph. Evening stroll in Clock Tower Market for local crafts.",
-        "activities": [
-          "Mehrangarh Fort",
-          "Jaswant Thada",
-          "Clock Tower Market"
-        ]
+        "activities": ["Mehrangarh Fort", "Jaswant Thada", "Clock Tower Market"]
       },
       {
         "day": 4,
         "title": "Jodhpur to Jaisalmer",
         "description": "Drive to Jaisalmer, the Golden City. Check into a 3-star hotel and visit Jaisalmer Fort. Explore Patwon ki Haveli’s intricate carvings. Enjoy a desert sunset at Bada Bagh.",
-        "activities": [
-          "Jaisalmer Fort",
-          "Patwon ki Haveli",
-          "Bada Bagh"
-        ]
+        "activities": ["Jaisalmer Fort", "Patwon ki Haveli", "Bada Bagh"]
       },
       {
         "day": 5,
         "title": "Jaisalmer to Jodhpur & Desert Adventure",
         "description": "Head to Sam Sand Dunes for a desert experience (camel ride extra). Enjoy folk performances under the stars. Drive back to Jodhpur and check into your 3-star hotel. Relax with a local dinner.",
-        "activities": [
-          "Sam Sand Dunes"
-        ]
+        "activities": ["Sam Sand Dunes"]
       },
       {
         "day": 6,
         "title": "Jodhpur Departure",
         "description": "Visit Umaid Bhawan Palace for a quick tour. Check out and transfer to the airport/station, carrying Rajasthan’s desert magic.",
-        "activities": [
-          "Umaid Bhawan Palace"
-        ]
+        "activities": ["Umaid Bhawan Palace"]
       }
     ],
     "inclusions": [
@@ -3398,13 +2953,8 @@
     "location": "India",
     "category": "Heritage, Royal, City",
     "featured": false,
-    "destinationNames": [
-      "Udaipur",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Udaipur", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Experience the romance of our custom Udaipur tour package, featuring serene lakes and grand palaces. This 3-night, 4-day private journey offers a tranquil escape with 24/7 support.",
     "highlights": [
       "Destinations: Udaipur (3N)",
@@ -3452,19 +3002,13 @@
         "day": 3,
         "title": "Udaipur’s Scenic Beauty",
         "description": "Visit Monsoon Palace for panoramic lake views. Opt for a Lake Pichola boat ride (extra cost). Explore Dudh Talai gardens. Evening free for leisurely lakefront walks or shopping.",
-        "activities": [
-          "Monsoon Palace",
-          "Lake Pichola",
-          "Dudh Talai"
-        ]
+        "activities": ["Monsoon Palace", "Lake Pichola", "Dudh Talai"]
       },
       {
         "day": 4,
         "title": "Udaipur Departure",
         "description": "After breakfast, visit Fateh Sagar Lake for a quick stroll. Check out and transfer to the airport/station, carrying Udaipur’s serene memories.",
-        "activities": [
-          "Fateh Sagar Lake"
-        ]
+        "activities": ["Fateh Sagar Lake"]
       }
     ],
     "inclusions": [
@@ -3502,14 +3046,8 @@
     "location": "India",
     "category": "Heritage, Hill Station, City",
     "featured": false,
-    "destinationNames": [
-      "Udaipur",
-      "Mount Abu",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Udaipur", "Mount Abu", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Discover our custom Udaipur Mount Abu tour package, blending Udaipur’s lakes with Mount Abu’s cool hills. This 3-night, 4-day private journey offers tranquility and 24/7 support.",
     "highlights": [
       "Destinations: Udaipur (2N), Mount Abu (1N)",
@@ -3557,19 +3095,13 @@
         "day": 3,
         "title": "Drive to Mount Abu",
         "description": "Drive to Mount Abu, Rajasthan’s hill station. Check into a 3-star hotel and visit Nakki Lake for a serene boat ride (extra cost). Explore Dilwara Temples’ marble carvings. Evening stroll at Sunset Point.",
-        "activities": [
-          "Nakki Lake",
-          "Dilwara Temples",
-          "Sunset Point"
-        ]
+        "activities": ["Nakki Lake", "Dilwara Temples", "Sunset Point"]
       },
       {
         "day": 4,
         "title": "Mount Abu Departure",
         "description": "After breakfast, visit Guru Shikhar, Mount Abu’s highest peak. Check out and transfer to the airport/station, carrying hilltop memories.",
-        "activities": [
-          "Guru Shikhar"
-        ]
+        "activities": ["Guru Shikhar"]
       }
     ],
     "inclusions": [
@@ -3608,15 +3140,8 @@
     "location": "India",
     "category": "Heritage, Royal, Desert, City",
     "featured": false,
-    "destinationNames": [
-      "Udaipur",
-      "Jodhpur",
-      "Jaisalmer",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Udaipur", "Jodhpur", "Jaisalmer", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Experience our custom Udaipur Jodhpur Jaisalmer tour package, blending lakes, blue streets, and golden dunes. This 5-night, 6-day private adventure offers a vibrant journey with 24/7 support.",
     "highlights": [
       "Destinations: Udaipur (2N), Jodhpur (2N), Jaisalmer (1N)",
@@ -3668,37 +3193,25 @@
         "day": 3,
         "title": "Drive to Jodhpur",
         "description": "Drive to Jodhpur, the Blue City. Check into a 3-star hotel and visit Mehrangarh Fort. Explore Jaswant Thada’s marble cenotaph. Evening stroll in Clock Tower Market.",
-        "activities": [
-          "Mehrangarh Fort",
-          "Jaswant Thada",
-          "Clock Tower Market"
-        ]
+        "activities": ["Mehrangarh Fort", "Jaswant Thada", "Clock Tower Market"]
       },
       {
         "day": 4,
         "title": "Jodhpur to Jaisalmer",
         "description": "Drive to Jaisalmer, the Golden City. Check into a 3-star hotel and visit Jaisalmer Fort. Explore Patwon ki Haveli’s carvings. Enjoy a desert sunset at Bada Bagh.",
-        "activities": [
-          "Jaisalmer Fort",
-          "Patwon ki Haveli",
-          "Bada Bagh"
-        ]
+        "activities": ["Jaisalmer Fort", "Patwon ki Haveli", "Bada Bagh"]
       },
       {
         "day": 5,
         "title": "Jaisalmer to Jodhpur & Desert Adventure",
         "description": "Visit Sam Sand Dunes for a desert experience (camel ride extra). Enjoy folk performances. Drive back to Jodhpur and check into your 3-star hotel. Relax with a local dinner.",
-        "activities": [
-          "Sam Sand Dunes"
-        ]
+        "activities": ["Sam Sand Dunes"]
       },
       {
         "day": 6,
         "title": "Jodhpur Departure",
         "description": "Visit Umaid Bhawan Palace. Check out and transfer to the airport/station, carrying desert memories.",
-        "activities": [
-          "Umaid Bhawan Palace"
-        ]
+        "activities": ["Umaid Bhawan Palace"]
       }
     ],
     "inclusions": [
@@ -3736,14 +3249,8 @@
     "location": "India",
     "category": "Heritage, Royal, Desert",
     "featured": false,
-    "destinationNames": [
-      "Jaisalmer",
-      "Jodhpur",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Jaisalmer", "Jodhpur", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Embark on our custom Jaisalmer Jodhpur tour package, featuring golden dunes and blue streets. This 4-night, 5-day private adventure offers desert thrills and 24/7 support.",
     "highlights": [
       "Destinations: Jaisalmer (2N), Jodhpur (2N)",
@@ -3770,30 +3277,19 @@
         "day": 1,
         "title": "Jaisalmer’s Golden Arrival",
         "description": "Arrive in Jaisalmer and check into a 3-star hotel. Visit Jaisalmer Fort, a living sandstone fortress. Explore Patwon ki Haveli’s intricate carvings. Enjoy a desert sunset at Bada Bagh. Savor a local dinner.",
-        "activities": [
-          "Jaisalmer Fort",
-          "Patwon ki Haveli",
-          "Bada Bagh"
-        ]
+        "activities": ["Jaisalmer Fort", "Patwon ki Haveli", "Bada Bagh"]
       },
       {
         "day": 2,
         "title": "Jaisalmer’s Desert Adventure",
         "description": "Head to Sam Sand Dunes for a desert experience (camel ride extra). Visit Kuldhara Village, an abandoned haunted site. Enjoy folk performances under the stars. Return to Jaisalmer for dinner.",
-        "activities": [
-          "Sam Sand Dunes",
-          "Kuldhara Village"
-        ]
+        "activities": ["Sam Sand Dunes", "Kuldhara Village"]
       },
       {
         "day": 3,
         "title": "Drive to Jodhpur",
         "description": "Drive to Jodhpur, the Blue City. Check into a 3-star hotel and visit Mehrangarh Fort. Explore Jaswant Thada’s marble cenotaph. Evening stroll in Clock Tower Market.",
-        "activities": [
-          "Mehrangarh Fort",
-          "Jaswant Thada",
-          "Clock Tower Market"
-        ]
+        "activities": ["Mehrangarh Fort", "Jaswant Thada", "Clock Tower Market"]
       },
       {
         "day": 4,
@@ -3809,9 +3305,7 @@
         "day": 5,
         "title": "Jodhpur Departure",
         "description": "After breakfast, visit Toorji ka Jhalra stepwell. Check out and transfer to the airport/station, carrying desert memories.",
-        "activities": [
-          "Toorji ka Jhalra"
-        ]
+        "activities": ["Toorji ka Jhalra"]
       }
     ],
     "inclusions": [
@@ -3850,15 +3344,8 @@
     "location": "India",
     "category": "Heritage, Royal, Desert, City",
     "featured": false,
-    "destinationNames": [
-      "Jaipur",
-      "Udaipur",
-      "Jaisalmer",
-      "Rajasthan"
-    ],
-    "relatedDestinations": [
-      4
-    ],
+    "destinationNames": ["Jaipur", "Udaipur", "Jaisalmer", "Rajasthan"],
+    "relatedDestinations": [4],
     "description": "Explore our custom Jaipur Udaipur Jaisalmer tour package, blending forts, lakes, and deserts. This 6-night, 7-day private adventure offers a vibrant journey with 24/7 support.",
     "highlights": [
       "Destinations: Jaipur (2N), Udaipur (2N), Jaisalmer (2N)",
@@ -3903,20 +3390,13 @@
         "day": 2,
         "title": "Jaipur’s Royal Heritage",
         "description": "Visit City Palace (10-min drive). Explore Nahargarh Fort for city views (20-min drive). Evening at Bapu Bazaar for handicrafts, followed by a cultural show and dinner.",
-        "activities": [
-          "City Palace (Jaipur)",
-          "Nahargarh Fort",
-          "Bapu Bazaar"
-        ]
+        "activities": ["City Palace (Jaipur)", "Nahargarh Fort", "Bapu Bazaar"]
       },
       {
         "day": 3,
         "title": "Drive to Udaipur",
         "description": "Drive to Udaipur, the Lake City. Check into a 3-star hotel and visit Lake Pichola. Explore Bagore ki Haveli for a cultural dance show. Enjoy a Mewari dinner.",
-        "activities": [
-          "Lake Pichola",
-          "Bagore ki Haveli"
-        ]
+        "activities": ["Lake Pichola", "Bagore ki Haveli"]
       },
       {
         "day": 4,
@@ -3933,28 +3413,19 @@
         "day": 5,
         "title": "Drive to Jaisalmer",
         "description": "Drive to Jaisalmer, the Golden City. Check into a 3-star hotel and visit Jaisalmer Fort. Explore Patwon ki Haveli’s carvings. Enjoy a desert sunset at Bada Bagh.",
-        "activities": [
-          "Jaisalmer Fort",
-          "Patwon ki Haveli",
-          "Bada Bagh"
-        ]
+        "activities": ["Jaisalmer Fort", "Patwon ki Haveli", "Bada Bagh"]
       },
       {
         "day": 6,
         "title": "Jaisalmer’s Desert Adventure",
         "description": "Visit Sam Sand Dunes for a desert experience (camel ride extra). Explore Kuldhara Village. Enjoy folk performances under the stars. Return to Jaisalmer for dinner.",
-        "activities": [
-          "Sam Sand Dunes",
-          "Kuldhara Village"
-        ]
+        "activities": ["Sam Sand Dunes", "Kuldhara Village"]
       },
       {
         "day": 7,
         "title": "Jaisalmer Departure",
         "description": "After breakfast, visit Gadsisar Lake for a quick stroll. Check out and transfer to the airport/station, carrying desert memories.",
-        "activities": [
-          "Gadsisar Lake"
-        ]
+        "activities": ["Gadsisar Lake"]
       }
     ],
     "inclusions": [
@@ -3992,14 +3463,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Lachung",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Lachung", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Embark on a 4-night adventure from Bagdogra, blending Gangtok’s vibrant charm with Lachung’s serene alpine beauty. This custom Gangtok Lachung tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake and Yumthang Valley. Perfect for a tranquil Himalayan getaway!",
     "highlights": [
       "Destinations: Gangtok (3N), Lachung (1N)",
@@ -4023,9 +3488,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Vibrant Start",
         "description": "Kick off from Bagdogra, driving 125 km (approx. 5 hours) through lush tea gardens to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant buzz and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4042,19 +3505,13 @@
         "day": 3,
         "title": "Gangtok to Lachung – Alpine Adventure",
         "description": "Post-breakfast, drive 120 km to Lachung (approx. 6 hours), a quaint Himalayan village. Check into a cozy 3-star guesthouse. Visit Lachung Monastery for a dose of serenity. Spend the evening soaking in the alpine charm by the Lachung River before dinner.",
-        "activities": [
-          "Lachung Monastery",
-          "Lachung River"
-        ]
+        "activities": ["Lachung Monastery", "Lachung River"]
       },
       {
         "day": 4,
         "title": "Lachung to Gangtok – Yumthang Valley Bliss",
         "description": "After breakfast, drive 25 km to Yumthang Valley, the “Valley of Flowers”. Marvel at its vibrant meadows and snow-capped peaks. Visit the hot springs for a warm dip. Return to Gangtok (120 km, ~6 hours) by evening for a relaxing dinner.",
-        "activities": [
-          "Yumthang Valley",
-          "Hot Springs"
-        ]
+        "activities": ["Yumthang Valley", "Hot Springs"]
       },
       {
         "day": 5,
@@ -4100,14 +3557,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Darjeeling",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Darjeeling", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Discover Gangtok’s vibrant culture and Darjeeling’s tea-scented hills in this 5-night private tour from Bagdogra. This custom Gangtok Darjeeling tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake and Tiger Hill. Perfect for a Himalayan blend of adventure and serenity!",
     "highlights": [
       "Destinations: Gangtok (3N), Darjeeling (2N)",
@@ -4136,9 +3587,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Buzz",
         "description": "Start from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant vibe and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4155,19 +3604,13 @@
         "day": 3,
         "title": "Gangtok – Tsomgo Lake Adventure",
         "description": "Post-breakfast, drive to Tsomgo Lake, a glacial beauty at 12,400 ft. Enjoy yak rides by the shimmering waters. Visit Baba Mandir for a spiritual touch. Return to Gangtok by evening, savoring the Himalayan magic over dinner.",
-        "activities": [
-          "Tsomgo Lake",
-          "Baba Mandir"
-        ]
+        "activities": ["Tsomgo Lake", "Baba Mandir"]
       },
       {
         "day": 4,
         "title": "Gangtok to Darjeeling – Tea Trails",
         "description": "After breakfast, drive 95 km to Darjeeling (approx. 4 hours). Check into a 3-star hotel. Visit Peace Pagoda for serene views. Stroll along Mall Road, soaking in Darjeeling’s colonial charm. Enjoy a cozy dinner amidst the hills.",
-        "activities": [
-          "Peace Pagoda",
-          "Darjeeling Mall Road"
-        ]
+        "activities": ["Peace Pagoda", "Darjeeling Mall Road"]
       },
       {
         "day": 5,
@@ -4225,14 +3668,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Pelling",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Pelling", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Blend Gangtok’s vibrant culture with Pelling’s tranquil vistas in this 5-night private tour from Bagdogra. This custom Gangtok Pelling tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake and Khecheopalri Lake. Perfect for a serene Himalayan escape!",
     "highlights": [
       "Destinations: Gangtok (3N), Pelling (2N)",
@@ -4259,9 +3696,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Vibrant Start",
         "description": "Begin from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant buzz and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4278,19 +3713,13 @@
         "day": 3,
         "title": "Gangtok – Tsomgo Lake Adventure",
         "description": "Post-breakfast, drive to Tsomgo Lake, a glacial beauty at 12,400 ft. Enjoy yak rides by the shimmering waters. Visit Baba Mandir for a spiritual touch. Return to Gangtok by evening, savoring the Himalayan magic over dinner.",
-        "activities": [
-          "Tsomgo Lake",
-          "Baba Mandir"
-        ]
+        "activities": ["Tsomgo Lake", "Baba Mandir"]
       },
       {
         "day": 4,
         "title": "Gangtok to Pelling – Scenic Serenity",
         "description": "After breakfast, drive 130 km to Pelling (approx. 6 hours). Check into a 3-star hotel with Kanchenjunga views. Visit Pemayangtse Monastery for spiritual calm. Stroll to Rabdentse Ruins for a glimpse of Sikkim’s royal past. Enjoy a cozy dinner.",
-        "activities": [
-          "Pemayangtse Monastery",
-          "Rabdentse Ruins"
-        ]
+        "activities": ["Pemayangtse Monastery", "Rabdentse Ruins"]
       },
       {
         "day": 5,
@@ -4346,15 +3775,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Lachen",
-      "Lachung",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Lachen", "Lachung", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Explore Gangtok’s vibrant charm and the alpine wonders of Lachen and Lachung in this 5-night private tour from Bagdogra. This custom Gangtok Lachen Lachung tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake and Gurudongmar Lake. Perfect for a thrilling Himalayan escape!",
     "highlights": [
       "Destinations: Gangtok (3N), Lachen (1N), Lachung (1N)",
@@ -4381,9 +3803,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Buzz",
         "description": "Start from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant vibe and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4400,27 +3820,19 @@
         "day": 3,
         "title": "Gangtok to Lachen – High Altitude Serenity",
         "description": "Post-breakfast, drive 120 km to Lachen (approx. 6 hours), a serene Himalayan village. Check into a cozy 3-star guesthouse. Visit Lachen Monastery for spiritual calm. Spend the evening by the Lachen River, soaking in the alpine tranquility before dinner.",
-        "activities": [
-          "Lachen Monastery",
-          "Lachen River"
-        ]
+        "activities": ["Lachen Monastery", "Lachen River"]
       },
       {
         "day": 4,
         "title": "Lachen to Lachung – Gurudongmar Lake Adventure",
         "description": "After breakfast, drive 25 km to Gurudongmar Lake, a sacred high-altitude marvel. Marvel at its turquoise waters and snowy peaks. Return to Lachen, then drive 50 km to Lachung (approx. 2 hours). Check into a 3-star guesthouse for dinner.",
-        "activities": [
-          "Gurudongmar Lake"
-        ]
+        "activities": ["Gurudongmar Lake"]
       },
       {
         "day": 5,
         "title": "Lachung to Gangtok – Yumthang Valley Bliss",
         "description": "Post-breakfast, drive 25 km to Yumthang Valley, the “Valley of Flowers”. Explore its vibrant meadows and hot springs. Return to Gangtok (120 km, ~6 hours) by evening, savoring the Himalayan magic over a cozy dinner.",
-        "activities": [
-          "Yumthang Valley",
-          "Hot Springs"
-        ]
+        "activities": ["Yumthang Valley", "Hot Springs"]
       },
       {
         "day": 6,
@@ -4466,15 +3878,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Pelling",
-      "Darjeeling",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Pelling", "Darjeeling", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Experience Gangtok’s vibrant culture, Pelling’s serene vistas, and Darjeeling’s tea-scented hills in this 6-night private tour from Bagdogra. This custom Gangtok Pelling Darjeeling tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake, Khecheopalri Lake, and Tiger Hill. Perfect for a Himalayan trilogy!",
     "highlights": [
       "Destinations: Gangtok (3N), Pelling (1N), Darjeeling (2N)",
@@ -4506,9 +3911,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Buzz",
         "description": "Kick off from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant vibe and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4525,28 +3928,19 @@
         "day": 3,
         "title": "Gangtok – Tsomgo Lake Adventure",
         "description": "Post-breakfast, drive to Tsomgo Lake, a glacial beauty at 12,400 ft. Enjoy yak rides by the shimmering waters. Visit Baba Mandir for a spiritual touch. Return to Gangtok by evening, savoring the Himalayan magic over dinner.",
-        "activities": [
-          "Tsomgo Lake",
-          "Baba Mandir"
-        ]
+        "activities": ["Tsomgo Lake", "Baba Mandir"]
       },
       {
         "day": 4,
         "title": "Gangtok to Pelling – Scenic Serenity",
         "description": "After breakfast, drive 130 km to Pelling (approx. 6 hours). Check into a 3-star hotel with Kanchenjunga views. Visit Pemayangtse Monastery for spiritual calm. Stroll to Rabdentse Ruins for a glimpse of Sikkim’s royal past. Enjoy a cozy dinner.",
-        "activities": [
-          "Pemayangtse Monastery",
-          "Rabdentse Ruins"
-        ]
+        "activities": ["Pemayangtse Monastery", "Rabdentse Ruins"]
       },
       {
         "day": 5,
         "title": "Pelling to Darjeeling – Tea Trails",
         "description": "Post-breakfast, drive 75 km to Darjeeling (approx. 4 hours). Check into a 3-star hotel. Visit Peace Pagoda for serene views. Stroll along Mall Road, soaking in Darjeeling’s colonial charm. Enjoy a cozy dinner amidst the hills.",
-        "activities": [
-          "Peace Pagoda",
-          "Darjeeling Mall Road"
-        ]
+        "activities": ["Peace Pagoda", "Darjeeling Mall Road"]
       },
       {
         "day": 6,
@@ -4604,15 +3998,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Pelling",
-      "Darjeeling",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Pelling", "Darjeeling", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Immerse in Gangtok’s vibrant culture, Pelling’s serene vistas, and Darjeeling’s tea-scented hills with this 7-night private tour from Bagdogra. This custom Gangtok Pelling Darjeeling tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake, Khecheopalri Lake, and Tiger Hill. Perfect for a comprehensive Himalayan journey!",
     "highlights": [
       "Destinations: Gangtok (3N), Pelling (2N), Darjeeling (2N)",
@@ -4646,9 +4033,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Buzz",
         "description": "Kick off from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant vibe and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4665,19 +4050,13 @@
         "day": 3,
         "title": "Gangtok – Tsomgo Lake Adventure",
         "description": "Post-breakfast, drive to Tsomgo Lake, a glacial beauty at 12,400 ft. Enjoy yak rides by the shimmering waters. Visit Baba Mandir for a spiritual touch. Return to Gangtok by evening, savoring the Himalayan magic over dinner.",
-        "activities": [
-          "Tsomgo Lake",
-          "Baba Mandir"
-        ]
+        "activities": ["Tsomgo Lake", "Baba Mandir"]
       },
       {
         "day": 4,
         "title": "Gangtok to Pelling – Scenic Serenity",
         "description": "After breakfast, drive 130 km to Pelling (approx. 6 hours). Check into a 3-star hotel with Kanchenjunga views. Visit Pemayangtse Monastery for spiritual calm. Stroll to Rabdentse Ruins for a glimpse of Sikkim’s royal past. Enjoy a cozy dinner.",
-        "activities": [
-          "Pemayangtse Monastery",
-          "Rabdentse Ruins"
-        ]
+        "activities": ["Pemayangtse Monastery", "Rabdentse Ruins"]
       },
       {
         "day": 5,
@@ -4693,10 +4072,7 @@
         "day": 6,
         "title": "Pelling to Darjeeling – Tea Trails",
         "description": "After breakfast, drive 75 km to Darjeeling (approx. 4 hours). Check into a 3-star hotel. Visit Peace Pagoda for serene views. Stroll along Mall Road, soaking in Darjeeling’s colonial charm. Enjoy a cozy dinner amidst the hills.",
-        "activities": [
-          "Peace Pagoda",
-          "Darjeeling Mall Road"
-        ]
+        "activities": ["Peace Pagoda", "Darjeeling Mall Road"]
       },
       {
         "day": 7,
@@ -4754,15 +4130,8 @@
     "location": "India",
     "category": "Mountain, Nature, Spiritual",
     "featured": false,
-    "destinationNames": [
-      "Gangtok",
-      "Lachung",
-      "Pelling",
-      "Sikkim"
-    ],
-    "relatedDestinations": [
-      6
-    ],
+    "destinationNames": ["Gangtok", "Lachung", "Pelling", "Sikkim"],
+    "relatedDestinations": [6],
     "description": "Dive into Gangtok’s vibrant culture, Lachung’s alpine wonders, and Pelling’s serene vistas with this 7-night private tour from Bagdogra. This custom Gangtok Lachung Pelling tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake, Yumthang Valley, and Khecheopalri Lake. Perfect for a deep Himalayan escape!",
     "highlights": [
       "Destinations: Gangtok (3N), Lachung (2N), Pelling (2N)",
@@ -4793,9 +4162,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Buzz",
         "description": "Start from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant vibe and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4812,37 +4179,25 @@
         "day": 3,
         "title": "Gangtok – Tsomgo Lake Adventure",
         "description": "Post-breakfast, drive to Tsomgo Lake, a glacial beauty at 12,400 ft. Enjoy yak rides by the shimmering waters. Visit Baba Mandir for a spiritual touch. Return to Gangtok by evening, savoring the Himalayan magic over dinner.",
-        "activities": [
-          "Tsomgo Lake",
-          "Baba Mandir"
-        ]
+        "activities": ["Tsomgo Lake", "Baba Mandir"]
       },
       {
         "day": 4,
         "title": "Gangtok to Lachung – Alpine Serenity",
         "description": "After breakfast, drive 120 km to Lachung (approx. 6 hours). Check into a cozy 3-star guesthouse. Visit Lachung Monastery for spiritual calm. Spend the evening by the Lachung River, soaking in the alpine tranquility before dinner.",
-        "activities": [
-          "Lachung Monastery",
-          "Lachung River"
-        ]
+        "activities": ["Lachung Monastery", "Lachung River"]
       },
       {
         "day": 5,
         "title": "Lachung – Yumthang Valley Bliss",
         "description": "Post-breakfast, drive 25 km to Yumthang Valley, the “Valley of Flowers”. Marvel at its vibrant meadows and snow-capped peaks. Visit the hot springs for a warm dip. Return to Lachung for a relaxing evening and dinner.",
-        "activities": [
-          "Yumthang Valley",
-          "Hot Springs"
-        ]
+        "activities": ["Yumthang Valley", "Hot Springs"]
       },
       {
         "day": 6,
         "title": "Lachung to Pelling – Scenic Transition",
         "description": "After breakfast, drive 190 km to Pelling (approx. 8 hours). Check into a 3-star hotel with Kanchenjunga views. Visit Pemayangtse Monastery for spiritual calm. Stroll to Rabdentse Ruins for a glimpse of Sikkim’s royal past. Enjoy a cozy dinner.",
-        "activities": [
-          "Pemayangtse Monastery",
-          "Rabdentse Ruins"
-        ]
+        "activities": ["Pemayangtse Monastery", "Rabdentse Ruins"]
       },
       {
         "day": 7,
@@ -4907,9 +4262,7 @@
       "Darjeeling",
       "Sikkim"
     ],
-    "relatedDestinations": [
-      6
-    ],
+    "relatedDestinations": [6],
     "description": "Experience Gangtok’s vibrant culture, Lachung’s alpine wonders, Pelling’s serene vistas, and Darjeeling’s tea-scented hills in this 8-night private tour from Bagdogra. This custom Gangtok Lachung Pelling Darjeeling tour package includes a private sedan, 3-star stays, and iconic sights like Tsomgo Lake, Yumthang Valley, Khecheopalri Lake, and Tiger Hill. Perfect for an epic Himalayan journey!",
     "highlights": [
       "Destinations: Gangtok (3N), Lachung (2N), Pelling (2N), Darjeeling (1N)",
@@ -4943,9 +4296,7 @@
         "day": 1,
         "title": "Bagdogra to Gangtok – Sikkim’s Buzz",
         "description": "Kick off from Bagdogra, driving 125 km (approx. 5 hours) to Gangtok. Check into a cozy 3-star hotel by evening. Stroll along MG Marg, soaking in the vibrant vibe and local flavors. Enjoy a warm dinner, ready for Sikkim’s charm.",
-        "activities": [
-          "MG Marg"
-        ]
+        "activities": ["MG Marg"]
       },
       {
         "day": 2,
@@ -4962,37 +4313,25 @@
         "day": 3,
         "title": "Gangtok – Tsomgo Lake Adventure",
         "description": "Post-breakfast, drive to Tsomgo Lake, a glacial beauty at 12,400 ft. Enjoy yak rides by the shimmering waters. Visit Baba Mandir for a spiritual touch. Return to Gangtok by evening, savoring the Himalayan magic over dinner.",
-        "activities": [
-          "Tsomgo Lake",
-          "Baba Mandir"
-        ]
+        "activities": ["Tsomgo Lake", "Baba Mandir"]
       },
       {
         "day": 4,
         "title": "Gangtok to Lachung – Alpine Serenity",
         "description": "After breakfast, drive 120 km to Lachung (approx. 6 hours). Check into a cozy 3-star guesthouse. Visit Lachung Monastery for spiritual calm. Spend the evening by the Lachung River, soaking in the alpine tranquility before dinner.",
-        "activities": [
-          "Lachung Monastery",
-          "Lachung River"
-        ]
+        "activities": ["Lachung Monastery", "Lachung River"]
       },
       {
         "day": 5,
         "title": "Lachung – Yumthang Valley Bliss",
         "description": "Post-breakfast, drive 25 km to Yumthang Valley, the “Valley of Flowers”. Marvel at its vibrant meadows and snow-capped peaks. Visit the hot springs for a warm dip. Return to Lachung for a relaxing evening and dinner.",
-        "activities": [
-          "Yumthang Valley",
-          "Hot Springs"
-        ]
+        "activities": ["Yumthang Valley", "Hot Springs"]
       },
       {
         "day": 6,
         "title": "Lachung to Pelling – Scenic Transition",
         "description": "After breakfast, drive 190 km to Pelling (approx. 8 hours). Check into a 3-star hotel with Kanchenjunga views. Visit Pemayangtse Monastery for spiritual calm. Stroll to Rabdentse Ruins for a glimpse of Sikkim’s royal past. Enjoy a cozy dinner.",
-        "activities": [
-          "Pemayangtse Monastery",
-          "Rabdentse Ruins"
-        ]
+        "activities": ["Pemayangtse Monastery", "Rabdentse Ruins"]
       },
       {
         "day": 7,
@@ -5008,10 +4347,7 @@
         "day": 8,
         "title": "Pelling to Darjeeling – Tea Trails",
         "description": "After breakfast, drive 75 km to Darjeeling (approx. 4 hours). Check into a 3-star hotel. Visit Peace Pagoda for serene views. Stroll along Mall Road, soaking in Darjeeling’s colonial charm. Enjoy a cozy dinner amidst the hills.",
-        "activities": [
-          "Peace Pagoda",
-          "Darjeeling Mall Road"
-        ]
+        "activities": ["Peace Pagoda", "Darjeeling Mall Road"]
       },
       {
         "day": 9,
@@ -5057,13 +4393,8 @@
     "location": "India",
     "category": "Hill Station, Nature",
     "featured": false,
-    "destinationNames": [
-      "Mussoorie",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Mussoorie", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Whisk away from Delhi to Mussoorie’s misty charm with this 3-night custom Mussoorie tour package. Enjoy a private sedan, cozy 3-star stays, and iconic sights like Kempty Falls and Mall Road. Perfect for a refreshing hill station retreat!",
     "highlights": [
       "Destinations: Mussoorie (3N)",
@@ -5086,9 +4417,7 @@
         "day": 1,
         "title": "Delhi to Mussoorie – Hill Station Vibes",
         "description": "Kick off your adventure from Delhi, driving 290 km (approx. 7 hours) to Mussoorie, the “Queen of Hills.” Check into a cozy 3-star hotel by evening. Stroll along the vibrant Mall Road, soaking in the bustling vibe and mountain air. Enjoy a warm dinner, ready for Mussoorie’s magic.",
-        "activities": [
-          "Mall Road"
-        ]
+        "activities": ["Mall Road"]
       },
       {
         "day": 2,
@@ -5154,14 +4483,8 @@
     "location": "India",
     "category": "Hill Station, Spiritual, Nature",
     "featured": false,
-    "destinationNames": [
-      "Mussoorie",
-      "Rishikesh",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Mussoorie", "Rishikesh", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Blend Mussoorie’s misty hills with Rishikesh’s spiritual vibes in this 4-night private tour from Delhi. This custom Mussoorie Rishikesh tour package includes a private sedan, 3-star stays, and iconic sights like Kempty Falls and Laxman Jhula. Perfect for a serene escape!",
     "highlights": [
       "Destinations: Mussoorie (2N), Rishikesh (2N)",
@@ -5187,9 +4510,7 @@
         "day": 1,
         "title": "Delhi to Mussoorie – Queen of Hills",
         "description": "Start from Delhi, driving 290 km (approx. 7 hours) to Mussoorie. Check into a cozy 3-star hotel by evening. Stroll along Mall Road, soaking in the vibrant mountain vibe. Enjoy the twinkling lights of Mussoorie’s skyline before a warm dinner.",
-        "activities": [
-          "Mall Road"
-        ]
+        "activities": ["Mall Road"]
       },
       {
         "day": 2,
@@ -5206,21 +4527,13 @@
         "day": 3,
         "title": "Mussoorie to Rishikesh – Spiritual Shores",
         "description": "Post-breakfast, drive 80 km to Rishikesh (approx. 3 hours). Check into a 3-star hotel by the Ganges. Visit Laxman Jhula and explore Ram Jhula’s vibrant market. Attend the serene Ganga Aarti at Triveni Ghat.",
-        "activities": [
-          "Laxman Jhula",
-          "Ram Jhula",
-          "Triveni Ghat"
-        ]
+        "activities": ["Laxman Jhula", "Ram Jhula", "Triveni Ghat"]
       },
       {
         "day": 4,
         "title": "Rishikesh – Adventure and Serenity",
         "description": "After breakfast, visit Neelkanth Mahadev Temple for divine vibes. Explore the Beatles Ashram for a quirky historical twist. Try a short yoga session by the Ganges or relax at Shivpuri’s riverside cafés. Return for a cozy dinner.",
-        "activities": [
-          "Neelkanth Mahadev Temple",
-          "Beatles Ashram",
-          "Shivpuri"
-        ]
+        "activities": ["Neelkanth Mahadev Temple", "Beatles Ashram", "Shivpuri"]
       },
       {
         "day": 5,
@@ -5266,15 +4579,8 @@
     "location": "India",
     "category": "Hill Station, Nature, City",
     "featured": false,
-    "destinationNames": [
-      "Mussoorie",
-      "Nainital",
-      "Dehradun",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Mussoorie", "Nainital", "Dehradun", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Embark on a 5-night private tour from Delhi, blending Mussoorie’s misty hills, Nainital’s serene lakes, and Dehradun’s urban charm. This custom Mussoorie Nainital Dehradun tour package includes a private sedan, 3-star stays, and iconic sights like Kempty Falls and Naini Lake. Perfect for a diverse Himalayan escape!",
     "highlights": [
       "Destinations: Mussoorie (2N), Nainital (2N), Dehradun (1N)",
@@ -5303,9 +4609,7 @@
         "day": 1,
         "title": "Delhi to Mussoorie – Misty Hills",
         "description": "Begin your journey from Delhi, driving 290 km (approx. 7 hours) to Mussoorie. Check into a cozy 3-star hotel by evening. Stroll along Mall Road, soaking in the vibrant mountain vibe. Enjoy the twinkling skyline before a warm dinner.",
-        "activities": [
-          "Mall Road (Mussoorie)"
-        ]
+        "activities": ["Mall Road (Mussoorie)"]
       },
       {
         "day": 2,
@@ -5322,10 +4626,7 @@
         "day": 3,
         "title": "Mussoorie to Nainital – Lake Vibes",
         "description": "Post-breakfast, drive 310 km to Nainital (approx. 8 hours). Check into a 3-star hotel by the serene Naini Lake. Take an evening boat ride on the lake. Stroll along Mall Road for local treats before dinner.",
-        "activities": [
-          "Naini Lake",
-          "Mall Road (Nainital)"
-        ]
+        "activities": ["Naini Lake", "Mall Road (Nainital)"]
       },
       {
         "day": 4,
@@ -5342,11 +4643,7 @@
         "day": 5,
         "title": "Nainital to Dehradun – Urban Retreat",
         "description": "Post-breakfast, drive 300 km to Dehradun (approx. 8 hours). Check into a 3-star hotel and visit Sahastradhara for its soothing springs. Explore Robber’s Cave for a quick nature fix. End with a stroll along Rajpur Road’s vibrant cafés.",
-        "activities": [
-          "Sahastradhara",
-          "Robber’s Cave",
-          "Rajpur Road"
-        ]
+        "activities": ["Sahastradhara", "Robber’s Cave", "Rajpur Road"]
       },
       {
         "day": 6,
@@ -5392,15 +4689,8 @@
     "location": "India",
     "category": "Hill Station, Nature, Wildlife",
     "featured": false,
-    "destinationNames": [
-      "Nainital",
-      "Jim Corbett",
-      "Mussoorie",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Nainital", "Jim Corbett", "Mussoorie", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Experience Nainital’s serene lakes, Jim Corbett’s thrilling wildlife, and Mussoorie’s misty hills in this 5-night private tour from Delhi. This custom Nainital Jim Corbett Mussoorie tour package includes a private sedan, 3-star stays, and iconic sights like Naini Lake and Kempty Falls. Perfect for a diverse adventure!",
     "highlights": [
       "Destinations: Nainital (2N), Jim Corbett (1N), Mussoorie (2N)",
@@ -5428,10 +4718,7 @@
         "day": 1,
         "title": "Delhi to Nainital – Lake Serenity",
         "description": "Kick off from Delhi, driving 310 km (approx. 8 hours) to Nainital. Check into a 3-star hotel by Naini Lake. Take an evening boat ride on the lake, soaking in twinkling reflections. Stroll along Mall Road for local treats before a cozy dinner.",
-        "activities": [
-          "Naini Lake",
-          "Mall Road (Nainital)"
-        ]
+        "activities": ["Naini Lake", "Mall Road (Nainital)"]
       },
       {
         "day": 2,
@@ -5448,18 +4735,13 @@
         "day": 3,
         "title": "Nainital to Jim Corbett – Wildlife Thrills",
         "description": "Post-breakfast, drive 160 km to Jim Corbett National Park (approx. 5 hours). Check into a 3-star resort. Embark on an afternoon jungle safari to spot tigers and deer. Relax by the Kosi River in the evening before dinner.",
-        "activities": [
-          "Jim Corbett National Park",
-          "Kosi River"
-        ]
+        "activities": ["Jim Corbett National Park", "Kosi River"]
       },
       {
         "day": 4,
         "title": "Jim Corbett to Mussoorie – Misty Hills",
         "description": "After breakfast, drive 250 km to Mussoorie (approx. 7 hours). Check into a 3-star hotel. Stroll along Mall Road, soaking in the vibrant mountain vibe. Enjoy the twinkling skyline before a warm dinner.",
-        "activities": [
-          "Mall Road (Mussoorie)"
-        ]
+        "activities": ["Mall Road (Mussoorie)"]
       },
       {
         "day": 5,
@@ -5515,13 +4797,8 @@
     "location": "India",
     "category": "Hill Station, Nature",
     "featured": false,
-    "destinationNames": [
-      "Nainital",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Nainital", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Escape to Nainital’s serene lakes and misty hills with this 3-night custom Nainital tour package from Delhi. Enjoy a private sedan, 3-star stays, and iconic sights like Naini Lake and Snow View Point. Perfect for a tranquil getaway!",
     "highlights": [
       "Destinations: Nainital (3N)",
@@ -5545,10 +4822,7 @@
         "day": 1,
         "title": "Delhi to Nainital – Lake Vibes",
         "description": "Start from Delhi, driving 310 km (approx. 8 hours) to Nainital. Check into a 3-star hotel by Naini Lake. Take an evening boat ride on the lake, soaking in twinkling reflections. Stroll along Mall Road for local treats before a cozy dinner.",
-        "activities": [
-          "Naini Lake",
-          "Mall Road"
-        ]
+        "activities": ["Naini Lake", "Mall Road"]
       },
       {
         "day": 2,
@@ -5565,11 +4839,7 @@
         "day": 3,
         "title": "Nainital – Nature’s Gems",
         "description": "Post-breakfast, visit Bhimtal Lake for serene boating. Explore the scenic Sattal for a nature fix. After lunch, trek to Naina Peak for breathtaking views. Return to your hotel, savoring Nainital’s tranquil charm over dinner.",
-        "activities": [
-          "Bhimtal Lake",
-          "Sattal",
-          "Naina Peak"
-        ]
+        "activities": ["Bhimtal Lake", "Sattal", "Naina Peak"]
       },
       {
         "day": 4,
@@ -5614,14 +4884,8 @@
     "location": "India",
     "category": "Hill Station, Nature, Heritage",
     "featured": false,
-    "destinationNames": [
-      "Nainital",
-      "Almora",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Nainital", "Almora", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Discover Nainital’s serene lakes and Almora’s cultural charm in this 3-night private tour from Delhi. This custom Nainital Almora tour package includes a private sedan, 3-star stays, and iconic sights like Naini Lake and Kasar Devi Temple. Perfect for a tranquil escape!",
     "highlights": [
       "Destinations: Nainital (2N), Almora (1N)",
@@ -5646,10 +4910,7 @@
         "day": 1,
         "title": "Delhi to Nainital – Lake Bliss",
         "description": "Begin from Delhi, driving 310 km (approx. 8 hours) to Nainital. Check into a 3-star hotel by Naini Lake. Enjoy an evening boat ride on the lake, soaking in twinkling reflections. Stroll along Mall Road for local treats before a cozy dinner.",
-        "activities": [
-          "Naini Lake",
-          "Mall Road"
-        ]
+        "activities": ["Naini Lake", "Mall Road"]
       },
       {
         "day": 2,
@@ -5717,15 +4978,8 @@
     "location": "India",
     "category": "Hill Station, Nature, Wildlife",
     "featured": false,
-    "destinationNames": [
-      "Nainital",
-      "Jim Corbett",
-      "Mussoorie",
-      "Uttarakhand"
-    ],
-    "relatedDestinations": [
-      3
-    ],
+    "destinationNames": ["Nainital", "Jim Corbett", "Mussoorie", "Uttarakhand"],
+    "relatedDestinations": [3],
     "description": "Dive into Nainital’s serene lakes, Jim Corbett’s thrilling wildlife, and Mussoorie’s misty hills with this 6-night private tour from Delhi. This custom Nainital Jim Corbett Mussoorie tour package includes a private sedan, 3-star stays, and iconic sights like Naini Lake, Corbett Safari, and Kempty Falls. Perfect for an epic Himalayan journey!",
     "highlights": [
       "Destinations: Nainital (2N), Jim Corbett (2N), Mussoorie (2N)",
@@ -5755,10 +5009,7 @@
         "day": 1,
         "title": "Delhi to Nainital – Lake Serenity",
         "description": "Kick off from Delhi, driving 310 km (approx. 8 hours) to Nainital. Check into a 3-star hotel by Naini Lake. Enjoy an evening boat ride on the lake, soaking in twinkling reflections. Stroll along Mall Road for local treats before a cozy dinner.",
-        "activities": [
-          "Naini Lake",
-          "Mall Road (Nainital)"
-        ]
+        "activities": ["Naini Lake", "Mall Road (Nainital)"]
       },
       {
         "day": 2,
@@ -5775,10 +5026,7 @@
         "day": 3,
         "title": "Nainital to Jim Corbett – Wildlife Adventure",
         "description": "Post-breakfast, drive 160 km to Jim Corbett National Park (approx. 5 hours). Check into a 3-star resort. Embark on an afternoon jungle safari to spot tigers and deer. Relax by the Kosi River in the evening, soaking in the wild ambiance before dinner.",
-        "activities": [
-          "Jim Corbett National Park",
-          "Kosi River"
-        ]
+        "activities": ["Jim Corbett National Park", "Kosi River"]
       },
       {
         "day": 4,
@@ -5794,9 +5042,7 @@
         "day": 5,
         "title": "Jim Corbett to Mussoorie – Misty Hills",
         "description": "Post-breakfast, drive 250 km to Mussoorie (approx. 7 hours). Check into a 3-star hotel. Stroll along Mall Road, soaking in the vibrant mountain vibe. Enjoy the twinkling skyline before a warm dinner, ready for Mussoorie’s charm.",
-        "activities": [
-          "Mall Road (Mussoorie)"
-        ]
+        "activities": ["Mall Road (Mussoorie)"]
       },
       {
         "day": 6,
@@ -5921,10 +5167,7 @@
         "day": 4,
         "title": "Gir’s Roaring Safari Thrills",
         "description": "Morning jeep safari in Gir National Park, visit Devaliya Safari Park. Lunch, then return to Vadodara for overnight stay.",
-        "activities": [
-          "Gir National Park",
-          "Devaliya Safari Park"
-        ]
+        "activities": ["Gir National Park", "Devaliya Safari Park"]
       },
       {
         "day": 5,
@@ -5972,11 +5215,7 @@
     "location": "India",
     "category": "Spiritual, Heritage, City",
     "featured": true,
-    "destinationNames": [
-      "Vadodara",
-      "Dwarka",
-      "Somnath"
-    ],
+    "destinationNames": ["Vadodara", "Dwarka", "Somnath"],
     "relatedDestinations": [20],
     "description": "Embark on a soulful Gujarat pilgrimage tour package, starting at Vadodara’s Swaminarayan Temple, then diving into Dwarka’s Krishna legacy and Somnath’s divine aura. This 4N/5D journey offers spiritual serenity, private sedan comfort, and 3-star stays. From ₹22,990 per person (twin-sharing), embrace Gujarat’s sacred vibes!",
     "highlights": [
@@ -6023,19 +5262,13 @@
         "day": 3,
         "title": "Dwarka’s Spiritual Sights",
         "description": "Visit Rukmini Temple and explore more of Dwarka’s spiritual charm. Rest in your 3-star hotel.",
-        "activities": [
-          "Rukmini Temple"
-        ]
+        "activities": ["Rukmini Temple"]
       },
       {
         "day": 4,
         "title": "Somnath’s Sacred Serenity",
         "description": "Travel to Somnath. Visit Somnath Temple, Bhalka Tirth, and Triveni Sangam. Enjoy the evening by the sea and overnight in Somnath.",
-        "activities": [
-          "Somnath Temple",
-          "Bhalka Tirth",
-          "Triveni Sangam"
-        ]
+        "activities": ["Somnath Temple", "Bhalka Tirth", "Triveni Sangam"]
       },
       {
         "day": 5,
@@ -6080,11 +5313,7 @@
     "location": "India",
     "category": "Desert, Heritage, Culture, City",
     "featured": true,
-    "destinationNames": [
-      "Ahmedabad",
-      "Rann of Kutch",
-      "Bhuj"
-    ],
+    "destinationNames": ["Ahmedabad", "Rann of Kutch", "Bhuj"],
     "relatedDestinations": [20],
     "description": "Get lost in Gujarat’s cultural kaleidoscope with this Ahmedabad and Rann of Kutch tour package. From Ahmedabad’s heritage to the Great Rann’s white desert and Bhuj’s vibrant crafts, this 5N/6D adventure is a cultural feast. Private sedan, 3-star stays, from ₹27,990 per person (twin-sharing).",
     "highlights": [
@@ -6127,11 +5356,7 @@
         "day": 2,
         "title": "Rann of Kutch’s Desert Spell",
         "description": "Drive to Rann of Kutch. Explore the Great Rann’s white desert, join Rann Utsav festivities (Nov-Feb), and visit Kala Dungar for panoramic views. Overnight in tented camps.",
-        "activities": [
-          "Great Rann of Kutch",
-          "Rann Utsav",
-          "Kala Dungar"
-        ]
+        "activities": ["Great Rann of Kutch", "Rann Utsav", "Kala Dungar"]
       },
       {
         "day": 3,
@@ -6157,11 +5382,7 @@
         "day": 5,
         "title": "Bhuj’s Royal Heritage",
         "description": "Visit Aina Mahal and Prag Mahal. Shop for Kutchi embroidery and bandhani at local markets. Overnight in Bhuj.",
-        "activities": [
-          "Aina Mahal",
-          "Prag Mahal",
-          "Dattatreya Market"
-        ]
+        "activities": ["Aina Mahal", "Prag Mahal", "Dattatreya Market"]
       },
       {
         "day": 6,
@@ -6209,12 +5430,7 @@
     "location": "India",
     "category": "Spiritual, Heritage, Beach, City",
     "featured": true,
-    "destinationNames": [
-      "Vadodara",
-      "Dwarka",
-      "Somnath",
-      "Diu"
-    ],
+    "destinationNames": ["Vadodara", "Dwarka", "Somnath", "Diu"],
     "relatedDestinations": [20],
     "description": "This Gujarat private tour package blends Vadodara’s cultural charm, Dwarka’s divine Krishna legacy, Somnath’s sacred shores, and Diu’s beachy bliss. A 6N/7D adventure with private sedan and 3-star stays, it’s perfect for soul-seekers and sun-lovers. From ₹29,990 per person (twin-sharing), dive into Gujarat’s magic!",
     "highlights": [
@@ -6268,38 +5484,25 @@
         "day": 3,
         "title": "Dwarka’s Spiritual Sights",
         "description": "Visit Rukmini Temple and explore more of Dwarka’s spiritual charm. Rest in your 3-star hotel.",
-        "activities": [
-          "Rukmini Temple"
-        ]
+        "activities": ["Rukmini Temple"]
       },
       {
         "day": 4,
         "title": "Somnath’s Sacred Shores",
         "description": "Travel to Somnath. Visit Somnath Temple, Bhalka Tirth, and Triveni Sangam. Enjoy the evening by the sea and overnight in Somnath.",
-        "activities": [
-          "Somnath Temple",
-          "Bhalka Tirth",
-          "Triveni Sangam"
-        ]
+        "activities": ["Somnath Temple", "Bhalka Tirth", "Triveni Sangam"]
       },
       {
         "day": 5,
         "title": "Diu’s Beachy Bliss",
         "description": "Drive to Diu. Explore Diu Fort, Naida Caves, and relax at Nagoa Beach. Overnight in Diu.",
-        "activities": [
-          "Diu Fort",
-          "Naida Caves",
-          "Nagoa Beach"
-        ]
+        "activities": ["Diu Fort", "Naida Caves", "Nagoa Beach"]
       },
       {
         "day": 6,
         "title": "Diu’s Coastal Charms",
         "description": "Visit Gangeshwar Temple and St. Paul’s Church. Enjoy Diu’s beaches and seafood. Overnight in Diu.",
-        "activities": [
-          "Gangeshwar Temple",
-          "St. Paul’s Church"
-        ]
+        "activities": ["Gangeshwar Temple", "St. Paul’s Church"]
       },
       {
         "day": 7,
@@ -6346,12 +5549,7 @@
     "location": "India",
     "category": "Wildlife, Heritage, Beach, City",
     "featured": true,
-    "destinationNames": [
-      "Ahmedabad",
-      "Junagadh",
-      "Gir National Park",
-      "Diu"
-    ],
+    "destinationNames": ["Ahmedabad", "Junagadh", "Gir National Park", "Diu"],
     "relatedDestinations": [20],
     "description": "This Ahmedabad and Gir safari adventure package blends heritage, wildlife, and Diu’s beaches. From Ahmedabad’s Sabarmati to Junagadh’s sacred Girnar Parvat, Gir’s thrilling lion safaris, and Diu’s coastal charm, this 5N/6D trip is pure thrill. Private sedan, 3-star stays, from ₹26,990 per person (twin-sharing).",
     "highlights": [
@@ -6392,39 +5590,25 @@
         "day": 2,
         "title": "Junagadh’s Girnar Glory",
         "description": "Drive to Junagadh. Trek or take the ropeway up Girnar Parvat, visit Uperkot Fort and Mahabat Maqbara. Enjoy a Gujarati dinner and overnight in Junagadh.",
-        "activities": [
-          "Girnar Parvat",
-          "Uperkot Fort",
-          "Mahabat Maqbara"
-        ]
+        "activities": ["Girnar Parvat", "Uperkot Fort", "Mahabat Maqbara"]
       },
       {
         "day": 3,
         "title": "Gir’s Wild Safari Thrills",
         "description": "Travel to Gir National Park. Morning jeep safari, visit Devaliya Safari Park. Lunch and overnight in Gir.",
-        "activities": [
-          "Gir National Park",
-          "Devaliya Safari Park"
-        ]
+        "activities": ["Gir National Park", "Devaliya Safari Park"]
       },
       {
         "day": 4,
         "title": "Diu’s Coastal Charm",
         "description": "Drive to Diu. Explore Diu Fort, Naida Caves, and relax at Nagoa Beach. Overnight in Diu.",
-        "activities": [
-          "Diu Fort",
-          "Naida Caves",
-          "Nagoa Beach"
-        ]
+        "activities": ["Diu Fort", "Naida Caves", "Nagoa Beach"]
       },
       {
         "day": 5,
         "title": "Diu’s Coastal Charms",
         "description": "Visit Gangeshwar Temple and St. Paul’s Church. Enjoy Diu’s beaches and seafood. Overnight in Diu.",
-        "activities": [
-          "Gangeshwar Temple",
-          "St. Paul’s Church"
-        ]
+        "activities": ["Gangeshwar Temple", "St. Paul’s Church"]
       },
       {
         "day": 6,
@@ -6472,12 +5656,7 @@
     "location": "India",
     "category": "Heritage, Culture, Desert, City",
     "featured": true,
-    "destinationNames": [
-      "Vadodara",
-      "Champaner",
-      "Ahmedabad",
-      "Rann of Kutch"
-    ],
+    "destinationNames": ["Vadodara", "Champaner", "Ahmedabad", "Rann of Kutch"],
     "relatedDestinations": [20],
     "description": "This Gujarat cultural tour package weaves Vadodara’s Swaminarayan Temple, Champaner’s UNESCO heritage, Ahmedabad’s historic charm, and Rann of Kutch’s desert magic. A 5N/6D journey with private sedan and 3-star stays, it’s ideal for culture buffs. From ₹27,990 per person (twin-sharing), explore Gujarat’s soul!",
     "highlights": [
@@ -6538,11 +5717,7 @@
         "day": 4,
         "title": "Rann of Kutch’s Desert Magic",
         "description": "Drive to Rann of Kutch. Explore the Great Rann’s white desert, join Rann Utsav festivities (Nov-Feb), and visit Kala Dungar. Overnight in tented camps.",
-        "activities": [
-          "Great Rann of Kutch",
-          "Rann Utsav",
-          "Kala Dungar"
-        ]
+        "activities": ["Great Rann of Kutch", "Rann Utsav", "Kala Dungar"]
       },
       {
         "day": 5,
@@ -6661,28 +5836,19 @@
         "day": 3,
         "title": "Dwarka’s Spiritual Sights",
         "description": "Visit Rukmini Temple and explore more of Dwarka’s spiritual charm. Rest in your 3-star hotel.",
-        "activities": [
-          "Rukmini Temple"
-        ]
+        "activities": ["Rukmini Temple"]
       },
       {
         "day": 4,
         "title": "Somnath’s Divine Embrace",
         "description": "Travel to Somnath. Visit Somnath Temple, Bhalka Tirth, and Triveni Sangam. Enjoy the evening by the sea and overnight in Somnath.",
-        "activities": [
-          "Somnath Temple",
-          "Bhalka Tirth",
-          "Triveni Sangam"
-        ]
+        "activities": ["Somnath Temple", "Bhalka Tirth", "Triveni Sangam"]
       },
       {
         "day": 5,
         "title": "Somnath’s Local Charms",
         "description": "Explore Somnath’s local markets for souvenirs. Spend an evening by the Arabian Sea. Overnight in Somnath.",
-        "activities": [
-          "Somnath Local Markets",
-          "Arabian Sea"
-        ]
+        "activities": ["Somnath Local Markets", "Arabian Sea"]
       },
       {
         "day": 6,
@@ -6699,10 +5865,7 @@
         "day": 7,
         "title": "Gir’s Lion Safari Thrill",
         "description": "Travel to Gir National Park. Morning jeep safari, visit Devaliya Safari Park. Overnight in Gir.",
-        "activities": [
-          "Gir National Park",
-          "Devaliya Safari Park"
-        ]
+        "activities": ["Gir National Park", "Devaliya Safari Park"]
       },
       {
         "day": 8,
@@ -6749,16 +5912,8 @@
     "location": "India",
     "category": "Hill Station, Coffee, Nature",
     "featured": true,
-    "destinationNames": [
-      "Coorg",
-      "Kodagu",
-      "Karnataka",
-      "Mumbai",
-      "Mangalore"
-    ],
-    "relatedDestinations": [
-      21
-    ],
+    "destinationNames": ["Coorg", "Kodagu", "Karnataka", "Mumbai", "Mangalore"],
+    "relatedDestinations": [21],
     "description": "Hop on a thrilling Coorg tour package from Mumbai, whisking you to Karnataka's misty hills! This 3N/4D journey blends Madikeri's coffee-scented trails, cascading waterfalls, and serene monasteries. With Sleeper Class train travel, a private vehicle, a Mumbai-based guide, 3-star stays, and no hidden costs, it's perfect for nature lovers. From ₹8,990 per person (twin-sharing), dive into Coorg's lush magic! Weekly departures (Wednesday-Sunday) until March 2026, limited to 14 seats.",
     "highlights": [
       "Mumbai, Mangalore, Coorg | 3N/4D",
@@ -6783,19 +5938,13 @@
         "day": 0,
         "title": "Mumbai to Mangalore by Train",
         "description": "Kick off your Coorg adventure with a late-night Sleeper Class train from Mumbai to Mangalore (~900 km, 16-18 hours). Board a comfortable sleeper class train (e.g., Matsyagandha Express) at 11:00 PM, guided by our Mumbai-based expert. Settle in for a cozy overnight journey, dreaming of Coorg's misty hills. Your guide shares tips to spark excitement for the adventure ahead. Distance: ~900 km. Time: 16-18 hours overnight. Notes: Pro Tip: Pack a light blanket for train comfort. Suggested Visual: Mumbai's bustling CST station at night. Meals & Overnight: Sleeper Class Train.",
-        "activities": [
-          "Train Journey"
-        ]
+        "activities": ["Train Journey"]
       },
       {
         "day": 1,
         "title": "Mangalore Arrival & Coorg's Warm Welcome",
         "description": "Arrive in Mangalore by 3:00 PM, greeted by your guide and private vehicle. Drive to Coorg (~150 km, 4 hours), winding through the lush Western Ghats. Check into your 3-star Madikeri hotel, then visit Raja's Seat for stunning sunset views of misty valleys (45 mins). Explore Madikeri Fort's historic ramparts, steeped in Coorg's royal past (30 mins). Visit Omkareshwara Temple's serene Shiva shrine, blending Keralite and Islamic styles (30 mins). Savor a Kodava dinner with pandi curry at your hotel, buzzing with Coorg's charm.",
-        "activities": [
-          "Raja's Seat",
-          "Madikeri Fort",
-          "Omkareshwara Temple"
-        ]
+        "activities": ["Raja's Seat", "Madikeri Fort", "Omkareshwara Temple"]
       },
       {
         "day": 2,
@@ -6813,10 +5962,7 @@
         "day": 3,
         "title": "Coorg's Serenity & Return to Mangalore",
         "description": "Post-breakfast, soak in Coorg's final delights. Visit Namdroling Monastery (Golden Temple) in Bylakuppe, a serene Tibetan settlement with golden statues (1 hour, 35 km). Explore Iruppu Falls' refreshing cascades, perfect for photos (45 mins, 80 km). Savor a local lunch (own cost), then drive to Mangalore (~150 km, 4 hours) for your late-night Sleeper Class train to Mumbai (~900 km, 16-18 hours). Your guide ensures a smooth departure, sharing Coorg's stories.",
-        "activities": [
-          "Namdroling Monastery",
-          "Iruppu Falls"
-        ]
+        "activities": ["Namdroling Monastery", "Iruppu Falls"]
       },
       {
         "day": 4,
@@ -7037,12 +6183,8 @@
     "location": "Maldives",
     "category": "Island",
     "featured": false,
-    "destinationNames": [
-      "Maafushi Island"
-    ],
-    "relatedDestinations": [
-      13
-    ],
+    "destinationNames": ["Maafushi Island"],
+    "relatedDestinations": [13],
     "description": "Escape to the turquoise wonders of the Maldives with Safari Sutra’s exclusive 2-night package at Icom Blue Maafushi Resort. Crystal-clear waters, water activities and relaxing island stays — from ₹32,990 per person (twin-sharing).",
     "highlights": [
       "Maafushi Island",
@@ -7260,10 +6402,7 @@
     "location": "India",
     "category": "Heritage",
     "featured": false,
-    "destinationNames": [
-      "Hospet",
-      "Hampi"
-    ],
+    "destinationNames": ["Hospet", "Hampi"],
     "description": "Embark on a 4-day journey from Mumbai to the ancient ruins of Hampi. Discover UNESCO-listed temples, boulder-strewn landscapes and vibrant culture — from ₹8,990 per person (twin-sharing).",
     "highlights": [
       "Hampi Ruins",
@@ -7325,10 +6464,7 @@
         "day": 4,
         "title": "Mumbai Arrival",
         "description": "Arrive in Mumbai in the morning. Trip concludes.",
-        "activities": [
-          "Arrive Mumbai",
-          "Trip ends"
-        ]
+        "activities": ["Arrive Mumbai", "Trip ends"]
       }
     ],
     "inclusions": [
@@ -7552,9 +6688,7 @@
       "Mawlynnong",
       "Dawki"
     ],
-    "relatedDestinations": [
-      23
-    ],
+    "relatedDestinations": [23],
     "description": "Dive into Meghalaya’s lush landscapes and cultural treasures with Safari Sutra’s 6-day Northeast Bliss. From Shillong’s lively markets to Cherrapunji’s waterfalls and Dawki’s crystal-clear Umngot River — a nature lover’s dream, from ₹23,990 per person (twin-sharing).",
     "highlights": [
       "Living Root Bridge trek (optional)",

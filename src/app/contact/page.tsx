@@ -1,31 +1,31 @@
 import React from "react";
-import Head from "next/head";
+import type { Metadata } from "next";
 import HeroSection from "@/components/UI/HeroSection";
 import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 import HomeHighlight from "@/components/Pages/HomePage/HomeHighlight";
 
+export const metadata: Metadata = {
+  title: "Contact Us | Safari Sutra",
+  description:
+    "Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip.",
+  keywords: [
+    "safari sutra contact",
+    "travel agency contact",
+    "travel inquiry",
+    "tour booking",
+  ],
+  openGraph: {
+    title: "Contact Us | Safari Sutra",
+    description:
+      "Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip.",
+    url: "https://thesafarisutra.com/contact",
+  },
+};
+
 const ContactPage: React.FC = () => {
   return (
     <div>
-      <Head>
-        <title>Contact Us | Safari Sutra</title>
-        <meta
-          name="description"
-          content="Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip."
-        />
-        <meta
-          name="keywords"
-          content="safari sutra contact, travel agency contact, travel inquiry, tour booking"
-        />
-        <link rel="canonical" href="https://thesafarisutra.com/contact" />
-        <meta property="og:title" content="Contact Us | Safari Sutra" />
-        <meta
-          property="og:description"
-          content="Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip."
-        />
-        <meta property="og:url" content="https://thesafarisutra.com/contact" />
-        <meta property="og:type" content="website" />
-      </Head>
+      {/* metadata exported via `export const metadata` */}
 
       <HeroSection
         title="Contact Us"

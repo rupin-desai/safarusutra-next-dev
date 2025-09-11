@@ -189,7 +189,7 @@ const AboutFAQ: React.FC = () => {
           {/* Decorative suitcase image (no window usage) */}
           <div className="absolute right-10 bottom-5 opacity-10 pointer-events-none w-44 md:w-60">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/graphics/suitcase.svg" alt="" aria-hidden="true" className="w-full h-auto" />
+            <img src="/illustrations/suitcase.svg" alt="" aria-hidden="true" className="w-full h-auto" />
           </div>
 
           <div className="relative z-10">
