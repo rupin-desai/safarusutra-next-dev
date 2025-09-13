@@ -1,0 +1,570 @@
+{
+  "mumbai": {
+    "slug": "mumbai",
+    "title": "Tours from Mumbai with Safari Sutra",
+    "subtitle": "Explore. Escape. Experience. Your Mumbai Adventure Begins!",
+    "intro": "Welcome to Safari Sutra, your premier Mumbai-based travel agency crafting unforgettable journeys from the heart of India’s bustling metropolis. From Powai’s vibrant hub, we design custom tour packages that whisk you from Mumbai’s chaotic charm to serene Gujarat pilgrimages, exotic Maldives atolls, and Himalayan wonders. Whether you’re craving a spiritual retreat to Vadodara’s temples or a thrilling safari in Gir, our 2025 packages are tailored for Mumbaikars seeking adventure, culture, and relaxation. Start your journey with us and experience travel like never before!",
+    "whyChoose": [
+      "Mumbai, the city of dreams, is your gateway to the world.",
+      "As a local travel agency headquartered in Powai, we understand the pulse of this city—its fast-paced life, diverse cultures, and wanderlust spirit.",
+      "Our tours are crafted to fit your schedule, with seamless departures from Chhatrapati Shivaji Maharaj International Airport (CSMIA).",
+      "From short weekend getaways to Goa’s beaches to week-long odysseys through Rajasthan’s deserts, we ensure every trip is a masterpiece of exploration.",
+      "Our eco-friendly ethos and personalized itineraries mean no hidden costs—just authentic experiences."
+    ],
+    "localTips": [
+      {
+        "title": "Airport Hacks",
+        "text": "Beat Mumbai’s traffic by scheduling flights outside peak hours (avoid 7-9 AM). Use CSMIA’s Terminal 2 for international tours (Maldives, Dubai) and book airport transfers with us for stress-free starts."
+      },
+      {
+        "title": "Monsoon Prep",
+        "text": "Traveling in July 2025? Pack waterproof gear for coastal tours (Goa, Andaman) as Mumbai’s rains can delay local travel."
+      },
+      {
+        "title": "Cultural Connect",
+        "text": "Visit Elephanta Caves before your Gujarat pilgrimage to spark your spiritual journey, or join Mumbai’s Ganesh Chaturthi festivities (September 2025) for a cultural prelude."
+      },
+      {
+        "title": "Foodie Tip",
+        "text": "Grab a vada pav at Aram in CST before heading to domestic tours like Ooty or Coorg—fuel up Mumbai-style!"
+      }
+    ],
+    "topTours": [
+      {
+        "id": "g1",
+        "slug": "divine-gujarat",
+        "title": "Divine Gujarat",
+        "duration": "4 Nights",
+        "price": "₹22,990",
+        "excerpt": "Explore Vadodara’s sacred temples and Dwarka’s spiritual shores. Perfect for Mumbaikars seeking devotion."
+      },
+      {
+        "id": "m1",
+        "slug": "maldives-magic",
+        "title": "Maldives Magic",
+        "duration": "2 Nights",
+        "price": "Contact for price",
+        "excerpt": "Dive into turquoise waters from Mumbai’s doorstep—ideal for a luxe escape."
+      },
+      {
+        "id": "g2",
+        "slug": "gangtok-darjeeling",
+        "title": "Gangtok & Darjeeling",
+        "duration": "5 Nights",
+        "price": "Contact for price",
+        "excerpt": "Himalayan serenity with tea estates and Kanchenjunga views—fly from CSMIA."
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "Safari Sutra turned our Gujarat pilgrimage into a divine experience! Departing from Mumbai was seamless, and the Vadodara temples were breathtaking.",
+        "author": "Priya S., Bandra"
+      },
+      {
+        "text": "As a busy professional in Navi Mumbai, I loved their quick Goa getaway. Perfectly planned, with beach vibes and zero hassle.",
+        "author": "Rohan M., Vashi"
+      }
+    ],
+    "contact": {
+      "office": "Visit our office to plan your dream tour or connect via email at hello@safarisutra.com. We’re located at:",
+      "email": "hello@safarisutra.com",
+      "cta": "Ready to escape Mumbai’s hustle? Contact Safari Sutra at our Powai office or email us to craft your 2025 journey. From Gujarat’s heritage to Andaman’s islands, your adventure starts here. Book now and let’s make travel unforgettable!"
+    }
+  },
+  "hyderabad": {
+    "slug": "hyderabad",
+    "title": "Tours from Hyderabad with Safari Sutra",
+    "subtitle": "Explore. Escape. Experience. Hyderabad’s Gateway to Adventure!",
+    "intro": "From Hyderabad’s historic Charminar to the world’s wonders, Safari Sutra, your trusted Mumbai-based travel agency, crafts extraordinary tour packages for Hyderabadi explorers. Whether you’re dreaming of Kerala’s backwaters, Rajasthan’s royal forts, or Sri Lanka’s ancient ruins, our 2025 itineraries blend culture, adventure, and serenity. Depart from Rajiv Gandhi International Airport with ease, and let us handle the details for a hassle-free journey. Start your escape from Hyderabad’s vibrant heart with Safari Sutra!",
+    "whyChoose": [
+      "Hyderabad’s blend of Nizami heritage and modern tech makes it the perfect launchpad for travel.",
+      "Our tours are designed for Hyderabadis, with flexible departures and eco-conscious itineraries that resonate with the city’s dynamic spirit.",
+      "From quick getaways to Coorg’s coffee hills to immersive Northeast expeditions, we offer personalized experiences with no hidden costs.",
+      "Our Mumbai office in Powai ensures seamless coordination, bringing world-class travel planning to Hyderabad’s doorstep."
+    ],
+    "localTips": [
+      {
+        "title": "Airport Efficiency",
+        "text": "Rajiv Gandhi Airport’s Terminal 1 is your hub for domestic (Kerala, Goa) and international (Maldives, Thailand) flights. Arrive 2 hours early to avoid queues."
+      },
+      {
+        "title": "Festivals",
+        "text": "Plan around Sankranti (January 2025) for vibrant Hyderabad vibes—pair with an Andhra Pradesh temple tour for cultural depth."
+      },
+      {
+        "title": "Packing Smart",
+        "text": "Hyderabad’s heat calls for light clothing, but pack layers for Himalayan tours (Sikkim, Ladakh) or monsoon-ready gear for coastal escapes."
+      },
+      {
+        "title": "Pre-Tour Treat",
+        "text": "Savor biryani at Paradise in Secunderabad before your journey—fuel your wanderlust with Hyderabad’s iconic flavors!"
+      }
+    ],
+    "topTours": [
+      {
+        "id": "n1",
+        "slug": "northeast-bliss",
+        "title": "Northeast Bliss",
+        "duration": "6 Days",
+        "price": "Contact for price",
+        "excerpt": "From Guwahati, explore Kaziranga’s wildlife and Assam’s tea gardens—perfect for nature lovers."
+      },
+      {
+        "id": "k1",
+        "slug": "kerala-backwaters",
+        "title": "Kerala Backwaters",
+        "duration": "4 Nights",
+        "price": "Contact for price",
+        "excerpt": "Houseboat cruises and Ayurvedic retreats, easily accessible from Hyderabad."
+      },
+      {
+        "id": "r1",
+        "slug": "rajasthan-royalty",
+        "title": "Rajasthan Royalty",
+        "duration": "5 Nights",
+        "price": "Contact for price",
+        "excerpt": "Jaipur and Udaipur’s forts and lakes—fly to history from Hyderabad."
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "Safari Sutra’s Northeast Bliss tour from Hyderabad was unforgettable! Kaziranga’s rhinos and tea gardens were magical. Perfectly planned!",
+        "author": "Ayesha K., Banjara Hills"
+      },
+      {
+        "text": "Their Kerala houseboat tour was a serene escape from Hyderabad’s hustle. Seamless flights and local guides made it special!",
+        "author": "Vikram R., Gachibowli"
+      }
+    ],
+    "contact": {
+      "office": "Powai, Mumbai (serving Hyderabad departures)",
+      "email": "hello@safarisutra.com",
+      "cta": "Ready to explore beyond Hyderabad’s Golconda Fort? Email Safari Sutra or visit our Mumbai office to plan your 2025 adventure. From Andhra’s temples to Maldives’ beaches, your journey begins here. Start your escape today!"
+    }
+  },
+  "bangalore": {
+    "slug": "bangalore",
+    "title": "Tours from Bangalore with Safari Sutra",
+    "subtitle": "Explore. Escape. Experience. Bangalore’s Passport to Wanderlust!",
+    "intro": "Safari Sutra, your trusted Mumbai-based travel agency, invites Bangaloreans to embark on unforgettable journeys from the Garden City. From Ooty’s misty hills to Bali’s tropical shores, our 2025 tour packages are crafted for tech-savvy travelers seeking culture, adventure, and serenity. Depart from Kempegowda International Airport with ease, and let us weave your dream vacation. Discover the world with Safari Sutra’s eco-friendly, personalized itineraries!",
+    "whyChoose": [
+      "Bangalore’s cosmopolitan vibe fuels a thirst for exploration.",
+      "From our Powai office, we create tours that match your city’s dynamic energy—whether it’s a quick Coorg retreat or an epic Himalayan trek.",
+      "Our sustainable travel ethos ensures authentic experiences, from Karnataka’s heritage to international wonders like Greece’s islands.",
+      "With no hidden costs, your Bangalore adventure starts with a seamless booking experience."
+    ],
+    "localTips": [
+      {
+        "title": "Airport Access",
+        "text": "Kempegowda Airport’s Terminal 2 is ideal for international flights (Thailand, Maldives). Book early for budget carriers like IndiGo."
+      },
+      {
+        "title": "Seasonal Planning",
+        "text": "Avoid Bangalore’s summer heat (April 2025) with hill station tours (Ooty, Kodaikanal) or monsoon-ready coastal trips."
+      },
+      {
+        "title": "Cultural Prep",
+        "text": "Visit Lalbagh Botanical Garden for a nature fix before Himalayan tours, or join Bangalore’s Ugadi celebrations (March 2025) for South Indian vibes."
+      },
+      {
+        "title": "Food Stop",
+        "text": "Energize with dosas at Vidyarthi Bhavan before your South India tours—perfect for Karnataka or Tamil Nadu journeys."
+      }
+    ],
+    "topTours": [
+      {
+        "id": "o1",
+        "slug": "ooty-kodaikanal",
+        "title": "Ooty-Kodaikanal",
+        "duration": "4 Nights",
+        "price": "Contact for price",
+        "excerpt": "Twin hill stations for misty serenity—perfect for Bangalore’s weekend warriors."
+      },
+      {
+        "id": "b1",
+        "slug": "bali-bliss",
+        "title": "Bali Bliss",
+        "duration": "5 Nights",
+        "price": "Contact for price",
+        "excerpt": "Temples and beaches for a tropical escape from Bangalore’s tech bustle."
+      },
+      {
+        "id": "u1",
+        "slug": "uttarakhand-adventure",
+        "title": "Uttarakhand Adventure",
+        "duration": "5 Nights",
+        "price": "Contact for price",
+        "excerpt": "Nainital and Corbett’s lakes and wildlife, accessible via direct flights."
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "Safari Sutra’s Ooty-Mysore tour was a perfect weekend escape from Bangalore. The hills and palaces were magical!",
+        "author": "Ananya P., Koramangala"
+      },
+      {
+        "text": "Their Bali package from Bangalore was pure bliss. Seamless planning and stunning beaches—already planning my next trip!",
+        "author": "Siddharth N., Whitefield"
+      }
+    ],
+    "contact": {
+      "office": "Powai, Mumbai (serving Bangalore departures)",
+      "email": "hello@safarisutra.com",
+      "cta": "Leave Bangalore’s tech grind behind with Safari Sutra. Contact us to craft your 2025 escape, from South India’s charm to global adventures. Book now for unforgettable memories!"
+    }
+  },
+  "pune": {
+    "slug": "pune",
+    "title": "Tours from Pune with Safari Sutra",
+    "subtitle": "Explore. Escape. Experience. Pune’s Path to Adventure!",
+    "intro": "Safari Sutra, your Mumbai-based travel agency, brings Pune’s adventurers closer to the world’s wonders. From the cultural pulse of Aundh to the serene hills of Lonavala, we craft 2025 tour packages that resonate with Pune’s vibrant spirit. Explore Rajasthan’s forts, Goa’s beaches, or Ladakh’s monasteries with seamless departures from Pune Airport. Let us turn your wanderlust into reality with eco-friendly, personalized journeys!",
+    "whyChoose": [
+      "Pune blends history with modernity, making it a perfect hub for travel.",
+      "From our Powai office, we design tours that suit Pune’s youthful energy and cultural depth.",
+      "Whether it’s a quick Mussoorie escape or a grand Gujarat pilgrimage, our itineraries promise no hidden costs and authentic experiences.",
+      "Fly from Pune to India’s heartlands or international gems with Safari Sutra’s expert planning."
+    ],
+    "localTips": [
+      {
+        "title": "Airport Ease",
+        "text": "Pune Airport’s compact size ensures quick check-ins. Book evening flights to avoid Lohegaon’s peak traffic."
+      },
+      {
+        "title": "Seasonal Vibes",
+        "text": "Plan around Pune’s Ganesh Chaturthi (September 2025) for cultural immersion before spiritual tours like Amarnath Yatra."
+      },
+      {
+        "title": "Packing Tips",
+        "text": "Light layers for coastal tours (Goa, Andaman); warm gear for Himalayan escapes (Sikkim, Himachal)."
+      },
+      {
+        "title": "Pre-Tour Bite",
+        "text": "Relish misal pav at Bedekar before your journey—Pune’s spicy kick to fuel your adventure!"
+      }
+    ],
+    "topTours": [
+      {
+        "id": "j1",
+        "slug": "jaipur-udaipur-bliss",
+        "title": "Jaipur-Udaipur Bliss",
+        "duration": "4 Nights",
+        "price": "Contact for price",
+        "excerpt": "Royal forts and lakes for Pune’s history buffs."
+      },
+      {
+        "id": "g1",
+        "slug": "goa-getaway",
+        "title": "Goa Getaway",
+        "duration": "3 Nights",
+        "price": "Contact for price",
+        "excerpt": "Beaches and nightlife, just a short flight from Pune."
+      },
+      {
+        "id": "l1",
+        "slug": "ladakh-adventure",
+        "title": "Ladakh Adventure",
+        "duration": "5 Nights",
+        "price": "Contact for price",
+        "excerpt": "Monasteries and Pangong Lake for high-altitude thrills."
+      }
+    ],
+    "testimonials": [
+      {
+        "text": "Safari Sutra’s Jaipur-Udaipur tour from Pune was royal bliss! Perfectly planned with vibrant forts and lakes.",
+        "author": "Neha T., Kothrud"
+      },
+      {
+        "text": "Their Goa getaway was a quick escape from Pune’s hustle. Beaches and parties—exactly what I needed!",
+        "author": "Arjun S., Baner"
+      }
+    ],
+    "contact": {
+      "office": "Powai, Mumbai (serving Pune departures)",
+      "email": "hello@safarisutra.com",
+      "cta": "Ready to explore beyond Pune’s Shaniwar Wada? Contact Safari Sutra to craft your 2025 journey, from coastal vibes to Himalayan heights. Start your adventure today!"
+    }
+  },
+  "nashik": {
+  "slug": "nashik",
+  "title": "Tours from Nashik with Safari Sutra",
+  "subtitle": "Explore. Escape. Experience. Nashik’s Spiritual Journey Begins!",
+  "intro": "From Nashik’s sacred ghats to the world’s wonders, Safari Sutra, your Mumbai-based travel agency, crafts divine tour packages for 2025. Whether it’s a Gujarat pilgrimage, Kerala’s backwaters, or Bhutan’s monasteries, we design journeys that resonate with Nashik’s spiritual soul. Depart from Ozar Airport or connect via Mumbai with our seamless planning. Let’s ignite your wanderlust with eco-friendly adventures!",
+  "whyChoose": [
+    "Nashik, the wine and pilgrimage capital, is your gateway to transformative travel.",
+    "From our Powai office, we create tours that blend Nashik’s devotion with global exploration.",
+    "From short escapes to Coorg’s hills to epic Rajasthan odysseys, our packages offer authentic experiences with no hidden costs.",
+    "Fly or drive to your dream destination with Safari Sutra’s expert touch."
+  ],
+  "localTips": [
+    {
+      "title": "Travel Hub",
+      "text": "Ozar Airport connects to Mumbai for international tours (Maldives, Thailand). Book connecting flights early for deals."
+    },
+    {
+      "title": "Kumbh Prep",
+      "text": "Nashik’s Simhastha Kumbh Mela (2027) is approaching—practice your pilgrimage with our Amarnath Yatra or Gujarat tours in 2025."
+    },
+    {
+      "title": "Packing Essentials",
+      "text": "Light cotton for coastal tours; shawls for Himalayan winters (Sikkim, Himachal)."
+    },
+    {
+      "title": "Local Flavor",
+      "text": "Savor misal at Kokni Katta before your spiritual journey—Nashik’s zest for your travel prep!"
+    }
+  ],
+  "topTours": [
+    {
+      "id": "g1",
+      "slug": "divine-gujarat",
+      "title": "Divine Gujarat",
+      "duration": "4 Nights",
+      "price": "₹22,990",
+      "excerpt": "Vadodara and Dwarka temples for Nashik’s pilgrims."
+    },
+    {
+      "id": "c1",
+      "slug": "coorg-escape",
+      "title": "Coorg Escape",
+      "duration": "3 Nights",
+      "price": "Contact for price",
+      "excerpt": "Coffee plantations and misty hills, a short hop from Nashik."
+    },
+    {
+      "id": "b1",
+      "slug": "bhutan-serenity",
+      "title": "Bhutan Serenity",
+      "duration": "5 Nights",
+      "price": "Contact for price",
+      "excerpt": "Tiger’s Nest and spiritual bliss for Nashik’s devotees."
+    }
+  ],
+  "testimonials": [
+    {
+      "text": "Safari Sutra’s Divine Gujarat tour from Nashik was a spiritual masterpiece. Dwarka’s temples felt like home!",
+      "author": "Shalini P., Panchvati"
+    },
+    {
+      "text": "Their Coorg retreat was a perfect break from Nashik’s vineyards. Misty hills and seamless planning!",
+      "author": "Rajesh M., College Road"
+    }
+  ],
+  "contact": {
+    "office": "Powai, Mumbai (serving Nashik departures)",
+    "email": "hello@safarisutra.com",
+    "cta": "Escape Nashik’s sacred shores with Safari Sutra. Contact us to plan your 2025 pilgrimage or adventure, from Gujarat to global gems. Book now for divine experiences!"
+  }
+  },
+  "nagpur": {
+  "slug": "nagpur",
+  "title": "Tours from Nagpur with Safari Sutra",
+  "subtitle": "Explore. Escape. Experience. Nagpur’s Adventure Awaits!",
+  "intro": "Safari Sutra, your Mumbai-based travel agency, invites Nagpur’s explorers to discover India and beyond in 2025. From Madhya Pradesh’s tiger reserves to Maldives’ turquoise waters, our tour packages blend wildlife, culture, and serenity. Depart from Dr. Babasaheb Ambedkar International Airport with ease, and let us craft your dream journey. Start your escape from Nagpur’s orange city with Safari Sutra!",
+  "whyChoose": [
+    "Nagpur’s central location and vibrant spirit make it ideal for travel.",
+    "From our Powai office, we design tours that capture Nagpur’s adventurous heart.",
+    "Whether it’s a quick Goa getaway or a grand Northeast expedition, our eco-friendly itineraries ensure authentic experiences with no hidden costs.",
+    "Fly from Nagpur to India’s wild heartlands or global destinations with our seamless planning."
+  ],
+  "localTips": [
+    {
+      "title": "Airport Access",
+      "text": "Nagpur’s airport is efficient; book early morning flights for domestic tours (Goa, Kerala) to avoid delays."
+    },
+    {
+      "title": "Festivals",
+      "text": "Join Nagpur’s Dussehra celebrations (October 2025) before cultural tours like Rajasthan or Odisha."
+    },
+    {
+      "title": "Packing Smart",
+      "text": "Light attire for coastal escapes; warm layers for Himalayan tours (Ladakh, Sikkim)."
+    },
+    {
+      "title": "Pre-Tour Snack",
+      "text": "Grab spicy Saoji chicken at Haldiram’s before your wildlife adventure—Nagpur’s fiery fuel!"
+    }
+  ],
+  "topTours": [
+    {
+      "id": "m1",
+      "slug": "madhya-pradesh-wildlife",
+      "title": "Madhya Pradesh Wildlife",
+      "duration": "5 Nights",
+      "price": "Contact for price",
+      "excerpt": "Kanha and Khajuraho for Nagpur’s nature lovers."
+    },
+    {
+      "id": "mm1",
+      "slug": "maldives-magic",
+      "title": "Maldives Magic",
+      "duration": "2 Nights",
+      "price": "Contact for price",
+      "excerpt": "Quick luxury escape from Nagpur’s hustle."
+    },
+    {
+      "id": "nexp1",
+      "slug": "northeast-expedition",
+      "title": "Northeast Expedition",
+      "duration": "7 Days",
+      "price": "Contact for price",
+      "excerpt": "Meghalaya and Assam’s caves and wildlife."
+    }
+  ],
+  "testimonials": [
+    {
+      "text": "Safari Sutra’s Madhya Pradesh tour from Nagpur was wild! Kanha’s tigers were a thrill—perfectly planned.",
+      "author": "Vinod K., Civil Lines"
+    },
+    {
+      "text": "Their Maldives escape was a dreamy break from Nagpur. Crystal waters and seamless flights!",
+      "author": "Priyanka S., Dhantoli"
+    }
+  ],
+  "contact": {
+    "office": "Powai, Mumbai (serving Nagpur departures)",
+    "email": "hello@safarisutra.com",
+    "cta": "Leave Nagpur’s orange groves behind with Safari Sutra. Contact us to plan your 2025 journey, from wildlife to tropical bliss. Start your escape today!"
+  }
+  },
+  "goa": {
+  "slug": "goa",
+  "title": "Tours from Goa with Safari Sutra",
+  "subtitle": "Explore. Escape. Experience. Goa’s Coastal Adventures Begin!",
+  "intro": "Born in Goa, Safari Sutra, now based in Mumbai, crafts unforgettable 2025 tour packages for Goan wanderers. From Andaman’s pristine beaches to Sikkim’s Himalayan serenity, our journeys extend Goa’s laid-back vibe to the world. Depart from Dabolim Airport with ease, and let us weave your next adventure. Discover India and beyond with Safari Sutra’s eco-friendly, personalized touch!",
+  "whyChoose": [
+    "Goa’s beaches and vibrant culture inspire our tours.",
+    "From our Powai office, we create packages that resonate with Goans’ love for relaxation and exploration.",
+    "Whether it’s a quick Dudhsagar adventure or a grand European odyssey, our itineraries blend authenticity with no hidden costs.",
+    "Fly from Goa to India’s heartlands or global gems with our seamless planning."
+  ],
+  "localTips": [
+    {
+      "title": "Airport Tips",
+      "text": "Dabolim Airport is compact; arrive 1.5 hours early for domestic flights (Kerala, Rajasthan) to breeze through."
+    },
+    {
+      "title": "Festivals",
+      "text": "Join Goa’s Carnival (February 2025) before coastal tours like Andaman or Maldives for extra festive vibes."
+    },
+    {
+      "title": "Packing Essentials",
+      "text": "Beachwear for island escapes; jackets for Himalayan tours (Sikkim, Himachal)."
+    },
+    {
+      "title": "Pre-Tour Feast",
+      "text": "Relish fish curry at Ritz Classic in Panjim before your journey—Goa’s coastal flavors to start strong!"
+    }
+  ],
+  "topTours": [
+    {
+      "id": "gd1",
+      "slug": "goa-dudhsagar-adventure",
+      "title": "Goa-Dudhsagar Adventure",
+      "duration": "3 Nights",
+      "price": "Contact for price",
+      "excerpt": "Waterfalls and beaches for Goan locals."
+    },
+    {
+      "id": "a1",
+      "slug": "andaman-serenity",
+      "title": "Andaman Serenity",
+      "duration": "5 Nights",
+      "price": "Contact for price",
+      "excerpt": "Havelock and Neil islands, a natural extension of Goa’s vibe."
+    },
+    {
+      "id": "s1",
+      "slug": "sikkim-bliss",
+      "title": "Sikkim Bliss",
+      "duration": "5 Nights",
+      "price": "Contact for price",
+      "excerpt": "Gangtok and Pelling’s monasteries for spiritual escapes."
+    }
+  ],
+  "testimonials": [
+    {
+      "text": "Safari Sutra’s Andaman tour from Goa was pure bliss! Havelock’s beaches felt like home but wilder.",
+      "author": "Maria F., Calangute"
+    },
+    {
+      "text": "Their Sikkim package was a Himalayan dream. Seamless planning from Goa’s doorstep!",
+      "author": "Rohan D., Margao"
+    }
+  ],
+  "contact": {
+    "office": "Powai, Mumbai (serving Goa departures)",
+    "email": "hello@safarisutra.com",
+    "cta": "Extend Goa’s coastal charm with Safari Sutra. Contact us to plan your 2025 adventure, from islands to mountains. Book now for unforgettable vibes!"
+  }
+  },
+  "vijayawada": {
+  "slug": "vijayawada",
+  "title": "Tours from Vijayawada with Safari Sutra",
+  "subtitle": "Explore. Escape. Experience. Vijayawada’s Journey to Wonder!",
+  "intro": "Safari Sutra, your Mumbai-based travel agency, brings Vijayawada’s travelers closer to India’s and the world’s treasures in 2025. From Andhra’s Tirupati temples to Thailand’s vibrant streets, our tour packages blend spirituality and adventure. Depart from Vijayawada Airport with ease, and let us craft your dream escape. Discover the world with Safari Sutra’s eco-friendly, personalized journeys!",
+  "whyChoose": [
+    "Vijayawada’s Krishna River ghats and cultural depth inspire our tours.",
+    "From our Powai office, we design packages for Vijayawada’s devotees and explorers, offering seamless trips to Gujarat’s pilgrimages, Kerala’s backwaters, or international gems like Bali.",
+    "Our sustainable itineraries ensure authentic experiences with no hidden costs, perfect for Andhra’s travelers."
+  ],
+  "localTips": [
+    {
+      "title": "Airport Access",
+      "text": "Vijayawada Airport connects easily to domestic hubs (Hyderabad, Bangalore) for tours like Ooty or Northeast. Book early for deals."
+    },
+    {
+      "title": "Festivals",
+      "text": "Join Vijayawada’s Durga Puja (October 2025) before spiritual tours like Divine Gujarat for added devotion."
+    },
+    {
+      "title": "Packing Tips",
+      "text": "Cotton attire for coastal tours (Andaman, Goa); warm layers for Himalayan escapes (Sikkim, Ladakh)."
+    },
+    {
+      "title": "Pre-Tour Treat",
+      "text": "Savor Andhra thali at Amaravati Restaurant before your journey—spicy fuel for your adventure!"
+    }
+  ],
+  "topTours": [
+    {
+      "id": "a1",
+      "slug": "andhra-pradesh-pilgrimage",
+      "title": "Andhra Pradesh Pilgrimage",
+      "duration": "3 Nights",
+      "price": "Contact for price",
+      "excerpt": "Tirupati and coastal bliss for Vijayawada’s devotees."
+    },
+    {
+      "id": "m1",
+      "slug": "maldives-magic",
+      "title": "Maldives Magic",
+      "duration": "2 Nights",
+      "price": "Contact for price",
+      "excerpt": "Overwater bungalows, accessible via Hyderabad or Bangalore."
+    },
+    {
+      "id": "k1",
+      "slug": "kerala-backwaters",
+      "title": "Kerala Backwaters",
+      "duration": "4 Nights",
+      "price": "Contact for price",
+      "excerpt": "Houseboat serenity, perfect for Andhra travelers."
+    }
+  ],
+  "testimonials": [
+    {
+      "text": "Safari Sutra’s Andhra Pradesh tour from Vijayawada was divine! Tirupati’s temples were a spiritual highlight.",
+      "author": "Lakshmi R., Bhavanipuram"
+    },
+    {
+      "text": "Their Maldives package was a quick escape from Vijayawada’s heat. Perfect beaches and planning!",
+      "author": "Krishna M., Moghalrajpuram"
+    }
+  ],
+  "contact": {
+    "office": "Powai, Mumbai (serving Vijayawada departures)",
+    "email": "hello@safarisutra.com",
+    "cta": "Leave Vijayawada’s Krishna shores with Safari Sutra. Contact us to plan your 2025 pilgrimage or tropical escape. Book now for unforgettable journeys!"
+  }
+  }
+}
