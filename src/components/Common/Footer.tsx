@@ -223,40 +223,14 @@ const Footer = () => {
             <h3 className="text-white font-medium mb-2 md:mb-4 text-base md:text-lg footer-heading">
               Quick Links
             </h3>
-            {/* Mobile: Row with wrapping, Desktop: Grid */}
-            <div className="flex flex-wrap justify-center gap-3 md:hidden">
-              <Link href="/" className="text-white text-sm hover:underline whitespace-nowrap">
-                Home
-              </Link>
-              <span className="text-white text-sm">•</span>
-              <Link href="/about/" className="text-white text-sm hover:underline whitespace-nowrap">
-                About
-              </Link>
-              <span className="text-white text-sm">•</span>
-              <Link href="/destination/" className="text-white text-sm hover:underline whitespace-nowrap">
-                Destinations
-              </Link>
-              <span className="text-white text-sm">•</span>
-              <Link href="/tour/" className="text-white text-sm hover:underline whitespace-nowrap">
-                Tours
-              </Link>
-              <Link href="/fixed-departures/" className="text-white text-sm hover:underline whitespace-nowrap">
-                Fixed Departures
-              </Link>
-              <span className="text-white text-sm">•</span>
-              <Link href="/hire/" className="text-white text-sm hover:underline whitespace-nowrap">
-                Hire
-              </Link>
-            </div>
-
-            {/* Desktop links - 2 columns grid - updated with Fixed Departures + Tours (removed B2B) */}
-            <div className="hidden md:grid grid-cols-2 gap-x-6 gap-y-2">
-              <Link href="/" className="text-white hover:underline whitespace-nowrap">Home</Link>
-              <Link href="/about/" className="text-white hover:underline whitespace-nowrap">About</Link>
-              <Link href="/destination/" className="text-white hover:underline whitespace-nowrap">Destinations</Link>
-              <Link href="/fixed-departures/" className="text-white hover:underline whitespace-nowrap">Fixed Departures</Link>
-              <Link href="/tour/" className="text-white hover:underline whitespace-nowrap">Tours</Link>
-              <Link href="/hire/" className="text-white hover:underline whitespace-nowrap">Hire</Link>
+            {/* Single-column Quick Links (centered on mobile, left-aligned on desktop) */}
+            <div className="flex flex-col items-center md:items-start space-y-2">
+              <Link href="/" className="text-white  hover:underline whitespace-nowrap">Home</Link>
+              <Link href="/about/" className="text-white  hover:underline whitespace-nowrap">About</Link>
+              <Link href="/destination/" className="text-white  hover:underline whitespace-nowrap">Destinations</Link>
+              <Link href="/fixed-departures/" className="text-white  hover:underline whitespace-nowrap">Fixed Departures</Link>
+              <Link href="/tour/" className="text-white  hover:underline whitespace-nowrap">Tours</Link>
+              <Link href="/hire/" className="text-white  hover:underline whitespace-nowrap">Hire</Link>
             </div>
           </motion.div>
 
@@ -288,6 +262,50 @@ const Footer = () => {
               <Link href="/privacy-policy/" className="text-white hover:underline whitespace-nowrap">Privacy Policy</Link>
               <Link href="/terms-and-conditions/" className="text-white hover:underline whitespace-nowrap">Terms & Conditions</Link>
               <Link href="/cancellation-policy/" className="text-white hover:underline whitespace-nowrap">Cancellation Policy</Link>
+            </div>
+          </motion.div>
+
+          {/* Tours links section - lists all "tours-from" city pages */}
+          <motion.div
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={companyLinksVariants}
+            className="flex flex-col items-center md:items-start"
+          >
+            <h3 className="text-white font-medium mb-2 md:mb-4 text-base md:text-lg footer-heading">
+              Tours
+            </h3>
+            {/* Mobile: compact city chips */}
+            <div className="flex flex-wrap justify-center items-center gap-2 md:hidden">
+              <span className="text-white text-sm font-medium">Tours from :</span>
+              <Link href="/tours-from-mumbai/" className="text-white text-sm hover:underline whitespace-nowrap">Mumbai</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-hyderabad/" className="text-white text-sm hover:underline whitespace-nowrap">Hyderabad</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-bangalore/" className="text-white text-sm hover:underline whitespace-nowrap">Bangalore</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-pune/" className="text-white text-sm hover:underline whitespace-nowrap">Pune</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-nashik/" className="text-white text-sm hover:underline whitespace-nowrap">Nashik</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-nagpur/" className="text-white text-sm hover:underline whitespace-nowrap">Nagpur</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-goa/" className="text-white text-sm hover:underline whitespace-nowrap">Goa</Link>
+              <span className="text-white text-sm">•</span>
+              <Link href="/tours-from-vijayawada/" className="text-white text-sm hover:underline whitespace-nowrap">Vijayawada</Link>
+            </div>
+
+            {/* Desktop: full list */}
+            <div className="hidden md:flex flex-col space-y-2">
+              <Link href="/tours-from-mumbai/" className="text-white hover:underline whitespace-nowrap">Tours from Mumbai</Link>
+              <Link href="/tours-from-hyderabad/" className="text-white hover:underline whitespace-nowrap">Tours from Hyderabad</Link>
+              <Link href="/tours-from-bangalore/" className="text-white hover:underline whitespace-nowrap">Tours from Bangalore</Link>
+              <Link href="/tours-from-pune/" className="text-white hover:underline whitespace-nowrap">Tours from Pune</Link>
+              <Link href="/tours-from-nashik/" className="text-white hover:underline whitespace-nowrap">Tours from Nashik</Link>
+              <Link href="/tours-from-nagpur/" className="text-white hover:underline whitespace-nowrap">Tours from Nagpur</Link>
+              <Link href="/tours-from-goa/" className="text-white hover:underline whitespace-nowrap">Tours from Goa</Link>
+              <Link href="/tours-from-vijayawada/" className="text-white hover:underline whitespace-nowrap">Tours from Vijayawada</Link>
             </div>
           </motion.div>
 
