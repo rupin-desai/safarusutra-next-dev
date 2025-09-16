@@ -2,8 +2,10 @@
   "mumbai": {
     "slug": "mumbai",
     "title": "Tours from Mumbai with Safari Sutra",
+    "heroimg":"https://images.unsplash.com/photo-1595658658481-d53d3f999875?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8bXVtYmFpfGVufDB8fDB8fHww",
     "subtitle": "Explore. Escape. Experience. Your Mumbai Adventure Begins!",
     "intro": "Welcome to Safari Sutra, your premier Mumbai-based travel agency crafting unforgettable journeys from the heart of India’s bustling metropolis. From Powai’s vibrant hub, we design custom tour packages that whisk you from Mumbai’s chaotic charm to serene Gujarat pilgrimages, exotic Maldives atolls, and Himalayan wonders. Whether you’re craving a spiritual retreat to Vadodara’s temples or a thrilling safari in Gir, our 2025 packages are tailored for Mumbaikars seeking adventure, culture, and relaxation. Start your journey with us and experience travel like never before!",
+    "introimg":"https://images.unsplash.com/photo-1570168007204-dfb528c6958f?fm=jpg&q=90&w=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fG11bWJhaXxlbnwwfHwwfHx8MA%3D%3D",
     "whyChoose": [
       "Mumbai, the city of dreams, is your gateway to the world.",
       "As a local travel agency headquartered in Powai, we understand the pulse of this city—its fast-paced life, diverse cultures, and wanderlust spirit.",
@@ -11,6 +13,7 @@
       "From short weekend getaways to Goa’s beaches to week-long odysseys through Rajasthan’s deserts, we ensure every trip is a masterpiece of exploration.",
       "Our eco-friendly ethos and personalized itineraries mean no hidden costs—just authentic experiences."
     ],
+    "tipsimg":"https://images.unsplash.com/photo-1562979314-bee7453e911c?fm=jpg&q=90&w=800&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8bXVtYmFpfGVufDB8fDB8fHww",
     "localTips": [
       {
         "title": "Airport Hacks",

@@ -39,18 +39,20 @@ export default function ToursFromContact({ contact }: { contact: Contact }) {
     const parts = text.split(new RegExp(`(${escapeRegExp(email)})`, "g"));
     return parts.map((part, idx) =>
       part === email ? (
-        <a key={idx} href={`mailto:${email}`} className="underline text-emerald-100" rel="noopener noreferrer">
+        <a key={idx} href={`mailto:${email}`} className="underline text-white" rel="noopener noreferrer">
           {email}
         </a>
       ) : (
-        <span key={idx}>{part}</span>
+        <span key={idx} className="text-white">
+          {part}
+        </span>
       )
     );
   };
 
   const renderOfficeWithEmail = (office?: string) => {
     if (!office) return null;
-    if (!emailFromOffice) return <span>{office}</span>;
+    if (!emailFromOffice) return <span className="text-white">{office}</span>;
 
     const parts = office.split(new RegExp(`(${escapeRegExp(emailFromOffice)})`, "g"));
     return parts.map((part, idx) =>
@@ -58,19 +60,21 @@ export default function ToursFromContact({ contact }: { contact: Contact }) {
         <a
           key={`email-${idx}`}
           href={`mailto:${emailFromOffice}`}
-          className="underline text-emerald-100"
+          className="underline text-white"
           rel="noopener noreferrer"
         >
           {emailFromOffice}
         </a>
       ) : (
-        <span key={`part-${idx}`}>{part}</span>
+        <span key={`part-${idx}`} className="text-white">
+          {part}
+        </span>
       )
     );
   };
 
   return (
-    <section className="relative w-full py-16 overflow-hidden">
+    <section className="relative w-full py-16 mb-16 overflow-hidden">
       {/* background image (if provided) + stronger black overlays for better contrast */}
       <div className="absolute inset-0 z-0">
         {bgStyle ? (
@@ -86,24 +90,23 @@ export default function ToursFromContact({ contact }: { contact: Contact }) {
 
       <div className="relative z-10 container mx-auto px-4">
         {/* center texts */}
-        <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-1 items-start text-white text-center">
+        <div className="max-w-5xl mx-auto grid gap-6 md:grid-cols-1 items-start text-center">
           <div>
             <h2
-              className="text-3xl md:text-4xl font-bold"
+              className="text-3xl md:text-4xl font-bold text-white"
               style={{ fontFamily: "var(--font-family-baloo)" }}
             >
               {heading}
             </h2>
 
-            <p className="mt-4 text-lg md:text-xl text-emerald-100/90">
+            <p className="mt-4 text-lg md:text-xl text-white">
               {renderTextWithEmail(bodyText)}
             </p>
 
-            <div className="mt-6 flex flex-col md:flex-row md:justify-center md:items-center gap-6 text-emerald-100">
+            <div className="mt-6 flex flex-col md:flex-row md:justify-center md:items-center gap-6 text-white">
               {contact.office && (
                 <div className="flex items-center gap-3">
-                  <div className="text-sm md:text-base font-medium">Office</div>
-                  <div className="text-base md:text-lg opacity-95">{renderOfficeWithEmail(contact.office)}</div>
+                  <div className="text-base md:text-lg">{renderOfficeWithEmail(contact.office)}</div>
                 </div>
               )}
             </div>

@@ -35,7 +35,8 @@ export default function ToursFromTestimonials({ items }: { items: Review[] }) {
         {items.map((r, i) => (
           <blockquote
             key={i}
-            className="relative bg-gradient-to-br from-white via-slate-50 to-white border border-gray-100 rounded-3xl p-8 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 w-full md:w-[48%] lg:w-[31%] max-w-[560px] min-h-[260px] flex flex-col"
+            className="relative bg-gradient-to-br from-white via-slate-50 to-white rounded-3xl p-8 shadow-md hover:shadow-lg transition-all transform hover:-translate-y-1 w-full md:w-[48%] lg:w-[31%] max-w-[560px] min-h-[260px] flex flex-col border-4"
+            style={{ borderColor: "#6b46c1" }}
             aria-label={`Review by ${r.author}`}
           >
             <div className="flex-1 flex flex-col gap-4">
