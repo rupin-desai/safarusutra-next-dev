@@ -1,0 +1,16 @@
+# Ensure index defaults
+DirectoryIndex index.html index.htm
+
+# Serve custom 404 page for missing resources
+ErrorDocument 404 /404.html
+
+RewriteEngine On
+RewriteBase /
+
+# Serve existing files & directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# For everything else, return a 404 (Apache will serve /404.html via ErrorDocument)
+RewriteRule ^ - [R=404,L]
