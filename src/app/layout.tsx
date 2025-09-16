@@ -77,6 +77,14 @@ fbq('track', 'PageView');`,
           }}
         />
 
+        {/* shown.io metrics script */}
+        <Script
+          id="shown-metrics"
+          src="https://shown.io/metrics/Er0Ljw7o81"
+          strategy="afterInteractive"
+          defer
+        />
+
         {/* GTM & Pixel noscript fallbacks (must be immediately under <body>) */}
         <noscript>
           <iframe

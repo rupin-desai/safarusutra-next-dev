@@ -266,6 +266,7 @@ const Footer = () => {
           </motion.div>
 
           {/* Tours links section - lists all "tours-from" city pages */}
+          
           <motion.div
             initial="initial"
             whileInView="animate"
@@ -308,6 +309,7 @@ const Footer = () => {
               <Link href="/tours-from-vijayawada/" className="text-white hover:underline whitespace-nowrap">Tours from Vijayawada</Link>
             </div>
           </motion.div>
+       
 
           {/* Contact info and social - updated with brown underline */}
           <motion.div

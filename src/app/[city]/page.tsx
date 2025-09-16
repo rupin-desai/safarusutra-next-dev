@@ -1,6 +1,12 @@
 import { notFound } from "next/navigation";
 import toursDataRaw from "../../data/ToursFromData.json";
 import HeroSection from "../../components/UI/HeroSection";
+import ToursFromIntro from "../../components/Pages/ToursFromPage/ToursFromIntro";
+import ToursFromWhyChoose from "../../components/Pages/ToursFromPage/ToursFromWhyChoose";
+import ToursFromTopTours from "../../components/Pages/ToursFromPage/ToursFromTopTours";
+import ToursFromTestimonials from "../../components/Pages/ToursFromPage/ToursFromTestimonials";
+import ToursFromContact from "../../components/Pages/ToursFromPage/ToursFromContact";
+import ToursFromTips from "../../components/Pages/ToursFromPage/ToursFromTips";
 
 type Tip = { title: string; text: string };
 type TopTour = {
@@ -69,53 +75,15 @@ export default function ToursFromCityPage({ params }: PageProps) {
   return (
     <>
       <HeroSection title={heroTitle} backgroundImage={heroBg} overlay={0.35} titleSize="text-4xl md:text-6xl" />
-      <main className="p-6 container mx-auto">
-        <h1 className="text-3xl font-bold">{data.title ?? heroTitle}</h1>
-        {data.subtitle && <p className="text-lg mt-2">{data.subtitle}</p>}
-        {data.intro && <p className="mt-4">{data.intro}</p>}
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold">Why Choose Us</h2>
-          <ul className="list-disc ml-6 mt-2">
-            {whyChoose.map((point, idx) => (
-              <li key={idx}>{point}</li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold">Top Tours</h2>
-          <div className="grid gap-4 mt-4">
-            {topTours.map((tour) => (
-              <div key={tour.id} className="p-4 border rounded-lg shadow">
-                <h3 className="text-xl font-bold">{tour.title}</h3>
-                <p>
-                  {tour.duration ?? "Duration N/A"} — {tour.price ?? "Price on request"}
-                </p>
-                {tour.excerpt && <p className="mt-1">{tour.excerpt}</p>}
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold">Testimonials</h2>
-          {testimonials.map((t, idx) => (
-            <blockquote key={idx} className="mt-4 p-4 border-l-4 bg-gray-50">
-              <p>&ldquo;{t.text}&rdquo;</p>
-              <footer className="mt-2">— {t.author}</footer>
-            </blockquote>
-          ))}
-        </section>
-
-        <section className="mt-8">
-          <h2 className="text-2xl font-semibold">Contact Us</h2>
-          {contact.cta && <p className="mt-2">{contact.cta}</p>}
-          <p className="mt-1">
-            📧 <a href={`mailto:${contact.email}`} className="text-blue-600">{contact.email}</a>
-          </p>
-        </section>
-      </main>
+      <>
+        {/* subtitle moved inside Intro component */}
+        <ToursFromIntro subtitle={data.subtitle} intro={data.intro} />
+        <ToursFromWhyChoose items={whyChoose} />
+        <ToursFromTips tips={data.localTips ?? []} />
+        <ToursFromTopTours tours={topTours} />
+        <ToursFromTestimonials items={testimonials} />
+        <ToursFromContact contact={contact} />
+      </>
     </>
   );
 }
