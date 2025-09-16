@@ -9,8 +9,26 @@ type Review = {
   date?: string; // ISO or readable string optional
 };
 
-export default function ToursFromTestimonials({ items }: { items: Review[] }) {
+export default function ToursFromTestimonials({
+  items,
+  cityName,
+}: {
+  items: Review[];
+  cityName?: string;
+}) {
   if (!items || items.length === 0) return null;
+
+  const formatCity = (c?: string) => {
+    if (!c) return "";
+    return String(c)
+      .replace(/[-_]/g, " ")
+      .split(/\s+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
+
+  const cityDisplay = formatCity(cityName);
+  const sectionTitle = cityDisplay ? `What ${cityDisplay} Locals Are Saying` : "What People Are Saying";
 
   const fmtDate = (d?: string) => {
     if (!d) return "";
@@ -29,7 +47,7 @@ export default function ToursFromTestimonials({ items }: { items: Review[] }) {
 
   return (
     <section className="mx-auto  px-4 pb-24">
-      <SectionTitle pillText="Reviews" title="What People Are Saying" icon={<Star size={16} />} centered color="#6b46c1" />
+      <SectionTitle pillText="Reviews" title={sectionTitle} icon={<Star size={16} />} centered color="#6b46c1" />
 
       <div className="mt-6 flex flex-wrap justify-center gap-6">
         {items.map((r, i) => (

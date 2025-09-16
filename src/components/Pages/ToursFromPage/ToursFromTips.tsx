@@ -5,18 +5,34 @@ import SectionTitle from "../../UI/SectionTitle";
 export default function ToursFromTips({
   tips,
   imageSrc,
+  cityName,
 }: {
   tips: { title: string; text: string }[];
   imageSrc?: string;
+  cityName?: string;
 }) {
   if (!tips || tips.length === 0) return null;
+
+  const formatCity = (c?: string) => {
+    if (!c) return "";
+    return String(c)
+      .replace(/[-_]/g, " ")
+      .split(/\s+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
+
+  const cityDisplay = formatCity(cityName);
+  const title = cityDisplay
+    ? `Local Tips for ${cityDisplay} Travelers`
+    : "Local Tips for Travelers";
 
   return (
     <section className="mx-auto max-w-[80rem] px-4 pb-24">
       <SectionTitle
         icon={<MapPin size={18} />}
         pillText="Travel Smart"
-        title="Local Tips for Travelers"
+        title={title}
         color="#F89B21"
         titleSize="medium"
         centered={true}
@@ -41,9 +57,7 @@ export default function ToursFromTips({
                   <div className="text-2xl font-semibold text-[var(--color-dark-brown)]">
                     {t.title}
                   </div>
-                  <div className="text-lg text-gray-700 mt-1">
-                    {t.text}
-                  </div>
+                  <div className="text-lg text-gray-700 mt-1">{t.text}</div>
                 </div>
               </li>
             ))}

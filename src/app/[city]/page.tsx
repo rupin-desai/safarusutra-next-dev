@@ -173,9 +173,9 @@ export default function ToursFromCityPage({ params }: PageProps) {
         <ToursFromTopTours tours={topTours} cityName={cityKey} />
         {/* pass normalized slug (cityKey) so WhyChoose can format and display the city name */}
         <ToursFromWhyChoose items={whyChoose} cityName={cityKey} />
-        {/* prefer city-specific tips image (tipsimg), fall back to contact backgroundImage */}
-        <ToursFromTips tips={data.localTips ?? []} imageSrc={data.tipsimg ?? data.contact?.backgroundImage} />
-        <ToursFromTestimonials items={testimonials} />
+        {/* prefer city-specific tips image (tipsimg), fall back to contact backgroundImage; pass slug for city name */}
+        <ToursFromTips tips={data.localTips ?? []} imageSrc={data.tipsimg ?? data.contact?.backgroundImage} cityName={cityKey} />
+        <ToursFromTestimonials items={testimonials} cityName={cityKey} />
         <ToursFromContact contact={contact} />
 
         {/* Home page highlight section (Instagram gallery) — appended at bottom */}

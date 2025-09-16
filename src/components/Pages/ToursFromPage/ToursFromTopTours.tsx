@@ -31,7 +31,7 @@ export default function ToursFromTopTours({
         pillText="Popular"
         title={title}
         color="#F89B21"
-        titleSize="medium"
+  
         centered={true}
       />
 
