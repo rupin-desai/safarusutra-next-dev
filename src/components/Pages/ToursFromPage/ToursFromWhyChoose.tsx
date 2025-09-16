@@ -22,7 +22,7 @@ export default function ToursFromWhyChoose({ items }: { items?: string[] }) {
   if (!items || items.length === 0) return null;
 
   return (
-    <section className="py-10" aria-labelledby="why-choose-section">
+    <section className="py-24" aria-labelledby="why-choose-section">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
           <SectionTitle
