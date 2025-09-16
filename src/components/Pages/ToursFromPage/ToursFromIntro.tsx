@@ -23,12 +23,28 @@ export default function ToursFromIntro({
 
   function renderMarkerDots() {
     const words = ["Explore", "Escape", "Experience"];
+    const dotColors = [
+      "var(--color-yellow-orange)",
+      "var(--color-dark-teal)",
+      "var(--color-medium-brown)",
+    ];
     return (
       <span className="inline">
         {words.map((w, i) => (
           <span key={w} className="inline">
-            <span className="text-[var(--color-dark-brown)] font-extrabold">{w}</span>
-            <span className="text-[var(--color-yellow-orange)] font-extrabold">.</span>
+            <span className="text-[var(--color-dark-brown)] font-extrabold">
+              {w}
+            </span>
+            <span
+              className="font-extrabold ml-1"
+              style={{
+                color: dotColors[i % dotColors.length],
+                marginRight:
+                  i < words.length - 1 ? 6 : 0,
+              }}
+            >
+              .
+            </span>
             {i < words.length - 1 && " "}
           </span>
         ))}
@@ -59,13 +75,15 @@ export default function ToursFromIntro({
               )}
 
               {tail && (
-                <p className="mt-4 text-lg md:text-xl text-gray-700 leading-relaxed">
-                  {tail}
+                <p className="mt-4 text-xl md:text-2xl text-gray-700 font-medium leading-relaxed">
+                  <span className="inline-block  border-l-4 border-[var(--color-yellow-orange)] pl-4 text-gray-800">
+                    {tail}
+                  </span>
                 </p>
               )}
 
               {intro && (
-                <div className="mt-6 prose max-w-none text-gray-700">
+                <div className="mt-6 prose md:text-lg text-justify max-w-none text-gray-700">
                   <p>{intro}</p>
                 </div>
               )}

@@ -78,9 +78,9 @@ export default function ToursFromCityPage({ params }: PageProps) {
       <>
         {/* subtitle moved inside Intro component */}
         <ToursFromIntro subtitle={data.subtitle} intro={data.intro} />
+        <ToursFromTopTours tours={topTours} />
         <ToursFromWhyChoose items={whyChoose} />
         <ToursFromTips tips={data.localTips ?? []} />
-        <ToursFromTopTours tours={topTours} />
         <ToursFromTestimonials items={testimonials} />
         <ToursFromContact contact={contact} />
       </>

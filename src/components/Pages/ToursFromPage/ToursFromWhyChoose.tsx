@@ -1,11 +1,22 @@
 "use client";
 import React from "react";
-import { Compass, Sparkles, Globe, Award, Leaf } from "lucide-react";
+import { Compass } from "lucide-react";
+import { motion } from "framer-motion";
 import SectionTitle from "../../UI/SectionTitle";
 import Illustration from "../../UI/Illustations";
 
-const ICONS = [Compass, Sparkles, Globe, Award, Leaf];
 const BRAND = "#066959";
+
+/* pick illustrations from your illustrations folder */
+const ILLUS = [
+  "camera",
+  "hotAirBallon",
+  "binoculars",
+  "planeIllustration",
+  "starfish",
+  "suitcase",
+  "coconutTree",
+];
 
 export default function ToursFromWhyChoose({ items }: { items?: string[] }) {
   if (!items || items.length === 0) return null;
@@ -14,26 +25,83 @@ export default function ToursFromWhyChoose({ items }: { items?: string[] }) {
     <section className="py-10" aria-labelledby="why-choose-section">
       <div className="container mx-auto px-4">
         <div className="text-center mb-8">
-          <SectionTitle pillText="Why Choose Us" title="Why Choose Safari Sutra" icon={<Compass size={16} />} color={BRAND} centered />
+          <SectionTitle
+            pillText="Why Choose Us"
+            title="Why Choose Safari Sutra"
+            icon={<Compass size={16} />}
+            color={BRAND}
+            centered
+          />
         </div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {/* use flex-wrap so last row items are centered; gap preserved */}
+        <div className="flex flex-wrap justify-center gap-8">
           {items.map((it, i) => {
-            const Icon = ICONS[i % ICONS.length];
-            const illusSize = 56;
+            const illusName = ILLUS[i % ILLUS.length];
 
             return (
-              <article key={i} className="relative bg-white border rounded-lg p-6 shadow-sm overflow-hidden">
-                <div className="flex items-start gap-4">
-                  <div className="flex-shrink-0">
-                    <div className="w-16 h-16 md:w-20 md:h-20 rounded-full flex items-center justify-center" style={{ backgroundColor: BRAND }}>
-                      <Illustration name={Icon.name?.toLowerCase() ?? "binoculars"} size={illusSize} color="#fff" />
+              <article
+                key={i}
+                className="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden flex flex-col md:flex-row w-full sm:w-[48%] lg:w-[31%]"
+                style={{ minWidth: 260 }}
+              >
+                {/* left: colored panel taking ~35% of card on md+ */}
+                <div
+                  className="hidden md:flex w-[30%] items-center justify-center p-4 rounded-l-lg"
+                  style={{ backgroundColor: BRAND }}
+                >
+                  <motion.div
+                    className="flex items-center justify-center"
+                    animate={{
+                      transform: [
+                        "translate3d(0px, -12px, 0px)",
+                        "translate3d(0px, 10px, 0px)",
+                        "translate3d(0px, -8px, 0px)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 4,
+                      repeat: Infinity,
+                      repeatType: "loop" as const,
+                      ease: "easeInOut",
+                    }}
+                    aria-hidden
+                  >
+                    <div className="w-40 h-40 flex items-center justify-center">
+                      <Illustration name={illusName} size={100} color="#fff" />
                     </div>
-                  </div>
+                  </motion.div>
+                </div>
 
-                  <div>
-                    <p className="text-gray-700 leading-relaxed">{it}</p>
-                  </div>
+                {/* mobile: circular icon above text */}
+                <div className="md:hidden flex items-center justify-center pt-6">
+                  <motion.div
+                    animate={{
+                      transform: [
+                        "translate3d(0px, -6px, 0px)",
+                        "translate3d(0px, 6px, 0px)",
+                        "translate3d(0px, -4px, 0px)",
+                      ],
+                    }}
+                    transition={{
+                      duration: 3.5,
+                      repeat: Infinity,
+                      repeatType: "loop" as const,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <div
+                      className="w-24 h-24 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: BRAND }}
+                    >
+                      <Illustration name={illusName} size={56} color="#fff" />
+                    </div>
+                  </motion.div>
+                </div>
+
+                {/* right: text area - centered */}
+                <div className="flex-1 p-6 flex items-center justify-center">
+                  <p className="text-center text-gray-700 leading-relaxed">{it}</p>
                 </div>
               </article>
             );
