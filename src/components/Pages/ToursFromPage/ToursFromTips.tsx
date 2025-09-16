@@ -12,7 +12,7 @@ export default function ToursFromTips({
   if (!tips || tips.length === 0) return null;
 
   return (
-    <section className="mx-auto max-w-6xl px-4 mt-8">
+    <section className="mx-auto max-w-[80rem] px-4 pb-24">
       <SectionTitle
         icon={<MapPin size={18} />}
         pillText="Travel Smart"
@@ -50,17 +50,17 @@ export default function ToursFromTips({
           </ul>
         </div>
 
-        {/* right: image centered vertically relative to left */}
+        {/* right: image centered vertically relative to left — increased max width */}
         <div className="hidden md:flex items-center justify-center h-full">
           {imageSrc ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={imageSrc}
               alt="Local tips illustration"
-              className="w-full max-w-md rounded-md object-cover shadow-sm max-h-[80%]"
+              className="w-full max-w-3xl rounded-md object-cover shadow-sm max-h-[80%]"
             />
           ) : (
-            <div className="w-full max-w-md h-full rounded-md bg-gray-100 border border-gray-100" />
+            <div className="w-full max-w-3xl h-full rounded-md bg-gray-100 border border-gray-100" />
           )}
         </div>
       </div>

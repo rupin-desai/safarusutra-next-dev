@@ -61,15 +61,16 @@
         "author": "Priya S., Bandra"
       },
       {
-        "text": "As a busy professional in Navi Mumbai, I loved their quick Goa getaway. Perfectly planned, with beach vibes and zero hassle.",
+        "text": "As a busy professional in Navi Mumbai, I loved their quick Goa getaway. Perfectly planned, with beach vibes and zero hassle.  Booking my next tour to Sikkim!",
         "author": "Rohan M., Vashi"
       }
     ],
-    "contact": {
-      "office": "Visit our office to plan your dream tour or connect via email at hello@safarisutra.com. We’re located at:",
-      "email": "hello@safarisutra.com",
-      "cta": "Ready to escape Mumbai’s hustle? Contact Safari Sutra at our Powai office or email us to craft your 2025 journey. From Gujarat’s heritage to Andaman’s islands, your adventure starts here. Book now and let’s make travel unforgettable!"
-    }
+   "contact": {
+    "office": "Visit our office to plan your dream tour or connect via email at hello@safarisutra.com.",
+    "title": "Book Your Mumbai Adventure Today!",
+    "text": "Ready to escape Mumbai’s hustle? Contact Safari Sutra at our Powai office or email us to craft your 2025 journey. From Gujarat’s heritage to Andaman’s islands, your adventure starts here. Book now and let’s make travel unforgettable!",
+    "backgroundImage": "https://images.unsplash.com/photo-1666843527155-14ec5f016802?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bXVtYmFpJTIwc2t5bGluZXxlbnwwfHwwfHx8MA%3D%3D"
+  }
   },
   "hyderabad": {
     "slug": "hyderabad",
