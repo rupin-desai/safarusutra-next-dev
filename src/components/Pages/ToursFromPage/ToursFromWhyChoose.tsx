@@ -21,7 +21,17 @@ const ILLUS = [
 export default function ToursFromWhyChoose({ items, cityName }: { items?: string[]; cityName?: string }) {
   if (!items || items.length === 0) return null;
 
-  const title = cityName ? `Why Choose Safari Sutra from ${cityName}` : "Why Choose Safari Sutra";
+  const formatCity = (c?: string) => {
+    if (!c) return "";
+    return String(c)
+      .replace(/[-_]/g, " ")
+      .split(/\s+/)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  };
+
+  const cityDisplay = formatCity(cityName);
+  const title = cityDisplay ? `Why Choose Safari Sutra from ${cityDisplay}` : "Why Choose Safari Sutra";
 
   return (
     <section className="py-24" aria-labelledby="why-choose-section">

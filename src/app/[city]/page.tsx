@@ -171,7 +171,8 @@ export default function ToursFromCityPage({ params }: PageProps) {
         {/* pass intro image (introimg) to ToursFromIntro */}
         <ToursFromIntro subtitle={data.subtitle} intro={data.intro} imageSrc={data.introimg} />
         <ToursFromTopTours tours={topTours} cityName={cityKey} />
-        <ToursFromWhyChoose items={whyChoose} />
+        {/* pass normalized slug (cityKey) so WhyChoose can format and display the city name */}
+        <ToursFromWhyChoose items={whyChoose} cityName={cityKey} />
         {/* prefer city-specific tips image (tipsimg), fall back to contact backgroundImage */}
         <ToursFromTips tips={data.localTips ?? []} imageSrc={data.tipsimg ?? data.contact?.backgroundImage} />
         <ToursFromTestimonials items={testimonials} />
