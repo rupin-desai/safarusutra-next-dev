@@ -41,7 +41,8 @@ type CityData = {
   contact?: Contact;
 };
 
-const toursData = toursDataRaw as Record<string, CityData>;
+// toursDataRaw comes from JSON — cast via unknown first to avoid TS structural mismatch errors.
+const toursData = toursDataRaw as unknown as Record<string, CityData>;
 
 interface PageProps {
   params: { city: string };

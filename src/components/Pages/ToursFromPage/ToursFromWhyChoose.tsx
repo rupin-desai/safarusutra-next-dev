@@ -18,8 +18,10 @@ const ILLUS = [
   "coconutTree",
 ];
 
-export default function ToursFromWhyChoose({ items }: { items?: string[] }) {
+export default function ToursFromWhyChoose({ items, cityName }: { items?: string[]; cityName?: string }) {
   if (!items || items.length === 0) return null;
+
+  const title = cityName ? `Why Choose Safari Sutra from ${cityName}` : "Why Choose Safari Sutra";
 
   return (
     <section className="py-24" aria-labelledby="why-choose-section">
@@ -27,7 +29,7 @@ export default function ToursFromWhyChoose({ items }: { items?: string[] }) {
         <div className="text-center mb-8">
           <SectionTitle
             pillText="Why Choose Us"
-            title="Why Choose Safari Sutra"
+            title={title}
             icon={<Compass size={16} />}
             color={BRAND}
             centered
