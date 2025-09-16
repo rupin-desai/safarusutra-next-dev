@@ -68,9 +68,13 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const formattedPrice =
     typeof tour.price === "number" ? `₹${tour.price.toLocaleString()}` : "₹24,999";
   const attractionCount = (Array.isArray(tour.attractions) && tour.attractions.length) || 0;
-  // show duration exactly as provided in JSON (e.g. "3N - 4D" or "3N")
   const durationDisplay = tour.duration ? String(tour.duration) : "N/A";
-  const titleSlug = createSlug((tour.title ?? String(tour.id)) as string);
+
+  // Use detailsTitle (from TourDetails.json) for the view-details slug when available.
+  // Fall back to tour.title or id if not provided.
+  const slugSource = ((tour as Record<string, unknown>).detailsTitle as string) ?? (tour.title as string) ?? String(tour.id);
+  const titleSlug = createSlug(String(slugSource));
+
   const displayTitle = extractTitle(tour.title);
 
   // Accessible ids for sr-only headings (ensure string)

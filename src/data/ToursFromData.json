@@ -31,7 +31,7 @@
     ],
     "topTours": [
       {
-        "id": "g1",
+        "id": "50",
         "slug": "divine-gujarat",
         "title": "Divine Gujarat",
         "duration": "4 Nights",
@@ -39,7 +39,7 @@
         "excerpt": "Explore Vadodara’s sacred temples and Dwarka’s spiritual shores. Perfect for Mumbaikars seeking devotion."
       },
       {
-        "id": "m1",
+        "id": "57",
         "slug": "maldives-magic",
         "title": "Maldives Magic",
         "duration": "2 Nights",
@@ -47,7 +47,7 @@
         "excerpt": "Dive into turquoise waters from Mumbai’s doorstep—ideal for a luxe escape."
       },
       {
-        "id": "g2",
+        "id": "35",
         "slug": "gangtok-darjeeling",
         "title": "Gangtok & Darjeeling",
         "duration": "5 Nights",

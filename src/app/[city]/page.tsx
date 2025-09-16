@@ -76,9 +76,8 @@ export default function ToursFromCityPage({ params }: PageProps) {
     <>
       <HeroSection title={heroTitle} backgroundImage={heroBg} overlay={0.35} titleSize="text-4xl md:text-6xl" />
       <>
-        {/* subtitle moved inside Intro component */}
-        <ToursFromIntro subtitle={data.subtitle} intro={data.intro} />
-        <ToursFromTopTours tours={topTours} />
+        <ToursFromIntro subtitle={data.subtitle} intro={data.intro} imageSrc={heroBg} />
+        <ToursFromTopTours tours={topTours} cityName={cityKey} />
         <ToursFromWhyChoose items={whyChoose} />
         <ToursFromTips tips={data.localTips ?? []} />
         <ToursFromTestimonials items={testimonials} />
