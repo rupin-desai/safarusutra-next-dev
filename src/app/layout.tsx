@@ -31,16 +31,16 @@ export default function RootLayout({
       <head>
         {/* Favicon */}
         <link rel="icon" href="/logos/logo.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/logos/logo-og.png" />
+        <link rel="apple-touch-icon" href="/logos/logo.png" />
         {/* Open Graph for WhatsApp/social previews */}
         <meta property="og:title" content="Safari Sutra | Tour & Travel Agency in India" />
         <meta property="og:description" content="Safari Sutra offers unforgettable travel experiences across India and beyond." />
-        <meta property="og:image" content="/logos/logo-og.png" />
+        <meta property="og:image" content="/logos/logo.png" />
         <meta property="og:url" content="https://thesafarisutra.com/" />
         <meta property="og:type" content="website" />
         {/* Twitter Card for completeness */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="/logos/logo-og.png" />
+        <meta name="twitter:image" content="/logos/logo.png" />
 
         {/* Google Tag Manager (head) - load before interactive */}
         <Script
