@@ -6,10 +6,23 @@
     "route": "Guwahati - Shillong - Cherrapunjee - Dawki - Shillong – Kaziranga - Guwahati",
     "duration": "6N - 7D",
     "price": 24999,
-    "image": "https://images.unsplash.com/photo-1665551839399-45421328d7da?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNoaWxsb25nfGVufDB8fDB8fHww",
+    "alt": "Sunrise over Shillong hills with mist-filled valleys",
+    "imageTitle": "Shillong hills at sunrise",
+    "srcSetWebp": "/images/Tours/shillong-hills-tour-480.webp 480w, /images/Tours/shillong-hills-tour-720.webp 720w, /images/Tours/shillong-hills-tour-1080.webp 1080w",
+    "srcFallback": "/images/Tours/shillong-hills-tour-1080.webp",
     "gallery": [
-      "https://images.unsplash.com/photo-1665551839399-45421328d7da?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNoaWxsb25nfGVufDB8fDB8fHww",
-      "https://images.unsplash.com/photo-1642175014539-23b986621dd4?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8aWl0JTIwZ3V3YWhhdGl8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/shillong-hills-tour-480.webp 480w, /images/Tours/shillong-hills-tour-720.webp 720w, /images/Tours/shillong-hills-tour-1080.webp 1080w",
+        "srcFallback": "/images/Tours/shillong-hills-tour-1080.webp",
+        "alt": "Sunrise over Shillong hills with mist-filled valleys",
+        "imageTitle": "Shillong hills at sunrise"
+      },
+      {
+        "srcSetWebp": "/images/Tours/northeast-1-tour-480.webp 480w, /images/Tours/northeast-1-tour-720.webp 720w, /images/Tours/northeast-1-tour-1080.webp 1080w",
+        "srcFallback": "/images/Tours/northeast-1-tour-1080.webp",
+        "alt": "White domed museum building with broad lawn in front at golden hour",
+        "imageTitle": "White domed museum building at golden hour"
+      }
     ],
     "location": "India",
     "category": "Nature",
@@ -162,10 +175,25 @@
     "route": "Port Blair (2N) – Havelock (2N) – Port Blair (1N)",
     "duration": "5N - 6D",
     "price": 34990,
-    "image": "https://images.unsplash.com/photo-1640618792277-b91f3199f6a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydCUyMGJsYWlyfGVufDB8fDB8fHww",
+    "alt": "Port Blair shoreline with turquoise waters with boats",
+    "imageTitle": "Port Blair coastline with boats",
+    "srcSetWebp": "/images/Tours/port-blair-tour-480.webp 480w, /images/Tours/port-blair-tour-720.webp 720w, /images/Tours/port-blair-tour-1080.webp 1080w",
+    "srcFallback": "/images/Tours/port-blair-tour-1080.webp",
     "gallery": [
-      "https://images.unsplash.com/photo-1640618792277-b91f3199f6a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydCUyMGJsYWlyfGVufDB8fDB8fHww",
-      "https://images.unsplash.com/photo-1672231862286-bdf67abb806c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGF2ZWxvY2slMjBpc2xhbmR8ZW58MHx8MHx8fDA%3D"
+      {
+        "original": "https://images.unsplash.com/photo-1640618792277-b91f3199f6a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydCUyMGJsYWlyfGVufDB8fDB8fHww",
+        "srcSetWebp": "/images/Tours/port-blair-gallery-1-480.webp 480w, /images/Tours/port-blair-gallery-1-720.webp 720w, /images/Tours/port-blair-gallery-1-1080.webp 1080w",
+        "srcFallback": "/images/Tours/port-blair-gallery-1-1080.webp",
+        "alt": "Port Blair waterfront with boats and golden-hour sky",
+        "imageTitle": "Port Blair waterfront at golden hour"
+      },
+      {
+        "original": "https://images.unsplash.com/photo-1672231862286-bdf67abb806c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGF2ZWxvY2slMjBpc2xhbmR8ZW58MHx8MHx8fDA%3D",
+        "srcSetWebp": "/images/Tours/havelock-radhanagar-480.webp 480w, /images/Tours/havelock-radhanagar-720.webp 720w, /images/Tours/havelock-radhanagar-1080.webp 1080w",
+        "srcFallback": "/images/Tours/havelock-radhanagar-1080.webp",
+        "alt": "Radhanagar Beach, Havelock Island — white sand and turquoise water",
+        "imageTitle": "Radhanagar Beach, Havelock Island"
+      }
     ],
     "location": "India",
     "category": "Island",
@@ -268,10 +296,23 @@
     "route": "Port Blair (2N) – Havelock (1N) – Neil Island (1N) – Port Blair (1N)",
     "duration": "5N - 6D",
     "price": 36490,
-    "image": "https://images.unsplash.com/photo-1672231862286-bdf67abb806c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGF2ZWxvY2slMjBpc2xhbmR8ZW58MHx8MHx8fDA%3D",
+    "alt": "Radhanagar Beach, Havelock Island — white sand and turquoise water at golden hour",
+    "imageTitle": "Radhanagar Beach, Havelock Island",
+    "srcSetWebp": "/images/Tours/havelock-neil-480.webp 480w, /images/Tours/havelock-neil-720.webp 720w, /images/Tours/havelock-neil-1080.webp 1080w",
+    "srcFallback": "/images/Tours/havelock-neil-1080.webp",
     "gallery": [
-      "https://images.unsplash.com/photo-1672231862286-bdf67abb806c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGF2ZWxvY2slMjBpc2xhbmR8ZW58MHx8MHx8fDA%3D",
-      "https://images.unsplash.com/photo-1545762374-d18079617da8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW5kYW1hbnxlbnwwfHwwfHx8MA%3D%3D"
+      {
+        "srcSetWebp": "/images/Tours/havelock-radhanagar-480.webp 480w, /images/Tours/havelock-radhanagar-720.webp 720w, /images/Tours/havelock-radhanagar-1080.webp 1080w",
+        "srcFallback": "/images/Tours/havelock-radhanagar-1080.webp",
+        "alt": "Radhanagar Beach shoreline with turquoise sea and white sand",
+        "imageTitle": "Radhanagar Beach shoreline"
+      },
+      {
+        "srcSetWebp": "/images/Tours/havelock-neil-gallery-2-480.webp 480w, /images/Tours/havelock-neil-gallery-2-720.webp 720w, /images/Tours/havelock-neil-gallery-2-1080.webp 1080w",
+        "srcFallback": "/images/Tours/havelock-neil-gallery-2-1080.webp",
+        "alt": "Neil Island coastline with rocky outcrops and calm blue water at sunset",
+        "imageTitle": "Neil Island coastline at sunset"
+      }
     ],
     "location": "India",
     "category": "Island",
@@ -385,10 +426,23 @@
     "route": "Port Blair (3N) – Havelock (2N) – Port Blair (1N)",
     "duration": "6N - 7D",
     "price": 39990,
-    "image": "https://images.unsplash.com/photo-1545762374-d18079617da8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YW5kYW1hbnxlbnwwfHwwfHx8MA%3D%3D",
+    "alt": "Neil Island coastline with rocky outcrops and calm blue water at sunset",
+    "imageTitle": "Neil Island coastline at sunset",
+    "srcSetWebp": "/images/Tours/havelock-neil-gallery-2-480.webp 480w, /images/Tours/havelock-neil-gallery-2-720.webp 720w, /images/Tours/havelock-neil-gallery-2-1080.webp 1080w",
+    "srcFallback": "/images/Tours/havelock-neil-gallery-2-1080.webp",
     "gallery": [
-      "https://images.unsplash.com/photo-1640618792277-b91f3199f6a8?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cG9ydCUyMGJsYWlyfGVufDB8fDB8fHww",
-      "https://images.unsplash.com/photo-1672231862286-bdf67abb806c?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aGF2ZWxvY2slMjBpc2xhbmR8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/port-blair-tour-480.webp 480w, /images/Tours/port-blair-tour-720.webp 720w, /images/Tours/port-blair-tour-1080.webp 1080w",
+        "srcFallback": "/images/Tours/port-blair-tour-1080.webp",
+        "alt": "Port Blair shoreline with turquoise waters with boats",
+        "imageTitle": "Port Blair coastline with boats"
+      },
+      {
+        "srcSetWebp": "/images/Tours/havelock-radhanagar-480.webp 480w, /images/Tours/havelock-radhanagar-720.webp 720w, /images/Tours/havelock-radhanagar-1080.webp 1080w",
+        "srcFallback": "/images/Tours/havelock-radhanagar-1080.webp",
+        "alt": "Radhanagar Beach, Havelock Island — white sand and turquoise water at golden hour",
+        "imageTitle": "Radhanagar Beach, Havelock Island"
+      }
     ],
     "location": "India",
     "category": "Island",
@@ -504,10 +558,23 @@
     "route": "Goa (3N)",
     "duration": "3N - 4D",
     "price": 22490,
-    "image": "https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fHww",
+    "alt": "Goa coastline with palm trees and golden sand at sunset",
+    "imageTitle": "Goa coastline at sunset",
+    "srcSetWebp": "/images/Tours/goa-getaway-480.webp 480w, /images/Tours/goa-getaway-720.webp 720w, /images/Tours/goa-getaway-1080.webp 1080w",
+    "srcFallback": "/images/Tours/goa-getaway-1080.webp",
     "gallery": [
-      "https://images.unsplash.com/photo-1541738679621-172e4575a81d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGdvYXxlbnwwfHwwfHx8MA%3D%3D",
-      "https://images.unsplash.com/photo-1682743710558-b338ba285925?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/goa-gallery-1-480.webp 480w, /images/Tours/goa-gallery-1-720.webp 720w, /images/Tours/goa-gallery-1-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-gallery-1-1080.webp",
+        "alt": "Tropical Goa beach with swaying palm trees, turquoise water, rocky shoreline, and distant beach huts under clear blue skies",
+        "imageTitle": "Scenic palm-lined beach view in Goa, India"
+      },
+      {
+        "srcSetWebp": "/images/Tours/goa-gallery-2-480.webp 480w, /images/Tours/goa-gallery-2-720.webp 720w, /images/Tours/goa-gallery-2-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-gallery-2-1080.webp",
+        "alt": "Nightlife at a Goa beach shack with glowing lights, palm decor, and sandy seating",
+        "imageTitle": "Goa beach shack nightlife with neon lights and beach seating"
+      }
     ],
     "location": "India",
     "category": "Beach",
@@ -598,10 +665,23 @@
     "route": "Goa (4N)",
     "duration": "4N - 5D",
     "price": 27990,
-    "image": "https://images.unsplash.com/photo-1541738679621-172e4575a81d?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGdvYXxlbnwwfHwwfHx8MA%3D%3D",
+    "srcSetWebp": "/images/Tours/goa-gallery-1-480.webp 480w, /images/Tours/goa-gallery-1-720.webp 720w, /images/Tours/goa-gallery-1-1080.webp 1080w",
+    "srcFallback": "/images/Tours/goa-gallery-1-1080.webp",
+    "alt": "Tropical Goa beach with swaying palm trees, turquoise water, rocky shoreline, and distant beach huts under clear blue skies",
+    "imageTitle": "Scenic palm-lined beach view in Goa, India",
     "gallery": [
-      "https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fHww",
-      "https://images.unsplash.com/photo-1682743710558-b338ba285925?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/goa-getaway-480.webp 480w, /images/Tours/goa-getaway-720.webp 720w, /images/Tours/goa-getaway-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-getaway-1080.webp",
+        "alt": "Goa coastline with palm trees and golden sand at sunset",
+        "imageTitle": "Goa coastline at sunset"
+      },
+      {
+        "srcSetWebp": "/images/Tours/goa-gallery-2-480.webp 480w, /images/Tours/goa-gallery-2-720.webp 720w, /images/Tours/goa-gallery-2-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-gallery-2-1080.webp",
+        "alt": "Nightlife at a Goa beach shack with glowing lights, palm decor, and sandy seating",
+        "imageTitle": "Goa beach shack nightlife with neon lights and beach seating"
+      }
     ],
     "location": "India",
     "category": "Beach",
@@ -701,10 +781,23 @@
     "route": "Goa (2N), Dudhsagar (1N)",
     "duration": "3N - 4D",
     "price": 24990,
-    "image": "https://www.savaari.com/blog/wp-content/uploads/2024/01/dave-hoefler-t56YSk_5SPc-unsplash-1024x682-1.webp",
+    "srcSetWebp": "/images/Tours/goa-dudhsagar-480.webp 480w, /images/Tours/goa-dudhsagar-720.webp 720w, /images/Tours/goa-dudhsagar-1080.webp 1080w",
+    "srcFallback": "/images/Tours/goa-dudhsagar-1080.webp",
+    "alt": "Dudhsagar Falls cascading through lush green forest",
+    "imageTitle": "Dudhsagar Falls",
     "gallery": [
-      "https://images.unsplash.com/photo-1682743710558-b338ba285925?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D",
-      "https://images.unsplash.com/photo-1625125959362-304b1599a37f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHVkaHNhZ2FyfGVufDB8fDB8fHww"
+      {
+        "srcSetWebp": "/images/Tours/goa-gallery-2-480.webp 480w, /images/Tours/goa-gallery-2-720.webp 720w, /images/Tours/goa-gallery-2-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-gallery-2-1080.webp",
+        "alt": "Nightlife at a Goa beach shack with glowing lights, palm decor, and sandy seating",
+        "imageTitle": "Goa beach shack nightlife with neon lights and beach seating"
+      },
+      {
+        "srcSetWebp": "/images/Tours/goa-dudhsagar-gallery-2-480.webp 480w, /images/Tours/goa-dudhsagar-gallery-2-720.webp 720w, /images/Tours/goa-dudhsagar-gallery-2-1080.webp 1080w",
+        "srcFallback": "https://images.unsplash.com/photo-1625125959362-304b1599a37f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZHVkaHNhZ2FyfGVufDB8fDB8fHww",
+        "alt": "Dudhsagar Falls approach and surrounding greenery",
+        "imageTitle": "Dudhsagar approach"
+      }
     ],
     "location": "India",
     "category": "Beach",
@@ -788,10 +881,23 @@
     "route": "Goa (3N), Dandeli (1N)",
     "duration": "4N - 5D",
     "price": 29990,
-    "image": "https://d3sftlgbtusmnv.cloudfront.net/blog/wp-content/uploads/2024/10/places-to-visit-in-dandeli-Cover-840x425.jpg",
+    "srcSetWebp": "/images/Tours/goa-dandeli-480.webp 480w, /images/Tours/goa-dandeli-720.webp 720w, /images/Tours/goa-dandeli-1080.webp 1080w",
+    "srcFallback": "/images/Tours/goa-dandeli-1080.webp",
+    "alt": "A group enjoying a guided whitewater rafting tour in Dandeli, a top adventure destination for tourists visiting Goa.",
+    "imageTitle": "Dandeli River Rafting",
     "gallery": [
-      "https://images.pexels.com/photos/18759469/pexels-photo-18759469.jpeg?cs=srgb&dl=pexels-karan-mridha-17124288-18759469.jpg&fm=jpg",
-      "https://images.unsplash.com/photo-1614082242765-7c98ca0f3df3?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hfGVufDB8fDB8fHww"
+      {
+        "srcSetWebp": "/images/Tours/goa-dandeli-gallery-1-480.webp 480w, /images/Tours/goa-dandeli-gallery-1-720.webp 720w, /images/Tours/goa-dandeli-gallery-1-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-dandeli-gallery-1-1080.webp",
+        "alt": "River scene with lush banks in Dandeli",
+        "imageTitle": "Dandeli river scene"
+      },
+      {
+        "srcSetWebp": "/images/Tours/goa-getaway-480.webp 480w, /images/Tours/goa-getaway-720.webp 720w, /images/Tours/goa-getaway-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-getaway-1080.webp",
+        "alt": "Goa coastline with palm trees and golden sand at sunset",
+        "imageTitle": "Goa coastline at sunset"
+      }
     ],
     "location": "India",
     "category": "Beach, Jungle",
@@ -890,10 +996,24 @@
     "route": "Goa (3N), Gokarna (2N)",
     "duration": "5N - 6D",
     "price": 34990,
-    "image": "https://images.unsplash.com/photo-1576440742053-8820cffa7bae?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8Z29rYXJuYXxlbnwwfHwwfHx8MA%3D%3D",
+    "image": "/images/Tours/goa-gokarna-1080.webp",
+    "srcSetWebp": "/images/Tours/goa-gokarna-480.webp 480w, /images/Tours/goa-gokarna-720.webp 720w, /images/Tours/goa-gokarna-1080.webp 1080w",
+    "srcFallback": "/images/Tours/goa-gokarna-1080.webp",
+    "alt": "Gokarna coastline with Om Beach crescent and palm-fringed shore",
+    "imageTitle": "Gokarna — Om Beach",
     "gallery": [
-      "https://images.unsplash.com/photo-1592463926267-59e4f1fee124?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTh8fGdva2FybmF8ZW58MHx8MHx8fDA%3D",
-      "https://images.unsplash.com/photo-1682743710558-b338ba285925?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/goa-gokarna-gallery-1-480.webp 480w, /images/Tours/goa-gokarna-gallery-1-720.webp 720w, /images/Tours/goa-gokarna-gallery-1-1080.webp 1080w",
+        "srcFallback": "/images/Tours/goa-gokarna-gallery-1-1080.webp",
+        "alt": "Gokarna beach with rocky shoreline and palms",
+        "imageTitle": "Gokarna rocky shore"
+      },
+      {
+        "srcSetWebp": "/images/Tours/goa-gokarna-gallery-2-480.webp 480w, /images/Tours/goa-gokarna-gallery-2-720.webp 720w, /images/Tours/goa-gokarna-gallery-2-1080.webp 1080w",
+        "srcFallback": "https://images.unsplash.com/photo-1682743710558-b338ba285925?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Z29hJTIwYmVhY2h8ZW58MHx8MHx8fDA%3D",
+        "alt": "Goa beach with soft sand and clear blue waters",
+        "imageTitle": "Goa beach daylight"
+      }
     ],
     "location": "India",
     "category": "Beach, Spiritual",
@@ -1007,10 +1127,23 @@
     "route": "Delhi – Manali (2N) – Dharamshala (2N) – Delhi",
     "duration": "4N - 5D",
     "price": 29990,
-    "image": "https://images.unsplash.com/photo-1592058879796-8378fba3961f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a3VsbHUlMjBtYW5hbGl8ZW58MHx8MHx8fDA%3D",
+    "srcSetWebp": "/images/Tours/manali-dharamshala-480.webp 480w, /images/Tours/manali-dharamshala-720.webp 720w, /images/Tours/manali-dharamshala-1080.webp 1080w",
+    "srcFallback": "/images/Tours/manali-dharamshala-1080.webp",
+    "alt": "Snowy Himalayan valley near Manali with pine forests and distant peaks",
+    "imageTitle": "Manali Himalayan valley",
     "gallery": [
-      "https://images.unsplash.com/photo-1711359940524-ed5e0ad9b89b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bWFuYWxpfGVufDB8fDB8fHww",
-      "https://images.unsplash.com/photo-1625401586082-9a9b17bc4ce5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGhhcmFtc2hhbGF8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/manali-dharamshala-gallery-1-480.webp 480w, /images/Tours/manali-dharamshala-gallery-1-720.webp 720w, /images/Tours/manali-dharamshala-gallery-1-1080.webp 1080w",
+        "srcFallback": "/images/Tours/manali-dharamshala-gallery-1-1080.webp",
+        "alt": "A person paragliding with a stunning view of the snow-capped Himalayan mountains in Manali.",
+        "imageTitle": "Paragliding in Manali"
+      },
+      {
+        "srcSetWebp": "/images/Tours/manali-dharamshala-gallery-2-480.webp 480w, /images/Tours/manali-dharamshala-gallery-2-720.webp 720w, /images/Tours/manali-dharamshala-gallery-2-1080.webp 1080w",
+        "srcFallback": "/images/Tours/manali-dharamshala-gallery-2-1080.webp",
+        "alt": "The iconic HPCA cricket stadium in Dharamshala, with its red pavilion set against the snow-capped Dhauladhar mountains.",
+        "imageTitle": "HPCA Cricket Stadium, Dharamshala"
+      }
     ],
     "location": "India",
     "category": "Mountain",
@@ -1109,10 +1242,23 @@
     "route": "Delhi – Shimla (2N) – Manali (3N) – Delhi",
     "duration": "5N - 6D",
     "price": 34990,
-    "image": "https://images.unsplash.com/photo-1597074866923-dc0589150358?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hpbWxhfGVufDB8fDB8fHww",
+    "srcSetWebp": "/images/Tours/shimla-manali-480.webp 480w, /images/Tours/shimla-manali-720.webp 720w, /images/Tours/shimla-manali-1080.webp 1080w",
+    "srcFallback": "/images/Tours/shimla-manali-1080.webp",
+    "alt": "The vibrant cityscape of Shimla, with colorful houses and hotels covering the lush Himalayan hillside under a bright blue sky.",
+    "imageTitle": "Shimla: Scenic View of the Queen of Hills",
     "gallery": [
-      "https://images.unsplash.com/photo-1609948543911-7f01ff385be5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hpbWxhfGVufDB8fDB8fHww",
-      "https://images.unsplash.com/photo-1592058879796-8378fba3961f?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8a3VsbHUlMjBtYW5hbGl8ZW58MHx8MHx8fDA%3D"
+      {
+        "srcSetWebp": "/images/Tours/shimla-manali-gallery-1-480.webp 480w, /images/Tours/shimla-manali-gallery-1-720.webp 720w, /images/Tours/shimla-manali-gallery-1-1080.webp 1080w",
+        "srcFallback": "/images/Tours/shimla-manali-gallery-1-1080.webp",
+        "alt": "The historic Christ Church in Shimla, with tourists on The Ridge and the Jakhu Temple statue on the hill behind.",
+        "imageTitle": "Christ Church on The Ridge, a Shimla Landmark"
+      },
+      {
+        "srcSetWebp": "/images/Tours/manali-dharamshala-480.webp 480w, /images/Tours/manali-dharamshala-720.webp 720w, /images/Tours/manali-dharamshala-1080.webp 1080w",
+        "srcFallback": "/images/Tours/manali-dharamshala-1080.webp",
+        "alt": "Snowy Himalayan valley near Manali with pine forests and distant peaks",
+        "imageTitle": "Manali Himalayan valley"
+      }
     ],
     "location": "India",
     "category": "Mountain",
@@ -1206,7 +1352,8 @@
       "Less than 7 days before departure: 100% of total tour cost"
     ],
     "locationType": "domestic"
-  },
+},
+
   {
     "id": 12,
     "title": "Dharamshala & Dalhousie: 5 Nights of Himalayan Charm",
