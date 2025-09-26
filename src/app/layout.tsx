@@ -30,17 +30,8 @@ export default function RootLayout({
     <html lang="en">
       <head>
         {/* Favicon */}
-        <link rel="icon" href="/logos/logo.svg" type="image/svg+xml" />
-        <link rel="apple-touch-icon" href="/logos/logo.png" />
-        {/* Open Graph for WhatsApp/social previews */}
-        <meta property="og:title" content="Safari Sutra | Tour & Travel Agency in India" />
-        <meta property="og:description" content="Safari Sutra offers unforgettable travel experiences across India and beyond." />
-        <meta property="og:image" content="/logos/logo.png" />
-        <meta property="og:url" content="https://thesafarisutra.com/" />
-        <meta property="og:type" content="website" />
-        {/* Twitter Card for completeness */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:image" content="/logos/logo.png" />
+        <link rel="icon" href="https://thesafarisutra.com/logos/logo.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="https://thesafarisutra.com/logos/logo.png" />
 
         {/* Google Tag Manager (head) - load before interactive */}
         <Script
@@ -77,8 +68,6 @@ gtag('config', 'G-H704RB7X8M');`,
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-  // Helper function to delay opening a URL until a gtag event is sent.
-  // Call it in response to an action that should navigate to a URL.
   function gtagSendEvent(url) {
     var callback = function () {
       if (typeof url === 'string') {
@@ -91,7 +80,6 @@ gtag('config', 'G-H704RB7X8M');`,
         'event_timeout': 2000
       });
     } else {
-      // fallback: navigate after timeout
       setTimeout(callback, 2000);
     }
   }`,
@@ -125,7 +113,7 @@ fbq('track', 'PageView');`,
         />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {/* GTM & Pixel noscript fallbacks (must be immediately under <body>) */}
+        {/* GTM & Pixel noscript fallbacks */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-MJGCDC3H"
@@ -144,8 +132,6 @@ fbq('track', 'PageView');`,
             alt="fb-pixel-noscript"
           />
         </noscript>
-
-        {/* mounts Mixpanel client on every page (wrapped in Suspense so next can SSR bail out) */}
         <Suspense fallback={null}>
           <MixpanelProvider />
         </Suspense>

@@ -22,6 +22,21 @@ export const metadata = {
       "Safari Sutra offers unforgettable travel experiences across India and beyond. Explore our domestic and international tour packages for your next adventure.",
     url: "https://thesafarisutra.com/",
     type: "website",
+    images: [
+      {
+        url: "https://thesafarisutra.com/logos/logo.png", // absolute URL for WhatsApp/social
+        width: 512,
+        height: 512,
+        alt: "Safari Sutra Logo",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Safari Sutra | Tour & Travel Agency in India",
+    description:
+      "Safari Sutra offers unforgettable travel experiences across India and beyond. Explore our domestic and international tour packages for your next adventure.",
+    images: ["https://thesafarisutra.com/logos/logo.png"],
   },
 };
 
