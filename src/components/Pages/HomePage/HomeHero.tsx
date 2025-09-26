@@ -15,14 +15,27 @@ import {
 import heroDataRaw from "@/data/HeroData.json";
 
 type Slide = {
+  id?: string;
   title: string;
   subtitle?: string;
-  image: string;
+  // removed `image` (we only use srcSetWebp + srcFallback)
+  alt?: string;
+  imageTitle?: string;
+  srcSetWebp?: string; // added for local webp srcset
+  srcFallback?: string; // local fallback image
   buttonText?: string;
   buttonLink?: string;
 };
 
 const heroData: Slide[] = (heroDataRaw as unknown) as Slide[];
+
+// helper to get first src from a srcset string
+const firstSrcFromSrcSet = (ss?: string): string | undefined => {
+  if (!ss) return undefined;
+  const first = ss.split(",")[0]?.trim();
+  if (!first) return undefined;
+  return first.split(/\s+/)[0];
+};
 
 // keep helper to optionally randomize client-side only
 const getRandomizedHeroData = (data: Slide[]) => {
@@ -119,9 +132,14 @@ const HomeHero: React.FC = () => {
     setClientSlides(shuffled);
 
     const preloads: HTMLImageElement[] = [];
-    shuffled.forEach((s) => {
+    // explicitly type `s` as Slide to avoid `any`
+    shuffled.forEach((s: Slide) => {
+      const srcToPreload = s.srcFallback ?? firstSrcFromSrcSet(s.srcSetWebp);
+      if (!srcToPreload) return; // nothing to preload
       const img = new Image();
-      img.src = s.image;
+      img.src = srcToPreload;
+      img.alt = s.alt ?? s.title;
+      img.title = s.imageTitle ?? s.alt ?? s.title; // use imageTitle for preload title
       preloads.push(img);
     });
     return () => {
@@ -201,10 +219,20 @@ const HomeHero: React.FC = () => {
 
       {/* ensure images are requested early */}
       <div style={{ display: "none", visibility: "hidden" }}>
-        {clientSlides.map((s, i) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img key={`pre-${i}`} src={s.image} alt="" aria-hidden="true" loading="lazy" />
-        ))}
+        {clientSlides.map((s, i) => {
+          const src = s.srcFallback ?? firstSrcFromSrcSet(s.srcSetWebp) ?? "";
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={`pre-${i}`}
+              src={src}
+              alt={s.alt ?? s.title}
+              title={s.imageTitle ?? s.alt ?? s.title} // imageTitle used here
+              aria-hidden="true"
+              loading="lazy"
+            />
+          );
+        })}
       </div>
 
       <section
@@ -230,13 +258,42 @@ const HomeHero: React.FC = () => {
           </motion.a>
         </motion.div>
 
-        {slides.map((slide, index) => (
-          <div key={`bg-${index}`} className="absolute inset-0 z-0 transition-opacity duration-500" style={{ opacity: index === currentSlide ? 1 : 0, zIndex: index === currentSlide ? 0 : -1 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={slide.image} alt={slide.title} className="w-full h-full object-cover" decoding="async" loading="lazy" />
-            <div className="absolute inset-0 bg-black/40" />
-          </div>
-        ))}
+        {slides.map((slide, index) => {
+          const builtSrcSet = slide.srcSetWebp ?? (slide.id ? `/images/Destinations/${slide.id}-480.webp 480w, /images/Destinations/${slide.id}-720.webp 720w, /images/Destinations/${slide.id}-1080.webp 1080w` : undefined);
+          const firstSrc = firstSrcFromSrcSet(builtSrcSet);
+          const fallbackSrc = slide.srcFallback ?? firstSrc ?? "";
+
+          return (
+            <div key={`bg-${index}`} className="absolute inset-0 z-0 transition-opacity duration-500" style={{ opacity: index === currentSlide ? 1 : 0, zIndex: index === currentSlide ? 0 : -1 }}>
+              {builtSrcSet ? (
+                <picture>
+                  <source type="image/webp" srcSet={builtSrcSet} sizes="100vw" />
+                  {/* fallback uses provided srcFallback or first src from srcSet */}
+                  <img
+                    src={fallbackSrc}
+                    alt={slide.alt ?? slide.title}
+                    title={slide.imageTitle ?? slide.alt ?? slide.title}
+                    className="w-full h-full object-cover"
+                    decoding="async"
+                    loading={index === currentSlide ? "eager" : "lazy"}
+                  />
+                </picture>
+              ) : (
+                // fallback if no srcSet (rare)
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={fallbackSrc}
+                  alt={slide.alt ?? slide.title}
+                  title={slide.imageTitle ?? slide.alt ?? slide.title}
+                  className="w-full h-full object-cover"
+                  decoding="async"
+                  loading={index === currentSlide ? "eager" : "lazy"}
+                />
+              )}
+              <div className="absolute inset-0 bg-black/40" />
+            </div>
+          );
+        })}
 
         <div className="container mx-auto md:-mt-10 px-5 md:px-32 relative z-10 flex flex-col justify-center h-full">
           <AnimatePresence mode="wait">
@@ -259,11 +316,11 @@ const HomeHero: React.FC = () => {
         </div>
 
         <div className="hidden md:block">
-          <button className="absolute z-20 left-4 md:left-8 top-1/2 transform -translate-y-1/2 hover:bg-white/30 text-white rounded-full p-2 transition-all" onClick={prevSlide} aria-label="Previous slide">
+          <button className="absolute cursor-pointer z-20 left-4 md:left-8 top-1/2 transform -translate-y-1/2 hover:bg-white/30 text-white rounded-full p-2 transition-all" onClick={prevSlide} aria-label="Previous slide">
             <ChevronLeft size={24} />
           </button>
 
-          <button className="absolute z-20 right-4 md:right-8 top-1/2 transform -translate-y-1/2 hover:bg-white/30 text-white rounded-full p-2 transition-all" onClick={nextSlide} aria-label="Next slide">
+          <button className="absolute cursor-pointer z-20 right-4 md:right-8 top-1/2 transform -translate-y-1/2 hover:bg-white/30 text-white rounded-full p-2 transition-all" onClick={nextSlide} aria-label="Next slide">
             <ChevronRight size={24} />
           </button>
         </div>
@@ -280,7 +337,7 @@ const HomeHero: React.FC = () => {
 
         <motion.div className="absolute bottom-0 left-1/2 w-[2000px] sm:w-[3000px] min-w-full overflow-hidden pointer-events-none select-none -mb-48 sm:-mb-72 z-10" initial="initial" animate="animate" variants={cloudAnim}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/graphics/cloud.min.svg" alt="" className="w-[3000px] min-w-full" loading="eager" />
+          <img src="/graphics/cloud.min.svg" alt="decorative cloud graphic" title="Decorative cloud graphic" className="w-[3000px] min-w-full" loading="eager" />
         </motion.div>
       </section>
     </>

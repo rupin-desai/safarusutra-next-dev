@@ -3,48 +3,66 @@
     "id": "welcome",
     "title": "EXPLORE. ESCAPE. EXPERIENCE",
     "subtitle": "Discover unforgettable experiences with Safari Sutra - where travel dreams become reality.",
-    "image": "https://images.unsplash.com/photo-1554629947-334ff61d85dc?fm=jpg&q=60&w=1000",
+    "alt": "Sunset over a safari landscape with acacia trees",
+    "imageTitle": "Sunset over safari landscape",
     "buttonText": "Start Your Journey",
-    "buttonLink": "#destinations"
+    "buttonLink": "#destinations",
+    "srcSetWebp": "/images/Common/hero-mountain-480.webp 480w, /images/Common/hero-mountain-720.webp 720w, /images/Common/hero-mountain-1080.webp 1080w",
+    "srcFallback": "/images/Common/hero-mountain-1080.webp"
   },
   {
     "id": "vietnam",
     "title": "TIMELESS VIETNAM",
     "subtitle": "Where ancient history and buzzing modern life blend over bowls of pho and stunning landscapes.",
-    "image": "https://images.unsplash.com/photo-1526139334526-f591a54b477c?fm=jpg&q=60&w=1000",
+    "alt": "Vietnamese street with lanterns and historic buildings",
+    "imageTitle": "Vietnam street with lanterns",
     "buttonText": "Explore Vietnam",
-    "buttonLink": "/destination/14/Vietnam"
+    "buttonLink": "/destination/14/Vietnam",
+    "srcSetWebp": "/images/Destinations/vietnam-street-480.webp 480w, /images/Destinations/vietnam-street-720.webp 720w, /images/Destinations/vietnam-street-1080.webp 1080w",
+    "srcFallback": "/images/Destinations/vietnam-street-1080.webp"
   },
   {
     "id": "maldives",
     "title": "PARADISE FOUND: MALDIVES",
     "subtitle": "White sands. Turquoise waters. Overwater bungalows. Enough said.",
-    "image": "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?fm=jpg&q=60&w=1000",
+    "alt": "Overwater bungalows on turquoise Maldivian sea",
+    "imageTitle": "Overwater bungalows in Maldives",
     "buttonText": "Discover Maldives",
-    "buttonLink": "/destination/13/Maldives"
+    "buttonLink": "/destination/13/Maldives",
+    "srcSetWebp": "/images/Destinations/maldives-house-480.webp 480w, /images/Destinations/maldives-house-720.webp 720w, /images/Destinations/maldives-house-1080.webp 1080w",
+    "srcFallback": "/images/Destinations/maldives-house-1080.webp"
   },
   {
     "id": "ladakh",
     "title": "MYSTICAL LADAKH",
     "subtitle": "Where rugged adventure meets serene spirituality. Buckle up—this is the roof of the world calling.",
-    "image": "https://images.unsplash.com/photo-1593118845043-359e5f628214?q=80&w=2070&auto=format&fit=crop",
+    "alt": "High-altitude Ladakh landscape with rugged mountains",
+    "imageTitle": "High-altitude Ladakh mountains",
     "buttonText": "Explore Ladakh",
-    "buttonLink": "/destination/7/Ladakh"
+    "buttonLink": "/destination/7/Ladakh",
+    "srcSetWebp": "/images/Destinations/ladakh-mountains-480.webp 480w, /images/Destinations/ladakh-mountains-720.webp 720w, /images/Destinations/ladakh-mountains-1080.webp 1080w",
+    "srcFallback": "/images/Destinations/ladakh-mountains-1080.webp"
   },
   {
     "id": "rajasthan",
     "title": "ROYAL RAJASTHAN",
     "subtitle": "Where history whispers through palace walls and desert winds carry tales of valor.",
-    "image": "https://images.pexels.com/photos/925069/pexels-photo-925069.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+    "alt": "Rajasthani palace architecture with warm golden tones",
+    "imageTitle": "Rajasthani palace architecture",
     "buttonText": "Discover Rajasthan",
-    "buttonLink": "/destination/4/Rajasthan"
+    "buttonLink": "/destination/4/Rajasthan",
+    "srcSetWebp": "/images/Destinations/rajasthan-palace-480.webp 480w, /images/Destinations/rajasthan-palace-720.webp 720w, /images/Destinations/rajasthan-palace-1080.webp 1080w",
+    "srcFallback": "/images/Destinations/rajasthan-palace-1080.webp"
   },
   {
     "id": "bali",
     "title": "ENCHANTING BALI",
     "subtitle": "The Island of Gods, where jungle retreats, surf breaks, and temple ceremonies coexist in harmony.",
-    "image": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800",
+    "alt": "Bali rice terraces and tropical landscape",
+    "imageTitle": "Bali rice terraces",
     "buttonText": "Discover Bali",
-    "buttonLink": "/destination/12/Bali"
+    "buttonLink": "/destination/12/Bali",
+    "srcSetWebp": "/images/Destinations/bali-tower-480.webp 480w, /images/Destinations/bali-tower-720.webp 720w, /images/Destinations/bali-tower-1080.webp 1080w",
+    "srcFallback": "/images/Destinations/bali-tower-1080.webp"
   }
 ]
