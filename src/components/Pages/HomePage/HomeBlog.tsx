@@ -111,7 +111,8 @@ export default function HomeBlog(): React.ReactElement {
     <section className="py-16 px-4 md:px-8 relative overflow-hidden">
       <motion.img
         src="/graphics/star2.svg"
-        alt=""
+        alt="Blog section decorative star"
+       title="Travel stories section star decoration"
         className="absolute -top-10 -right-10 w-28 h-28 z-0"
         aria-hidden="true"
         draggable={false}
@@ -226,7 +227,8 @@ export default function HomeBlog(): React.ReactElement {
 
       <motion.img
         src="/graphics/star.svg"
-        alt=""
+        alt="Decorative star for blog section"
+        title="Decorative Star"
         className="absolute -bottom-10 -left-10 w-28 h-28 z-0"
         aria-hidden="true"
         draggable={false}

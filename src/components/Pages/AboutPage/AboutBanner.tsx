@@ -29,7 +29,8 @@ const AboutBanner = () => {
       >
         <Image
           src="/graphics/star.svg"
-          alt=""
+          alt="Star for decoration"
+          title="Decorative star for about banner section"
           width={96}
           height={96}
           className="w-14 h-14 md:w-24 md:h-24"

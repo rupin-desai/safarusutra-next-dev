@@ -164,7 +164,8 @@ const HomeNewsletter: React.FC = () => {
             >
               <motion.img
                 src="/graphics/star.svg"
-                alt=""
+                alt="Star for decoration in newsletter section"
+                title="Star for decoration"
                 className="w-full h-full"
                 aria-hidden="true"
                 style={{ transformOrigin: "center" }}

@@ -185,7 +185,8 @@ const HomeIntro: React.FC<Props> = ({ featuredIds: featuredIdsProp }) => {
       <motion.div className="absolute top-0 left-0 z-10 w-[300px] h-[80px] sm:w-[260px] sm:h-[60px] md:w-[340px] md:h-[80px] lg:w-[420px] lg:h-[110px]" initial="initial" animate="animate" variants={decorativeElementsVariants}>
         <motion.img
           src="/graphics/linearrow.svg"
-          alt=""
+          alt="Travel airplane illustration"
+          title="Safari Sutra airplane flying along path"
           className="absolute top-0 md:top-10 left-[-150px] w-[800px] h-auto sm:left-[-60px] sm:w-[180px] md:left-[-80px] md:w-[240px] lg:left-[-100px] lg:w-[320px]"
           draggable={false}
           aria-hidden="true"
@@ -194,7 +195,8 @@ const HomeIntro: React.FC<Props> = ({ featuredIds: featuredIdsProp }) => {
         />
         <motion.img
           src="/graphics/plane.svg"
-          alt=""
+          alt="Curved arrow pointing to destinations"
+          title="Directional arrow graphic for featured tours"
           className="absolute top-5 md:top-10 left-[32px] w-14 h-14 sm:left-[56px] sm:w-10 sm:h-10 md:left-[80px] md:w-14 md:h-14 lg:left-[104px] lg:w-20 lg:h-20"
           draggable={false}
           aria-hidden="true"

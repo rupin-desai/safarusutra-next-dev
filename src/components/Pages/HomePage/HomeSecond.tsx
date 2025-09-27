@@ -14,7 +14,8 @@ const HomeSecond: React.FC = () => {
         <div>
           <img
             src="/graphics/bigline.svg"
-            alt=""
+            alt="Big decorative line for background aesthetics"
+            title="Background decorative line graphic"
             className={`
               absolute
               pointer-events-none

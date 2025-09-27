@@ -402,7 +402,7 @@ const ContactInfo: React.FC = () => (
     <motion.div className="hidden md:flex flex-col items-center mb-10" variants={logoVariants}>
       <div className="bg-white p-3 rounded-xl shadow-md mb-2">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logos/logo.svg" alt="SafariSutra" className="h-10 md:h-16 w-auto" />
+        <img src="/logos/logo.svg" title="Logo of Safari Sutra" alt="SafariSutra" className="h-10 md:h-16 w-auto" />
       </div>
       <p className="font-thin text-center tracking-wide">SAFARI SUTRA</p>
     </motion.div>

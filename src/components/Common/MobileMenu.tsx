@@ -113,7 +113,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({ isOpen, toggleMenu, isLegalPage
 
           <motion.div className="flex flex-col items-center mx-auto" variants={linkVariants}>
             <Link href="/" onClick={toggleMenu} className="flex flex-col items-center">
-              <Image src="/logos/logo.svg" alt="SafariSutra" className="h-16 w-16" width={64} height={64} unoptimized />
+              <Image src="/logos/logo.svg"  title="Logo of Safari Sutra" alt="SafariSutra" className="h-16 w-16" width={64} height={64} unoptimized />
               <span className="text-xs font-extralight tracking-widest mt-1 text-gray-800 text-center">SAFARI SUTRA</span>
             </Link>
           </motion.div>

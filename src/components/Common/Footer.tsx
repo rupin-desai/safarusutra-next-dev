@@ -200,6 +200,7 @@ const Footer = () => {
                 <Image
                   src="/logos/logo.svg"
                   alt="SafariSutra"
+                  title="Logo of Safari Sutra"
                   width={96}
                   height={96}
                   className="h-14 md:h-20 w-auto"

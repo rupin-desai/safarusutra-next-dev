@@ -145,7 +145,8 @@ const HomeHighlight: React.FC = () => {
             {/* Line with plane SVG */}
             <motion.img
               src="/graphics/linewithplane.svg"
-              alt=""
+              alt="Curved line with airplane trail"
+              title="Travel path with airplane trail decoration"
               className="absolute 
                         -top-70 -left-20 w-52 h-52 
                         md:-top-70 md:-left-30 md:w-72 md:h-72 

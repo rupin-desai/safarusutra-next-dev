@@ -240,7 +240,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
           {/* Logo - Left */}
           <motion.div className="flex-shrink-0" initial="initial" animate="animate" variants={logoVariants}>
             <Link href="/" className="flex flex-col items-center">
-              <Image src="/logos/logo.svg" alt="SafariSutra" width={40} height={40} unoptimized />
+              <Image src="/logos/logo.svg"  title="Logo of Safari Sutra" alt="SafariSutra" width={40} height={40} unoptimized />
               <span className={`text-xs md:text-sm font-extralight mt-1 ${textColor}`}>SAFARI SUTRA</span>
             </Link>
           </motion.div>

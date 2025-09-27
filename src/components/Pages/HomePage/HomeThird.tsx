@@ -34,7 +34,8 @@ const HomeThird: React.FC = () => {
       <div className="absolute inset-0 -z-10 overflow-hidden">
         <motion.img
           src="/graphics/biggreenline.svg"
-          alt=""
+          alt="Big decorative line for background aesthetics"
+          title="Background green decorative line"
           className="absolute w-[330%] md:w-[120%] top-[170px] md:top-[50px] h-auto object-cover pointer-events-none select-none -left-[100px]"
           aria-hidden="true"
           draggable={false}

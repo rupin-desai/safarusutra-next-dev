@@ -235,7 +235,8 @@ const StyleCard = memo(function StyleCard({ card, idx }: { card: StyleCardData; 
           {isThirdCard && (
             <motion.img
               src="/graphics/greenplane.svg"
-              alt=""
+              alt="Green travel plane illustration"
+              title="Safari Sutra green plane accent"
               className="absolute -bottom-8 -right-8 w-12 h-12 z-10"
               aria-hidden="true"
               draggable={false}
@@ -294,7 +295,8 @@ const StyleCard = memo(function StyleCard({ card, idx }: { card: StyleCardData; 
             {isThirdCard && (
               <motion.img
                 src="/graphics/greenplane.svg"
-                alt=""
+                alt="Green travel plane illustration"
+                title="Safari Sutra green plane accent"
                 className="absolute md:-bottom-10 md:-right-10 lg:-bottom-16 lg:-right-18 md:w-20 md:h-20 lg:w-32 lg:h-32 z-10"
                 aria-hidden="true"
                 draggable={false}
@@ -381,7 +383,8 @@ const HomeStyle = () => {
       <motion.div initial="initial" animate="animate" variants={star1Variants} className="absolute top-6 right-4 md:right-12 lg:right-20">
         <motion.img
           src="/graphics/star.svg"
-          alt=""
+          alt="Decorative star for home style section"
+          title='Decorative star graphic'
           className="w-12 h-12 md:w-16 md:h-16 z-10"
           aria-hidden="true"
           draggable={false}
@@ -416,7 +419,8 @@ const HomeStyle = () => {
       <motion.div initial="initial" animate="animate" variants={star2Variants} className="absolute bottom-32 md:bottom-40 left-4 md:left-12 lg:left-28">
         <motion.img
           src="/graphics/star2.svg"
-          alt=""
+          alt="Decorative star graphic"
+          title="Animated decorative star accent"
           className="w-10 h-10 md:w-14 md:h-14 z-10"
           aria-hidden="true"
           draggable={false}
