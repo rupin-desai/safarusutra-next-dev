@@ -13,8 +13,17 @@ type Tour = {
   id?: string | number;
   title?: string;
   slug?: string;
+  
+  // New responsive image properties
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+  
+  // Legacy image properties for backward compatibility
   heroImage?: string;
   image?: string;
+  
   metaDescription?: string;
   description?: string;
   caption?: string;
@@ -65,8 +74,17 @@ const normalizeEntry = (entry: unknown): Tour => {
     id,
     title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
     slug: typeof e.slug === "string" ? e.slug : undefined,
+    
+    // New responsive image properties
+    srcSetWebp: typeof e.srcSetWebp === "string" ? e.srcSetWebp : undefined,
+    srcFallback: typeof e.srcFallback === "string" ? e.srcFallback : undefined,
+    alt: typeof e.alt === "string" ? e.alt : undefined,
+    imageTitle: typeof e.imageTitle === "string" ? e.imageTitle : undefined,
+    
+    // Legacy image properties
     heroImage: typeof e.heroImage === "string" ? e.heroImage : undefined,
     image: typeof e.image === "string" ? e.image : undefined,
+    
     metaDescription: typeof e.metaDescription === "string" ? e.metaDescription : undefined,
     description: typeof e.description === "string" ? e.description : undefined,
     caption: typeof e.caption === "string" ? e.caption : undefined,
@@ -160,7 +178,8 @@ export async function generateMetadata({
     (typeof tour.description === "string" && tour.description) ||
     (typeof tour.caption === "string" && tour.caption) ||
     `Policy details for ${tour.title} — cancellations, refunds and booking terms.`;
-  const image = String(tour.heroImage || tour.image || "/logos/logo.svg");
+  // Use new responsive properties first, then fallback to legacy
+  const image = tour.srcFallback || String(tour.heroImage || tour.image || "/logos/logo.svg");
   const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/policy`;
 
   return {
@@ -171,7 +190,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      images: image ? [{ url: image, alt: tour.title ?? "Safari Sutra" }] : undefined,
+      images: image ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }] : undefined,
     },
     twitter: {
       title,
