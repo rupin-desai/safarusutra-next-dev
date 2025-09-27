@@ -23,8 +23,6 @@ interface FAQItemProps {
 const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick, idx }) => (
   <div
     className="border-b border-white/10 py-5"
-    itemScope
-    itemType="https://schema.org/Question"
     aria-labelledby={`faq-q-${idx}`}
   >
     <button
@@ -34,7 +32,7 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick, id
       aria-expanded={isOpen}
       aria-controls={`faq-a-${idx}`}
     >
-      <h3 className="text-lg font-medium text-white" itemProp="name">
+      <h3 className="text-lg font-medium text-white">
         {question}
       </h3>
       <span className="ml-4 flex-shrink-0 cursor-pointer">
@@ -54,11 +52,8 @@ const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick, id
       animate={{ height: isOpen ? "auto" : 0, opacity: isOpen ? 1 : 0.85 }}
       transition={{ type: "spring", stiffness: 260, damping: 25 }}
       className="overflow-hidden"
-      itemProp="acceptedAnswer"
-      itemScope
-      itemType="https://schema.org/Answer"
     >
-      <div className="pt-3 pb-1" itemProp="text">
+      <div className="pt-3 pb-1">
         <p className="text-base text-white/90">{answer}</p>
       </div>
     </motion.div>
@@ -95,23 +90,23 @@ const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle
 
   const showLess = () => setVisibleCount(Math.min(PAGE_SIZE, items.length));
 
+  // Fixed JSON-LD structure - removed name field and microdata conflicts
   const jsonLd = useMemo(() => {
     if (!items.length) return null;
-    const mainEntity = items.map((it) => ({
-      "@type": "Question",
-      name: it.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: it.answer,
-      },
-    }));
+    
     return {
       "@context": "https://schema.org",
       "@type": "FAQPage",
-      mainEntity,
-      name: `${destinationTitle} FAQ - Safari Sutra`,
+      mainEntity: items.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: item.answer,
+        },
+      })),
     };
-  }, [items, destinationTitle]);
+  }, [items]);
 
   // compute visibleItems as a hook before any early returns so hook order remains stable
   const visibleItems = useMemo(() => items.slice(0, visibleCount), [items, visibleCount]);
@@ -123,10 +118,8 @@ const DestinationFAQs: React.FC<DestinationFAQsProps> = ({ faq, destinationTitle
       id="destination-faq"
       aria-labelledby="destination-faq-title"
       className="py-12 px-4"
-      itemScope
-      itemType="https://schema.org/FAQPage"
     >
-      {/* JSON-LD for SEO */}
+      {/* Fixed JSON-LD for SEO - removed conflicting microdata */}
       {jsonLd && (
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       )}
