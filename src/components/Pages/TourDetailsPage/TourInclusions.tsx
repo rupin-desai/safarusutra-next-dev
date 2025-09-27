@@ -1,7 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { CheckCircle } from "lucide-react";
-import type { Tour as BaseTour } from "@/components/UI/TourCard";
+import type { Tour as BaseTour, GalleryItem } from "@/components/UI/TourCard";
 
 const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
   const inclusions: string[] = Array.isArray(tour?.inclusions)
@@ -33,10 +33,21 @@ const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
         }`
       : `${origin}/tour/${tour?.id || ""}`;
 
-  const ogImage =
-    tour?.gallery && Array.isArray(tour.gallery) && tour.gallery.length > 0
-      ? tour.gallery[0]
-      : "/og-default.jpg";
+  // Fix: Handle both string and GalleryItem types in gallery
+  const getImageUrl = (galleryItem: string | GalleryItem | undefined): string => {
+    if (!galleryItem) return "/og-default.jpg";
+    
+    if (typeof galleryItem === "string") {
+      return galleryItem;
+    }
+    
+    // GalleryItem object - prioritize srcFallback, then srcSetWebp
+    return galleryItem.srcFallback || galleryItem.srcSetWebp || "/og-default.jpg";
+  };
+
+  const ogImage = tour?.gallery && Array.isArray(tour.gallery) && tour.gallery.length > 0
+    ? getImageUrl(tour.gallery[0])
+    : "/og-default.jpg";
 
   const jsonLd = {
     "@context": "https://schema.org",

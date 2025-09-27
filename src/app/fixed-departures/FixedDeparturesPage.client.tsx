@@ -8,11 +8,111 @@ import TourGrid from "@/components/Pages/ToursPage/TourGrid";
 import packageData from "@/data/TourDetails.json";
 import TourOverlay from "@/components/Pages/ToursPage/TourOverlay";
 import SSButton from "@/components/UI/SSButton";
-import type { Tour } from "@/app/tour/TourPage.client"; // reuse Tour type from TourPage.client
+import type { Tour, AvailableMonth, DateObj } from "@/components/UI/TourCard"; // Import unified types
 
-type AvailableDateMonth = { month: string; dates: Array<{ date: string; enabled?: boolean }>; [k: string]: unknown };
 type CompositeFilter = { type: "composite"; categories?: string[]; price?: string[] };
 type Filter = "all" | "india" | "international" | string | CompositeFilter;
+
+/* Helper function to convert price to number */
+const getPriceAsNumber = (price: string | number | undefined): number | null => {
+  if (typeof price === "number") return price;
+  if (typeof price === "string") {
+    // Remove currency symbols, commas, and convert to number
+    const cleanPrice = price.replace(/[₹,]/g, "");
+    const numPrice = parseFloat(cleanPrice);
+    return isNaN(numPrice) ? null : numPrice;
+  }
+  return null;
+};
+
+/* Normalize raw tour data to match the unified Tour type */
+const normalizeRawTourData = (rawTours: unknown[]): Tour[] => {
+  return rawTours.map((rawTour): Tour => {
+    const tour = rawTour as Record<string, unknown>;
+    
+    // Normalize availableDates from the raw data format to the expected format
+    const normalizedAvailableDates: AvailableMonth[] | undefined = Array.isArray(tour.availableDates)
+      ? (tour.availableDates as unknown[]).map((month) => {
+          const monthData = month as Record<string, unknown>;
+          return {
+            month: String(monthData.month || ''),
+            dates: Array.isArray(monthData.dates)
+              ? (monthData.dates as unknown[]).map((dateItem): DateObj => {
+                  const date = dateItem as Record<string, unknown>;
+                  return {
+                    range: String(date.date || date.range || ''), // Map 'date' to 'range'
+                    enabled: date.enabled !== false,
+                  };
+                })
+              : [],
+          };
+        })
+      : undefined;
+
+    // Normalize gallery to match the expected format
+    const normalizedGallery = Array.isArray(tour.gallery) 
+      ? (tour.gallery as unknown[]).map((g) => {
+          if (typeof g === "string") return g; // Legacy string format
+          if (g && typeof g === "object") {
+            const galleryItem = g as Record<string, unknown>;
+            return {
+              srcSetWebp: typeof galleryItem.srcSetWebp === "string" ? galleryItem.srcSetWebp : undefined,
+              srcFallback: typeof galleryItem.srcFallback === "string" ? galleryItem.srcFallback : undefined,
+              alt: typeof galleryItem.alt === "string" ? galleryItem.alt : undefined,
+              imageTitle: typeof galleryItem.imageTitle === "string" ? galleryItem.imageTitle : undefined,
+              ...galleryItem,
+            };
+          }
+          return String(g ?? "");
+        })
+      : undefined;
+
+    return {
+      id: tour.id as string | number,
+      title: typeof tour.title === "string" ? tour.title : undefined,
+      subtitle: typeof tour.subtitle === "string" ? tour.subtitle : undefined,
+      route: typeof tour.route === "string" ? tour.route : undefined,
+      description: typeof tour.description === "string" ? tour.description : undefined,
+      category: tour.category as string | string[],
+      location: typeof tour.location === "string" ? tour.location : undefined,
+      price: typeof tour.price === "number" ? tour.price : typeof tour.price === "string" ? tour.price : undefined,
+      duration: typeof tour.duration === "string" ? tour.duration : undefined,
+      locationType: typeof tour.locationType === "string" ? tour.locationType : undefined,
+      
+      // New responsive image properties
+      srcSetWebp: typeof tour.srcSetWebp === "string" ? tour.srcSetWebp : undefined,
+      srcFallback: typeof tour.srcFallback === "string" ? tour.srcFallback : undefined,
+      alt: typeof tour.alt === "string" ? tour.alt : undefined,
+      imageTitle: typeof tour.imageTitle === "string" ? tour.imageTitle : undefined,
+      
+      // Legacy image properties
+      image: typeof tour.image === "string" ? tour.image : undefined,
+      heroImage: typeof tour.heroImage === "string" ? tour.heroImage : undefined,
+      
+      // Normalized data
+      availableDates: normalizedAvailableDates,
+      gallery: normalizedGallery,
+      
+      // Other properties
+      highlights: Array.isArray(tour.highlights) ? tour.highlights.map(h => String(h)) : undefined,
+      attractions: Array.isArray(tour.attractions) ? tour.attractions.map(a => String(a)) : undefined,
+      inclusions: Array.isArray(tour.inclusions) ? tour.inclusions.map(i => String(i)) : undefined,
+      exclusions: Array.isArray(tour.exclusions) ? tour.exclusions.map(e => String(e)) : undefined,
+      cancellationPolicy: Array.isArray(tour.cancellationPolicy) ? tour.cancellationPolicy.map(c => String(c)) : undefined,
+      featured: typeof tour.featured === "boolean" ? tour.featured : undefined,
+      relatedDestinations: Array.isArray(tour.relatedDestinations) ? tour.relatedDestinations : undefined,
+      destinationNames: Array.isArray(tour.destinationNames) ? tour.destinationNames.map(d => String(d)) : undefined,
+      metaDescription: typeof tour.metaDescription === "string" ? tour.metaDescription : undefined,
+      bestTime: typeof tour.bestTime === "string" ? tour.bestTime : undefined,
+      contact: typeof tour.contact === "string" ? tour.contact : undefined,
+      notes: typeof tour.notes === "string" ? tour.notes : undefined,
+      slug: typeof tour.slug === "string" ? tour.slug : undefined,
+      
+      // Preserve any other properties
+      ...tour,
+    } as Tour;
+  });
+};
 
 /* Generic shuffle */
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -39,10 +139,13 @@ const FixedDeparturesPageClient: React.FC = () => {
     try {
       setIsLoading(true);
       if (Array.isArray(packageData) && (packageData as unknown[]).length > 0) {
-        const randomizedTours = shuffleArray<Tour>(packageData as unknown as Tour[]);
+        // Normalize the raw tour data to match the unified Tour type
+        const normalizedTours = normalizeRawTourData(packageData as unknown[]);
+        const randomizedTours = shuffleArray<Tour>(normalizedTours);
         setTours(randomizedTours);
         setFilteredTours(randomizedTours);
       } else {
+        console.error("Package data is empty or invalid");
         setTours([]);
         setFilteredTours([]);
       }
@@ -72,7 +175,7 @@ const FixedDeparturesPageClient: React.FC = () => {
         m.content = pageDescription;
         document.head.appendChild(m);
       }
-    } catch  {
+    } catch {
       // noop
     }
   }, []);
@@ -107,16 +210,18 @@ const FixedDeparturesPageClient: React.FC = () => {
 
         if (comp.price && comp.price.length > 0) {
           result = result.filter((tour) => {
-            if (tour.price == null || typeof tour.price !== "number") return false;
+            const tourPrice = getPriceAsNumber(tour.price);
+            if (tourPrice === null) return false;
+            
             return comp.price!.some((priceRange) => {
               const range = priceRange.replace(/₹/g, "").split("-");
               if (range.length === 2) {
                 const min = parseInt(range[0].replace(/,/g, ""), 10);
                 const max = parseInt(range[1].replace(/,/g, ""), 10);
-                return Number(tour.price) >= min && Number(tour.price) <= max;
+                return tourPrice >= min && tourPrice <= max;
               } else if (priceRange.includes("+")) {
                 const min = parseInt(priceRange.replace(/₹|\+|,/g, ""), 10);
-                return Number(tour.price) >= min;
+                return tourPrice >= min;
               }
               return false;
             });
@@ -179,10 +284,12 @@ const FixedDeparturesPageClient: React.FC = () => {
   const hasAvailableDates = (tour: Tour) => {
     try {
       if (!Array.isArray(tour?.availableDates)) return false;
-      return (tour.availableDates as AvailableDateMonth[]).some((month) => Array.isArray(month.dates) && month.dates.some((d) => d.enabled !== false));
+      return tour.availableDates.some((month: AvailableMonth) => 
+        Array.isArray(month.dates) && month.dates.some((d: DateObj) => d.enabled !== false)
+      );
     } catch {
+      return false;
     }
-    return false;
   };
 
   const locationTypeOf = (tour: Tour) => String(tour?.locationType || "").trim().toLowerCase();
@@ -247,6 +354,7 @@ const FixedDeparturesPageClient: React.FC = () => {
                   setFilteredTours(tours);
                 }}
                 className="px-4 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors"
+                type="button"
               >
                 Reset Filters
               </button>
