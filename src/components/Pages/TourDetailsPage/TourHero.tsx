@@ -9,6 +9,50 @@ import Navbar from "@/components/Common/Navbar";
 import { getBreadcrumbs } from "../../utils/BreadcrumbDetails";
 import type { Tour } from "@/components/UI/TourCard";
 
+// Helper function to generate responsive srcSet from base path
+const generateResponsiveSrcSet = (basePath?: string): string => {
+  if (!basePath) return "";
+  
+  // If already contains multiple sizes, return as-is
+  if (basePath.includes(',')) return basePath;
+  
+  // Extract the base path and extension
+  const lastSlash = basePath.lastIndexOf('/');
+  const lastDot = basePath.lastIndexOf('.');
+  
+  if (lastSlash === -1 || lastDot === -1) return basePath;
+  
+  const pathPrefix = basePath.substring(0, lastSlash + 1);
+  const nameWithoutExt = basePath.substring(lastSlash + 1, lastDot);
+  const extension = basePath.substring(lastDot);
+  
+  // Generate responsive sizes for hero: 480w, 720w, 1080w, 1920w
+  const sizes = [480, 720, 1080, 1920];
+  const srcSetEntries = sizes.map(size => {
+    const imagePath = `${pathPrefix}${nameWithoutExt}-${size}${extension}`;
+    return `${imagePath} ${size}w`;
+  });
+  
+  return srcSetEntries.join(', ');
+};
+
+// Helper function to get smallest image as fallback
+const getSmallestImageSrc = (basePath?: string): string => {
+  if (!basePath) return "/og-default.jpg";
+  
+  // If it's already a 480px image, return as-is
+  if (basePath.includes('-480.')) return basePath;
+  
+  // Replace larger sizes with 480px version
+  return basePath
+    .replace('-1920.webp', '-480.webp')
+    .replace('-1080.webp', '-480.webp')
+    .replace('-720.webp', '-480.webp')
+    .replace('-1920.jpg', '-480.jpg')
+    .replace('-1080.jpg', '-480.jpg')
+    .replace('-720.jpg', '-480.jpg');
+};
+
 // Animation variants for title (keep transform: translate3d)
 const titleVariants: Variants = {
   initial: {
@@ -50,9 +94,15 @@ const TourHero = ({ tour }: { tour?: Tour | null }) => {
   const pathname = usePathname();
 
   // Use new responsive properties or fallback to legacy image
-  const backgroundImageSrc = tour?.srcFallback || tour?.image || "/og-default.jpg";
+  const baseSrc = tour?.srcFallback || tour?.image || tour?.heroImage || "/og-default.jpg";
+  const backgroundImageSrc = getSmallestImageSrc(baseSrc); // Use smallest as fallback
   const backgroundImageAlt = tour?.alt || tour?.title || "Tour destination";
   const backgroundImageTitle = tour?.imageTitle || tour?.title || "Tour destination";
+
+  // Generate responsive srcSet
+  const responsiveSrcSet = tour?.srcSetWebp && tour.srcSetWebp.includes(',') 
+    ? tour.srcSetWebp // Already contains multiple sizes
+    : generateResponsiveSrcSet(tour?.srcSetWebp || tour?.srcFallback || tour?.image || tour?.heroImage);
 
   // Get breadcrumbs based on current path
   const breadcrumbs = getBreadcrumbs(pathname || "/");
@@ -64,10 +114,10 @@ const TourHero = ({ tour }: { tour?: Tour | null }) => {
         {/* Background image with responsive sources */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           <picture className="w-full h-full">
-            {tour?.srcSetWebp && (
+            {responsiveSrcSet && (
               <source 
-                srcSet={tour.srcSetWebp}
-                sizes="100vw"
+                srcSet={responsiveSrcSet}
+                sizes="(max-width: 480px) 480px, (max-width: 768px) 720px, (max-width: 1024px) 1080px, 100vw"
                 type="image/webp"
               />
             )}
@@ -76,7 +126,10 @@ const TourHero = ({ tour }: { tour?: Tour | null }) => {
               alt={backgroundImageAlt}
               title={backgroundImageTitle}
               className="w-full h-full object-cover"
-             
+              loading="eager"
+              fetchPriority="high"
+              width={1920}
+              height={800}
             />
           </picture>
 

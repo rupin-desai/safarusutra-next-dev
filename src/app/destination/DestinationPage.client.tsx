@@ -8,6 +8,10 @@ import DestinationContactBanner from "@/components/Pages/DestinationPage/Destina
 import DestinationSearchFilter from "@/components/Pages/DestinationPage/DestinationSearchFilter";
 import packageData from "@/data/Destinations.json";
 
+
+
+
+
 export default function DestinationPageClient(): React.ReactElement {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeFilters, setActiveFilters] = useState({
