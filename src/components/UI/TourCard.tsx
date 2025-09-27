@@ -118,6 +118,30 @@ const extractTitle = (title?: string): string => {
   return colonIndex > 0 ? title.substring(0, colonIndex).trim() : title;
 };
 
+// Helper function to generate responsive srcSet from base path
+const generateResponsiveSrcSet = (basePath?: string): string => {
+  if (!basePath) return "";
+  
+  // Extract the base path and extension
+  const lastSlash = basePath.lastIndexOf('/');
+  const lastDot = basePath.lastIndexOf('.');
+  
+  if (lastSlash === -1 || lastDot === -1) return basePath;
+  
+  const pathPrefix = basePath.substring(0, lastSlash + 1);
+  const nameWithoutExt = basePath.substring(lastSlash + 1, lastDot);
+  const extension = basePath.substring(lastDot);
+  
+  // Generate responsive sizes: 480w, 720w, 1080w
+  const sizes = [480, 720, 1080];
+  const srcSetEntries = sizes.map(size => {
+    const imagePath = `${pathPrefix}${nameWithoutExt}-${size}${extension}`;
+    return `${imagePath} ${size}w`;
+  });
+  
+  return srcSetEntries.join(', ');
+};
+
 interface TourCardProps {
   tour: Tour;
 }
@@ -146,6 +170,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const imageSrc = tour.srcFallback || tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
   const imageAlt = tour.alt || tour.title || `Tour ${idStr}`;
   const imageTitle = tour.imageTitle || tour.title || `Tour ${idStr}`;
+  
+  // Generate responsive srcSet
+  const responsiveSrcSet = tour.srcSetWebp && tour.srcSetWebp.includes(',') 
+    ? tour.srcSetWebp // Already contains multiple sizes
+    : generateResponsiveSrcSet(tour.srcSetWebp || tour.srcFallback || tour.image);
 
   const handleBookNow = () => {
     const result = generateTourBookingInquiry(tour) as { subject?: string; message?: string };
@@ -178,10 +207,10 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
       <div className="absolute inset-0 w-full h-full">
         <picture>
-          {tour.srcSetWebp && (
+          {responsiveSrcSet && (
             <source 
-              srcSet={tour.srcSetWebp}
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              srcSet={responsiveSrcSet}
+              sizes="(max-width: 480px) 320px, (max-width: 768px) 400px, (max-width: 1200px) 360px, 400px"
               type="image/webp"
             />
           )}
@@ -191,6 +220,8 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
             title={imageTitle}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             loading="lazy"
+            width={400}
+            height={500}
           />
         </picture>
       </div>
