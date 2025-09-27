@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Head from "next/head";
 import { motion, AnimatePresence, Variants } from "framer-motion";
 import { ChevronDown, ChevronUp, MapPin, Clock } from "lucide-react";
 
@@ -63,69 +62,6 @@ const TourItinerary: React.FC<{ tour: Tour }> = ({ tour }) => {
     },
   };
 
-  // Enhanced JSON-LD for TouristTrip/TravelAction structured data
-  const tourJsonLd =
-    tour && Array.isArray(tour.itinerary) && tour.itinerary.length
-      ? {
-          "@context": "https://schema.org",
-          "@type": "TouristTrip",
-          name: tour.title || "Tour Package",
-          description: tour.subtitle || tour.description || `${tour.title} itinerary`,
-          image: tour.heroImage || tour.image || undefined,
-          touristType: "leisure",
-          duration: tour.duration || undefined,
-          ...(tour.price && {
-            offers: {
-              "@type": "Offer",
-              price: typeof tour.price === "string" ? tour.price.replace(/[^\d.]/g, "") : tour.price,
-              priceCurrency: "INR",
-              availability: "https://schema.org/InStock",
-            },
-          }),
-          itinerary: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
-            "@type": "TouristAttraction",
-            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title || "Tour Day"}`,
-            description: day.description || undefined,
-            address: day.location
-              ? {
-                  "@type": "PostalAddress",
-                  addressLocality: day.location,
-                }
-              : undefined,
-            ...(Array.isArray(day.activities) && day.activities.length > 0 && {
-              potentialAction: day.activities.map((activity: string) => ({
-                "@type": "Action",
-                name: activity,
-              })),
-            }),
-          })),
-          subTrip: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
-            "@type": "Trip",
-            name: `Day ${day.day !== undefined ? day.day : idx + 1}`,
-            description: day.description || undefined,
-            partOfTrip: {
-              "@type": "TouristTrip",
-              name: tour.title,
-            },
-            ...(day.location && {
-              arrivalLocation: {
-                "@type": "Place",
-                name: day.location,
-              },
-            }),
-            ...(day.accommodation && {
-              accommodationBooking: {
-                "@type": "LodgingReservation",
-                lodgingBusiness: {
-                  "@type": "LodgingBusiness",
-                  name: day.accommodation,
-                },
-              },
-            }),
-          })),
-        }
-      : null;
-
   if (!tour.itinerary || tour.itinerary.length === 0) {
     return (
       <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
@@ -158,30 +94,8 @@ const TourItinerary: React.FC<{ tour: Tour }> = ({ tour }) => {
     );
   }
 
-  const metaTitle = tour?.title ? `${tour.title} — Day-by-Day Itinerary & Highlights | Safari Sutra` : "Tour Itinerary — Day-by-Day | Safari Sutra";
-  const metaDescription = (tour?.subtitle || tour?.description || "").slice(0, 160) || `${tour?.title || "Tour"} itinerary and day by day schedule.`;
-
   return (
     <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
-      <Head>
-        <title>{metaTitle}</title>
-        <meta name="description" content={metaDescription} />
-        <link
-          rel="canonical"
-          href={
-            typeof window !== "undefined"
-              ? window.location.href
-              : `https://thesafarisutra.com/tour/${tour?.id ?? ""}/itinerary`
-          }
-        />
-        {tourJsonLd && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{ __html: JSON.stringify(tourJsonLd) }}
-          />
-        )}
-      </Head>
-
       <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Tour Itinerary</h2>
 
       <div className="flex flex-col md:flex-row md:items-center gap-3 mb-5 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-100">

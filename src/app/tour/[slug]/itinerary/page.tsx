@@ -33,7 +33,25 @@ type Tour = {
   category?: string | string[];
   featured?: boolean;
   relatedDestinations?: Array<string | number>;
+  itinerary?: ItineraryDay[];
+  route?: string;
   [k: string]: unknown;
+};
+
+type ItineraryDay = {
+  day?: number;
+  title?: string;
+  description?: string;
+  location?: string;
+  activities?: string[];
+  meals?: {
+    breakfast?: boolean;
+    lunch?: boolean;
+    dinner?: boolean;
+    [key: string]: unknown;
+  };
+  accommodation?: string;
+  [key: string]: unknown;
 };
 
 const normalizeEntry = (entry: unknown): Tour => {
@@ -92,6 +110,7 @@ const normalizeEntry = (entry: unknown): Tour => {
     duration: typeof e.duration === "string" ? e.duration : undefined,
     price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
+    route: typeof e.route === "string" ? e.route : undefined,
     category,
     itinerary,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
@@ -116,6 +135,73 @@ const createSlug = (text?: string) =>
     .replace(/[^\w\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-");
+
+// Generate TouristTrip JSON-LD schema
+const generateTouristTripJsonLd = (tour: Tour, slug: string) => {
+  if (!tour || !Array.isArray(tour.itinerary) || tour.itinerary.length === 0) {
+    return null;
+  }
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    "name": tour.title || "Tour Package",
+    "description": tour.description || `${tour.title} itinerary`,
+    "image": tour.srcFallback || tour.heroImage || tour.image,
+    "url": `https://thesafarisutra.com/tour/${slug}/itinerary`,
+    "touristType": "leisure",
+    "duration": tour.duration,
+    ...(tour.price && {
+      "offers": {
+        "@type": "Offer",
+        "price": typeof tour.price === "string" ? tour.price.replace(/[^\d.]/g, "") : String(tour.price),
+        "priceCurrency": "INR",
+        "availability": "https://schema.org/InStock"
+      }
+    }),
+    "itinerary": tour.itinerary.map((day: ItineraryDay, idx: number) => ({
+      "@type": "TouristAttraction", 
+      "name": `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title || "Tour Day"}`,
+      "description": day.description,
+      ...(day.location && {
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": day.location
+        }
+      }),
+      ...(Array.isArray(day.activities) && day.activities.length > 0 && {
+        "potentialAction": day.activities.map((activity: string) => ({
+          "@type": "Action",
+          "name": activity
+        }))
+      })
+    })),
+    "subTrip": tour.itinerary.map((day: ItineraryDay, idx: number) => ({
+      "@type": "Trip",
+      "name": `Day ${day.day !== undefined ? day.day : idx + 1}`,
+      "description": day.description,
+      "partOfTrip": {
+        "@type": "TouristTrip", 
+        "name": tour.title
+      },
+      ...(day.location && {
+        "arrivalLocation": {
+          "@type": "Place",
+          "name": day.location
+        }
+      }),
+      ...(day.accommodation && {
+        "accommodationBooking": {
+          "@type": "LodgingReservation",
+          "lodgingBusiness": {
+            "@type": "LodgingBusiness",
+            "name": day.accommodation
+          }
+        }
+      })
+    }))
+  };
+};
 
 /**
  * generateStaticParams must return the list of { slug } objects that match
@@ -146,9 +232,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug?: string | string[] };
+  params: Promise<{ slug?: string | string[] }>; // Fixed: Next.js 15 async params
 }): Promise<Metadata> {
-  const rawSlug = params?.slug;
+  const { slug: rawSlug } = await params; // Fixed: await params
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
   if (!slug) {
     return {
@@ -198,8 +284,8 @@ export async function generateMetadata({
   };
 }
 
-export default function TourItineraryPage({ params }: { params: { slug?: string | string[] } }) {
-  const rawSlug = params?.slug;
+export default async function TourItineraryPage({ params }: { params: Promise<{ slug?: string | string[] }> }) { // Fixed: Next.js 15 async params and async function
+  const { slug: rawSlug } = await params; // Fixed: await params
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
 
   if (!slug) return notFound();
@@ -215,8 +301,19 @@ export default function TourItineraryPage({ params }: { params: { slug?: string 
 
   const activeTab = "itinerary";
 
+  // Generate JSON-LD for structured data
+  const jsonLd = generateTouristTripJsonLd(tour, slug);
+
   return (
     <div className="bg-gray-50 min-h-screen">
+      {/* Add JSON-LD structured data at page level */}
+      {jsonLd && (
+        <script 
+          type="application/ld+json" 
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} 
+        />
+      )}
+
       <TourHero tour={tour} />
 
       <Suspense fallback={<div aria-hidden="true" />}>
