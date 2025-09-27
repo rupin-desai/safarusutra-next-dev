@@ -12,6 +12,11 @@ type PackageItem = {
   id: number | string;
   title?: string;
   slug?: string;
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+  // Keep legacy image property for backward compatibility
   image?: string;
   route?: string;
   price?: number;

@@ -28,8 +28,24 @@ const normalizeEntry = (entry: unknown): Tour => {
   const highlights =
     Array.isArray(e.highlights) ? (e.highlights as unknown[]).map((h) => (typeof h === "string" ? h : String(h))) : undefined;
 
-  // map commonly used array/object fields safely
-  const gallery = Array.isArray(e.gallery) ? (e.gallery as unknown[]).map((g) => String(g ?? "")) : undefined;
+  // Handle gallery with new responsive properties
+  const gallery = Array.isArray(e.gallery)
+    ? (e.gallery as unknown[]).map((g) => {
+        if (typeof g === "string") return g; // Legacy string format
+        if (g && typeof g === "object") {
+          const galleryItem = g as Record<string, unknown>;
+          return {
+            srcSetWebp: typeof galleryItem.srcSetWebp === "string" ? galleryItem.srcSetWebp : undefined,
+            srcFallback: typeof galleryItem.srcFallback === "string" ? galleryItem.srcFallback : undefined,
+            alt: typeof galleryItem.alt === "string" ? galleryItem.alt : undefined,
+            imageTitle: typeof galleryItem.imageTitle === "string" ? galleryItem.imageTitle : undefined,
+            ...galleryItem,
+          };
+        }
+        return String(g ?? "");
+      })
+    : undefined;
+
   const attractions = Array.isArray(e.attractions)
     ? (e.attractions as unknown[]).map((a) => (typeof a === "string" ? a : String(a)))
     : undefined;
@@ -48,6 +64,7 @@ const normalizeEntry = (entry: unknown): Tour => {
           day: typeof o.day === "number" ? o.day : typeof o.day === "string" ? Number(o.day) : undefined,
           title: typeof o.title === "string" ? o.title : undefined,
           description: typeof o.description === "string" ? o.description : undefined,
+          activities: Array.isArray(o.activities) ? (o.activities as unknown[]).map((a) => String(a)) : undefined,
           ...o,
         };
       })
@@ -74,9 +91,19 @@ const normalizeEntry = (entry: unknown): Tour => {
   return {
     id,
     title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
+    subtitle: typeof e.subtitle === "string" ? e.subtitle : undefined,
     slug: typeof e.slug === "string" ? e.slug : undefined,
+
+    // New responsive image properties
+    srcSetWebp: typeof e.srcSetWebp === "string" ? e.srcSetWebp : undefined,
+    srcFallback: typeof e.srcFallback === "string" ? e.srcFallback : undefined,
+    alt: typeof e.alt === "string" ? e.alt : undefined,
+    imageTitle: typeof e.imageTitle === "string" ? e.imageTitle : undefined,
+
+    // Legacy image properties for backward compatibility
     heroImage: typeof e.heroImage === "string" ? e.heroImage : undefined,
     image: typeof e.image === "string" ? e.image : undefined,
+
     metaDescription: typeof e.metaDescription === "string" ? e.metaDescription : undefined,
     description: typeof e.description === "string" ? e.description : undefined,
     caption: typeof e.caption === "string" ? e.caption : undefined,
@@ -95,6 +122,11 @@ const normalizeEntry = (entry: unknown): Tour => {
     availableDates,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
     relatedDestinations: Array.isArray(e.relatedDestinations) ? (e.relatedDestinations as Array<string | number>) : undefined,
+    destinationNames: Array.isArray(e.destinationNames) ? (e.destinationNames as unknown[]).map((d) => String(d)) : undefined,
+    locationType: typeof e.locationType === "string" ? e.locationType : undefined,
+    bestTime: typeof e.bestTime === "string" ? e.bestTime : undefined,
+    contact: typeof e.contact === "string" ? e.contact : undefined,
+    notes: typeof e.notes === "string" ? e.notes : undefined,
   } as Tour;
 };
 
@@ -159,7 +191,9 @@ export async function generateMetadata({
   const description = String(
     tour.metaDescription ?? tour.description ?? tour.caption ?? `Explore ${tour.title} with Safari Sutra — itinerary, inclusions and departure dates.`
   );
-  const image = String(tour.heroImage ?? tour.image ?? "/logos/logo.svg");
+
+  // Use new responsive image properties or fallback to legacy
+  const image = String(tour.srcFallback ?? tour.heroImage ?? tour.image ?? "/logos/logo.svg");
   const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}`;
 
   return {
@@ -170,7 +204,7 @@ export async function generateMetadata({
       title,
       description,
       url,
-      images: image ? [{ url: String(image), alt: tour.title ?? "Safari Sutra" }] : undefined,
+      images: image ? [{ url: String(image), alt: tour.alt ?? tour.title ?? "Safari Sutra" }] : undefined,
     },
     twitter: {
       title,
@@ -195,7 +229,7 @@ export default function TourPageDetails({ params }: { params: { slug?: string | 
 
   if (!tour) return notFound();
 
-  // pass serializable tour prop to client component
+  // pass serializable tour prop to client component with all responsive image properties
   const tourProp = JSON.parse(JSON.stringify(tour)) as Tour;
 
   return <TourPageClient tour={tourProp} />;

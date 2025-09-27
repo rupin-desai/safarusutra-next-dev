@@ -1,7 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Head from "next/head";
-import Image from "next/image";
 import { CheckCircle, MapPin, Clock, Calendar, X } from "lucide-react";
 
 type DateObj = {
@@ -22,6 +21,15 @@ type ItineraryDay = {
   [key: string]: unknown;
 };
 
+type GalleryItem = {
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+  // Legacy support
+  [key: string]: unknown;
+};
+
 type Tour = {
   id?: string | number;
   title?: string;
@@ -33,7 +41,7 @@ type Tour = {
   itinerary?: ItineraryDay[];
   highlights?: string[];
   attractions?: string[];
-  gallery?: string[];
+  gallery?: (GalleryItem | string)[];
   [key: string]: unknown;
 };
 
@@ -147,6 +155,27 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     typeof window !== "undefined" && window.location
       ? `${window.location.origin}${window.location.pathname}${window.location.search || ""}`
       : `${origin}/tour/${tour?.id ?? ""}`;
+
+  // Helper function to get image properties from gallery item
+  const getImageProps = (item: GalleryItem | string, index: number) => {
+    if (typeof item === "string") {
+      // Legacy string format
+      return {
+        src: item,
+        alt: `${tour.title ?? "Tour"} - ${index + 1}`,
+        title: `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
+        srcSetWebp: undefined,
+      };
+    }
+
+    // New object format
+    return {
+      src: item.srcFallback || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2",
+      alt: item.alt || `${tour.title ?? "Tour"} - ${index + 1}`,
+      title: item.imageTitle || `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
+      srcSetWebp: item.srcSetWebp,
+    };
+  };
 
   return (
     <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
@@ -281,11 +310,30 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
       <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Photo Gallery</h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
         {Array.isArray(tour.gallery) &&
-          tour.gallery.slice(0, 4).map((photo, index) => (
-            <div key={index} className="relative overflow-hidden rounded-lg aspect-[4/3]">
-              <Image src={photo} alt={`${tour.title ?? "Tour"} - ${index + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-300" />
-            </div>
-          ))}
+          tour.gallery.slice(0, 4).map((photo, index) => {
+            const imageProps = getImageProps(photo, index);
+
+            return (
+              <div key={index} className="relative overflow-hidden rounded-lg aspect-[4/3]">
+                <picture>
+                  {imageProps.srcSetWebp && (
+                    <source
+                      srcSet={imageProps.srcSetWebp}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                      type="image/webp"
+                    />
+                  )}
+                  <img
+                    src={imageProps.src}
+                    alt={imageProps.alt}
+                    title={imageProps.title}
+                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                    loading="lazy"
+                  />
+                </picture>
+              </div>
+            );
+          })}
       </div>
 
       {Array.isArray(tour.gallery) && tour.gallery.length > 4 && (

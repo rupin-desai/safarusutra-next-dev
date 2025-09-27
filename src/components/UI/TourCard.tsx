@@ -13,15 +13,75 @@ export type Tour = {
   // make `id` optional to be compatible with other module types that allow undefined
   id?: string | number;
   title?: string;
+  subtitle?: string;
   route?: string;
   description?: string;
   category?: string | string[];
   location?: string;
   price?: number | string;
   duration?: string;
+  
+  // New responsive image properties
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+  
+  // Legacy image properties for backward compatibility
   image?: string;
+  heroImage?: string;
+  
+  // Gallery with responsive support
+  gallery?: (GalleryItem | string)[];
+  
+  // Other tour properties
+  highlights?: string[];
+  attractions?: string[];
+  itinerary?: ItineraryDay[];
+  inclusions?: string[];
+  exclusions?: string[];
+  cancellationPolicy?: string[];
+  availableDates?: AvailableMonth[];
+  featured?: boolean;
+  relatedDestinations?: (string | number)[];
+  destinationNames?: string[];
+  locationType?: string;
+  metaDescription?: string;
+  bestTime?: string;
+  contact?: string;
+  notes?: string;
+  slug?: string;
+  
   [k: string]: unknown;
 } & Record<string, unknown>;
+
+// Supporting types
+export type GalleryItem = {
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+  [key: string]: unknown;
+};
+
+export type ItineraryDay = {
+  day?: number;
+  title?: string;
+  description?: string;
+  activities?: string[];
+  [key: string]: unknown;
+};
+
+export type AvailableMonth = {
+  month: string;
+  dates: DateObj[];
+};
+
+export type DateObj = {
+  range: string;
+  enabled?: boolean;
+  [key: string]: unknown;
+};
 
 const cardVariants: Variants = {
   initial: {
@@ -82,6 +142,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const titleId = `tour-title-${idStr}`;
   const routeId = `tour-route-${idStr}`;
 
+  // Image handling - use new responsive properties or fallback to legacy
+  const imageSrc = tour.srcFallback || tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+  const imageAlt = tour.alt || tour.title || `Tour ${idStr}`;
+  const imageTitle = tour.imageTitle || tour.title || `Tour ${idStr}`;
+
   const handleBookNow = () => {
     const result = generateTourBookingInquiry(tour) as { subject?: string; message?: string };
     const subject = result.subject ?? "";
@@ -112,12 +177,22 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
       </h3>
 
       <div className="absolute inset-0 w-full h-full">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={tour.image ?? "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"}
-          alt={tour.title ?? `Tour ${idStr}`}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
+        <picture>
+          {tour.srcSetWebp && (
+            <source 
+              srcSet={tour.srcSetWebp}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
+              type="image/webp"
+            />
+          )}
+          <img
+            src={imageSrc}
+            alt={imageAlt}
+            title={imageTitle}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+            loading="lazy"
+          />
+        </picture>
       </div>
 
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent opacity-80" />

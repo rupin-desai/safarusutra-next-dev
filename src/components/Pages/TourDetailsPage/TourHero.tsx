@@ -4,7 +4,6 @@ import React from "react";
 import { ChevronRight, Home } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 import Link from "next/link";
-import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Navbar from "@/components/Common/Navbar";
 import { getBreadcrumbs } from "../../utils/BreadcrumbDetails";
@@ -50,8 +49,10 @@ const TourHero = ({ tour }: { tour?: Tour | null }) => {
   // Get current pathname to generate breadcrumbs
   const pathname = usePathname();
 
-  // Use tour.image directly (provide fallback)
-  const backgroundImageSrc = tour?.image ?? "/og-default.jpg";
+  // Use new responsive properties or fallback to legacy image
+  const backgroundImageSrc = tour?.srcFallback || tour?.image || "/og-default.jpg";
+  const backgroundImageAlt = tour?.alt || tour?.title || "Tour destination";
+  const backgroundImageTitle = tour?.imageTitle || tour?.title || "Tour destination";
 
   // Get breadcrumbs based on current path
   const breadcrumbs = getBreadcrumbs(pathname || "/");
@@ -60,15 +61,24 @@ const TourHero = ({ tour }: { tour?: Tour | null }) => {
     <>
       <Navbar />
       <section className="relative flex flex-col items-center justify-center overflow-hidden h-[60vh] pt-16">
-        {/* Background image */}
-        <div className="absolute inset-0 z-0 overflow-hidden ">
-          <Image
-            src={backgroundImageSrc}
-            alt={tour?.title ?? ""}
-            className="w-full h-full object-cover"
-            fill
-            priority
-          />
+        {/* Background image with responsive sources */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          <picture className="w-full h-full">
+            {tour?.srcSetWebp && (
+              <source 
+                srcSet={tour.srcSetWebp}
+                sizes="100vw"
+                type="image/webp"
+              />
+            )}
+            <img
+              src={backgroundImageSrc}
+              alt={backgroundImageAlt}
+              title={backgroundImageTitle}
+              className="w-full h-full object-cover"
+             
+            />
+          </picture>
 
           {/* Dark overlay for better text visibility */}
           <div className="absolute inset-0 bg-black/60" />
