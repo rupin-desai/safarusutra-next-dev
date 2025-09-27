@@ -226,12 +226,42 @@ const Footer = () => {
             </h3>
             {/* Single-column Quick Links (centered on mobile, left-aligned on desktop) */}
             <div className="flex flex-col items-center md:items-start space-y-2">
-              <Link href="/" className="text-white  hover:underline whitespace-nowrap">Home</Link>
-              <Link href="/about/" className="text-white  hover:underline whitespace-nowrap">About</Link>
-              <Link href="/destination/" className="text-white  hover:underline whitespace-nowrap">Destinations</Link>
-              <Link href="/fixed-departures/" className="text-white  hover:underline whitespace-nowrap">Fixed Departures</Link>
-              <Link href="/tour/" className="text-white  hover:underline whitespace-nowrap">Tours</Link>
-              <Link href="/hire/" className="text-white  hover:underline whitespace-nowrap">Hire</Link>
+              <Link
+                href="/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                Home
+              </Link>
+              <Link
+                href="/about/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                About
+              </Link>
+              <Link
+                href="/destination/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                Destinations
+              </Link>
+              <Link
+                href="/fixed-departures/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                Fixed Departures
+              </Link>
+              <Link
+                href="/tour/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                Tours
+              </Link>
+              <Link
+                href="/hire/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                Hire
+              </Link>
             </div>
           </motion.div>
 
@@ -248,26 +278,66 @@ const Footer = () => {
             </h3>
             {/* Mobile: Row with wrapping */}
             <div className="flex flex-wrap justify-center gap-3 md:hidden">
-              <Link href="/contact/" className="text-white text-sm hover:underline whitespace-nowrap">Contact Us</Link>
+              <Link
+                href="/contact/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Contact Us
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/privacy-policy/" className="text-white text-sm hover:underline whitespace-nowrap">Privacy Policy</Link>
+              <Link
+                href="/privacy-policy/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Privacy Policy
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/terms-and-conditions/" className="text-white text-sm hover:underline whitespace-nowrap">Terms & Conditions</Link>
+              <Link
+                href="/terms-and-conditions/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Terms & Conditions
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/cancellation-policy/" className="text-white text-sm hover:underline whitespace-nowrap">Cancellation Policy</Link>
+              <Link
+                href="/cancellation-policy/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Cancellation Policy
+              </Link>
             </div>
 
             {/* Desktop links - single column list */}
             <div className="hidden md:flex flex-col space-y-2">
-              <Link href="/contact/" className="text-white hover:underline whitespace-nowrap">Contact Us</Link>
-              <Link href="/privacy-policy/" className="text-white hover:underline whitespace-nowrap">Privacy Policy</Link>
-              <Link href="/terms-and-conditions/" className="text-white hover:underline whitespace-nowrap">Terms & Conditions</Link>
-              <Link href="/cancellation-policy/" className="text-white hover:underline whitespace-nowrap">Cancellation Policy</Link>
+              <Link
+                href="/contact/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Contact Us
+              </Link>
+              <Link
+                href="/privacy-policy/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                href="/terms-and-conditions/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Terms & Conditions
+              </Link>
+              <Link
+                href="/cancellation-policy/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Cancellation Policy
+              </Link>
             </div>
           </motion.div>
 
           {/* Tours links section - lists all "tours-from" city pages */}
-          
+
           <motion.div
             initial="initial"
             whileInView="animate"
@@ -280,37 +350,118 @@ const Footer = () => {
             </h3>
             {/* Mobile: compact city chips */}
             <div className="flex flex-wrap justify-center items-center gap-2 md:hidden">
-              <span className="text-white text-sm font-medium">Tours from :</span>
-              <Link href="/tours-from-mumbai/" className="text-white text-sm hover:underline whitespace-nowrap">Mumbai</Link>
+              <span className="text-white text-sm font-medium">
+                Tours from :
+              </span>
+              <Link
+                href="/tours-from-mumbai/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Mumbai
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-hyderabad/" className="text-white text-sm hover:underline whitespace-nowrap">Hyderabad</Link>
+              <Link
+                href="/tours-from-hyderabad/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Hyderabad
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-bangalore/" className="text-white text-sm hover:underline whitespace-nowrap">Bangalore</Link>
+              <Link
+                href="/tours-from-bangalore/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Bangalore
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-pune/" className="text-white text-sm hover:underline whitespace-nowrap">Pune</Link>
+              <Link
+                href="/tours-from-pune/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Pune
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-nashik/" className="text-white text-sm hover:underline whitespace-nowrap">Nashik</Link>
+              <Link
+                href="/tours-from-nashik/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Nashik
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-nagpur/" className="text-white text-sm hover:underline whitespace-nowrap">Nagpur</Link>
+              <Link
+                href="/tours-from-nagpur/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Nagpur
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-goa/" className="text-white text-sm hover:underline whitespace-nowrap">Goa</Link>
+              <Link
+                href="/tours-from-goa/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Goa
+              </Link>
               <span className="text-white text-sm">•</span>
-              <Link href="/tours-from-vijayawada/" className="text-white text-sm hover:underline whitespace-nowrap">Vijayawada</Link>
+              <Link
+                href="/tours-from-vijayawada/"
+                className="text-white text-sm hover:underline whitespace-nowrap"
+              >
+                Vijayawada
+              </Link>
             </div>
 
             {/* Desktop: full list */}
             <div className="hidden md:flex flex-col space-y-2">
-              <Link href="/tours-from-mumbai/" className="text-white hover:underline whitespace-nowrap">Tours from Mumbai</Link>
-              <Link href="/tours-from-hyderabad/" className="text-white hover:underline whitespace-nowrap">Tours from Hyderabad</Link>
-              <Link href="/tours-from-bangalore/" className="text-white hover:underline whitespace-nowrap">Tours from Bangalore</Link>
-              <Link href="/tours-from-pune/" className="text-white hover:underline whitespace-nowrap">Tours from Pune</Link>
-              <Link href="/tours-from-nashik/" className="text-white hover:underline whitespace-nowrap">Tours from Nashik</Link>
-              <Link href="/tours-from-nagpur/" className="text-white hover:underline whitespace-nowrap">Tours from Nagpur</Link>
-              <Link href="/tours-from-goa/" className="text-white hover:underline whitespace-nowrap">Tours from Goa</Link>
-              <Link href="/tours-from-vijayawada/" className="text-white hover:underline whitespace-nowrap">Tours from Vijayawada</Link>
+              <Link
+                href="/tours-from-mumbai/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Mumbai
+              </Link>
+              <Link
+                href="/tours-from-hyderabad/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Hyderabad
+              </Link>
+              <Link
+                href="/tours-from-bangalore/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Bangalore
+              </Link>
+              <Link
+                href="/tours-from-pune/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Pune
+              </Link>
+              <Link
+                href="/tours-from-nashik/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Nashik
+              </Link>
+              <Link
+                href="/tours-from-nagpur/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Nagpur
+              </Link>
+              <Link
+                href="/tours-from-goa/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Goa
+              </Link>
+              <Link
+                href="/tours-from-vijayawada/"
+                className="text-white hover:underline whitespace-nowrap"
+              >
+                Tours from Vijayawada
+              </Link>
             </div>
           </motion.div>
-       
 
           {/* Contact info and social - updated with brown underline */}
           <motion.div
@@ -386,9 +537,9 @@ const Footer = () => {
                 <Twitter size={18} />
               </a>
               <a
-                href="https://www.instagram.com/safarisutra/"
+                href="https://instagram.com/safarisutra"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 aria-label="Instagram"
                 className="text-white hover:text-gray-200 transition-colors"
               >
