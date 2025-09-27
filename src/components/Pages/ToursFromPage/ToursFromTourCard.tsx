@@ -21,7 +21,17 @@ type TourDetail = {
   route?: string; // <-- use this property as requested
   duration?: string;
   price?: string | number;
+
+  // Legacy image properties for backward compatibility
   image?: string;
+  heroImage?: string;
+
+  // New responsive image properties
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+
   gallery?: string[];
   description?: string;
   excerpt?: string;
@@ -51,6 +61,30 @@ export default function ToursFromTourCard({ tour }: { tour: TopTour }) {
   // ROUTE: use "route" field from TourDetails.json only (display route like "Port Blair (2N) – ...")
   const routeFromDetail = detail?.route ? String(detail.route) : undefined;
 
+  // Generate responsive image properties with fallbacks
+  const getImageProperties = () => {
+    // Priority: detail.srcSetWebp/srcFallback > detail.heroImage/image > tour.image > generated fallback
+    const srcSetWebp = detail?.srcSetWebp || undefined;
+    const srcFallback =
+      detail?.srcFallback ||
+      detail?.heroImage ||
+      detail?.image ||
+      tour.image ||
+      (tour.slug ? `/images/tours/${tour.slug}.jpg` : `/images/tours/${tour.id}.jpg`);
+
+    const alt = detail?.alt || `${tour.title || detail?.title || "Tour"} image`;
+    const imageTitle = detail?.imageTitle || tour.title || detail?.title || "Tour";
+
+    return {
+      srcSetWebp,
+      srcFallback,
+      alt,
+      imageTitle,
+    };
+  };
+
+  const { srcSetWebp, srcFallback, alt, imageTitle } = getImageProperties();
+
   // prefer detail for rich fields, but card title still prefers TopTour.title per earlier behavior
   const mapped: TourType = {
     id: String(detail?.id ?? tour.id ?? "unknown"),
@@ -62,7 +96,16 @@ export default function ToursFromTourCard({ tour }: { tour: TopTour }) {
     route: routeFromDetail,
     duration: String((detail?.duration ?? tour.duration) ?? "") || undefined,
     price: (detail?.price ?? tour.price) as string | number | undefined,
-    image: String((detail?.image ?? tour.image ?? (tour.slug ? `/images/tours/${tour.slug}.jpg` : `/images/tours/${tour.id}.jpg`))),
+
+    // New responsive image properties
+    srcSetWebp,
+    srcFallback,
+    alt,
+    imageTitle,
+
+    // Legacy image property for backward compatibility
+    image: srcFallback,
+
     description: String((detail?.description ?? detail?.excerpt ?? tour.excerpt ?? "")),
     slug: (detail?.slug ?? tour.slug) as string | undefined,
     // detailsTitle used for "View details" label — ONLY from TourDetails.json
