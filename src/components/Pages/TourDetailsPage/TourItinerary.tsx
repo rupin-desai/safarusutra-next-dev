@@ -31,6 +31,9 @@ type Tour = {
   route?: string;
   duration?: string;
   itinerary?: ItineraryDay[];
+  image?: string;
+  heroImage?: string;
+  price?: string | number;
   [key: string]: unknown;
 };
 
@@ -60,19 +63,65 @@ const TourItinerary: React.FC<{ tour: Tour }> = ({ tour }) => {
     },
   };
 
-  // build JSON-LD ItemList for itinerary (improves SEO indexing of day-by-day itinerary)
-  const itineraryJsonLd =
-    Array.isArray(tour?.itinerary) && tour.itinerary.length
+  // Enhanced JSON-LD for TouristTrip/TravelAction structured data
+  const tourJsonLd =
+    tour && Array.isArray(tour.itinerary) && tour.itinerary.length
       ? {
           "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: `${tour.title || "Tour"} - Itinerary`,
+          "@type": "TouristTrip",
+          name: tour.title || "Tour Package",
           description: tour.subtitle || tour.description || `${tour.title} itinerary`,
-          itemListElement: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
-            "@type": "ListItem",
-            position: idx + 1,
-            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title ?? ""}`,
-            description: day.description ?? "",
+          image: tour.heroImage || tour.image || undefined,
+          touristType: "leisure",
+          duration: tour.duration || undefined,
+          ...(tour.price && {
+            offers: {
+              "@type": "Offer",
+              price: typeof tour.price === "string" ? tour.price.replace(/[^\d.]/g, "") : tour.price,
+              priceCurrency: "INR",
+              availability: "https://schema.org/InStock",
+            },
+          }),
+          itinerary: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
+            "@type": "TouristAttraction",
+            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title || "Tour Day"}`,
+            description: day.description || undefined,
+            address: day.location
+              ? {
+                  "@type": "PostalAddress",
+                  addressLocality: day.location,
+                }
+              : undefined,
+            ...(Array.isArray(day.activities) && day.activities.length > 0 && {
+              potentialAction: day.activities.map((activity: string) => ({
+                "@type": "Action",
+                name: activity,
+              })),
+            }),
+          })),
+          subTrip: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
+            "@type": "Trip",
+            name: `Day ${day.day !== undefined ? day.day : idx + 1}`,
+            description: day.description || undefined,
+            partOfTrip: {
+              "@type": "TouristTrip",
+              name: tour.title,
+            },
+            ...(day.location && {
+              arrivalLocation: {
+                "@type": "Place",
+                name: day.location,
+              },
+            }),
+            ...(day.accommodation && {
+              accommodationBooking: {
+                "@type": "LodgingReservation",
+                lodgingBusiness: {
+                  "@type": "LodgingBusiness",
+                  name: day.accommodation,
+                },
+              },
+            }),
           })),
         }
       : null;
@@ -125,7 +174,12 @@ const TourItinerary: React.FC<{ tour: Tour }> = ({ tour }) => {
               : `https://thesafarisutra.com/tour/${tour?.id ?? ""}/itinerary`
           }
         />
-        {itineraryJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itineraryJsonLd) }} />}
+        {tourJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(tourJsonLd) }}
+          />
+        )}
       </Head>
 
       <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Tour Itinerary</h2>

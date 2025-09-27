@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { motion, Variants } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const VALID_TABS = ["overview", "itinerary", "inclusions", "policy"] as const;
 type Tab = typeof VALID_TABS[number];
@@ -33,7 +34,6 @@ const TourTabs: React.FC<Props> = ({
   setActiveTab: propSetActiveTab,
   slug: slugProp,
 }) => {
-  const router = useRouter();
   const pathname = usePathname() ?? "/";
 
   // derive active tab from pathname if present
@@ -71,18 +71,20 @@ const TourTabs: React.FC<Props> = ({
     return `/tour/${encodeURIComponent(next)}`;
   };
 
-  const switchTab = (tab: Tab) => {
-    if (!VALID_TABS.includes(tab) || tab === active) return;
-
+  // Generate URLs for each tab
+  const getTabUrl = (tab: Tab): string => {
     const base = buildBase();
-    const target = tab === "overview" ? base : `${base}/${tab}`;
+    return tab === "overview" ? base : `${base}/${tab}`;
+  };
 
-    router.push(target);
+  const handleTabClick = (tab: Tab) => {
+    if (!VALID_TABS.includes(tab)) return;
 
     if (typeof propSetActiveTab === "function") propSetActiveTab(tab);
     setLocalActive(tab);
     if (typeof onChangeTab === "function") onChangeTab(tab);
 
+    // Smooth scroll to top when tab changes
     if (typeof window !== "undefined") {
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -109,32 +111,42 @@ const TourTabs: React.FC<Props> = ({
         >
           <div className="flex justify-start md:justify-center overflow-x-auto scrollbar-hide">
             <div className="flex items-center py-1 px-1">
-              {VALID_TABS.map((tab, index) => (
-                <React.Fragment key={tab}>
-                  {index > 0 && <div className="h-5 w-px bg-gray-300 mx-2 md:mx-4" />}
+              {VALID_TABS.map((tab, index) => {
+                const tabUrl = getTabUrl(tab);
+                const isActive = active === tab;
+                
+                return (
+                  <React.Fragment key={tab}>
+                    {index > 0 && <div className="h-5 w-px bg-gray-300 mx-2 md:mx-4" />}
 
-                  <motion.button
-                    initial="initial"
-                    whileHover="hover"
-                    className={`relative whitespace-nowrap cursor-pointer px-1 md:px-2 py-2 text-sm md:text-base font-medium transition-all duration-300 ${
-                      active === tab ? "text-[var(--color-orange)]" : "text-gray-600 hover:text-gray-900"
-                    }`}
-                    onClick={() => switchTab(tab)}
-                    aria-current={active === tab ? "true" : "false"}
-                    type="button"
-                  >
-                    {tab.charAt(0).toUpperCase() + tab.slice(1)}
-                    {active === tab && (
-                      <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-orange)] rounded-full"
-                        initial={{ scaleX: 0 }}
-                        animate={{ scaleX: 1 }}
-                        transition={{ duration: 0.3, ease: [0.42, 0, 0.58, 1] }}
-                      />
-                    )}
-                  </motion.button>
-                </React.Fragment>
-              ))}
+                    <Link
+                      href={tabUrl}
+                      onClick={() => handleTabClick(tab)}
+                      className={`relative whitespace-nowrap cursor-pointer px-1 md:px-2 py-2 text-sm md:text-base font-medium transition-all duration-300 block ${
+                        isActive ? "text-[var(--color-orange)]" : "text-gray-600 hover:text-gray-900"
+                      }`}
+                      aria-current={isActive ? "page" : "false"}
+                      prefetch={true}
+                    >
+                      <motion.span
+                        initial="initial"
+                        whileHover="hover"
+                        className="block"
+                      >
+                        {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                        {isActive && (
+                          <motion.div
+                            className="absolute bottom-0 left-0 right-0 h-0.5 bg-[var(--color-orange)] rounded-full"
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ duration: 0.3, ease: [0.42, 0, 0.58, 1] }}
+                          />
+                        )}
+                      </motion.span>
+                    </Link>
+                  </React.Fragment>
+                );
+              })}
             </div>
           </div>
         </motion.div>
