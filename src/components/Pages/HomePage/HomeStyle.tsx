@@ -126,49 +126,59 @@ const planeVariants: Variants = {
 };
 
 type StyleCardData = {
-  img: string;
+  srcSetWebp: string;
+  srcFallback: string;
+  alt: string;
+  imageTitle: string;
   title: string;
   oneliner: string;
   color: string;
-  alt: string;
   width: number;
   height: number;
 };
 
 const cards: StyleCardData[] = [
   {
-    img: "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4",
+    srcSetWebp: "/images/Home/home-style-1-480.webp",
+    srcFallback: "/images/Home/home-style-1-480.webp",
+    alt: "Luxury glamping tent with comfortable furnishings illuminated by warm golden light at sunrise in a scenic wilderness setting",
+    imageTitle: "Glamping Experience — Luxury Meets Wilderness Adventure",
     title: "Glamping, Not Camping",
     oneliner: "Luxurious comfort meets wilderness adventure",
     color: "var(--color-orange)",
-    alt: "Luxury glamping tent with comfortable furnishings at sunrise",
     width: 480,
     height: 404,
   },
   {
-    img: "https://images.unsplash.com/photo-1600714480856-dc99b28892eb",
+    srcSetWebp: "/images/Home/home-style-2-480.webp",
+    srcFallback: "/images/Home/home-style-2-480.webp",
+    alt: "Professional safari guide pointing out wildlife to tourists during an educational nature tour in natural habitat",
+    imageTitle: "Expert Local Guides — Bringing Destinations to Life",
     title: "Guides Who Know Their Stuff",
     oneliner: "Expert local guides bringing destinations to life",
     color: "var(--color-dark-teal)",
-    alt: "Safari guide pointing out wildlife to tourists during a tour",
     width: 480,
     height: 404,
   },
   {
-    img: "https://images.unsplash.com/photo-1688820661462-a44e4b2770e8",
+    srcSetWebp: "/images/Home/home-style-3-480.webp",
+    srcFallback: "/images/Home/home-style-3-480.webp",
+    alt: "Traditional Bharatanatyam dancer in vibrant costume performing authentic classical Indian dance with graceful expressions",
+    imageTitle: "Authentic Cultural Experiences — Beyond Tourist Traps",
     title: "Culture Without the Clichés",
     oneliner: "Authentic cultural experiences beyond the tourist traps",
     color: "var(--color-yellow-orange)",
-    alt: "Traditional Bharatanatyam dancer performing authentic cultural dance",
     width: 480,
     height: 404,
   },
   {
-    img: "https://images.unsplash.com/photo-1506260408121-e353d10b87c7",
+    srcSetWebp: "/images/Home/home-style-4-480.webp",
+    srcFallback: "/images/Home/home-style-4-480.webp",
+    alt: "Breathtaking panoramic view of lush green rolling hills and valleys showcasing pristine eco-friendly sustainable travel destinations",
+    imageTitle: "Eco-Friendly Adventures — Green Travel with Positive Impact",
     title: "Green Travel (Not Just the Scenery)",
     oneliner: "Eco-friendly adventures with a positive footprint",
     color: "var(--color-green)",
-    alt: "Beautiful green hills showcasing eco-friendly sustainable travel destinations",
     width: 480,
     height: 404,
   },
@@ -205,17 +215,23 @@ const StyleCard = memo(function StyleCard({ card, idx }: { card: StyleCardData; 
       {/* Mobile Layout - Always Image on top, then title and oneliner (centered) */}
       <div className="flex flex-col items-center text-center md:hidden w-full">
         <div className="relative mb-4">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={card.img}
-            alt={card.alt}
-            className="w-[300px] h-[220px] object-cover rounded-2xl shadow-lg"
-            width={300}
-            height={220}
-            loading="lazy"
-            sizes="(max-width: 768px) 300px, (max-width: 1024px) 520px, 480px"
-            decoding="async"
-          />
+          <picture>
+            <source
+              srcSet={card.srcSetWebp}
+              sizes="300px"
+              type="image/webp"
+            />
+            <img
+              src={card.srcFallback}
+              alt={card.alt}
+              title={card.imageTitle}
+              className="w-[300px] h-[220px] object-cover rounded-2xl shadow-lg"
+              width={300}
+              height={220}
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           {isThirdCard && (
             <motion.img
               src="/graphics/greenplane.svg"
@@ -258,17 +274,23 @@ const StyleCard = memo(function StyleCard({ card, idx }: { card: StyleCardData; 
         // Image right on desktop
         <div className="hidden md:flex flex-col items-start md:w-1/2 relative">
           <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={card.img}
-              alt={card.alt}
-              className="md:w-[520px] md:h-[320px] lg:w-[480px] lg:h-[404px] object-cover rounded-2xl shadow-lg"
-              width={520}
-              height={320}
-              loading="lazy"
-              sizes="(max-width: 768px) 300px, (max-width: 1024px) 520px, 480px"
-              decoding="async"
-            />
+            <picture>
+              <source
+                srcSet={card.srcSetWebp}
+                sizes="(max-width: 1024px) 520px, 480px"
+                type="image/webp"
+              />
+              <img
+                src={card.srcFallback}
+                alt={card.alt}
+                title={card.imageTitle}
+                className="md:w-[520px] md:h-[320px] lg:w-[480px] lg:h-[404px] object-cover rounded-2xl shadow-lg"
+                width={520}
+                height={320}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
             {isThirdCard && (
               <motion.img
                 src="/graphics/greenplane.svg"
@@ -321,17 +343,23 @@ const StyleCard = memo(function StyleCard({ card, idx }: { card: StyleCardData; 
             <p className="text-gray-600 md:text-base lg:text-lg mt-1 lg:mt-2 text-left">{card.oneliner}</p>
           </div>
           <div className="relative">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={card.img}
-              alt={card.alt}
-              className="md:w-[520px] md:h-[320px] lg:w-[480px] lg:h-[404px] object-cover rounded-2xl shadow-lg"
-              width={520}
-              height={320}
-              loading="lazy"
-              sizes="(max-width: 768px) 300px, (max-width: 1024px) 520px, 480px"
-              decoding="async"
-            />
+            <picture>
+              <source
+                srcSet={card.srcSetWebp}
+                sizes="(max-width: 1024px) 520px, 480px"
+                type="image/webp"
+              />
+              <img
+                src={card.srcFallback}
+                alt={card.alt}
+                title={card.imageTitle}
+                className="md:w-[520px] md:h-[320px] lg:w-[480px] lg:h-[404px] object-cover rounded-2xl shadow-lg"
+                width={520}
+                height={320}
+                loading="lazy"
+                decoding="async"
+              />
+            </picture>
           </div>
         </div>
       )}
