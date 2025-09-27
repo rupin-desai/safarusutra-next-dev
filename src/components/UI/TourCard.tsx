@@ -142,6 +142,21 @@ const generateResponsiveSrcSet = (basePath?: string): string => {
   return srcSetEntries.join(', ');
 };
 
+// Helper function to get smallest image as fallback
+const getSmallestImageSrc = (basePath?: string): string => {
+  if (!basePath) return "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+  
+  // If it's already a 480px image, return as-is
+  if (basePath.includes('-480.')) return basePath;
+  
+  // Replace larger sizes with 480px version
+  return basePath
+    .replace('-1080.webp', '-480.webp')
+    .replace('-720.webp', '-480.webp')
+    .replace('-1080.jpg', '-480.jpg')
+    .replace('-720.jpg', '-480.jpg');
+};
+
 interface TourCardProps {
   tour: Tour;
 }
@@ -167,7 +182,8 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const routeId = `tour-route-${idStr}`;
 
   // Image handling - use new responsive properties or fallback to legacy
-  const imageSrc = tour.srcFallback || tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+  const baseSrc = tour.srcFallback || tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+  const imageSrc = getSmallestImageSrc(baseSrc); // Use smallest as fallback
   const imageAlt = tour.alt || tour.title || `Tour ${idStr}`;
   const imageTitle = tour.imageTitle || tour.title || `Tour ${idStr}`;
   
@@ -210,7 +226,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
           {responsiveSrcSet && (
             <source 
               srcSet={responsiveSrcSet}
-              sizes="(max-width: 480px) 320px, (max-width: 768px) 400px, (max-width: 1200px) 360px, 400px"
+              sizes="(max-width: 320px) 300px, (max-width: 480px) 320px, (max-width: 640px) 360px, (max-width: 768px) 380px, (max-width: 1024px) 360px, 400px"
               type="image/webp"
             />
           )}

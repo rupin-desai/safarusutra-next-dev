@@ -50,6 +50,30 @@ interface Props {
   onDateSelect?: (month: string, range: string) => void;
 }
 
+// Helper function to generate responsive srcSet from base path
+const generateResponsiveSrcSet = (basePath?: string): string => {
+  if (!basePath) return "";
+
+  // Extract the base path and extension
+  const lastSlash = basePath.lastIndexOf("/");
+  const lastDot = basePath.lastIndexOf(".");
+
+  if (lastSlash === -1 || lastDot === -1) return basePath;
+
+  const pathPrefix = basePath.substring(0, lastSlash + 1);
+  const nameWithoutExt = basePath.substring(lastSlash + 1, lastDot);
+  const extension = basePath.substring(lastDot);
+
+  // Generate responsive sizes for gallery: 320w, 640w, 768w, 1024w
+  const sizes = [320, 640, 768, 1024];
+  const srcSetEntries = sizes.map((size) => {
+    const imagePath = `${pathPrefix}${nameWithoutExt}-${size}${extension}`;
+    return `${imagePath} ${size}w`;
+  });
+
+  return srcSetEntries.join(", ");
+};
+
 const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [selectedTooltipInfo, setSelectedTooltipInfo] = useState<{ month: string; date: string } | null>(null);
@@ -159,21 +183,30 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
   // Helper function to get image properties from gallery item
   const getImageProps = (item: GalleryItem | string, index: number) => {
     if (typeof item === "string") {
-      // Legacy string format
+      // Legacy string format - generate responsive srcSet
       return {
-        src: item,
+        src: item.replace('-1080.webp', '-480.webp'), // Use smallest as fallback
         alt: `${tour.title ?? "Tour"} - ${index + 1}`,
         title: `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
-        srcSetWebp: undefined,
+        srcSetWebp: generateResponsiveSrcSet(item),
       };
     }
 
     // New object format
+    const srcSetWebp = item.srcSetWebp && item.srcSetWebp.includes(',') 
+      ? item.srcSetWebp // Already contains multiple sizes
+      : generateResponsiveSrcSet(item.srcSetWebp || item.srcFallback);
+
+    // Use smallest image as fallback src
+    const fallbackSrc = item.srcFallback 
+      ? item.srcFallback.replace('-1080.webp', '-480.webp')
+      : "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+
     return {
-      src: item.srcFallback || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2",
+      src: fallbackSrc,
       alt: item.alt || `${tour.title ?? "Tour"} - ${index + 1}`,
       title: item.imageTitle || `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
-      srcSetWebp: item.srcSetWebp,
+      srcSetWebp: srcSetWebp,
     };
   };
 
@@ -319,7 +352,7 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
                   {imageProps.srcSetWebp && (
                     <source
                       srcSet={imageProps.srcSetWebp}
-                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                      sizes="(max-width: 320px) 280px, (max-width: 480px) 320px, (max-width: 640px) 300px, (max-width: 768px) 350px, (max-width: 1024px) 400px, 450px"
                       type="image/webp"
                     />
                   )}
@@ -329,6 +362,8 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
                     title={imageProps.title}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                     loading="lazy"
+                    width={450}
+                    height={338}
                   />
                 </picture>
               </div>

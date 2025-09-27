@@ -37,6 +37,57 @@ const firstSrcFromSrcSet = (ss?: string): string | undefined => {
   return first.split(/\s+/)[0];
 };
 
+// Helper function to get smallest image as fallback
+const getSmallestImageSrc = (basePath?: string): string => {
+  if (!basePath) return "";
+  
+  // If it's already a 480px image, return as-is
+  if (basePath.includes('-480.')) return basePath;
+  
+  // Replace larger sizes with 480px version
+  return basePath
+    .replace('-1080.webp', '-480.webp')
+    .replace('-720.webp', '-480.webp')
+    .replace('-1080.jpg', '-480.jpg')
+    .replace('-720.jpg', '-480.jpg');
+};
+
+// Helper function to generate responsive srcSet from base path or ID
+const generateResponsiveSrcSet = (basePath?: string, slideId?: string): string => {
+  if (basePath && basePath.includes(',')) {
+    // Already contains multiple sizes
+    return basePath;
+  }
+  
+  if (basePath) {
+    // Extract the base path and extension
+    const lastSlash = basePath.lastIndexOf('/');
+    const lastDot = basePath.lastIndexOf('.');
+    
+    if (lastSlash !== -1 && lastDot !== -1) {
+      const pathPrefix = basePath.substring(0, lastSlash + 1);
+      const nameWithoutExt = basePath.substring(lastSlash + 1, lastDot);
+      const extension = basePath.substring(lastDot);
+      
+      // Generate responsive sizes: 480w, 720w, 1080w
+      const sizes = [480, 720, 1080];
+      const srcSetEntries = sizes.map(size => {
+        const imagePath = `${pathPrefix}${nameWithoutExt}-${size}${extension}`;
+        return `${imagePath} ${size}w`;
+      });
+      
+      return srcSetEntries.join(', ');
+    }
+  }
+  
+  // Fallback: generate from slide ID
+  if (slideId) {
+    return `/images/Destinations/${slideId}-480.webp 480w, /images/Destinations/${slideId}-720.webp 720w, /images/Destinations/${slideId}-1080.webp 1080w`;
+  }
+  
+  return "";
+};
+
 // keep helper to optionally randomize client-side only
 const getRandomizedHeroData = (data: Slide[]) => {
   if (!Array.isArray(data) || data.length <= 1) return data;
@@ -134,7 +185,11 @@ const HomeHero: React.FC = () => {
     const preloads: HTMLImageElement[] = [];
     // explicitly type `s` as Slide to avoid `any`
     shuffled.forEach((s: Slide) => {
-      const srcToPreload = s.srcFallback ?? firstSrcFromSrcSet(s.srcSetWebp);
+      const builtSrcSet = generateResponsiveSrcSet(s.srcSetWebp, s.id);
+      const firstSrc = firstSrcFromSrcSet(builtSrcSet);
+      const fallbackSrc = s.srcFallback ?? firstSrc ?? "";
+      const srcToPreload = getSmallestImageSrc(fallbackSrc); // Use smallest for preload
+      
       if (!srcToPreload) return; // nothing to preload
       const img = new Image();
       img.src = srcToPreload;
@@ -217,15 +272,19 @@ const HomeHero: React.FC = () => {
     <>
       <Navbar />
 
-      {/* ensure images are requested early */}
+      {/* ensure images are requested early - use smallest images for preload */}
       <div style={{ display: "none", visibility: "hidden" }}>
         {clientSlides.map((s, i) => {
-          const src = s.srcFallback ?? firstSrcFromSrcSet(s.srcSetWebp) ?? "";
+          const builtSrcSet = generateResponsiveSrcSet(s.srcSetWebp, s.id);
+          const firstSrc = firstSrcFromSrcSet(builtSrcSet);
+          const fallbackSrc = s.srcFallback ?? firstSrc ?? "";
+          const preloadSrc = getSmallestImageSrc(fallbackSrc);
+          
           return (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={`pre-${i}`}
-              src={src}
+              src={preloadSrc}
               alt={s.alt ?? s.title}
               title={s.imageTitle ?? s.alt ?? s.title} // imageTitle used here
               aria-hidden="true"
@@ -259,18 +318,23 @@ const HomeHero: React.FC = () => {
         </motion.div>
 
         {slides.map((slide, index) => {
-          const builtSrcSet = slide.srcSetWebp ?? (slide.id ? `/images/Destinations/${slide.id}-480.webp 480w, /images/Destinations/${slide.id}-720.webp 720w, /images/Destinations/${slide.id}-1080.webp 1080w` : undefined);
+          const builtSrcSet = generateResponsiveSrcSet(slide.srcSetWebp, slide.id);
           const firstSrc = firstSrcFromSrcSet(builtSrcSet);
           const fallbackSrc = slide.srcFallback ?? firstSrc ?? "";
+          const smallestSrc = getSmallestImageSrc(fallbackSrc); // Use smallest as img src
 
           return (
             <div key={`bg-${index}`} className="absolute inset-0 z-0 transition-opacity duration-500" style={{ opacity: index === currentSlide ? 1 : 0, zIndex: index === currentSlide ? 0 : -1 }}>
               {builtSrcSet ? (
                 <picture>
-                  <source type="image/webp" srcSet={builtSrcSet} sizes="100vw" />
-                  {/* fallback uses provided srcFallback or first src from srcSet */}
+                  <source 
+                    type="image/webp" 
+                    srcSet={builtSrcSet} 
+                    sizes="(max-width: 480px) 480px, (max-width: 768px) 720px, 100vw" 
+                  />
+                  {/* Use smallest image as fallback */}
                   <img
-                    src={fallbackSrc}
+                    src={smallestSrc}
                     alt={slide.alt ?? slide.title}
                     title={slide.imageTitle ?? slide.alt ?? slide.title}
                     className="w-full h-full object-cover"
@@ -282,7 +346,7 @@ const HomeHero: React.FC = () => {
                 // fallback if no srcSet (rare)
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  src={fallbackSrc}
+                  src={smallestSrc}
                   alt={slide.alt ?? slide.title}
                   title={slide.imageTitle ?? slide.alt ?? slide.title}
                   className="w-full h-full object-cover"
