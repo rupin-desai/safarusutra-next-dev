@@ -127,12 +127,18 @@ const AboutExperience: React.FC = () => {
             </motion.h2>
 
             {/* Image now appears right after the title on mobile - standard img */}
-            <motion.div className="w-full mb-8 md:hidden" variants={imageVariants}>
+            <motion.div
+              className="w-full mb-8 md:hidden"
+              variants={imageVariants}
+            >
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="https://images.unsplash.com/photo-1442570468985-f63ed5de9086"
+                  src="/images/about/about-experience-1080.webp"
+                  srcSet="/images/about/about-experience-480.webp 480w, /images/about/about-experience-720.webp 720w, /images/about/about-experience-1080.webp 1080w"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                   alt="Hot air balloons over African savannah at sunrise"
+                  title="A Scenic Train Journey Through the Ghats to Goa"
                   className="w-full h-64 object-cover"
                   loading="lazy"
                   width={800}
@@ -141,40 +147,66 @@ const AboutExperience: React.FC = () => {
               </div>
             </motion.div>
 
-            <motion.div className="space-y-4 mb-8 text-justify" variants={textVariants}>
-              <p className="text-lg leading-relaxed" style={{ textAlignLast: "left" }}>
+            <motion.div
+              className="space-y-4 mb-8 text-justify"
+              variants={textVariants}
+            >
+              <p
+                className="text-lg leading-relaxed"
+                style={{ textAlignLast: "left" }}
+              >
                 At Safari Sutra, we craft journeys that create lasting memories
                 beyond the ordinary tourist trail. Our experiences connect you
-                intimately with Africa&#39;s breathtaking landscapes and wildlife.
+                intimately with Africa&#39;s breathtaking landscapes and
+                wildlife.
               </p>
 
-              <p className="text-lg leading-relaxed" style={{ textAlignLast: "left" }}>
+              <p
+                className="text-lg leading-relaxed"
+                style={{ textAlignLast: "left" }}
+              >
                 From hot air balloon safaris to encounters with local Maasai
                 warriors, each adventure is designed to transform your
                 perspective while honoring our commitment to sustainable tourism
                 and cultural respect.
               </p>
 
-              <p className="text-lg leading-relaxed" style={{ textAlignLast: "left" }}>
+              <p
+                className="text-lg leading-relaxed"
+                style={{ textAlignLast: "left" }}
+              >
                 We tailor each journey to your interests while preserving these
                 precious ecosystems for generations to come.
               </p>
             </motion.div>
 
-            <motion.div variants={buttonVariants} className="flex justify-center md:justify-start w-full">
-              <SSButton color="var(--color-orange)" scrollTo="reviews" variant="primary">
+            <motion.div
+              variants={buttonVariants}
+              className="flex justify-center md:justify-start w-full"
+            >
+              <SSButton
+                color="var(--color-orange)"
+                scrollTo="reviews"
+                variant="primary"
+              >
                 See What Our Clients Say
               </SSButton>
             </motion.div>
           </motion.div>
 
           {/* Right content - Image (hidden on mobile) - standard img */}
-          <motion.div className="hidden md:block md:w-1/2" variants={imageVariants}>
+          <motion.div
+            className="hidden md:block md:w-1/2"
+            variants={imageVariants}
+          >
             <div className="rounded-2xl overflow-hidden shadow-xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="https://images.unsplash.com/photo-1442570468985-f63ed5de9086"
+                src="/images/about/about-experience-1080.webp"
+                srcSet="/images/about/about-experience-480.webp 480w, /images/about/about-experience-720.webp 720w, /images/about/about-experience-1080.webp 1080w"
+                sizes="(max-width: 768px) 100vw, (min-width: 769px) 50vw"
                 alt="Hot air balloons over African savannah at sunrise"
+                title="A Scenic Train Journey Through the Ghats to Goa"
                 className="w-full h-[600px] object-cover"
                 loading="lazy"
                 width={1200}

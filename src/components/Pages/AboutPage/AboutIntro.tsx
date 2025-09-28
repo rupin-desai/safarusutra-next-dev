@@ -114,7 +114,8 @@ const AboutIntro: React.FC = () => {
         <motion.div animate={floatingAnimate} transition={floatingTransition} className="relative w-full h-full">
           <Image
             src="/graphics/balloon.svg"
-            alt=""
+            alt="Decorative element balloon used for design"
+            title = "Decorative balloon graphic"
             fill
             className="object-contain"
             draggable={false}

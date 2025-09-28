@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -37,16 +37,26 @@ const AboutBanner = () => {
         />
       </motion.div>
 
-      {/* Background image with overlay - standard img tag */}
+      {/* Background image with overlay - responsive sources from /images/about */}
       <div className="absolute inset-0 w-full h-full z-0">
-        <Image
-          src="https://images.unsplash.com/photo-1506929562872-bb421503ef21"
-          alt="Mountain landscape with stunning sunset view"
-          fill
-          className="object-cover"
-          priority={false}
-          unoptimized
-        />
+        <picture>
+          <source
+            srcSet="/images/about/about-banner-bg-480.webp 480w, /images/about/about-banner-bg-720.webp 720w, /images/about/about-banner-bg-1080.webp 1080w"
+            sizes="100vw"
+            type="image/webp"
+          />
+          {/* fallback img */}
+          <img
+            src="/images/about/about-banner-bg-1080.webp"
+            srcSet="/images/about/about-banner-bg-480.webp 480w, /images/about/about-banner-bg-720.webp 720w, /images/about/about-banner-bg-1080.webp 1080w"
+            sizes="100vw"
+            alt="Beach ocean view with one boat"
+            title="Beach ocean view with one boat"
+            className="w-full h-full object-cover"
+            loading="lazy"
+          />
+        </picture>
+
         {/* Dark overlay for better text readability */}
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
@@ -103,7 +113,11 @@ const AboutBanner = () => {
             damping: 20,
           }}
         >
-          <SSButton variant="primary" color="var(--color-orange)" to="/destination/">
+          <SSButton
+            variant="primary"
+            color="var(--color-orange)"
+            to="/destination/"
+          >
             View Destinations
           </SSButton>
 

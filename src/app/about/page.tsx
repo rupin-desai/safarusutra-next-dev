@@ -10,7 +10,7 @@ import AboutBanner from "@/components/Pages/AboutPage/AboutBanner";
 import HomeHighlight from "@/components/Pages/HomePage/HomeHighlight";
 
 export const metadata: Metadata = {
-  title: "About Us | Safari Sutra",
+  title: "About Us | Safari Sutra Tours & Travels in India",
   description:
     "Learn about Safari Sutra, our story, values, and what makes us different. Meet the team behind your memorable travel experiences.",
   openGraph: {

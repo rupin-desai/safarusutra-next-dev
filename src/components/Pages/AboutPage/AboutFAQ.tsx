@@ -18,7 +18,12 @@ interface FAQItemProps {
   onClick: () => void;
 }
 
-const FAQItem: React.FC<FAQItemProps> = ({ question, answer, isOpen, onClick }) => {
+const FAQItem: React.FC<FAQItemProps> = ({
+  question,
+  answer,
+  isOpen,
+  onClick,
+}) => {
   return (
     <div className="border-b border-white/20 py-5">
       <button
@@ -149,6 +154,22 @@ const AboutFAQ: React.FC = () => {
     setOpenIndex((prev) => (prev === index ? -1 : index));
   };
 
+  // build JSON-LD from faqData
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqData.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: f.answer,
+      },
+    })),
+  };
+
+  const faqJsonLd = JSON.stringify(faqSchema);
+
   return (
     <section className="pb-16 pt-8 px-4">
       <motion.div
@@ -158,6 +179,13 @@ const AboutFAQ: React.FC = () => {
         viewport={{ once: true, amount: 0.1 }}
         variants={sectionVariants}
       >
+        {/* Inject JSON-LD for FAQ rich result */}
+        <script
+          type="application/ld+json"
+
+          dangerouslySetInnerHTML={{ __html: faqJsonLd }}
+        />
+
         <motion.div className="mb-12 text-center" variants={titleVariants}>
           <SectionTitle
             icon={<HelpCircle size={16} />}
@@ -167,8 +195,8 @@ const AboutFAQ: React.FC = () => {
             centered={true}
           />
           <p className="mt-4 max-w-2xl mx-auto text-gray-600">
-            Everything you need to know about our safari experiences. Can&#39;t find
-            what you&#39;re looking for?{' '}
+            Everything you need to know about our safari experiences. Can&#39;t
+            find what you&#39;re looking for?{" "}
             <Link
               href="/contact/"
               className="text-[var(--color-orange)] font-medium hover:underline"
@@ -190,7 +218,13 @@ const AboutFAQ: React.FC = () => {
           {/* Decorative suitcase image (no window usage) */}
           <div className="absolute right-10 bottom-5 opacity-10 pointer-events-none w-44 md:w-60">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/illustrations/suitcase.svg" alt="" aria-hidden="true" className="w-full h-auto" />
+            <img
+              src="/illustrations/suitcase.svg"
+              alt="A decorative suitcase for FAQ section"
+              title="Decorative suitcase for FAQ section"
+              aria-hidden="true"
+              className="w-full h-auto"
+            />
           </div>
 
           <div className="relative z-10">

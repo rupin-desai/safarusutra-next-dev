@@ -79,7 +79,7 @@ type Stat = {
   suffix: string;
   label: string;
   text: string;
-  img: string;
+  img: string; // local image path (will be used to build srcSet)
   alt: string;
   color: string;
   duration: number;
@@ -87,13 +87,14 @@ type Stat = {
   isInfinity: boolean;
 };
 
+// Use /images/about responsive files
 const stats: Stat[] = [
   {
     rawNumber: 15000,
     suffix: "+",
     label: "Trips Planned",
     text: "We've helped travelers design over 15,000 personalized adventures across the globe, each one tailored to create unforgettable experiences.",
-    img: "https://images5.alphacoders.com/541/thumb-1920-541026.jpg",
+    img: "/images/about/about-stats-1-1080.webp",
     alt: "A group of travelers exploring a scenic mountain landscape at sunrise",
     color: "var(--color-orange)",
     duration: 2.5,
@@ -105,7 +106,7 @@ const stats: Stat[] = [
     suffix: "+",
     label: "International Escapades",
     text: "Over 1,000 international adventures and counting! From African safaris to European getaways, we've helped travelers explore every corner of the world.",
-    img: "https://images.pexels.com/photos/386000/pexels-photo-386000.jpeg",
+    img: "/images/about/about-stats-2-1080.webp", // will build 480/720/1080 srcset
     alt: "Passport with travel stamps alongside travel planning materials",
     color: "var(--color-dark-teal)",
     duration: 2,
@@ -117,7 +118,7 @@ const stats: Stat[] = [
     suffix: "",
     label: "Memories Made",
     text: "Countless memories created (and ∞ chai cups consumed ☕) throughout our journey. Each adventure adds another story to our ever-growing collection of travel tales.",
-    img: "https://images.pexels.com/photos/459270/pexels-photo-459270.jpeg",
+    img: "/images/about/about-stats-3-1080.webp",
     alt: "A group of friends sharing memories around a campfire during sunset",
     color: "var(--color-yellow-orange)",
     duration: 3,
@@ -125,6 +126,29 @@ const stats: Stat[] = [
     isInfinity: true,
   },
 ];
+
+// Helper to build a srcSet from a filename that ends with -{size}.ext or a base file
+const buildSrcSet = (imagePath: string) => {
+  if (!imagePath) return "";
+  const lastDot = imagePath.lastIndexOf(".");
+  if (lastDot === -1) return imagePath;
+
+  const ext = imagePath.substring(lastDot);
+  let prefix = imagePath.substring(0, lastDot);
+
+  // Remove any trailing size suffix like -480, -720, -1080
+  prefix = prefix.replace(/-(480|720|1080)$/, "");
+
+  const sizes = [480, 720, 1080];
+  return sizes.map((s) => `${prefix}-${s}${ext} ${s}w`).join(", ");
+};
+
+// Helper to get smallest (480) variant as fallback src
+const smallestVariant = (imagePath: string) => {
+  if (!imagePath) return imagePath;
+  if (imagePath.includes("-480.")) return imagePath;
+  return imagePath.replace(/-(1080|720)\./, "-480.");
+};
 
 interface StatCardProps {
   stat: Stat;
@@ -136,6 +160,9 @@ const StatCard: React.FC<StatCardProps> = ({ stat, idx, isLast }) => {
   const isEven = idx % 2 === 0;
   const ref = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(ref, { once: true, amount: 0.3 });
+
+  const srcSet = buildSrcSet(stat.img);
+  const fallbackSrc = smallestVariant(stat.img);
 
   return (
     <motion.div
@@ -185,15 +212,26 @@ const StatCard: React.FC<StatCardProps> = ({ stat, idx, isLast }) => {
       </div>
 
       <div className={`md:w-1/2 w-full ${!isEven && "md:order-1"}`}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={stat.img}
-          alt={stat.alt}
-          className="w-full h-[280px] md:h-[400px] object-cover rounded-2xl shadow-lg"
-          width={800}
-          height={600}
-          loading="lazy"
-        />
+        <picture>
+          {srcSet && (
+            <source
+              srcSet={srcSet}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              type="image/webp"
+            />
+          )}
+          <img
+            src={fallbackSrc}
+            srcSet={srcSet || undefined}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            alt={stat.alt}
+            title={stat.label}
+            className="w-full h-[280px] md:h-[400px] object-cover rounded-2xl shadow-lg"
+            width={800}
+            height={600}
+            loading="lazy"
+          />
+        </picture>
       </div>
     </motion.div>
   );
@@ -256,7 +294,8 @@ const AboutStats: React.FC = () => {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/graphics/planeoutline.svg"
-            alt=""
+            alt="A plane graphical element for decoration in about stats section"
+            title="Decorative plane for about stats section"
             className="w-full h-auto"
             draggable={false}
             width={256}

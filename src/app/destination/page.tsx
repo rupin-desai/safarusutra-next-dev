@@ -3,7 +3,7 @@ import React from "react";
 import DestinationPageClient from "./DestinationPage.client";
 
 export const metadata: Metadata = {
-  title: "Destinations | Safari Sutra",
+  title: "Destinations | Safari Sutra Tours & Travels in India",
   description:
     "Discover destinations with Safari Sutra — beaches, mountains, wildlife and cultural escapes. Browse destination guides, highlights and packages.",
   keywords: [
