@@ -29,6 +29,19 @@ const containerVariants: Variants = {
   },
 };
 
+// Helper function to format date to ISO 8601 with timezone
+const formatDateToISO = (dateString: string): string => {
+  try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return new Date().toISOString();
+    }
+    return date.toISOString();
+  } catch {
+    return new Date().toISOString();
+  }
+};
+
 export default function BlogsPageClient() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
@@ -94,19 +107,31 @@ export default function BlogsPageClient() {
         "@type": "ImageObject",
         url: "https://thesafarisutra.com/logos/logo.png",
       },
+      url: "https://thesafarisutra.com",
     },
     blogPost: Array.isArray(blogs)
       ? blogs.map((blog) => ({
           "@type": "BlogPosting",
           headline: blog.title,
           description: blog.description,
-          datePublished: blog.datePublished,
+          datePublished: formatDateToISO(blog.datePublished),
+          dateModified: formatDateToISO(blog.datePublished),
           author: {
             "@type": "Person",
             name: blog.author,
+            url: "https://thesafarisutra.com/about",
           },
           image: blog.image,
           url: `https://thesafarisutra.com/blogs/${blog.slug}`,
+          publisher: {
+            "@type": "Organization",
+            name: "Safari Sutra",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://thesafarisutra.com/logos/logo.png",
+            },
+            url: "https://thesafarisutra.com",
+          },
         }))
       : [],
   };

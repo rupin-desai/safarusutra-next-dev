@@ -32,6 +32,20 @@ const getCategoryColor = (category: string): string => {
   return CATEGORY_COLORS[category] || "#f59e0b";
 };
 
+// Helper function to format date to ISO 8601 with timezone
+const formatDateToISO = (dateString: string): string => {
+  try {
+    const date = new Date(dateString);
+    // If date is invalid, return current date
+    if (isNaN(date.getTime())) {
+      return new Date().toISOString();
+    }
+    return date.toISOString();
+  } catch {
+    return new Date().toISOString();
+  }
+};
+
 export function generateStaticParams() {
   if (!Array.isArray(blogs)) return [];
   return blogs.map((blog) => ({
@@ -65,7 +79,8 @@ export async function generateMetadata({
       description: blog.description || "Read this travel story on Safari Sutra",
       url: pageUrl,
       type: "article",
-      publishedTime: blog.datePublished,
+      publishedTime: formatDateToISO(blog.datePublished),
+      modifiedTime: formatDateToISO(blog.datePublished),
       authors: [blog.author],
       tags: blog.tags || [],
       images: [
@@ -146,13 +161,16 @@ export default function BlogSlugPage({ params }: BlogSlugPageProps) {
     "@type": "BlogPosting",
     headline: blog.title,
     description: blog.description || "",
-    datePublished: blog.datePublished || "",
-    dateModified: blog.datePublished || "",
+    datePublished: formatDateToISO(blog.datePublished),
+    dateModified: formatDateToISO(blog.datePublished),
     author: {
       "@type": "Person",
       name: blog.author || "Safari Sutra",
+      url: "https://thesafarisutra.com/about",
     },
-    image: blog.image || "",
+    image:
+      blog.image ||
+      "https://images.unsplash.com/photo-1533850595620-7b1711221751",
     publisher: {
       "@type": "Organization",
       name: "Safari Sutra",
@@ -160,6 +178,7 @@ export default function BlogSlugPage({ params }: BlogSlugPageProps) {
         "@type": "ImageObject",
         url: "https://thesafarisutra.com/logos/logo.png",
       },
+      url: "https://thesafarisutra.com",
     },
     mainEntityOfPage: {
       "@type": "WebPage",
