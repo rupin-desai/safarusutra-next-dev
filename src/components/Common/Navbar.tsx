@@ -16,7 +16,9 @@ type NavbarProps = {
 const navbarVariants: Variants = {
   visible: (scrolled: boolean) => ({
     transform: "translate3d(0px, 0px, 0px)",
-    backgroundColor: scrolled ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0)",
+    backgroundColor: scrolled
+      ? "rgba(255, 255, 255, 0.9)"
+      : "rgba(255, 255, 255, 0)",
     boxShadow: scrolled ? "0 4px 6px -1px rgba(0, 0, 0, 0.1)" : "none",
     transition: {
       type: "spring",
@@ -190,7 +192,11 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
     ? "var(--color-green)"
     : "white";
 
-  const hamburgerColor = isLegalPage ? "bg-[var(--color-medium-brown)]" : scrolled ? "bg-gray-800" : "bg-white";
+  const hamburgerColor = isLegalPage
+    ? "bg-[var(--color-medium-brown)]"
+    : scrolled
+    ? "bg-gray-800"
+    : "bg-white";
 
   return (
     <>
@@ -221,16 +227,22 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
           transform: scaleX(1);
         }
 
-        ${isLegalPage ? `
+        ${
+          isLegalPage
+            ? `
         .navbar-legal {
           background-color: rgba(255, 255, 255, 0.9) !important;
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
         }
-        ` : ""}
+        `
+            : ""
+        }
       `}</style>
 
       <motion.nav
-        className={`fixed top-0 left-0 w-full z-50 ${isLegalPage ? "navbar-legal" : ""}`}
+        className={`fixed top-0 left-0 w-full z-50 ${
+          isLegalPage ? "navbar-legal" : ""
+        }`}
         initial="hidden"
         animate={visible ? "visible" : "hidden"}
         custom={scrolled || isLegalPage}
@@ -238,15 +250,36 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between py-4 px-6">
           {/* Logo - Left */}
-          <motion.div className="flex-shrink-0" initial="initial" animate="animate" variants={logoVariants}>
+          <motion.div
+            className="flex-shrink-0"
+            initial="initial"
+            animate="animate"
+            variants={logoVariants}
+          >
             <Link href="/" className="flex flex-col items-center">
-              <Image src="/logos/logo.svg"  title="Logo of Safari Sutra" alt="SafariSutra" width={40} height={40} unoptimized />
-              <span className={`text-xs md:text-sm font-extralight mt-1 ${textColor}`}>SAFARI SUTRA</span>
+              <Image
+                src="/logos/logo.svg"
+                title="Logo of Safari Sutra"
+                alt="SafariSutra"
+                width={40}
+                height={40}
+                unoptimized
+              />
+              <span
+                className={`text-xs md:text-sm font-extralight mt-1 ${textColor}`}
+              >
+                SAFARI SUTRA
+              </span>
             </Link>
           </motion.div>
 
           {/* Desktop Navigation - Center */}
-          <motion.div className="hidden md:flex items-center justify-center flex-1" initial="initial" animate="animate" variants={navLinksVariants}>
+          <motion.div
+            className="hidden md:flex items-center justify-center flex-1"
+            initial="initial"
+            animate="animate"
+            variants={navLinksVariants}
+          >
             <div className="flex space-x-8">
               {[
                 { href: "/", label: "Home" },
@@ -254,10 +287,13 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                 { href: "/destination/", label: "Destinations" },
                 { href: "/fixed-departures/", label: "Tours" },
                 { href: "/hire/", label: "Hire" },
+                { href: "/blogs/", label: "Blogs" },
               ].map((link) => {
-                 if (link.href === "/fixed-departures/") {
-                   const isActive = pathname.startsWith("/fixed-departures/") || pathname.startsWith("/tour/");
-                   return (
+                if (link.href === "/fixed-departures/") {
+                  const isActive =
+                    pathname.startsWith("/fixed-departures/") ||
+                    pathname.startsWith("/tour/");
+                  return (
                     <div
                       key={link.href}
                       ref={dropdownRef}
@@ -265,83 +301,132 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                       onMouseEnter={() => scheduleOpen()}
                       onMouseLeave={() => scheduleClose()}
                     >
-                       <button
-                         onClick={() => setToursOpen((v) => !v)}
-                         className={`nav-link uppercase font-medium transition-colors ${textColor} ${isActive ? "active" : ""}`}
-                         aria-expanded={toursOpen}
-                         aria-haspopup="true"
-                         aria-controls="tours-menu"
-                         style={{ background: "transparent", border: "none" }}
-                       >
-                         {link.label}
-                       </button>
- 
-                       <AnimatePresence>
-                         {toursOpen && (
-                           <motion.div
-                             id="tours-menu"
-                             role="menu"
-                             initial={{ opacity: 0, scale: 0.95, y: -6 }}
-                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                             exit={{ opacity: 0, scale: 0.98, y: -6 }}
-                             transition={{ duration: 0.18, ease: "easeOut" }}
-                             className="absolute left-0 mt-2 bg-white rounded shadow-md"
-                             style={{
-                               minWidth: 180,
-                               zIndex: 100,
-                               padding: "6px 0",
-                               transformOrigin: "top left",
-                             }}
-                             onMouseEnter={() => {
-                               if (closeTimerRef.current) {
-                                 window.clearTimeout(closeTimerRef.current);
-                                 closeTimerRef.current = null;
-                               }
-                             }}
-                             onMouseLeave={() => scheduleClose()}
-                           >
-                             <Link href="/fixed-departures/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                               Fixed Departures
-                             </Link>
-                             <Link href="/tour/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                               All Tours
-                             </Link>
-                           </motion.div>
-                         )}
-                       </AnimatePresence>
-                     </div>
-                   );
-                 }
- 
-                 const isActive = pathname === link.href;
-                 return (
-                   <Link key={link.href} href={link.href} className={`nav-link uppercase font-medium transition-colors ${textColor} ${isActive ? "active" : ""}`}>
-                     {link.label}
-                   </Link>
-                 );
-               })}
+                      <button
+                        onClick={() => setToursOpen((v) => !v)}
+                        className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                          isActive ? "active" : ""
+                        }`}
+                        aria-expanded={toursOpen}
+                        aria-haspopup="true"
+                        aria-controls="tours-menu"
+                        style={{ background: "transparent", border: "none" }}
+                      >
+                        {link.label}
+                      </button>
+
+                      <AnimatePresence>
+                        {toursOpen && (
+                          <motion.div
+                            id="tours-menu"
+                            role="menu"
+                            initial={{ opacity: 0, scale: 0.95, y: -6 }}
+                            animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.98, y: -6 }}
+                            transition={{ duration: 0.18, ease: "easeOut" }}
+                            className="absolute left-0 mt-2 bg-white rounded shadow-md"
+                            style={{
+                              minWidth: 180,
+                              zIndex: 100,
+                              padding: "6px 0",
+                              transformOrigin: "top left",
+                            }}
+                            onMouseEnter={() => {
+                              if (closeTimerRef.current) {
+                                window.clearTimeout(closeTimerRef.current);
+                                closeTimerRef.current = null;
+                              }
+                            }}
+                            onMouseLeave={() => scheduleClose()}
+                          >
+                            <Link
+                              href="/fixed-departures/"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              Fixed Departures
+                            </Link>
+                            <Link
+                              href="/tour/"
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            >
+                              All Tours
+                            </Link>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                      isActive ? "active" : ""
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </div>
           </motion.div>
 
           {/* Contact Button - Right */}
-          <motion.div className="hidden md:block" initial="initial" animate="animate" variants={contactButtonVariants}>
-            <SSButton to="/contact/" variant="primary" color={isLegalPage ? "var(--color-orange)" : "var(--color-green)"} className="px-3">
+          <motion.div
+            className="hidden md:block"
+            initial="initial"
+            animate="animate"
+            variants={contactButtonVariants}
+          >
+            <SSButton
+              to="/contact/"
+              variant="primary"
+              color={isLegalPage ? "var(--color-orange)" : "var(--color-green)"}
+              className="px-3"
+            >
               Contact Us
             </SSButton>
           </motion.div>
 
           {/* Hamburger Icon for Mobile */}
-          <motion.div className="md:hidden cursor-pointer" initial="initial" animate="animate" variants={logoVariants} onClick={toggleMenu}>
-            <div className={`w-6 h-0.5 mb-1.5 transition-all ${hamburgerColor} ${isOpen ? "transform rotate-45 translate-y-2" : ""}`} />
-            <div className={`w-6 h-0.5 mb-1.5 transition-all ${hamburgerColor} ${isOpen ? "opacity-0" : ""}`} />
-            <div className={`w-6 h-0.5 transition-all ${hamburgerColor} ${isOpen ? "transform -rotate-45 -translate-y-2" : ""}`} />
+          <motion.div
+            className="md:hidden cursor-pointer"
+            initial="initial"
+            animate="animate"
+            variants={logoVariants}
+            onClick={toggleMenu}
+          >
+            <div
+              className={`w-6 h-0.5 mb-1.5 transition-all ${hamburgerColor} ${
+                isOpen ? "transform rotate-45 translate-y-2" : ""
+              }`}
+            />
+            <div
+              className={`w-6 h-0.5 mb-1.5 transition-all ${hamburgerColor} ${
+                isOpen ? "opacity-0" : ""
+              }`}
+            />
+            <div
+              className={`w-6 h-0.5 transition-all ${hamburgerColor} ${
+                isOpen ? "transform -rotate-45 -translate-y-2" : ""
+              }`}
+            />
           </motion.div>
         </div>
       </motion.nav>
 
       {/* Separate AnimatePresence for the mobile menu */}
       <AnimatePresence>
-        {isOpen && <MobileMenu key="mobile-menu" isOpen={isOpen} toggleMenu={toggleMenu} isLegalPage={isLegalPage} />}
+        {isOpen && (
+          <MobileMenu
+            key="mobile-menu"
+            isOpen={isOpen}
+            toggleMenu={toggleMenu}
+            isLegalPage={isLegalPage}
+          />
+        )}
       </AnimatePresence>
     </>
   );

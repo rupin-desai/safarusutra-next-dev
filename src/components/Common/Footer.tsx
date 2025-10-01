@@ -262,6 +262,12 @@ const Footer = () => {
               >
                 Hire
               </Link>
+              <Link
+                href="/blogs/"
+                className="text-white  hover:underline whitespace-nowrap"
+              >
+                Blogs
+              </Link>
             </div>
           </motion.div>
 

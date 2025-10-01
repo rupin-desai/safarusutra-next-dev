@@ -10,6 +10,7 @@ interface SectionTitleProps {
   containerClassName?: string;
   titleSize?: "small" | "medium" | "large" | "default";
   centered?: boolean;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 /**
@@ -24,6 +25,7 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
   containerClassName = "",
   titleSize = "default",
   centered = true,
+  as = "h2",
 }) => {
   // Get the appropriate classes based on the titleSize prop
   const getTitleSizeClasses = () => {
@@ -43,17 +45,19 @@ const SectionTitle: React.FC<SectionTitleProps> = ({
     ? "items-center text-center"
     : "items-start text-left";
 
+  const TitleTag = as;
+
   return (
     <div className={`flex flex-col ${alignmentClass} ${containerClassName}`}>
       <div className="mb-3">
         <TitlePill icon={icon} text={pillText} color={color} />
       </div>
-      <h2
+      <TitleTag
         className={`${getTitleSizeClasses()} font-family-oswald font-medium mb-8 ${titleClassName}`}
         style={{ fontFamily: "var(--font-family-oswald)" }}
       >
         {title}
-      </h2>
+      </TitleTag>
     </div>
   );
 };

@@ -50,11 +50,12 @@ interface Breadcrumb {
 }
 
 interface HeroSectionProps {
-  title: string;
+  title?: string;
   backgroundImage: string;
   overlay?: number;
   titleSize?: string;
   customBreadcrumbs?: Breadcrumb[] | null;
+  compact?: boolean;
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({
@@ -63,6 +64,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   overlay = 0.2,
   titleSize = "text-4xl md:text-6xl lg:text-7xl",
   customBreadcrumbs = null,
+  compact = false,
 }) => {
   const pathname = usePathname() ?? "/";
 
@@ -81,15 +83,25 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const breadcrumbs: Breadcrumb[] =
     (customBreadcrumbs ?? (getBreadcrumbs(pathname) as Breadcrumb[])) || [];
 
+  // Check if this is a blog slug page (not the main /blogs page)
+  const isBlogSlugPage =
+    pathname.startsWith("/blogs/") &&
+    pathname !== "/blogs" &&
+    !pathname.endsWith("/blogs");
+
   return (
     <>
       <Navbar />
-      <section className="relative flex flex-col items-center justify-center overflow-hidden h-[40vh] pt-16">
+      <section
+        className={`relative flex flex-col items-center justify-center overflow-hidden pt-16 ${
+          isBlogSlugPage || compact ? "h-[25vh]" : "h-[40vh]"
+        }`}
+      >
         <div className="absolute inset-0 z-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={backgroundImageSrc}
-            alt={`${title} background image`}
+            alt={`${title || "Page"} background image`}
             className="w-full h-full object-cover"
             loading="eager"
           />
@@ -103,14 +115,16 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         </div>
 
         <div className="container mx-auto px-4 z-10 text-center flex flex-col items-center justify-center">
-          <motion.h1
-            className={`text-white font-family-baloo ${titleSize} uppercase text-center font-bold z-10 drop-shadow-lg mb-4`}
-            initial="initial"
-            animate={animationState}
-            variants={titleVariants}
-          >
-            {title}
-          </motion.h1>
+          {!isBlogSlugPage && !compact && title && (
+            <motion.h1
+              className={`text-white font-family-baloo ${titleSize} uppercase text-center font-bold z-10 drop-shadow-lg mb-4`}
+              initial="initial"
+              animate={animationState}
+              variants={titleVariants}
+            >
+              {title}
+            </motion.h1>
+          )}
 
           {breadcrumbs && breadcrumbs.length > 0 && (
             <motion.div

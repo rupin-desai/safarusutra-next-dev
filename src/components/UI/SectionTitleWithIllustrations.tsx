@@ -16,6 +16,7 @@ interface Props {
   containerClassName?: string;
   titleSize?: TitleSize;
   showIllustrations?: boolean;
+  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 // Title animation variants
@@ -90,6 +91,7 @@ const SectionTitleWithIllustrations: React.FC<Props> = ({
   containerClassName = "",
   titleSize = "medium",
   showIllustrations = true,
+  as = "h2",
 }) => {
   // Select random illustrations and colors for left and right sides
   const { leftIllustration, rightIllustration } = useMemo(() => {
@@ -173,6 +175,7 @@ const SectionTitleWithIllustrations: React.FC<Props> = ({
           color={color}
           centered={centered}
           titleSize={titleSize}
+          as={as}
         />
       </motion.div>
     </div>
