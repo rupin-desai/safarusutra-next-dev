@@ -134,8 +134,8 @@ const AboutExperience: React.FC = () => {
               <div className="rounded-2xl overflow-hidden shadow-xl">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/images/about/about-experience-1080.webp"
-                  srcSet="/images/about/about-experience-480.webp 480w, /images/about/about-experience-720.webp 720w, /images/about/about-experience-1080.webp 1080w"
+                  src="/images/About/about-experience-1080.webp"
+                  srcSet="/images/About/about-experience-480.webp 480w, /images/About/about-experience-720.webp 720w, /images/About/about-experience-1080.webp 1080w"
                   sizes="(max-width: 768px) 100vw, 50vw"
                   alt="Hot air balloons over African savannah at sunrise"
                   title="A Scenic Train Journey Through the Ghats to Goa"
@@ -202,8 +202,8 @@ const AboutExperience: React.FC = () => {
             <div className="rounded-2xl overflow-hidden shadow-xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/images/about/about-experience-1080.webp"
-                srcSet="/images/about/about-experience-480.webp 480w, /images/about/about-experience-720.webp 720w, /images/about/about-experience-1080.webp 1080w"
+                src="/images/About/about-experience-1080.webp"
+                srcSet="/images/About/about-experience-480.webp 480w, /images/About/about-experience-720.webp 720w, /images/About/about-experience-1080.webp 1080w"
                 sizes="(max-width: 768px) 100vw, (min-width: 769px) 50vw"
                 alt="Hot air balloons over African savannah at sunrise"
                 title="A Scenic Train Journey Through the Ghats to Goa"

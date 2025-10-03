@@ -94,7 +94,7 @@ const stats: Stat[] = [
     suffix: "+",
     label: "Trips Planned",
     text: "We've helped travelers design over 15,000 personalized adventures across the globe, each one tailored to create unforgettable experiences.",
-    img: "/images/about/about-stats-1-1080.webp",
+    img: "/images/About/about-stats-1-1080.webp",
     alt: "A group of travelers exploring a scenic mountain landscape at sunrise",
     color: "var(--color-orange)",
     duration: 2.5,
@@ -106,7 +106,7 @@ const stats: Stat[] = [
     suffix: "+",
     label: "International Escapades",
     text: "Over 1,000 international adventures and counting! From African safaris to European getaways, we've helped travelers explore every corner of the world.",
-    img: "/images/about/about-stats-2-1080.webp", // will build 480/720/1080 srcset
+    img: "/images/About/about-stats-2-1080.webp", // will build 480/720/1080 srcset
     alt: "Passport with travel stamps alongside travel planning materials",
     color: "var(--color-dark-teal)",
     duration: 2,
@@ -118,7 +118,7 @@ const stats: Stat[] = [
     suffix: "",
     label: "Memories Made",
     text: "Countless memories created (and ∞ chai cups consumed ☕) throughout our journey. Each adventure adds another story to our ever-growing collection of travel tales.",
-    img: "/images/about/about-stats-3-1080.webp",
+    img: "/images/About/about-stats-3-1080.webp",
     alt: "A group of friends sharing memories around a campfire during sunset",
     color: "var(--color-yellow-orange)",
     duration: 3,

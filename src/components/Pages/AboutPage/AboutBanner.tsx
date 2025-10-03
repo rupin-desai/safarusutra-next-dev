@@ -41,14 +41,14 @@ const AboutBanner = () => {
       <div className="absolute inset-0 w-full h-full z-0">
         <picture>
           <source
-            srcSet="/images/about/about-banner-bg-480.webp 480w, /images/about/about-banner-bg-720.webp 720w, /images/about/about-banner-bg-1080.webp 1080w"
+            srcSet="/images/About/about-banner-bg-480.webp 480w, /images/About/about-banner-bg-720.webp 720w, /images/About/about-banner-bg-1080.webp 1080w"
             sizes="100vw"
             type="image/webp"
           />
           {/* fallback img */}
           <img
-            src="/images/about/about-banner-bg-1080.webp"
-            srcSet="/images/about/about-banner-bg-480.webp 480w, /images/about/about-banner-bg-720.webp 720w, /images/about/about-banner-bg-1080.webp 1080w"
+            src="/images/About/about-banner-bg-1080.webp"
+            srcSet="/images/About/about-banner-bg-480.webp 480w, /images/About/about-banner-bg-720.webp 720w, /images/About/about-banner-bg-1080.webp 1080w"
             sizes="100vw"
             alt="Beach ocean view with one boat"
             title="Beach ocean view with one boat"
