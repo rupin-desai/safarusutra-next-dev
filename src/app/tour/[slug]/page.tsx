@@ -244,6 +244,19 @@ export async function generateMetadata({
       alternates: {
         canonical: "https://thesafarisutra.com/tour",
       },
+      openGraph: {
+        title: "Tour | Safari Sutra", // og:title
+        type: "website", // og:type
+        url: "https://thesafarisutra.com/tour", // og:url
+        description: "Explore our curated tours on Safari Sutra.", // og:description
+        siteName: "Safari Sutra", // og:site_name
+        images: [
+          {
+            url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", // og:image
+            alt: "Safari Sutra Tours", // og:image:alt
+          },
+        ],
+      },
     };
   }
 
@@ -271,6 +284,19 @@ export async function generateMetadata({
       alternates: {
         canonical: "https://thesafarisutra.com/tour",
       },
+      openGraph: {
+        title: "Tour Not Found | Safari Sutra", // og:title
+        type: "website", // og:type
+        url: "https://thesafarisutra.com/tour", // og:url
+        description: "The tour you are looking for could not be found.", // og:description
+        siteName: "Safari Sutra", // og:site_name
+        images: [
+          {
+            url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", // og:image
+            alt: "Safari Sutra Tours Not Found", // og:image:alt
+          },
+        ],
+      },
     };
   }
 
@@ -286,7 +312,10 @@ export async function generateMetadata({
 
   // Use new responsive image properties or fallback to legacy
   const image = String(
-    tour.srcFallback ?? tour.heroImage ?? tour.image ?? "/logos/logo.svg"
+    tour.srcFallback ??
+      tour.heroImage ??
+      tour.image ??
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
   );
   const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}`;
 
@@ -303,26 +332,26 @@ export async function generateMetadata({
         follow: true,
       },
     },
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
-      title,
-      description,
-      url,
-      images: image
-        ? [
-            {
-              url: String(image),
-              alt: tour.alt ?? tour.title ?? "Safari Sutra",
-            },
-          ]
-        : undefined,
+      title, // og:title
+      type: "website", // og:type
+      url, // og:url
+      description, // og:description
+      siteName: "Safari Sutra", // og:site_name
+      images: [
+        {
+          url: image, // og:image
+          alt: tour.alt ?? tour.title ?? "Safari Sutra Tours", // og:image:alt
+        },
+      ],
     },
     twitter: {
       title,
       description,
-      images: image ? [String(image)] : undefined,
-    },
-    alternates: {
-      canonical: url,
+      images: [image],
     },
   };
 }

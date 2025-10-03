@@ -91,10 +91,17 @@ export async function generateMetadata({
     description: description.slice(0, 160),
     metadataBase: new URL(siteUrl),
     openGraph: {
-      title: cityTitle,
-      description: description.slice(0, 160),
-      url: canonical,
-      images: [{ url: image, alt: cityTitle }],
+      title: cityTitle, // og:title
+      type: "website", // og:type
+      url: canonical, // og:url
+      description: description.slice(0, 160), // og:description
+      siteName: "Safari Sutra", // og:site_name
+      images: [
+        {
+          url: image, // og:image
+          alt: cityTitle, // og:image:alt
+        },
+      ],
     },
     robots: {
       index: true,

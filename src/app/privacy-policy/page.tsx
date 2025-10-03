@@ -24,15 +24,26 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Privacy Policy | Safari Sutra",
+    title: "Privacy Policy | Safari Sutra", // og:title
+    type: "website", // og:type
     description:
-      "Learn how Safari Sutra collects, uses, protects, and shares your personal information. Read our privacy policy and understand your data protection rights.",
-    url: "https://thesafarisutra.com/privacy-policy",
+      "Learn how Safari Sutra collects, uses, protects, and shares your personal information. Read our privacy policy and understand your data protection rights.", // og:description
+    url: "https://thesafarisutra.com/privacy-policy", // og:url
+    siteName: "Safari Sutra", // og:site_name
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80", // og:image
+        alt: "Safari Sutra Privacy Policy", // og:image:alt
+      },
+    ],
   },
   twitter: {
     title: "Privacy Policy | Safari Sutra",
     description:
       "Learn how Safari Sutra collects, uses, protects, and shares your personal information.",
+    images: [
+      "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80",
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/privacy-policy",

@@ -34,9 +34,17 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "About Us | Safari Sutra",
+    type: "website",
+    url: "https://thesafarisutra.com/about",
     description:
       "Learn about Safari Sutra, our story, values, and what makes us different.",
-    url: "https://thesafarisutra.com/about",
+    siteName: "Safari Sutra",
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1416432506697-b1045ba8a3da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        alt: "Safari Sutra Team in Nature - About Us",
+      },
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/about",

@@ -75,6 +75,9 @@ export async function generateMetadata({
   }
 
   const pageUrl = `https://thesafarisutra.com/blogs/${blog.slug}`;
+  const imageUrl =
+    blog.image ||
+    "https://images.unsplash.com/photo-1533850595620-7b1711221751";
 
   return {
     title: `${blog.title} - Safari Sutra`,
@@ -93,31 +96,27 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${blog.title} - Safari Sutra`,
-      description: blog.description || "Read this travel story on Safari Sutra",
-      url: pageUrl,
-      type: "article",
+      title: `${blog.title} - Safari Sutra`, // og:title
+      description: blog.description || "Read this travel story on Safari Sutra", // og:description
+      url: pageUrl, // og:url
+      type: "article", // og:type
+      siteName: "Safari Sutra", // og:site_name
+      images: [
+        {
+          url: imageUrl, // og:image
+          alt: blog.title, // og:image:alt
+        },
+      ],
       publishedTime: formatDateToISO(blog.datePublished),
       modifiedTime: formatDateToISO(blog.datePublished),
       authors: [blog.author],
       tags: blog.tags || [],
-      images: [
-        {
-          url:
-            blog.image ||
-            "https://images.unsplash.com/photo-1533850595620-7b1711221751",
-          alt: blog.title,
-        },
-      ],
     },
     twitter: {
       card: "summary_large_image",
       title: `${blog.title} - Safari Sutra`,
       description: blog.description || "Read this travel story on Safari Sutra",
-      images: [
-        blog.image ||
-          "https://images.unsplash.com/photo-1533850595620-7b1711221751",
-      ],
+      images: [imageUrl],
     },
   };
 }
@@ -221,7 +220,7 @@ export default function BlogSlugPage({ params }: BlogSlugPageProps) {
         customBreadcrumbs={[
           { label: "Home", path: "/" },
           { label: "Blogs", path: "/blogs" },
-          { label: blog.title, isLast: true },
+          { label: blog.title, path: "", isLast: true },
         ]}
       />
 

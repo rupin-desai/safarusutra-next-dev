@@ -22,10 +22,18 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Destinations | Safari Sutra",
+    title: "Destinations | Safari Sutra", // og:title
+    type: "website", // og:type
     description:
-      "Discover destinations with Safari Sutra — beaches, mountains, wildlife and cultural escapes. Browse destination guides, highlights and packages.",
-    url: "https://thesafarisutra.com/destination",
+      "Discover destinations with Safari Sutra — beaches, mountains, wildlife and cultural escapes. Browse destination guides, highlights and packages.", // og:description
+    url: "https://thesafarisutra.com/destination", // og:url
+    siteName: "Safari Sutra", // og:site_name
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", // og:image
+        alt: "Safari Sutra Destinations", // og:image:alt
+      },
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/destination",

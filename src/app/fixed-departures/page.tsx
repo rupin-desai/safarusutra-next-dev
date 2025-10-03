@@ -27,10 +27,18 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Fixed‑Date Departures | Safari Sutra",
+    title: "Fixed‑Date Departures | Safari Sutra", // og:title
+    type: "website", // og:type
     description:
-      "Handpicked fixed‑date departures with guaranteed departure dates — mini escapes, home‑turf adventures and faraway wonders.",
-    url: "https://thesafarisutra.com/fixed-departures",
+      "Handpicked fixed‑date departures with guaranteed departure dates — mini escapes, home‑turf adventures and faraway wonders.", // og:description
+    url: "https://thesafarisutra.com/fixed-departures", // og:url
+    siteName: "Safari Sutra", // og:site_name
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", // og:image
+        alt: "Safari Sutra Fixed Departures", // og:image:alt
+      },
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/fixed-departures",

@@ -24,10 +24,18 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Contact Us | Safari Sutra",
+    title: "Contact Us | Safari Sutra", // og:title
+    type: "website", // og:type
+    url: "https://thesafarisutra.com/contact", // og:url
     description:
-      "Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip.",
-    url: "https://thesafarisutra.com/contact",
+      "Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip.", // og:description
+    siteName: "Safari Sutra", // og:site_name
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1485424103497-0c883b9b2953?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", // og:image
+        alt: "Contact Safari Sutra Team", // og:image:alt
+      },
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/contact",

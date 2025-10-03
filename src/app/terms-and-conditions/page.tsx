@@ -23,10 +23,18 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Terms & Conditions | Safari Sutra",
+    title: "Terms & Conditions | Safari Sutra", // og:title
+    type: "website", // og:type
     description:
-      "Read Safari Sutra's Terms & Conditions covering bookings, cancellations, liabilities, and user responsibilities for travel services and website use.",
-    url: "https://thesafarisutra.com/terms-and-conditions",
+      "Read Safari Sutra's Terms & Conditions covering bookings, cancellations, liabilities, and user responsibilities for travel services and website use.", // og:description
+    url: "https://thesafarisutra.com/terms-and-conditions", // og:url
+    siteName: "Safari Sutra", // og:site_name
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80", // og:image
+        alt: "Safari Sutra Terms & Conditions", // og:image:alt
+      },
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/terms-and-conditions",

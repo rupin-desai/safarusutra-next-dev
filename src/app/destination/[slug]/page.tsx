@@ -144,6 +144,19 @@ export async function generateMetadata({
       alternates: {
         canonical: "https://thesafarisutra.com/destination",
       },
+      openGraph: {
+        title: "Destination | Safari Sutra", // og:title
+        type: "website", // og:type
+        url: "https://thesafarisutra.com/destination", // og:url
+        description: "Discover destinations and travel guides at Safari Sutra.", // og:description
+        siteName: "Safari Sutra", // og:site_name
+        images: [
+          {
+            url: "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2", // og:image
+            alt: "Safari Sutra Destination", // og:image:alt
+          },
+        ],
+      },
     };
   }
 
@@ -185,6 +198,19 @@ export async function generateMetadata({
       alternates: {
         canonical: "https://thesafarisutra.com/destination",
       },
+      openGraph: {
+        title: "Destination Not Found | Safari Sutra", // og:title
+        type: "website", // og:type
+        url: "https://thesafarisutra.com/destination", // og:url
+        description: "The destination you are looking for could not be found.", // og:description
+        siteName: "Safari Sutra", // og:site_name
+        images: [
+          {
+            url: "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2", // og:image
+            alt: "Safari Sutra Destination Not Found", // og:image:alt
+          },
+        ],
+      },
     };
   }
 
@@ -209,7 +235,9 @@ export async function generateMetadata({
     )} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
 
   const image = String(
-    completeData.heroImage || completeData.image || "/logos/logo.svg"
+    completeData.heroImage ||
+      completeData.image ||
+      "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"
   );
   const url = `https://thesafarisutra.com/destination/${slug}`;
 
@@ -225,21 +253,21 @@ export async function generateMetadata({
         follow: true,
       },
     },
-    openGraph: {
-      title,
-      description,
-      url,
-      images: image
-        ? [{ url: image, alt: String(completeData.title) || "Safari Sutra" }]
-        : undefined,
-    },
-    twitter: {
-      title,
-      description,
-      images: image ? [image] : undefined,
-    },
     alternates: {
       canonical: url,
+    },
+    openGraph: {
+      title, // og:title
+      type: "website", // og:type
+      url, // og:url
+      description, // og:description
+      siteName: "Safari Sutra", // og:site_name
+      images: [
+        {
+          url: image, // og:image
+          alt: String(completeData.title) || "Safari Sutra Destination", // og:image:alt
+        },
+      ],
     },
   };
 }

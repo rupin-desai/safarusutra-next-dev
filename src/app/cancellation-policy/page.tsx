@@ -7,10 +7,18 @@ export const metadata: Metadata = {
   description:
     "Read Safari Sutra's cancellation, refund, and modification policies for your travel bookings. Know your rights and responsibilities.",
   openGraph: {
-    title: "Cancellation Policy | Safari Sutra",
+    title: "Cancellation Policy | Safari Sutra", // og:title
+    type: "website", // og:type
+    url: "https://thesafarisutra.com/cancellation-policy", // og:url
     description:
-      "Read Safari Sutra's cancellation, refund, and modification policies for your travel bookings. Know your rights and responsibilities.",
-    url: "https://thesafarisutra.com/cancellation-policy",
+      "Read Safari Sutra's cancellation, refund, and modification policies for your travel bookings. Know your rights and responsibilities.", // og:description
+    siteName: "Safari Sutra", // og:site_name
+    images: [
+      {
+        url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", // og:image
+        alt: "Safari Sutra Cancellation Policy", // og:image:alt
+      },
+    ],
   },
   alternates: {
     canonical: "https://thesafarisutra.com/cancellation-policy",

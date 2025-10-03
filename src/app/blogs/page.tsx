@@ -27,15 +27,16 @@ export const metadata: Metadata = {
     canonical: "https://thesafarisutra.com/blogs",
   },
   openGraph: {
-    title: "Travel Blog - Safari Sutra | Stories, Tips & Destination Guides",
+    title: "Travel Blog - Safari Sutra | Stories, Tips & Destination Guides", // og:title
     description:
-      "Discover travel stories, destination guides, and expert tips for adventures across India and beyond. Find hidden gems and cultural insights.",
-    url: "https://thesafarisutra.com/blogs",
-    type: "website",
+      "Discover travel stories, destination guides, and expert tips for adventures across India and beyond. Find hidden gems and cultural insights.", // og:description
+    url: "https://thesafarisutra.com/blogs", // og:url
+    type: "website", // og:type
+    siteName: "Safari Sutra", // og:site_name
     images: [
       {
-        url: "https://images.unsplash.com/photo-1533850595620-7b1711221751",
-        alt: "Safari Sutra Travel Blog",
+        url: "https://images.unsplash.com/photo-1533850595620-7b1711221751", // og:image
+        alt: "Safari Sutra Travel Blog", // og:image:alt
       },
     ],
   },
