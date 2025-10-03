@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     siteName: "Safari Sutra", // og:site_name
     images: [
       {
-        url: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1200&q=80", // og:image
+        url: "https://thesafarisutra.com/logos/logo.png", // og:image
         alt: "Safari Sutra Privacy Policy", // og:image:alt
       },
     ],

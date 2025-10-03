@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     siteName: "Safari Sutra", // og:site_name
     images: [
       {
-        url: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80", // og:image
+        url: "https://thesafarisutra.com/logos/logo.png", // og:image
         alt: "Safari Sutra Fixed Departures", // og:image:alt
       },
     ],
