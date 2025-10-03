@@ -18,7 +18,9 @@ const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
 
   const metaDescription =
     (inclusions.length && inclusions.slice(0, 5).join(", ")) ||
-    (typeof tour?.description === "string" ? tour.description.slice(0, 160) : undefined) ||
+    (typeof tour?.description === "string"
+      ? tour.description.slice(0, 160)
+      : undefined) ||
     "Tour inclusions and exclusions on Safari Sutra.";
 
   const origin =
@@ -34,20 +36,25 @@ const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
       : `${origin}/tour/${tour?.id || ""}`;
 
   // Fix: Handle both string and GalleryItem types in gallery
-  const getImageUrl = (galleryItem: string | GalleryItem | undefined): string => {
+  const getImageUrl = (
+    galleryItem: string | GalleryItem | undefined
+  ): string => {
     if (!galleryItem) return "/og-default.jpg";
-    
+
     if (typeof galleryItem === "string") {
       return galleryItem;
     }
-    
+
     // GalleryItem object - prioritize srcFallback, then srcSetWebp
-    return galleryItem.srcFallback || galleryItem.srcSetWebp || "/og-default.jpg";
+    return (
+      galleryItem.srcFallback || galleryItem.srcSetWebp || "/og-default.jpg"
+    );
   };
 
-  const ogImage = tour?.gallery && Array.isArray(tour.gallery) && tour.gallery.length > 0
-    ? getImageUrl(tour.gallery[0])
-    : "/og-default.jpg";
+  const ogImage =
+    tour?.gallery && Array.isArray(tour.gallery) && tour.gallery.length > 0
+      ? getImageUrl(tour.gallery[0])
+      : "/og-default.jpg";
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -108,7 +115,9 @@ const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
       <h2 className="text-2xl font-bold text-gray-800 mb-4">Tour Inclusions</h2>
 
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-800 mb-3">What&apos;s Included</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-3">
+          What&apos;s Included
+        </h3>
         <ul className="space-y-2">
           {inclusions.map((item: string, index: number) => (
             <li key={index} className="flex items-start">
@@ -123,7 +132,9 @@ const TourInclusions = ({ tour }: { tour?: BaseTour | null }) => {
       </div>
 
       <div>
-        <h3 className="text-xl font-bold text-gray-800 mb-3">What&apos;s Not Included</h3>
+        <h3 className="text-xl font-bold text-gray-800 mb-3">
+          What&apos;s Not Included
+        </h3>
         <ul className="space-y-2">
           {exclusions.map((item: string, index: number) => (
             <li key={index} className="flex items-start">

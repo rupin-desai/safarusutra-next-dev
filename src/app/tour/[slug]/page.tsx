@@ -4,6 +4,15 @@ import tourDataRaw from "@/data/TourDetails.json";
 import TourPageClient from "./TourPage.client";
 import type { Tour } from "@/components/UI/TourCard";
 
+// Add this type definition
+type ItineraryDay = {
+  day?: number;
+  title?: string;
+  description?: string;
+  location?: string;
+  activities?: string[];
+};
+
 /* helper to create a URL-friendly slug from title/id */
 const createSlug = (text?: string) =>
   String(text ?? "")
@@ -318,6 +327,14 @@ export async function generateMetadata({
   };
 }
 
+function getFullImageUrl(src: string): string {
+  if (!src)
+    return "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+  if (src.startsWith("http")) return src;
+  const path = src.startsWith("/") ? src : `/${src}`;
+  return `https://thesafarisutra.com${path}`;
+}
+
 export default function TourPageDetails({
   params,
 }: {
@@ -339,8 +356,132 @@ export default function TourPageDetails({
 
   if (!tour) return notFound();
 
+  // --- JSON-LD schemas ---
+  // FIX: Ensure slug is properly defined
+  const pageSlug = tour.slug || createSlug(String(tour?.title ?? ""));
+
+  // --- Optimized JSON-LD schema ---
+  // Helper: ISO 8601 duration (e.g. "P4D" for 4 days)
+  function toIsoDuration(duration?: string): string | undefined {
+    if (!duration) return undefined;
+    const dayMatch = duration.match(
+      /(\d+)\s*D|(\d+)\s*Days|(\d+)\s*N\s*-\s*(\d+)D/i
+    );
+    if (dayMatch) {
+      const days = dayMatch[4] || dayMatch[1] || dayMatch[2] || dayMatch[3];
+      if (days) return `P${days}D`;
+    }
+    const num = duration.match(/\d+/);
+    if (num) return `P${num[0]}D`;
+    return undefined;
+  }
+
+  // Deduplicate keywords
+  function getUniqueKeywords(tour: Tour): string[] {
+    const arr = [
+      ...(Array.isArray(tour.category)
+        ? tour.category
+        : tour.category
+        ? [tour.category]
+        : []),
+      ...(tour.destinationNames ?? []),
+      ...(tour.attractions?.slice(0, 10) ?? []), // Limit to top 10 attractions
+    ]
+      .map((k) => String(k).trim())
+      .filter(Boolean);
+    return Array.from(new Set(arr));
+  }
+
+  const isoDuration = toIsoDuration(tour.duration);
+  const keywords = getUniqueKeywords(tour);
+
+  // Group additionalProperty items by type for better structure
+  const inclusionsProps = (tour.inclusions ?? []).map((inc: string) => ({
+    "@type": "PropertyValue",
+    name: "Inclusion",
+    value: inc,
+  }));
+
+  const exclusionsProps = (tour.exclusions ?? []).map((exc: string) => ({
+    "@type": "PropertyValue",
+    name: "Exclusion",
+    value: exc,
+  }));
+
+  const cancellationProps = (tour.cancellationPolicy ?? []).map(
+    (rule: string) => ({
+      "@type": "PropertyValue",
+      name: "Cancellation Policy",
+      value: rule,
+    })
+  );
+
+  const optimizedJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TouristTrip",
+    name: tour.title || "Tour Package",
+    description: tour.description || tour.metaDescription || "",
+    image: getFullImageUrl(
+      tour.srcFallback || tour.heroImage || tour.image || ""
+    ),
+    url: `https://thesafarisutra.com/tour/${pageSlug}`,
+    touristType: "leisure",
+    keywords,
+    duration: isoDuration,
+    provider: {
+      "@type": "Organization",
+      name: "Safari Sutra",
+      url: "https://thesafarisutra.com",
+    },
+    offers: {
+      "@type": "Offer",
+      price:
+        typeof tour.price === "number" ? String(tour.price) : tour.price ?? "0",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      url: `https://thesafarisutra.com/tour/${pageSlug}`,
+    },
+    itinerary: Array.isArray(tour.itinerary)
+      ? tour.itinerary.map((day: ItineraryDay, idx: number) => {
+          const item: Record<string, unknown> = {
+            "@type": "TouristAttraction",
+            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${
+              day.title || "Tour Day"
+            }`,
+            description: day.description,
+          };
+          if (day.location) {
+            item.address = {
+              "@type": "PostalAddress",
+              addressLocality: day.location,
+            };
+          }
+          if (Array.isArray(day.activities) && day.activities.length > 0) {
+            item.keywords = day.activities.join(", ");
+          }
+          return item;
+        })
+      : [],
+    additionalProperty: [
+      ...inclusionsProps,
+      ...exclusionsProps,
+      ...cancellationProps,
+    ],
+  };
+
   // pass serializable tour prop to client component with all responsive image properties
   const tourProp = JSON.parse(JSON.stringify(tour)) as Tour;
 
-  return <TourPageClient tour={tourProp} />;
+  return (
+    <>
+      {/* Only inject the optimized schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(optimizedJsonLd) }}
+      />
+
+      {/* Main client component */}
+      <TourPageClient tour={tourProp} />
+    </>
+  );
 }

@@ -28,23 +28,41 @@ type TourWithDates = BaseTour & {
   [key: string]: unknown;
 };
 
-const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tour: TourWithDates; selectedMonth?: string; selectedDateRange?: string }) => {
+const TourSidebar = ({
+  tour,
+  selectedMonth = "",
+  selectedDateRange = "",
+}: {
+  tour: TourWithDates;
+  selectedMonth?: string;
+  selectedDateRange?: string;
+}) => {
   const router = useRouter();
   const [copied, setCopied] = useState(false);
   const [availableMonths, setAvailableMonths] = useState<string[]>([]);
-  const [availableDatesForMonth, setAvailableDatesForMonth] = useState<DateObj[]>([]);
+  const [availableDatesForMonth, setAvailableDatesForMonth] = useState<
+    DateObj[]
+  >([]);
   const [showDateSelector, setShowDateSelector] = useState(false);
 
   // Use state for the selected values so they can be updated either from props or internal selection
-  const [internalSelectedMonth, setInternalSelectedMonth] = useState<string>(selectedMonth);
-  const [internalSelectedDate, setInternalSelectedDate] = useState<string>(selectedDateRange);
+  const [internalSelectedMonth, setInternalSelectedMonth] =
+    useState<string>(selectedMonth);
+  const [internalSelectedDate, setInternalSelectedDate] =
+    useState<string>(selectedDateRange);
 
   // typed hover transition to satisfy TS when using "spring"
-  const hoverTransition = { type: "spring" as const, stiffness: 500, damping: 15 };
+  const hoverTransition = {
+    type: "spring" as const,
+    stiffness: 500,
+    damping: 15,
+  };
 
   // Initialize available months and dates if tour has availableDates
   useEffect(() => {
-    const months = Array.isArray(tour?.availableDates) ? tour.availableDates : [];
+    const months = Array.isArray(tour?.availableDates)
+      ? tour.availableDates
+      : [];
     if (months.length === 0) {
       setShowDateSelector(false);
       setAvailableMonths([]);
@@ -58,7 +76,9 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
       return { ...m, dates, enabledDates };
     });
 
-    const monthsWithEnabledDates = processedMonths.filter((m) => (m.enabledDates ?? []).length > 0);
+    const monthsWithEnabledDates = processedMonths.filter(
+      (m) => (m.enabledDates ?? []).length > 0
+    );
 
     if (monthsWithEnabledDates.length > 0) {
       const monthNames = monthsWithEnabledDates.map((m) => m.month);
@@ -69,12 +89,16 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
       if (!internalSelectedMonth) {
         const first = monthNames[0];
         setInternalSelectedMonth(first);
-        const firstMonthData = monthsWithEnabledDates.find((m) => m.month === first);
+        const firstMonthData = monthsWithEnabledDates.find(
+          (m) => m.month === first
+        );
         if (firstMonthData) {
           setAvailableDatesForMonth(firstMonthData.enabledDates ?? []);
         }
       } else {
-        const selected = monthsWithEnabledDates.find((m) => m.month === internalSelectedMonth);
+        const selected = monthsWithEnabledDates.find(
+          (m) => m.month === internalSelectedMonth
+        );
         setAvailableDatesForMonth(selected?.enabledDates ?? []);
       }
     } else {
@@ -102,14 +126,20 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
       return;
     }
 
-    const monthData = tour.availableDates.find((item) => item.month === internalSelectedMonth);
+    const monthData = tour.availableDates.find(
+      (item) => item.month === internalSelectedMonth
+    );
     if (monthData && Array.isArray(monthData.dates)) {
-      const enabledDates = monthData.dates.filter((dateObj) => dateObj.enabled !== false);
+      const enabledDates = monthData.dates.filter(
+        (dateObj) => dateObj.enabled !== false
+      );
       setAvailableDatesForMonth(enabledDates);
 
       // If the currently selected date isn't in the new month or is disabled, reset it
       if (internalSelectedDate) {
-        const dateStillValid = enabledDates.some((dateObj) => dateObj.range === internalSelectedDate);
+        const dateStillValid = enabledDates.some(
+          (dateObj) => dateObj.range === internalSelectedDate
+        );
         if (!dateStillValid) {
           setInternalSelectedDate("");
         }
@@ -150,7 +180,9 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
   // Handle custom quote request
   const handleCustomQuote = () => {
     const subject = `Custom Quote Request: ${tour.title ?? ""}`;
-    const message = `I am interested in a custom quote for the "${tour.title ?? ""}" tour. I would like to discuss specific requirements and preferences.`;
+    const message = `I am interested in a custom quote for the "${
+      tour.title ?? ""
+    }" tour. I would like to discuss specific requirements and preferences.`;
     const params = new URLSearchParams({ subject, message });
     router.push(`/contact?${params.toString()}`);
   };
@@ -170,12 +202,51 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md p-6 sticky top-24">
+    <div className=" bg-white rounded-xl shadow-md p-6 sticky top-24">
+      {/* Share button at top right */}
+      <div className="absolute top-4 right-4 z-10">
+        <motion.button
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
+            copied
+              ? "bg-green-100 text-green-700"
+              : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
+          }`}
+          whileHover={
+            !copied
+              ? {
+                  transform: "translate3d(0px, -2px, 0px)",
+                  transition: hoverTransition,
+                }
+              : {}
+          }
+          whileTap={!copied ? { transform: "translate3d(0px, 1px, 0px)" } : {}}
+          initial={{ transform: "translate3d(0px, 0px, 0px)" }}
+          onClick={copyToClipboard}
+          type="button"
+          aria-label="Share this tour"
+        >
+          {copied ? (
+            <>
+              <Check size={18} />
+              <span className="font-medium">Copied!</span>
+            </>
+          ) : (
+            <>
+              <Share2 size={18} />
+              <span className="font-medium">Share</span>
+            </>
+          )}
+        </motion.button>
+      </div>
+
       <div className="mb-4">
         <span className="text-gray-600 text-sm">Starting from</span>
         <div className="flex items-center">
           <span className="text-3xl font-bold text-orange-500">
-            ₹{typeof tour?.price === "number" ? tour.price.toLocaleString() : tour?.price ?? ""}
+            ₹
+            {typeof tour?.price === "number"
+              ? tour.price.toLocaleString()
+              : tour?.price ?? ""}
           </span>
           <span className="text-gray-600 ml-1">per person</span>
         </div>
@@ -188,11 +259,12 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
             <Calendar size={16} className="mr-2 text-orange-500" />
             Select your preferred date
           </h3>
-
-          <div className="space-y-2">
-            {/* Month selector */}
-            <div>
-              <label htmlFor="month-select" className="text-xs text-gray-500 block mb-1">
+          <div className="flex gap-2">
+            <div className="flex-1">
+              <label
+                htmlFor="month-select"
+                className="text-xs text-gray-500 block mb-1"
+              >
                 Month
               </label>
               <select
@@ -208,10 +280,11 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
                 ))}
               </select>
             </div>
-
-            {/* Date selector */}
-            <div>
-              <label htmlFor="date-select" className="text-xs text-gray-500 block mb-1">
+            <div className="flex-1">
+              <label
+                htmlFor="date-select"
+                className="text-xs text-gray-500 block mb-1"
+              >
                 Date Range
               </label>
               <select
@@ -229,7 +302,6 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
               </select>
             </div>
           </div>
-
           {internalSelectedDate && (
             <div className="mt-2 p-2 bg-green-50 text-green-700 text-xs rounded-md">
               You have selected: {internalSelectedDate}, {internalSelectedMonth}
@@ -238,56 +310,52 @@ const TourSidebar = ({ tour, selectedMonth = "", selectedDateRange = "" }: { tou
         </div>
       )}
 
-      <SSButton variant="primary" color="var(--color-orange)" className="w-full mb-3" onClick={handleBookNow}>
+      <SSButton
+        variant="primary"
+        color="var(--color-orange)"
+        className="w-full mb-3"
+        onClick={handleBookNow}
+      >
         Book Now
       </SSButton>
 
-      {/* Custom message before Request Custom Quote button */}
       <p className="text-center text-gray-600 text-sm mb-2 italic">
         Need different dates or special arrangements? We can help!
       </p>
 
-      <SSButton variant="outline" color="var(--color-orange)" className="w-full mb-6" onClick={handleCustomQuote}>
+      <SSButton
+        variant="outline"
+        color="var(--color-orange)"
+        className="w-full mb-6"
+        onClick={handleCustomQuote}
+      >
         Request Custom Quote
       </SSButton>
 
-      <div className="flex justify-between mb-6">
-        <motion.button
-          className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
-            copied ? "bg-green-100 text-green-700" : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
-          }`}
-          whileHover={!copied ? { transform: "translate3d(0px, -2px, 0px)", transition: hoverTransition } : {}}
-          whileTap={!copied ? { transform: "translate3d(0px, 1px, 0px)" } : {}}
-          initial={{ transform: "translate3d(0px, 0px, 0px)" }}
-          onClick={copyToClipboard}
-          type="button"
-        >
-          {copied ? (
-            <>
-              <Check size={18} />
-              <span className="font-medium">Copied!</span>
-            </>
-          ) : (
-            <>
-              <Share2 size={18} />
-              <span className="font-medium">Share</span>
-            </>
-          )}
-        </motion.button>
-      </div>
-
       <div className="border-t border-gray-200 pt-6">
         <h3 className="font-bold text-gray-800 mb-3">Need Help?</h3>
-        <p className="text-gray-600 text-sm mb-3">Our travel experts are ready to assist you with any questions or special requests.</p>
-        <SSButton variant="outline" color="var(--color-orange)" className="w-full flex items-center justify-center gap-2" onClick={() => router.push("/contact/")}>
+        <p className="text-gray-600 text-sm mb-3">
+          Our travel experts are ready to assist you with any questions or
+          special requests.
+        </p>
+        <SSButton
+          variant="outline"
+          color="var(--color-orange)"
+          className="w-full flex items-center justify-center gap-2"
+          onClick={() => router.push("/contact/")}
+        >
           Contact Our Team
         </SSButton>
       </div>
 
-      {/* Toast Notification */}
       <AnimatePresence>
         {copied && (
-          <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 20 }} className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 20 }}
+            className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2 z-50"
+          >
             <Check size={16} className="text-green-400" />
             <span>Link copied to clipboard!</span>
           </motion.div>
