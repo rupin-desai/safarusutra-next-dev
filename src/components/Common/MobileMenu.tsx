@@ -203,15 +203,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             </Link>
           </motion.div>
 
-          <motion.div variants={linkVariants} className="text-right">
-            <Link
-              href="/blogs/"
-              className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor}`}
-              onClick={toggleMenu}
-            >
-              Blogs
-            </Link>
-          </motion.div>
+
         </nav>
 
         <div className="mt-auto space-y-4">

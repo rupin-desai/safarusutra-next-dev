@@ -286,8 +286,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
                 { href: "/about/", label: "About" },
                 { href: "/destination/", label: "Destinations" },
                 { href: "/fixed-departures/", label: "Tours" },
-                { href: "/hire/", label: "Hire" },
-                { href: "/blogs/", label: "Blogs" },
+                { href: "/hire/", label: "Hire" }
               ].map((link) => {
                 if (link.href === "/fixed-departures/") {
                   const isActive =
