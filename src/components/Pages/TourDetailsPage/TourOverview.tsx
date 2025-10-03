@@ -54,7 +54,8 @@ interface Props {
 const generateResponsiveSrcSet = (basePath?: string): string => {
   if (!basePath) return "";
 
-  // Extract the base path and extension
+  basePath = basePath.trim();
+
   const lastSlash = basePath.lastIndexOf("/");
   const lastDot = basePath.lastIndexOf(".");
 
@@ -64,8 +65,8 @@ const generateResponsiveSrcSet = (basePath?: string): string => {
   const nameWithoutExt = basePath.substring(lastSlash + 1, lastDot);
   const extension = basePath.substring(lastDot);
 
-  // Generate responsive sizes for gallery: 320w, 640w, 768w, 1024w
-  const sizes = [320, 640, 768, 1024];
+  // Only use available sizes: 480w, 720w, 1080w
+  const sizes = [480, 720, 1080];
   const srcSetEntries = sizes.map((size) => {
     const imagePath = `${pathPrefix}${nameWithoutExt}-${size}${extension}`;
     return `${imagePath} ${size}w`;
@@ -76,9 +77,14 @@ const generateResponsiveSrcSet = (basePath?: string): string => {
 
 const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
   const [showTooltip, setShowTooltip] = useState(false);
-  const [selectedTooltipInfo, setSelectedTooltipInfo] = useState<{ month: string; date: string } | null>(null);
+  const [selectedTooltipInfo, setSelectedTooltipInfo] = useState<{
+    month: string;
+    date: string;
+  } | null>(null);
 
-  const allDates = Array.isArray(tour?.availableDates) ? tour.availableDates : [];
+  const allDates = Array.isArray(tour?.availableDates)
+    ? tour.availableDates
+    : [];
 
   // Set tour ids here to disable the "20 days" blocking rule for specific tours.
   const TWENTY_DAY_RULE_DISABLED_IDS: number[] = [57];
@@ -108,7 +114,10 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     return dt;
   };
 
-  const parseRangeStartDate = (monthLabel: string | undefined, range: string | undefined) => {
+  const parseRangeStartDate = (
+    monthLabel: string | undefined,
+    range: string | undefined
+  ) => {
     if (!monthLabel || !range) return null;
     const ml = String(monthLabel).trim();
     const mm = ml.match(/([A-Za-z]+)\s+(\d{4})/);
@@ -116,7 +125,9 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     const monthIdx = monthNameToIndex(mm[1]);
     const year = parseInt(mm[2], 10);
 
-    const parts = String(range).split(/[-–—]/).map((p) => p.trim());
+    const parts = String(range)
+      .split(/[-–—]/)
+      .map((p) => p.trim());
     if (parts.length === 0) return null;
     const first = parts[0];
     const firstDayMatch = first.match(/(\d{1,2})/);
@@ -138,13 +149,18 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: `${tour.title || "Tour"} - Itinerary`,
-          description: tour.subtitle || tour.description || `${tour.title} itinerary`,
-          itemListElement: (tour.itinerary as ItineraryDay[]).map((day: ItineraryDay, idx: number) => ({
-            "@type": "ListItem",
-            position: idx + 1,
-            name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title ?? ""}`,
-            description: day.description ?? "",
-          })),
+          description:
+            tour.subtitle || tour.description || `${tour.title} itinerary`,
+          itemListElement: (tour.itinerary as ItineraryDay[]).map(
+            (day: ItineraryDay, idx: number) => ({
+              "@type": "ListItem",
+              position: idx + 1,
+              name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${
+                day.title ?? ""
+              }`,
+              description: day.description ?? "",
+            })
+          ),
         }
       : null;
 
@@ -158,12 +174,18 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     const diffDays = startDate ? daysBetween(startDate, today) : Infinity;
     const within20 = diffDays >= 0 && diffDays <= 20; // date is today..20 days ahead
 
-    const disable20RuleForThisTour = TWENTY_DAY_RULE_DISABLED_IDS.includes(Number(tour?.id));
+    const disable20RuleForThisTour = TWENTY_DAY_RULE_DISABLED_IDS.includes(
+      Number(tour?.id)
+    );
 
-    const disabledBecause = dateObject.enabled === false || past || (!disable20RuleForThisTour && within20);
+    const disabledBecause =
+      dateObject.enabled === false ||
+      past ||
+      (!disable20RuleForThisTour && within20);
 
     if (!disabledBecause) {
-      if (typeof onDateSelect === "function") onDateSelect(month, dateObject.range);
+      if (typeof onDateSelect === "function")
+        onDateSelect(month, dateObject.range);
 
       setSelectedTooltipInfo({ month, date: dateObject.range });
       setShowTooltip(true);
@@ -173,11 +195,15 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
   };
 
   const origin =
-    typeof window !== "undefined" && window.location && window.location.origin ? window.location.origin : "https://thesafarisutra.com";
+    typeof window !== "undefined" && window.location && window.location.origin
+      ? window.location.origin
+      : "https://thesafarisutra.com";
 
   const canonical =
     typeof window !== "undefined" && window.location
-      ? `${window.location.origin}${window.location.pathname}${window.location.search || ""}`
+      ? `${window.location.origin}${window.location.pathname}${
+          window.location.search || ""
+        }`
       : `${origin}/tour/${tour?.id ?? ""}`;
 
   // Helper function to get image properties from gallery item
@@ -185,7 +211,7 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     if (typeof item === "string") {
       // Legacy string format - generate responsive srcSet
       return {
-        src: item.replace('-1080.webp', '-480.webp'), // Use smallest as fallback
+        src: item.replace("-1080.webp", "-480.webp"), // Use smallest as fallback
         alt: `${tour.title ?? "Tour"} - ${index + 1}`,
         title: `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
         srcSetWebp: generateResponsiveSrcSet(item),
@@ -193,19 +219,22 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     }
 
     // New object format
-    const srcSetWebp = item.srcSetWebp && item.srcSetWebp.includes(',') 
-      ? item.srcSetWebp // Already contains multiple sizes
-      : generateResponsiveSrcSet(item.srcSetWebp || item.srcFallback);
+    const srcSetWebp =
+      item.srcSetWebp && item.srcSetWebp.includes(",")
+        ? item.srcSetWebp // Already contains multiple sizes
+        : generateResponsiveSrcSet(item.srcSetWebp || item.srcFallback);
 
     // Use smallest image as fallback src
-    const fallbackSrc = item.srcFallback 
-      ? item.srcFallback.replace('-1080.webp', '-480.webp')
+    const fallbackSrc = item.srcFallback
+      ? item.srcFallback.replace("-1080.webp", "-480.webp")
       : "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
 
     return {
       src: fallbackSrc,
       alt: item.alt || `${tour.title ?? "Tour"} - ${index + 1}`,
-      title: item.imageTitle || `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
+      title:
+        item.imageTitle ||
+        `${tour.title ?? "Tour"} - Gallery Image ${index + 1}`,
       srcSetWebp: srcSetWebp,
     };
   };
@@ -214,11 +243,20 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
     <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 mb-8">
       {/* SEO: itinerary JSON-LD and canonical */}
       <Head>
-        {itineraryJsonLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itineraryJsonLd) }} />}
+        {itineraryJsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(itineraryJsonLd),
+            }}
+          />
+        )}
         <link rel="canonical" href={canonical} />
       </Head>
 
-      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">Tour Overview</h2>
+      <h2 className="text-xl sm:text-2xl font-bold text-gray-800 mb-3 sm:mb-4">
+        Tour Overview
+      </h2>
 
       {/* Route and Duration summary */}
       <div className="flex flex-col md:flex-row md:items-center gap-3 mb-5 p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-100">
@@ -226,7 +264,9 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
           <MapPin size={16} className="text-orange-500 mr-2 flex-shrink-0" />
           <div>
             <span className="text-xs sm:text-sm text-gray-500">Route</span>
-            <p className="font-medium text-sm sm:text-base text-gray-800">{tour.route ?? "Various destinations"}</p>
+            <p className="font-medium text-sm sm:text-base text-gray-800">
+              {tour.route ?? "Various destinations"}
+            </p>
           </div>
         </div>
 
@@ -236,13 +276,18 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
           <Clock size={16} className="text-orange-500 mr-2 flex-shrink-0" />
           <div>
             <span className="text-xs sm:text-sm text-gray-500">Duration</span>
-            <p className="font-medium text-sm sm:text-base text-gray-800">{tour.duration ?? "N/A"}</p>
+            <p className="font-medium text-sm sm:text-base text-gray-800">
+              {tour.duration ?? "N/A"}
+            </p>
           </div>
         </div>
       </div>
 
       <div className="prose prose-sm sm:prose max-w-none mb-6">
-        <p className="text-gray-700 text-justify" style={{ textAlignLast: "left" }}>
+        <p
+          className="text-gray-700 text-justify"
+          style={{ textAlignLast: "left" }}
+        >
           {tour.description}
         </p>
       </div>
@@ -267,7 +312,9 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
               </div>
             </div>
             <div className="flex-grow sm:text-right mt-2 sm:mt-0">
-              <span className="text-xs text-gray-600 italic">Click on an available date to select it</span>
+              <span className="text-xs text-gray-600 italic">
+                Click on an available date to select it
+              </span>
             </div>
           </div>
 
@@ -275,20 +322,35 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {(allDates as AvailableMonth[]).map((monthData, index) => (
                 <div key={index} className="bg-white p-3 rounded-lg shadow-sm">
-                  <h4 className="font-medium text-gray-800 border-b pb-2 mb-2">{monthData.month}</h4>
+                  <h4 className="font-medium text-gray-800 border-b pb-2 mb-2">
+                    {monthData.month}
+                  </h4>
                   <div className="flex flex-wrap gap-2">
                     {Array.isArray(monthData.dates) &&
                       monthData.dates.map((dateObj, i) => {
-                        const startDate = parseRangeStartDate(monthData.month, dateObj.range);
+                        const startDate = parseRangeStartDate(
+                          monthData.month,
+                          dateObj.range
+                        );
                         const today = new Date();
-                        const past = startDate ? startOfDay(startDate) < startOfDay(today) : false;
+                        const past = startDate
+                          ? startOfDay(startDate) < startOfDay(today)
+                          : false;
 
-                        const diffDays = startDate ? daysBetween(startDate, today) : Infinity;
+                        const diffDays = startDate
+                          ? daysBetween(startDate, today)
+                          : Infinity;
                         const within20 = diffDays >= 0 && diffDays <= 20;
 
-                        const disable20RuleForThisTour = TWENTY_DAY_RULE_DISABLED_IDS.includes(Number(tour?.id));
+                        const disable20RuleForThisTour =
+                          TWENTY_DAY_RULE_DISABLED_IDS.includes(
+                            Number(tour?.id)
+                          );
 
-                        const isRed = dateObj.enabled === false || past || (!disable20RuleForThisTour && within20);
+                        const isRed =
+                          dateObj.enabled === false ||
+                          past ||
+                          (!disable20RuleForThisTour && within20);
 
                         const disabled = isRed;
 
@@ -299,11 +361,17 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
                         return (
                           <button
                             key={i}
-                            onClick={() => handleDateClick(monthData.month, dateObj)}
+                            onClick={() =>
+                              handleDateClick(monthData.month, dateObj)
+                            }
                             disabled={disabled}
                             className={`inline-block text-xs py-1 px-2 rounded-md transition-all ${className}`}
-                            style={{ cursor: disabled ? "not-allowed" : "pointer" }}
-                            title={startDate ? startDate.toDateString() : undefined}
+                            style={{
+                              cursor: disabled ? "not-allowed" : "pointer",
+                            }}
+                            title={
+                              startDate ? startDate.toDateString() : undefined
+                            }
                             aria-disabled={disabled}
                           >
                             {dateObj.range}
@@ -314,40 +382,57 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-gray-500 mt-4">* Dates are subject to availability at the time of booking.</p>
+            <p className="text-xs text-gray-500 mt-4">
+              * Dates are subject to availability at the time of booking.
+            </p>
           </div>
         </>
       )}
 
-      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Tour Highlights</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
+        Tour Highlights
+      </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 mb-5 sm:mb-6">
         {Array.isArray(tour.highlights) &&
           tour.highlights.map((highlight, index) => (
             <div key={index} className="flex items-start">
-              <CheckCircle className="text-orange-500 mt-0.5 mr-2 flex-shrink-0" size={16} />
+              <CheckCircle
+                className="text-orange-500 mt-0.5 mr-2 flex-shrink-0"
+                size={16}
+              />
               <p className="text-sm sm:text-base text-gray-700">{highlight}</p>
             </div>
           ))}
       </div>
 
-      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Attractions Covered</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
+        Attractions Covered
+      </h3>
       <div className="flex flex-wrap gap-1.5 sm:gap-2 mb-5 sm:mb-6">
         {Array.isArray(tour.attractions) &&
           tour.attractions.map((attraction, index) => (
-            <span key={index} className="bg-gray-100 text-gray-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
+            <span
+              key={index}
+              className="bg-gray-100 text-gray-700 px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm"
+            >
               {String(attraction)}
             </span>
           ))}
       </div>
 
-      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">Photo Gallery</h3>
+      <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-2 sm:mb-3">
+        Photo Gallery
+      </h3>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
         {Array.isArray(tour.gallery) &&
           tour.gallery.slice(0, 4).map((photo, index) => {
             const imageProps = getImageProps(photo, index);
 
             return (
-              <div key={index} className="relative overflow-hidden rounded-lg aspect-[4/3]">
+              <div
+                key={index}
+                className="relative overflow-hidden rounded-lg aspect-[4/3]"
+              >
                 <picture>
                   {imageProps.srcSetWebp && (
                     <source
@@ -373,7 +458,9 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
 
       {Array.isArray(tour.gallery) && tour.gallery.length > 4 && (
         <div className="mt-3 text-center">
-          <button className="text-orange-500 font-medium text-sm hover:text-orange-600 transition-colors">View all {tour.gallery.length} photos</button>
+          <button className="text-orange-500 font-medium text-sm hover:text-orange-600 transition-colors">
+            View all {tour.gallery.length} photos
+          </button>
         </div>
       )}
 
@@ -384,7 +471,10 @@ const TourOverview: React.FC<Props> = ({ tour, onDateSelect }) => {
           <span>
             Selected: {selectedTooltipInfo.date}, {selectedTooltipInfo.month}
           </span>
-          <button onClick={() => setShowTooltip(false)} className="ml-3 text-green-600 hover:text-green-800">
+          <button
+            onClick={() => setShowTooltip(false)}
+            className="ml-3 text-green-600 hover:text-green-800"
+          >
             <X size={16} />
           </button>
         </div>

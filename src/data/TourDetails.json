@@ -2619,7 +2619,7 @@
     "duration": "5N - 6D",
     "price": 34990,
     "srcSetWebp": "/images/Tours/srinagar-gulmarg-pahalgam-houseboat-480.webp 480w, /images/Tours/srinagar-gulmarg-pahalgam-houseboat-720.webp 720w, /images/Tours/srinagar-gulmarg-pahalgam-houseboat-1080.webp 1080w",
-    "srcFallback": "/srinagar-gulmarg-pahalgam-houseboat-1080.webp",
+    "srcFallback": "/images/Tours/srinagar-gulmarg-pahalgam-houseboat-1080.webp",
     "alt": "An early morning view of a winding road through the lush green meadows of Gulmarg, with snow-dusted mountains in the background",
     "imageTitle": "A Scenic Drive Through Gulmarg, Kashmir",
     "gallery": [
@@ -6049,7 +6049,7 @@
       },
       {
         "srcSetWebp": "/images/Tours/ahmedabad-gallery-1-480.webp 480w, /images/Tours/ahmedabad-gallery-1-720.webp 720w, /images/Tours/ahmedabad-gallery-1-1080.webp 1080w",
-        "srcFallback": "/ahmedabad-gallery-1-1080.webp",
+        "srcFallback": "/images/Tours/ahmedabad-gallery-1-1080.webp",
         "alt": "A view looking down through the multiple levels of the Adalaj Stepwell, showcasing its intricately carved sandstone pillars and galleries",
         "imageTitle": "The Intricate Adalaj Stepwell near Ahmedabad"
       }
@@ -6303,7 +6303,7 @@
     "gallery": [
       {
         "srcSetWebp": "/images/Tours/ahmedabad-gallery-1-480.webp 480w, /images/Tours/ahmedabad-gallery-1-720.webp 720w, /images/Tours/ahmedabad-gallery-1-1080.webp 1080w",
-        "srcFallback": "/ahmedabad-gallery-1-1080.webp",
+        "srcFallback": "/images/Tours/ahmedabad-gallery-1-1080.webp",
         "alt": "A view looking down through the multiple levels of the Adalaj Stepwell, showcasing its intricately carved sandstone pillars and galleries",
         "imageTitle": "The Intricate Adalaj Stepwell near Ahmedabad"
       },

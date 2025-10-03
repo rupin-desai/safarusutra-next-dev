@@ -176,13 +176,13 @@ const DestinationDetailsOverview: React.FC<Props> = ({
       <div className="container mx-auto px-4">
         <div className="flex flex-col lg:flex-row gap-12">
           <div className="w-full lg:w-2/3 flex flex-col items-center lg:items-start">
-            <motion.h1
+            <motion.h2
               className="text-3xl md:text-4xl font-bold mb-4 text-center lg:text-left"
               style={{ fontFamily: "var(--font-family-baloo)" }}
               variants={contentFadeIn}
             >
               {tourData.title}
-            </motion.h1>
+            </motion.h2>
 
             <motion.div
               className="flex items-center mb-6 justify-center lg:justify-start"
