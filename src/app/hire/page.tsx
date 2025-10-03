@@ -13,11 +13,23 @@ export const metadata: Metadata = {
     "travel industry careers",
     "employment opportunities",
   ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Careers | Join Our Team | Safari Sutra",
     description:
       "Build your career in travel with Safari Sutra. Explore current job openings and join our passionate team of travel specialists.",
     url: "https://thesafarisutra.com/hire",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/hire",
   },
 };
 

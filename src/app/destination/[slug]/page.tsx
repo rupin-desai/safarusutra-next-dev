@@ -43,7 +43,8 @@ const createSlug = (text: string) =>
 const getDestinationsArray = (): Destination[] => {
   const raw: unknown = destinationsRaw;
   if (Array.isArray(raw)) return raw as Destination[];
-  if (raw && typeof raw === "object") return Object.values(raw as Record<string, Destination>);
+  if (raw && typeof raw === "object")
+    return Object.values(raw as Record<string, Destination>);
   return [];
 };
 
@@ -61,7 +62,9 @@ const resolveDetailsForIdOrSlug = (idOrSlug: string) => {
     const bySlug = (raw as unknown[]).find((entry) => {
       if (!entry || typeof entry !== "object") return false;
       const e = entry as Record<string, unknown>;
-      const slug = e.slug ?? (typeof e.title === "string" ? createSlug(e.title) : undefined);
+      const slug =
+        e.slug ??
+        (typeof e.title === "string" ? createSlug(e.title) : undefined);
       return String(slug ?? "") === String(idOrSlug);
     });
     return (bySlug as Record<string, unknown>) ?? {};
@@ -71,13 +74,21 @@ const resolveDetailsForIdOrSlug = (idOrSlug: string) => {
     // direct key
     if (map[idOrSlug]) return (map[idOrSlug] as Record<string, unknown>) ?? {};
     // try numeric key
-    const numericKey = Object.keys(map).find((k) => String(k) === String(idOrSlug));
+    const numericKey = Object.keys(map).find(
+      (k) => String(k) === String(idOrSlug)
+    );
     if (numericKey) return (map[numericKey] as Record<string, unknown>) ?? {};
     // try finding by id/slug within values
     const found = Object.values(map).find((entry) => {
       if (!entry || typeof entry !== "object") return false;
       const e = entry as Record<string, unknown>;
-      return String(e.id ?? e.slug ?? (typeof e.title === "string" ? createSlug(e.title) : "")) === String(idOrSlug);
+      return (
+        String(
+          e.id ??
+            e.slug ??
+            (typeof e.title === "string" ? createSlug(e.title) : "")
+        ) === String(idOrSlug)
+      );
     });
     return (found as Record<string, unknown>) ?? {};
   }
@@ -88,9 +99,16 @@ export async function generateStaticParams() {
   const items = getDestinationsArray();
   const params = items
     .map((d) => {
-      const slugFromField = typeof d.slug === "string" && d.slug.trim().length > 0 ? d.slug.trim() : undefined;
+      const slugFromField =
+        typeof d.slug === "string" && d.slug.trim().length > 0
+          ? d.slug.trim()
+          : undefined;
       const title = typeof d.title === "string" ? d.title.trim() : "";
-      const slugFallback = title ? createSlug(title) : d.id ? String(d.id) : undefined;
+      const slugFallback = title
+        ? createSlug(title)
+        : d.id
+        ? String(d.id)
+        : undefined;
       const slug = slugFromField ?? slugFallback;
       return slug ? { slug } : null;
     })
@@ -114,12 +132,26 @@ export async function generateMetadata({
     return {
       title: "Destination | Safari Sutra",
       description: "Discover destinations and travel guides at Safari Sutra.",
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/destination",
+      },
     };
   }
 
   const destinations = getDestinationsArray();
   let destination = destinations.find((d) => {
-    const candidate = d?.slug ? String(d.slug) : createSlug(String(d?.title ?? ""));
+    const candidate = d?.slug
+      ? String(d.slug)
+      : createSlug(String(d?.title ?? ""));
     return String(candidate) === String(slug);
   });
 
@@ -141,35 +173,73 @@ export async function generateMetadata({
     return {
       title: "Destination Not Found | Safari Sutra",
       description: "The destination you are looking for could not be found.",
+      robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/destination",
+      },
     };
   }
 
-  const id = destination.id ? String(destination.id) : String(destination.slug ?? "");
+  const id = destination.id
+    ? String(destination.id)
+    : String(destination.slug ?? "");
   const details = resolveDetailsForIdOrSlug(id);
 
   const completeData = { ...destination, ...details };
 
-  const title = completeData.title ? `${String(completeData.title)} | Safari Sutra` : "Destination | Safari Sutra";
+  const title = completeData.title
+    ? `${String(completeData.title)} | Safari Sutra Tours & Travels in India`
+    : "Destination | Safari Sutra";
   const description =
-    String(completeData.metaDescription || completeData.description || completeData.caption) ||
-    `Explore ${String(completeData.title)} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
+    String(
+      completeData.metaDescription ||
+        completeData.description ||
+        completeData.caption
+    ) ||
+    `Explore ${String(
+      completeData.title
+    )} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
 
-  const image = String(completeData.heroImage || completeData.image || "/logos/logo.svg");
+  const image = String(
+    completeData.heroImage || completeData.image || "/logos/logo.svg"
+  );
   const url = `https://thesafarisutra.com/destination/${slug}`;
 
   return {
     title,
     description,
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     openGraph: {
       title,
       description,
       url,
-      images: image ? [{ url: image, alt: String(completeData.title) || "Safari Sutra" }] : undefined,
+      images: image
+        ? [{ url: image, alt: String(completeData.title) || "Safari Sutra" }]
+        : undefined,
     },
     twitter: {
       title,
       description,
       images: image ? [image] : undefined,
+    },
+    alternates: {
+      canonical: url,
     },
   };
 }
@@ -182,7 +252,9 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
   // find by slug/title in primary destinations array
   let destination = destinations.find((d) => {
-    const candidate = d?.slug ? String(d.slug) : createSlug(String(d?.title ?? ""));
+    const candidate = d?.slug
+      ? String(d.slug)
+      : createSlug(String(d?.title ?? ""));
     return String(candidate) === String(slug);
   });
 
@@ -202,26 +274,51 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
   if (!destination) return notFound();
 
-  const id = destination.id ? String(destination.id) : String(destination.slug ?? "");
+  const id = destination.id
+    ? String(destination.id)
+    : String(destination.slug ?? "");
 
   // get per-destination details
   const details = resolveDetailsForIdOrSlug(id);
   const completeData: Record<string, unknown> = { ...destination, ...details };
 
   // helpers
-  const getString = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
-  const parseRating = (v: unknown): number | undefined => {
-    if (v == null) return undefined;
-    if (typeof v === "number") return v;
-    if (typeof v === "string") {
-      const n = Number(String(v).replace(/[^\d.]/g, ""));
-      return Number.isFinite(n) ? n : undefined;
-    }
-    if (typeof v === "object") {
-      const o = v as Record<string, unknown>;
-      return parseRating(o.rating ?? o.Rating ?? o.score ?? o.value ?? o.stars);
-    }
-    return undefined;
+  const getString = (v: unknown) =>
+    typeof v === "string" ? v : v == null ? "" : String(v);
+
+  // JSON-LD Product schema for destination rich result
+  const getFullImageUrl = (src: string): string => {
+    if (!src)
+      return "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+    if (src.startsWith("http")) return src;
+    const path = src.startsWith("/") ? src : `/${src}`;
+    return `https://thesafarisutra.com${path}`;
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: getString(completeData.title),
+    description: getString(
+      completeData.metaDescription ||
+        completeData.description ||
+        completeData.caption
+    ),
+    image: getFullImageUrl(
+      getString(completeData.heroImage || completeData.image)
+    ),
+    brand: {
+      "@type": "Brand",
+      name: "Safari Sutra",
+    },
+    category: getString(completeData.location),
+    offers: {
+      "@type": "Offer",
+      price: "0", // If you have a price, use it here
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      url: `https://thesafarisutra.com/destination/${slug}`,
+    },
   };
 
   // normalize FAQ into the shape DestinationFAQs expects: { items?: {question, answer}[] } | null
@@ -234,7 +331,10 @@ export default function Page({ params }: { params: { slug?: string } }) {
           if (!Array.isArray(items)) return null;
           const mapped = (items as unknown[])
             .map((it) => {
-              const o = it && typeof it === "object" ? (it as Record<string, unknown>) : {};
+              const o =
+                it && typeof it === "object"
+                  ? (it as Record<string, unknown>)
+                  : {};
               const question = getString(o.question ?? o.q ?? "");
               const answer = getString(o.answer ?? o.a ?? "");
               return { question, answer };
@@ -245,17 +345,22 @@ export default function Page({ params }: { params: { slug?: string } }) {
       : null;
 
   // build detailsProp expected by DestinationDetailsOverview (Detail[])
-  const detailsObj = (details && typeof details === "object" ? (details as Record<string, unknown>) : {}) as Record<
-    string,
-    unknown
-  >;
+  const detailsObj = (
+    details && typeof details === "object"
+      ? (details as Record<string, unknown>)
+      : {}
+  ) as Record<string, unknown>;
   const detailsProp: { title: string; description?: string }[] = [];
   if (Array.isArray(detailsObj.details)) {
     (detailsObj.details as unknown[]).forEach((item) => {
-      const o = item && typeof item === "object" ? (item as Record<string, unknown>) : {};
+      const o =
+        item && typeof item === "object"
+          ? (item as Record<string, unknown>)
+          : {};
       const title = getString(o.title ?? o.name ?? o.label ?? "");
       const description = getString(o.description ?? o.desc ?? o.value ?? "");
-      if (title) detailsProp.push({ title, description: description || undefined });
+      if (title)
+        detailsProp.push({ title, description: description || undefined });
     });
   } else {
     for (const [key, val] of Object.entries(detailsObj)) {
@@ -284,16 +389,25 @@ export default function Page({ params }: { params: { slug?: string } }) {
         const o = val as Record<string, unknown>;
         const title = getString(o.title ?? key);
         const description = getString(o.description ?? o.desc ?? o.value ?? "");
-        if (title) detailsProp.push({ title, description: description || undefined });
+        if (title)
+          detailsProp.push({ title, description: description || undefined });
       }
     }
   }
 
   // attractions
-  type AttractionLocal = { title?: string; image?: string; description?: string };
-  const attractionsProp: AttractionLocal[] = Array.isArray(completeData.attractions)
+  type AttractionLocal = {
+    title?: string;
+    image?: string;
+    description?: string;
+  };
+  const attractionsProp: AttractionLocal[] = Array.isArray(
+    completeData.attractions
+  )
     ? (completeData.attractions as unknown[]).map((a) => {
-        const o = (a && typeof a === "object" ? (a as Record<string, unknown>) : {}) as Record<string, unknown>;
+        const o = (
+          a && typeof a === "object" ? (a as Record<string, unknown>) : {}
+        ) as Record<string, unknown>;
         return {
           title: getString(o.title),
           image: getString(o.image),
@@ -315,11 +429,22 @@ export default function Page({ params }: { params: { slug?: string } }) {
   const tourDataProp = {
     title: getString(completeData.title),
     rating:
-      parseRating(completeData.rating ?? completeData.Rating ?? details.rating ?? details.Rating) ??
-      parseRating(altFromArray ? (altFromArray as Record<string, unknown>).rating : undefined),
+      parseRating(
+        completeData.rating ??
+          completeData.Rating ??
+          details.rating ??
+          details.Rating
+      ) ??
+      parseRating(
+        altFromArray
+          ? (altFromArray as Record<string, unknown>).rating
+          : undefined
+      ),
     location: getString(completeData.location),
     description: getString(completeData.description),
-    longDescription: getString(completeData.longDescription ?? completeData.long_description),
+    longDescription: getString(
+      completeData.longDescription ?? completeData.long_description
+    ),
     details: detailsProp,
     // include normalized attractions so Sidebar can render the list
     attractions: attractionsProp,
@@ -327,6 +452,10 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <HeroSection
         title={String(completeData.title)}
         backgroundImage={String(completeData.heroImage || completeData.image)}
@@ -339,17 +468,39 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
       <DestinationDetailsOverview tourData={tourDataProp} />
 
-      {!!completeData.tourWhy && <DestinationWhy tour={completeData as Record<string, unknown>} />}
+      {!!completeData.tourWhy && (
+        <DestinationWhy tour={completeData as Record<string, unknown>} />
+      )}
 
       <DestinationAttractions attractions={attractionsProp} />
 
-      <DestinationPackages destinationName={String(completeData.title)} destinationId={id ? Number(id) : undefined} />
+      <DestinationPackages
+        destinationName={String(completeData.title)}
+        destinationId={id ? Number(id) : undefined}
+      />
 
-      <DestinationRelated relatedTours={[]} currentTourId={id ? Number(id) : undefined} allTours={destinations} />
+      <DestinationRelated
+        relatedTours={[]}
+        currentTourId={id ? Number(id) : undefined}
+        allTours={destinations}
+      />
 
       <ContactSection />
 
-      <DestinationFAQs faq={faqProp} destinationTitle={String(completeData.title)} />
+      <DestinationFAQs
+        faq={faqProp}
+        destinationTitle={String(completeData.title)}
+      />
     </div>
   );
+}
+
+// Add this helper above your component
+function parseRating(val: unknown): number | undefined {
+  if (typeof val === "number") return val;
+  if (typeof val === "string") {
+    const num = parseFloat(val);
+    return isNaN(num) ? undefined : num;
+  }
+  return undefined;
 }

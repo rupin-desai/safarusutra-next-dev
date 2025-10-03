@@ -16,6 +16,18 @@ export const metadata = {
     "international tours",
   ],
   metadataBase: new URL("https://thesafarisutra.com"),
+  alternates: {
+    canonical: "https://thesafarisutra.com/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Safari Sutra | Tour & Travel Agency in India",
     description:

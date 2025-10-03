@@ -4,6 +4,11 @@ DirectoryIndex index.html index.htm
 # Serve custom 404 page for missing resources
 ErrorDocument 404 /404.html
 
+# Add X-Robots-Tag header
+<IfModule mod_headers.c>
+  Header set X-Robots-Tag "index, follow"
+</IfModule>
+
 RewriteEngine On
 RewriteBase /
 

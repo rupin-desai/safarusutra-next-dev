@@ -12,17 +12,17 @@ type Tour = {
   id?: string | number;
   title?: string;
   slug?: string;
-  
+
   // New responsive image properties
   srcSetWebp?: string;
   srcFallback?: string;
   alt?: string;
   imageTitle?: string;
-  
+
   // Legacy image properties for backward compatibility
   heroImage?: string;
   image?: string;
-  
+
   metaDescription?: string;
   description?: string;
   caption?: string;
@@ -42,12 +42,14 @@ const normalizeEntry = (entry: unknown): Tour => {
   if (!entry || typeof entry !== "object") return {};
   const e = entry as Record<string, unknown>;
   const rawId = e.id ?? e.ID ?? e["packageId"] ?? e["package_id"];
-  const id = typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
+  const id =
+    typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
 
   const rawCategory = e.category ?? e.categories ?? e["Category"];
   let category: string | string[] | undefined;
   if (typeof rawCategory === "string") category = rawCategory;
-  else if (Array.isArray(rawCategory)) category = rawCategory.map((c) => (typeof c === "string" ? c : String(c)));
+  else if (Array.isArray(rawCategory))
+    category = rawCategory.map((c) => (typeof c === "string" ? c : String(c)));
   else category = undefined;
 
   // map inclusions and exclusions arrays safely
@@ -61,30 +63,43 @@ const normalizeEntry = (entry: unknown): Tour => {
 
   return {
     id,
-    title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
+    title:
+      typeof e.title === "string"
+        ? e.title
+        : typeof e.name === "string"
+        ? e.name
+        : undefined,
     slug: typeof e.slug === "string" ? e.slug : undefined,
-    
+
     // New responsive image properties
     srcSetWebp: typeof e.srcSetWebp === "string" ? e.srcSetWebp : undefined,
     srcFallback: typeof e.srcFallback === "string" ? e.srcFallback : undefined,
     alt: typeof e.alt === "string" ? e.alt : undefined,
     imageTitle: typeof e.imageTitle === "string" ? e.imageTitle : undefined,
-    
+
     // Legacy image properties
     heroImage: typeof e.heroImage === "string" ? e.heroImage : undefined,
     image: typeof e.image === "string" ? e.image : undefined,
-    
-    metaDescription: typeof e.metaDescription === "string" ? e.metaDescription : undefined,
+
+    metaDescription:
+      typeof e.metaDescription === "string" ? e.metaDescription : undefined,
     description: typeof e.description === "string" ? e.description : undefined,
     caption: typeof e.caption === "string" ? e.caption : undefined,
     duration: typeof e.duration === "string" ? e.duration : undefined,
-    price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
+    price:
+      typeof e.price === "number"
+        ? e.price
+        : typeof e.price === "string"
+        ? e.price
+        : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     category,
     inclusions,
     exclusions,
     featured: typeof e.featured === "boolean" ? e.featured : undefined,
-    relatedDestinations: Array.isArray(e.relatedDestinations) ? (e.relatedDestinations as Array<string | number>) : undefined,
+    relatedDestinations: Array.isArray(e.relatedDestinations)
+      ? (e.relatedDestinations as Array<string | number>)
+      : undefined,
   } as Tour;
 };
 
@@ -92,7 +107,8 @@ const normalizeEntry = (entry: unknown): Tour => {
 const getToursArray = (): Tour[] => {
   const raw: unknown = tourDataRaw;
   if (Array.isArray(raw)) return (raw as unknown[]).map(normalizeEntry);
-  if (raw && typeof raw === "object") return Object.values(raw as Record<string, unknown>).map(normalizeEntry);
+  if (raw && typeof raw === "object")
+    return Object.values(raw as Record<string, unknown>).map(normalizeEntry);
   return [];
 };
 
@@ -117,7 +133,9 @@ export async function generateStaticParams() {
 
   const params = tours
     .map((t) => {
-      const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+      const candidate = t?.slug
+        ? String(t.slug)
+        : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
       return { slug: String(candidate ?? "") };
     })
     .filter((p) => p.slug && p.slug.length > 0);
@@ -145,12 +163,26 @@ export async function generateMetadata({
     return {
       title: "Inclusions | Safari Sutra",
       description: "Inclusions for Safari Sutra tours.",
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/tour/inclusions",
+      },
     };
   }
 
   const tours = getToursArray();
   const tour = tours.find((t) => {
-    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    const candidate = t?.slug
+      ? String(t.slug)
+      : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
     return String(candidate) === String(slug);
   });
 
@@ -158,34 +190,73 @@ export async function generateMetadata({
     return {
       title: "Inclusions Not Found | Safari Sutra",
       description: "Inclusions information for this tour could not be found.",
+      robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/tour/inclusions",
+      },
     };
   }
 
-  const pageTitle = tour.title ? `Inclusions — ${tour.title} | Safari Sutra` : "Inclusions | Safari Sutra";
+  const pageTitle = tour.title
+    ? `Inclusions | ${tour.title} | Safari Sutra`
+    : "Inclusions | Safari Sutra";
   const description = String(tour.description ?? "").slice(0, 160);
-  // Use new responsive properties first, then fallback to legacy
-  const image = tour.srcFallback || (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
-  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/inclusions`;
+  const image =
+    tour.srcFallback ||
+    (tour.heroImage as string) ||
+    (tour.image as string) ||
+    "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(
+    slug
+  )}/inclusions`;
 
   return {
     title: pageTitle,
     description,
-    keywords: [tour.title ?? "", "inclusions", "tour", "Safari Sutra"].filter(Boolean),
+    keywords: [tour.title ?? "", "inclusions", "tour", "Safari Sutra"].filter(
+      Boolean
+    ),
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     openGraph: {
       title: pageTitle,
       description,
       url,
-      images: image ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }] : undefined,
+      images: image
+        ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }]
+        : undefined,
     },
     twitter: {
       title: pageTitle,
       description,
       images: image ? [image] : undefined,
     },
+    alternates: {
+      canonical: url,
+    },
   };
 }
 
-export default function Page({ params }: { params: { slug?: string | string[] } }) {
+export default function Page({
+  params,
+}: {
+  params: { slug?: string | string[] };
+}) {
   const rawSlug = params?.slug;
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
 
@@ -194,7 +265,9 @@ export default function Page({ params }: { params: { slug?: string | string[] } 
   const tours = getToursArray();
 
   const tour = tours.find((t) => {
-    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    const candidate = t?.slug
+      ? String(t.slug)
+      : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
     return String(candidate) === String(slug);
   });
 

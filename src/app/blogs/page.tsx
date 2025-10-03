@@ -14,6 +14,15 @@ export const metadata: Metadata = {
     "travel stories",
     "india travel",
   ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   alternates: {
     canonical: "https://thesafarisutra.com/blogs",
   },

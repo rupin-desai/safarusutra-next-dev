@@ -5,7 +5,7 @@ import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 import HomeHighlight from "@/components/Pages/HomePage/HomeHighlight";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Safari Sutra",
+  title: "Contact Us | Safari Sutra Tours & Travels in India",
   description:
     "Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip.",
   keywords: [
@@ -14,11 +14,23 @@ export const metadata: Metadata = {
     "travel inquiry",
     "tour booking",
   ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Contact Us | Safari Sutra",
     description:
       "Get in touch with Safari Sutra for travel inquiries, booking assistance, or general questions. Our team is ready to help plan your perfect trip.",
     url: "https://thesafarisutra.com/contact",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/contact",
   },
 };
 

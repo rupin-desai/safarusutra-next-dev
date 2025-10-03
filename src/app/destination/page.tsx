@@ -12,11 +12,23 @@ export const metadata: Metadata = {
     "safari sutra destinations",
     "travel guides",
   ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Destinations | Safari Sutra",
     description:
       "Discover destinations with Safari Sutra — beaches, mountains, wildlife and cultural escapes. Browse destination guides, highlights and packages.",
     url: "https://thesafarisutra.com/destination",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/destination",
   },
 };
 

@@ -13,17 +13,17 @@ type Tour = {
   id?: string | number;
   title?: string;
   slug?: string;
-  
+
   // New responsive image properties
   srcSetWebp?: string;
   srcFallback?: string;
   alt?: string;
   imageTitle?: string;
-  
+
   // Legacy image properties for backward compatibility
   heroImage?: string;
   image?: string;
-  
+
   metaDescription?: string;
   description?: string;
   caption?: string;
@@ -43,7 +43,8 @@ const normalizeEntry = (entry: unknown): Tour => {
 
   // narrow the various possible id fields to string | number | undefined
   const rawId = e.id ?? e.ID ?? e["packageId"] ?? e["package_id"];
-  const id = typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
+  const id =
+    typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
 
   // normalize category to string | string[] | undefined
   const rawCategory = e.category ?? e.categories ?? e["Category"];
@@ -72,24 +73,35 @@ const normalizeEntry = (entry: unknown): Tour => {
 
   return {
     id,
-    title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
+    title:
+      typeof e.title === "string"
+        ? e.title
+        : typeof e.name === "string"
+        ? e.name
+        : undefined,
     slug: typeof e.slug === "string" ? e.slug : undefined,
-    
+
     // New responsive image properties
     srcSetWebp: typeof e.srcSetWebp === "string" ? e.srcSetWebp : undefined,
     srcFallback: typeof e.srcFallback === "string" ? e.srcFallback : undefined,
     alt: typeof e.alt === "string" ? e.alt : undefined,
     imageTitle: typeof e.imageTitle === "string" ? e.imageTitle : undefined,
-    
+
     // Legacy image properties
     heroImage: typeof e.heroImage === "string" ? e.heroImage : undefined,
     image: typeof e.image === "string" ? e.image : undefined,
-    
-    metaDescription: typeof e.metaDescription === "string" ? e.metaDescription : undefined,
+
+    metaDescription:
+      typeof e.metaDescription === "string" ? e.metaDescription : undefined,
     description: typeof e.description === "string" ? e.description : undefined,
     caption: typeof e.caption === "string" ? e.caption : undefined,
     duration: typeof e.duration === "string" ? e.duration : undefined,
-    price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
+    price:
+      typeof e.price === "number"
+        ? e.price
+        : typeof e.price === "string"
+        ? e.price
+        : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     category,
     cancellationPolicy,
@@ -128,7 +140,9 @@ export async function generateStaticParams() {
 
   const params = tours
     .map((t) => {
-      const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+      const candidate = t?.slug
+        ? String(t.slug)
+        : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
       return { slug: String(candidate ?? "") };
     })
     .filter((p) => p.slug && p.slug.length > 0);
@@ -154,13 +168,28 @@ export async function generateMetadata({
   if (!slug) {
     return {
       title: "Tour Policy | Safari Sutra",
-      description: "Tour policies, cancellation and booking terms for Safari Sutra tours.",
+      description:
+        "Tour policies, cancellation and booking terms for Safari Sutra tours.",
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/tour/policy",
+      },
     };
   }
 
   const tours = getToursArray();
   const tour = tours.find((t) => {
-    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    const candidate = t?.slug
+      ? String(t.slug)
+      : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
     return String(candidate) === String(slug);
   });
 
@@ -168,39 +197,79 @@ export async function generateMetadata({
     return {
       title: "Tour Policy Not Found | Safari Sutra",
       description: "Policy details for this tour could not be found.",
+      robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/tour/policy",
+      },
     };
   }
 
-  // Dynamic title that clearly indicates this is the policy page for the specific tour
-  const title = tour.title ? `Policy — ${tour.title} | Safari Sutra` : "Tour Policy | Safari Sutra";
+  const title = tour.title
+    ? `Policy — ${tour.title} | Safari Sutra`
+    : "Tour Policy | Safari Sutra";
   const description =
     (typeof tour.metaDescription === "string" && tour.metaDescription) ||
     (typeof tour.description === "string" && tour.description) ||
     (typeof tour.caption === "string" && tour.caption) ||
     `Policy details for ${tour.title} — cancellations, refunds and booking terms.`;
-  // Use new responsive properties first, then fallback to legacy
-  const image = tour.srcFallback || String(tour.heroImage || tour.image || "/logos/logo.svg");
-  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/policy`;
+  const image =
+    tour.srcFallback ||
+    String(tour.heroImage || tour.image || "/logos/logo.svg");
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(
+    slug
+  )}/policy`;
 
   return {
     title,
     description,
-    keywords: [tour.title ?? "", "policy", "cancellation", "refund", "Safari Sutra"].filter(Boolean),
+    keywords: [
+      tour.title ?? "",
+      "policy",
+      "cancellation",
+      "refund",
+      "Safari Sutra",
+    ].filter(Boolean),
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     openGraph: {
       title,
       description,
       url,
-      images: image ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }] : undefined,
+      images: image
+        ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }]
+        : undefined,
     },
     twitter: {
       title,
       description,
       images: image ? [image] : undefined,
     },
+    alternates: {
+      canonical: url,
+    },
   };
 }
 
-export default function TourPolicyPage({ params }: { params: { slug?: string | string[] } }) {
+export default function TourPolicyPage({
+  params,
+}: {
+  params: { slug?: string | string[] };
+}) {
   const rawSlug = params?.slug;
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
 
@@ -209,7 +278,9 @@ export default function TourPolicyPage({ params }: { params: { slug?: string | s
   const tours = getToursArray();
 
   const tour = tours.find((t) => {
-    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    const candidate = t?.slug
+      ? String(t.slug)
+      : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
     return String(candidate) === String(slug);
   });
 

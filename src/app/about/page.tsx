@@ -13,11 +13,33 @@ export const metadata: Metadata = {
   title: "About Us | Safari Sutra Tours & Travels in India",
   description:
     "Learn about Safari Sutra, our story, values, and what makes us different. Meet the team behind your memorable travel experiences.",
+  keywords: [
+    "safari sutra about",
+    "travel company values",
+    "safari sutra team",
+    "travel agency india",
+    "safari sutra mission",
+    "travel experience india",
+    "travel company background",
+    "travel company history",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "About Us | Safari Sutra",
     description:
       "Learn about Safari Sutra, our story, values, and what makes us different.",
     url: "https://thesafarisutra.com/about",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/about",
   },
 };
 

@@ -62,6 +62,15 @@ export async function generateMetadata({
     return {
       title: "Blog Not Found - Safari Sutra",
       description: "The requested blog post could not be found.",
+      robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
     };
   }
 
@@ -73,6 +82,15 @@ export async function generateMetadata({
     keywords: blog.tags || [],
     alternates: {
       canonical: pageUrl,
+    },
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
     },
     openGraph: {
       title: `${blog.title} - Safari Sutra`,

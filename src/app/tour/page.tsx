@@ -6,12 +6,29 @@ export const metadata: Metadata = {
   title: "Tours | Safari Sutra Tours & Travels in India",
   description:
     "Explore Safari Sutra's curated tours and fixed departures — short escapes, domestic adventures and international journeys.",
-  keywords: ["tours", "fixed departures", "travel packages", "Safari Sutra tours"],
+  keywords: [
+    "tours",
+    "fixed departures",
+    "travel packages",
+    "Safari Sutra tours",
+  ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Tours | Safari Sutra",
     description:
       "Explore Safari Sutra's curated tours and fixed departures — short escapes, domestic adventures and international journeys.",
     url: "https://thesafarisutra.com/tour",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/tour",
   },
 };
 

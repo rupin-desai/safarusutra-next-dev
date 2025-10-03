@@ -13,17 +13,17 @@ type Tour = {
   id?: string | number;
   title?: string;
   slug?: string;
-  
+
   // New responsive image properties
   srcSetWebp?: string;
   srcFallback?: string;
   alt?: string;
   imageTitle?: string;
-  
+
   // Legacy image properties for backward compatibility
   heroImage?: string;
   image?: string;
-  
+
   metaDescription?: string;
   description?: string;
   caption?: string;
@@ -58,7 +58,8 @@ const normalizeEntry = (entry: unknown): Tour => {
   if (!entry || typeof entry !== "object") return {};
   const e = entry as Record<string, unknown>;
   const rawId = e.id ?? e.ID ?? e["packageId"] ?? e["package_id"];
-  const id = typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
+  const id =
+    typeof rawId === "number" || typeof rawId === "string" ? rawId : undefined;
 
   // normalize category to string | string[] | undefined
   const rawCategory = e.category ?? e.categories ?? e["Category"];
@@ -77,12 +78,21 @@ const normalizeEntry = (entry: unknown): Tour => {
         if (!it || typeof it !== "object") return {};
         const o = it as Record<string, unknown>;
         return {
-          day: typeof o.day === "number" ? o.day : typeof o.day === "string" ? Number(o.day) : undefined,
+          day:
+            typeof o.day === "number"
+              ? o.day
+              : typeof o.day === "string"
+              ? Number(o.day)
+              : undefined,
           title: typeof o.title === "string" ? o.title : undefined,
-          description: typeof o.description === "string" ? o.description : undefined,
+          description:
+            typeof o.description === "string" ? o.description : undefined,
           location: typeof o.location === "string" ? o.location : undefined,
-          activities: Array.isArray(o.activities) ? (o.activities as unknown[]).map(a => String(a)) : undefined,
-          accommodation: typeof o.accommodation === "string" ? o.accommodation : undefined,
+          activities: Array.isArray(o.activities)
+            ? (o.activities as unknown[]).map((a) => String(a))
+            : undefined,
+          accommodation:
+            typeof o.accommodation === "string" ? o.accommodation : undefined,
           meals: o.meals && typeof o.meals === "object" ? o.meals : undefined,
           ...o,
         };
@@ -91,24 +101,35 @@ const normalizeEntry = (entry: unknown): Tour => {
 
   return {
     id,
-    title: typeof e.title === "string" ? e.title : typeof e.name === "string" ? e.name : undefined,
+    title:
+      typeof e.title === "string"
+        ? e.title
+        : typeof e.name === "string"
+        ? e.name
+        : undefined,
     slug: typeof e.slug === "string" ? e.slug : undefined,
-    
+
     // New responsive image properties
     srcSetWebp: typeof e.srcSetWebp === "string" ? e.srcSetWebp : undefined,
     srcFallback: typeof e.srcFallback === "string" ? e.srcFallback : undefined,
     alt: typeof e.alt === "string" ? e.alt : undefined,
     imageTitle: typeof e.imageTitle === "string" ? e.imageTitle : undefined,
-    
+
     // Legacy image properties
     heroImage: typeof e.heroImage === "string" ? e.heroImage : undefined,
     image: typeof e.image === "string" ? e.image : undefined,
-    
-    metaDescription: typeof e.metaDescription === "string" ? e.metaDescription : undefined,
+
+    metaDescription:
+      typeof e.metaDescription === "string" ? e.metaDescription : undefined,
     description: typeof e.description === "string" ? e.description : undefined,
     caption: typeof e.caption === "string" ? e.caption : undefined,
     duration: typeof e.duration === "string" ? e.duration : undefined,
-    price: typeof e.price === "number" ? e.price : typeof e.price === "string" ? e.price : undefined,
+    price:
+      typeof e.price === "number"
+        ? e.price
+        : typeof e.price === "string"
+        ? e.price
+        : undefined,
     location: typeof e.location === "string" ? e.location : undefined,
     route: typeof e.route === "string" ? e.route : undefined,
     category,
@@ -124,7 +145,8 @@ const normalizeEntry = (entry: unknown): Tour => {
 const getToursArray = (): Tour[] => {
   const raw: unknown = tourDataRaw;
   if (Array.isArray(raw)) return (raw as unknown[]).map(normalizeEntry);
-  if (raw && typeof raw === "object") return Object.values(raw as Record<string, unknown>).map(normalizeEntry);
+  if (raw && typeof raw === "object")
+    return Object.values(raw as Record<string, unknown>).map(normalizeEntry);
   return [];
 };
 
@@ -145,61 +167,67 @@ const generateTouristTripJsonLd = (tour: Tour, slug: string) => {
   return {
     "@context": "https://schema.org",
     "@type": "TouristTrip",
-    "name": tour.title || "Tour Package",
-    "description": tour.description || `${tour.title} itinerary`,
-    "image": tour.srcFallback || tour.heroImage || tour.image,
-    "url": `https://thesafarisutra.com/tour/${slug}/itinerary`,
-    "touristType": "leisure",
-    "duration": tour.duration,
+    name: tour.title || "Tour Package",
+    description: tour.description || `${tour.title} itinerary`,
+    image: tour.srcFallback || tour.heroImage || tour.image,
+    url: `https://thesafarisutra.com/tour/${slug}/itinerary`,
+    touristType: "leisure",
+    duration: tour.duration,
     ...(tour.price && {
-      "offers": {
+      offers: {
         "@type": "Offer",
-        "price": typeof tour.price === "string" ? tour.price.replace(/[^\d.]/g, "") : String(tour.price),
-        "priceCurrency": "INR",
-        "availability": "https://schema.org/InStock"
-      }
+        price:
+          typeof tour.price === "string"
+            ? tour.price.replace(/[^\d.]/g, "")
+            : String(tour.price),
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+      },
     }),
-    "itinerary": tour.itinerary.map((day: ItineraryDay, idx: number) => ({
-      "@type": "TouristAttraction", 
-      "name": `Day ${day.day !== undefined ? day.day : idx + 1}: ${day.title || "Tour Day"}`,
-      "description": day.description,
+    itinerary: tour.itinerary.map((day: ItineraryDay, idx: number) => ({
+      "@type": "TouristAttraction",
+      name: `Day ${day.day !== undefined ? day.day : idx + 1}: ${
+        day.title || "Tour Day"
+      }`,
+      description: day.description,
       ...(day.location && {
-        "address": {
+        address: {
           "@type": "PostalAddress",
-          "addressLocality": day.location
-        }
+          addressLocality: day.location,
+        },
       }),
-      ...(Array.isArray(day.activities) && day.activities.length > 0 && {
-        "potentialAction": day.activities.map((activity: string) => ({
-          "@type": "Action",
-          "name": activity
-        }))
-      })
+      ...(Array.isArray(day.activities) &&
+        day.activities.length > 0 && {
+          potentialAction: day.activities.map((activity: string) => ({
+            "@type": "Action",
+            name: activity,
+          })),
+        }),
     })),
-    "subTrip": tour.itinerary.map((day: ItineraryDay, idx: number) => ({
+    subTrip: tour.itinerary.map((day: ItineraryDay, idx: number) => ({
       "@type": "Trip",
-      "name": `Day ${day.day !== undefined ? day.day : idx + 1}`,
-      "description": day.description,
-      "partOfTrip": {
-        "@type": "TouristTrip", 
-        "name": tour.title
+      name: `Day ${day.day !== undefined ? day.day : idx + 1}`,
+      description: day.description,
+      partOfTrip: {
+        "@type": "TouristTrip",
+        name: tour.title,
       },
       ...(day.location && {
-        "arrivalLocation": {
+        arrivalLocation: {
           "@type": "Place",
-          "name": day.location
-        }
+          name: day.location,
+        },
       }),
       ...(day.accommodation && {
-        "accommodationBooking": {
+        accommodationBooking: {
           "@type": "LodgingReservation",
-          "lodgingBusiness": {
+          lodgingBusiness: {
             "@type": "LodgingBusiness",
-            "name": day.accommodation
-          }
-        }
-      })
-    }))
+            name: day.accommodation,
+          },
+        },
+      }),
+    })),
   };
 };
 
@@ -213,7 +241,9 @@ export async function generateStaticParams() {
 
   const params = tours
     .map((t) => {
-      const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+      const candidate = t?.slug
+        ? String(t.slug)
+        : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
       return { slug: String(candidate ?? "") };
     })
     .filter((p) => p.slug && p.slug.length > 0);
@@ -232,20 +262,34 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug?: string | string[] }>; // Fixed: Next.js 15 async params
+  params: Promise<{ slug?: string | string[] }>;
 }): Promise<Metadata> {
-  const { slug: rawSlug } = await params; // Fixed: await params
+  const { slug: rawSlug } = await params;
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
   if (!slug) {
     return {
       title: "Itinerary | Safari Sutra",
       description: "Tour itineraries and day-by-day plans from Safari Sutra.",
+      robots: {
+        index: true,
+        follow: true,
+        nocache: false,
+        googleBot: {
+          index: true,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/tour/itinerary",
+      },
     };
   }
 
   const tours = getToursArray();
   const tour = tours.find((t) => {
-    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    const candidate = t?.slug
+      ? String(t.slug)
+      : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
     return String(candidate) === String(slug);
   });
 
@@ -253,38 +297,78 @@ export async function generateMetadata({
     return {
       title: "Itinerary Not Found | Safari Sutra",
       description: "The itinerary you are looking for could not be found.",
+      robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+          index: false,
+          follow: true,
+        },
+      },
+      alternates: {
+        canonical: "https://thesafarisutra.com/tour/itinerary",
+      },
     };
   }
 
-  const title = tour.title ? `Itinerary — ${tour.title} | Safari Sutra` : "Itinerary | Safari Sutra";
+  const title = tour.title
+    ? `Itinerary — ${tour.title} | Safari Sutra`
+    : "Itinerary | Safari Sutra";
   const description =
     tour.metaDescription ||
     tour.description ||
     tour.caption ||
     `Day-by-day itinerary for ${tour.title} by Safari Sutra.`;
-  // Use new responsive properties first, then fallback to legacy
-  const image = tour.srcFallback || (tour.heroImage as string) || (tour.image as string) || "/logos/logo.svg";
-  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}/itinerary`;
+  const image =
+    tour.srcFallback ||
+    (tour.heroImage as string) ||
+    (tour.image as string) ||
+    "/logos/logo.svg";
+  const url = `https://thesafarisutra.com/tour/${encodeURIComponent(
+    slug
+  )}/itinerary`;
 
   return {
     title,
     description,
-    keywords: [tour.title ?? "", "itinerary", "tour", "Safari Sutra"].filter(Boolean),
+    keywords: [tour.title ?? "", "itinerary", "tour", "Safari Sutra"].filter(
+      Boolean
+    ),
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
     openGraph: {
       title,
       description,
       url,
-      images: image ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }] : undefined,
+      images: image
+        ? [{ url: image, alt: tour.alt ?? tour.title ?? "Safari Sutra" }]
+        : undefined,
     },
     twitter: {
       title,
       description,
       images: image ? [image] : undefined,
     },
+    alternates: {
+      canonical: url,
+    },
   };
 }
 
-export default async function TourItineraryPage({ params }: { params: Promise<{ slug?: string | string[] }> }) { // Fixed: Next.js 15 async params and async function
+export default async function TourItineraryPage({
+  params,
+}: {
+  params: Promise<{ slug?: string | string[] }>;
+}) {
+  // Fixed: Next.js 15 async params and async function
   const { slug: rawSlug } = await params; // Fixed: await params
   const slug = Array.isArray(rawSlug) ? rawSlug[0] : rawSlug ?? "";
 
@@ -293,7 +377,9 @@ export default async function TourItineraryPage({ params }: { params: Promise<{ 
   const tours = getToursArray();
 
   const tour = tours.find((t) => {
-    const candidate = t?.slug ? String(t.slug) : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
+    const candidate = t?.slug
+      ? String(t.slug)
+      : createSlug(String(t?.title ?? "")) || (t?.id ? String(t.id) : "");
     return String(candidate) === String(slug);
   });
 
@@ -308,9 +394,9 @@ export default async function TourItineraryPage({ params }: { params: Promise<{ 
     <div className="bg-gray-50 min-h-screen">
       {/* Add JSON-LD structured data at page level */}
       {jsonLd && (
-        <script 
-          type="application/ld+json" 
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       )}
 

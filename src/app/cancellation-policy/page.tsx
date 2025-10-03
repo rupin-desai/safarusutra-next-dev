@@ -3,14 +3,17 @@ import React from "react";
 import Navbar from "@/components/Common/Navbar";
 
 export const metadata: Metadata = {
-  title: "Cancellation Policy | Safari Sutra",
+  title: "Cancellation Policy | Safari Sutra Tours & Travels in India",
   description:
-    "Learn about Safari Sutra's cancellation, refund, and modification policies. Understand your rights and responsibilities when changing or cancelling your travel plans.",
+    "Read Safari Sutra's cancellation, refund, and modification policies for your travel bookings. Know your rights and responsibilities.",
   openGraph: {
     title: "Cancellation Policy | Safari Sutra",
     description:
-      "Learn about Safari Sutra's cancellation, refund, and modification policies. Understand your rights and responsibilities when changing or cancelling your travel plans.",
+      "Read Safari Sutra's cancellation, refund, and modification policies for your travel bookings. Know your rights and responsibilities.",
     url: "https://thesafarisutra.com/cancellation-policy",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/cancellation-policy",
   },
 };
 
@@ -21,7 +24,10 @@ export default function CancellationPolicy(): React.ReactElement {
 
       <div className="pt-24 md:pt-28" />
 
-      <section className="py-12 px-4 md:py-16 md:px-16 bg-white" style={{ willChange: "opacity" }}>
+      <section
+        className="py-12 px-4 md:py-16 md:px-16 bg-white"
+        style={{ willChange: "opacity" }}
+      >
         <div className="max-w-4xl mx-auto">
           {/* Simple section title */}
           <div className="mb-10 text-center">
@@ -33,7 +39,18 @@ export default function CancellationPolicy(): React.ReactElement {
 
           <div className="prose prose-lg max-w-none text-justify mb-10">
             <p>
-              Welcome to Safari Sutra Holidays Private Limited (&quot;Safari Sutra,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). These Terms and Conditions (&quot;Terms&quot;) govern your use of our website, mobile applications, and all travel-related services, including but not limited to bookings for flights, hotels, holiday packages, and other travel arrangements. By accessing or using our services, you agree to be bound by these Terms and the specific conditions of third-party providers (e.g., airlines, hotels, tour operators). If you do not agree with these Terms, please do not use our services. These Terms do not constitute a partnership or agency relationship between you and Safari Sutra, and no party has authority to bind the other in any way.
+              Welcome to Safari Sutra Holidays Private Limited (&quot;Safari
+              Sutra,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;).
+              These Terms and Conditions (&quot;Terms&quot;) govern your use of
+              our website, mobile applications, and all travel-related services,
+              including but not limited to bookings for flights, hotels, holiday
+              packages, and other travel arrangements. By accessing or using our
+              services, you agree to be bound by these Terms and the specific
+              conditions of third-party providers (e.g., airlines, hotels, tour
+              operators). If you do not agree with these Terms, please do not
+              use our services. These Terms do not constitute a partnership or
+              agency relationship between you and Safari Sutra, and no party has
+              authority to bind the other in any way.
             </p>
           </div>
 
@@ -121,17 +138,18 @@ export default function CancellationPolicy(): React.ReactElement {
                   <strong className="text-[var(--color-orange)]">
                     Non-Refundable Bookings:
                   </strong>{" "}
-                  Flights, hotels, or packages marked as &quot;Non-Refundable&quot; on the
-                  final travel vouchers or itinerary are not eligible for
-                  refunds, resulting in a zero refund if canceled.
+                  Flights, hotels, or packages marked as
+                  &quot;Non-Refundable&quot; on the final travel vouchers or
+                  itinerary are not eligible for refunds, resulting in a zero
+                  refund if canceled.
                 </li>
                 <li>
                   <strong className="text-[var(--color-orange)]">
                     Refundable Bookings:
                   </strong>{" "}
-                  For services marked as &quot;Refundable&quot; on the final travel
-                  vouchers or itinerary, refunds will be processed as per the
-                  specific cancellation policy outlined in the booking
+                  For services marked as &quot;Refundable&quot; on the final
+                  travel vouchers or itinerary, refunds will be processed as per
+                  the specific cancellation policy outlined in the booking
                   confirmation and itinerary. Refunds may vary due to
                   international exchange rates, supplier policies, and payments
                   received to date. Eligible refunds will be processed within 90
@@ -174,9 +192,9 @@ export default function CancellationPolicy(): React.ReactElement {
                   grounded, canceled, or delayed flights), customers must
                   contact the respective airline directly. Safari Sutra is not
                   liable for such cancellations, and refunds are subject to the
-                  airline&apos;s processing timelines and policies. Similarly, for
-                  hotel cancellations, refunds are subject to the hotel&apos;s terms
-                  as outlined in the itinerary.
+                  airline&apos;s processing timelines and policies. Similarly,
+                  for hotel cancellations, refunds are subject to the
+                  hotel&apos;s terms as outlined in the itinerary.
                 </li>
                 <li>
                   <strong className="text-[var(--color-orange)]">
@@ -456,7 +474,10 @@ export default function CancellationPolicy(): React.ReactElement {
               13. Contact Us
             </h2>
             <div className="prose prose-lg max-w-none">
-              <p>For questions or concerns about these Terms, please contact us at:</p>
+              <p>
+                For questions or concerns about these Terms, please contact us
+                at:
+              </p>
               <p>
                 <strong>Email:</strong>{" "}
                 <a
@@ -467,7 +488,10 @@ export default function CancellationPolicy(): React.ReactElement {
                 </a>
               </p>
               <p>
-                <strong>Address:</strong> Safari Sutra Holidays Private Limited, Work, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai, Maharashtra 400059
+                <strong>Address:</strong> Safari Sutra Holidays Private Limited,
+                Work, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya
+                Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai,
+                Maharashtra 400059
               </p>
               <p>
                 <strong>Phone:</strong>{" "}

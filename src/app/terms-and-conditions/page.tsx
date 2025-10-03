@@ -3,7 +3,7 @@ import React from "react";
 import Navbar from "@/components/Common/Navbar";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | Safari Sutra",
+  title: "Terms & Conditions | Safari Sutra Tours & Travels in India",
   description:
     "Read Safari Sutra's Terms & Conditions covering bookings, cancellations, liabilities, and user responsibilities for travel services and website use.",
   keywords: [
@@ -13,11 +13,23 @@ export const metadata: Metadata = {
     "safari sutra terms",
     "travel terms",
   ],
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Terms & Conditions | Safari Sutra",
     description:
       "Read Safari Sutra's Terms & Conditions covering bookings, cancellations, liabilities, and user responsibilities for travel services and website use.",
     url: "https://thesafarisutra.com/terms-and-conditions",
+  },
+  alternates: {
+    canonical: "https://thesafarisutra.com/terms-and-conditions",
   },
 };
 
@@ -40,18 +52,18 @@ export default function TermsAndConditions(): React.ReactElement {
 
           <div className="prose prose-lg max-w-none text-justify mb-10">
             <p>
-              Welcome to Safari Sutra Holidays Private Limited (&quot;Safari Sutra,&quot;
-              &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;). These Terms and Conditions (&quot;Terms&quot;) govern
-              your use of our website, mobile applications, and all
-              travel-related services, including but not limited to bookings for
-              flights, hotels, holiday packages, and other travel arrangements.
-              By accessing or using our services, you agree to be bound by these
-              Terms and the specific conditions of third-party providers (e.g.,
-              airlines, hotels, tour operators). If you do not agree with these
-              Terms, please do not use our services. These Terms do not
-              constitute a partnership or agency relationship between you and
-              Safari Sutra, and no party has authority to bind the other in any
-              way.
+              Welcome to Safari Sutra Holidays Private Limited (&quot;Safari
+              Sutra,&quot; &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;).
+              These Terms and Conditions (&quot;Terms&quot;) govern your use of
+              our website, mobile applications, and all travel-related services,
+              including but not limited to bookings for flights, hotels, holiday
+              packages, and other travel arrangements. By accessing or using our
+              services, you agree to be bound by these Terms and the specific
+              conditions of third-party providers (e.g., airlines, hotels, tour
+              operators). If you do not agree with these Terms, please do not
+              use our services. These Terms do not constitute a partnership or
+              agency relationship between you and Safari Sutra, and no party has
+              authority to bind the other in any way.
             </p>
           </div>
 
@@ -290,4 +302,4 @@ export default function TermsAndConditions(): React.ReactElement {
       </section>
     </div>
   );
-};
+}
