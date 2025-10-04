@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import { motion, Variants } from "framer-motion";
 import { MapPin, Globe } from "lucide-react";
 import packageData from "@/data/Destinations.json";
 import DestinationCard from "@/components/UI/DestinationCard";
 import type { Tour as DestinationCardTour } from "@/components/UI/DestinationCard";
 
-// Narrowly typed package item instead of `any`
 type PackageItem = {
   id: string | number;
   location?: string;
   title?: string;
-  image?: string;
+  srcSetWebp: string;
+  srcFallback: string;
+  alt?: string;
+  imageTitle?: string;
+  caption?: string;
+  price?: string;
+  duration?: string;
   [key: string]: unknown;
 };
 
@@ -18,7 +23,6 @@ interface Props {
   filteredPackages?: PackageItem[];
 }
 
-// Typed motion variants using Variants (no `any`)
 const tabsVariants: Variants = {
   initial: {
     opacity: 0,
@@ -72,14 +76,25 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
   const [visibleTours, setVisibleTours] = useState<PackageItem[]>([]);
   const sectionRef = useRef<HTMLElement | null>(null);
 
-  // Use the filteredPackages prop if provided, otherwise use all packageData
-  const allPackages: PackageItem[] = (filteredPackages ?? (packageData as PackageItem[])) as PackageItem[];
+  const allPackages: PackageItem[] = (filteredPackages ??
+    (packageData as PackageItem[])) as PackageItem[];
 
-  // Define domestic and international packages
-  const domesticTours = allPackages.filter((tour) => String(tour.location ?? "").toLowerCase() === "india");
-  const internationalTours = allPackages.filter((tour) => String(tour.location ?? "").toLowerCase() !== "india");
+  // Memoize arrays so they don't change on every render
+  const domesticTours = useMemo(
+    () =>
+      allPackages.filter(
+        (tour) => String(tour.location ?? "").toLowerCase() === "india"
+      ),
+    [allPackages]
+  );
+  const internationalTours = useMemo(
+    () =>
+      allPackages.filter(
+        (tour) => String(tour.location ?? "").toLowerCase() !== "india"
+      ),
+    [allPackages]
+  );
 
-  // Fisher-Yates shuffle to randomize tours without mutating original array
   const shuffleArray = (arr: PackageItem[]) => {
     const a = arr.slice();
     for (let i = a.length - 1; i > 0; i--) {
@@ -89,14 +104,12 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
     return a;
   };
 
-  // Initialize visible tours whenever activeTab or filteredPackages change
   useEffect(() => {
-    const initialTours = activeTab === "domestic" ? domesticTours : internationalTours;
+    const initialTours =
+      activeTab === "domestic" ? domesticTours : internationalTours;
     setVisibleTours(shuffleArray(initialTours));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, filteredPackages]);
+  }, [activeTab, filteredPackages, domesticTours, internationalTours]);
 
-  // Handle tab switching
   const selectTab = (tab: "domestic" | "international") => {
     if (tab === activeTab) return;
     setActiveTab(tab);
@@ -104,17 +117,14 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
     setVisibleTours(shuffleArray(toursToShow));
   };
 
-  // Get the active tab color based on tab selection
   const getActiveTabColor = (tab: "domestic" | "international") =>
     tab === "domestic" ? "text-orange-500" : "text-green-600";
 
-  // Get the active tab background color
   const getActiveTabBgColor = (tab: "domestic" | "international") =>
     tab === "domestic" ? "bg-orange-50" : "bg-green-50";
 
   return (
     <section className="overflow-hidden" ref={sectionRef}>
-      {/* Animated Tab Selector - always animate */}
       <motion.div
         className="flex justify-center mb-12 px-3"
         initial="initial"
@@ -122,7 +132,6 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
         variants={tabsVariants}
       >
         <div className="inline-flex w-full max-w-md bg-gray-100 rounded-full p-1.5">
-          {/* Domestic Tab Button */}
           <motion.button
             onClick={() => selectTab("domestic")}
             className={`flex items-center justify-center flex-1 cursor-pointer px-3 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -141,7 +150,6 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
             </span>
           </motion.button>
 
-          {/* International Tab Button */}
           <motion.button
             onClick={() => selectTab("international")}
             className={`flex items-center justify-center flex-1 cursor-pointer px-3 sm:px-6 py-2.5 rounded-full text-sm font-medium transition-all ${
@@ -162,7 +170,6 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
         </div>
       </motion.div>
 
-      {/* Package Cards: animate always (no viewport gating) */}
       <motion.div
         key={activeTab}
         initial="initial"
@@ -195,27 +202,36 @@ const DestinationAllPackages: React.FC<Props> = ({ filteredPackages }) => {
               }
             `}</style>
             {visibleTours.map((tour, index) => {
-              // normalize to the DestinationCard's Tour shape so the component gets required non-optional fields
               const tourProp: DestinationCardTour = {
                 id: tour.id,
                 title: String(tour.title ?? ""),
-                image: String(tour.image ?? "/graphics/placeholder.jpg"),
-                // DestinationCard's Tour type doesn't include `route`, so keep only fields it expects
+                srcSetWebp: String(tour.srcSetWebp ?? ""),
+                srcFallback: String(tour.srcFallback ?? ""),
+                alt: String(tour.alt ?? ""),
+                imageTitle: String(tour.imageTitle ?? ""),
                 location: String(tour.location ?? ""),
-                caption: String((tour as unknown as Record<string, unknown>).caption ?? "Unforgettable Safari Experience"),
-                price: String((tour as unknown as Record<string, unknown>).price ?? ""),
-                duration: String((tour as unknown as Record<string, unknown>).duration ?? ""),
+                caption: String(tour.caption ?? ""),
+                price: String(tour.price ?? ""),
+                duration: String(tour.duration ?? ""),
               };
 
               return (
-                <motion.div key={`${String(tour.id)}-${activeTab}`} variants={cardVariants} className="card-wrapper">
+                <motion.div
+                  key={`${String(tour.id)}-${activeTab}`}
+                  variants={cardVariants}
+                  className="card-wrapper"
+                >
                   <DestinationCard tour={tourProp} index={index} />
                 </motion.div>
               );
             })}
           </div>
         ) : (
-          <motion.div className="text-center py-16 text-gray-500" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <motion.div
+            className="text-center py-16 text-gray-500"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
             No packages available in this category.
           </motion.div>
         )}
