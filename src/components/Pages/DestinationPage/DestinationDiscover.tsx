@@ -6,7 +6,6 @@ import { Compass } from "lucide-react";
 import CountUp from "react-countup";
 import SectionTitle from "../../UI/SectionTitle";
 import SSButton from "../../UI/SSButton";
-import Image from "next/image";
 
 // Animation variants (use Variants and translate3d strings)
 const sectionVariants: Variants = {
@@ -64,7 +63,6 @@ const DestinationDiscover: React.FC = () => {
 
   return (
     <section className="py-16 px-8 md:px-20 bg-white overflow-hidden relative">
-      {/* CSS for rotating stars remains the same */}
       <style>
         {`
           @keyframes slowRotateClockwise {
@@ -83,7 +81,8 @@ const DestinationDiscover: React.FC = () => {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/graphics/star.svg"
-        alt=""
+        alt="Decorative spinning star graphic for discover section"
+        title="Decorative star graphic"
         className="absolute top-0 right-5 md:top-20 md:right-10 w-12 h-12 md:w-16 md:h-16 opacity-90"
         style={{
           animation: "slowRotateClockwise 30s linear infinite",
@@ -95,7 +94,8 @@ const DestinationDiscover: React.FC = () => {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="/graphics/star2.svg"
-        alt=""
+        alt="Decorative spinning star graphic for discovery section"
+        title="Decorative spinning star graphic"
         className="absolute bottom-20 left-10 w-28 h-28 opacity-15"
         style={{
           animation: "slowRotateCounterClockwise 45s linear infinite",
@@ -121,20 +121,20 @@ const DestinationDiscover: React.FC = () => {
         />
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mt-12">
-          {/* Updated text content with fun, creative approach */}
           <motion.div variants={itemVariants}>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed text-justify">
-              Think of us as your travel fairy godparents—minus the wand, plus the
-              Wi‑Fi! We don&apos;t just book trips; we craft
+              Think of us as your travel fairy godparents—minus the wand, plus
+              the Wi‑Fi! We don&apos;t just book trips; we craft
               &quot;remember-that-time-when&quot; moments that&apos;ll have you
               humble-bragging for years. Whether you&apos;re dreaming of selfies
               with elephants in the wild, sipping chai with locals in hidden
               mountain villages, or simply escaping your boss&apos;s weekly
-              &quot;quick catch-ups,&quot; we&apos;ve got you covered. And unlike
-              those one-size-fits-all travel factories, we obsess over the little
-              details—because we know it&apos;s the difference between a nice
-              vacation and a &quot;OMG-did-that-really-happen&quot; adventure that
-              breaks your Instagram feed!
+              &quot;quick catch-ups,&quot; we&apos;ve got you covered. And
+              unlike those one-size-fits-all travel factories, we obsess over
+              the little details—because we know it&apos;s the difference
+              between a nice vacation and a
+              &quot;OMG-did-that-really-happen&quot; adventure that breaks your
+              Instagram feed!
             </p>
 
             <div className="flex flex-wrap items-center gap-4 mt-6">
@@ -167,15 +167,19 @@ const DestinationDiscover: React.FC = () => {
             </div>
           </motion.div>
 
-          {/* Image section remains unchanged */}
+          {/* Responsive image using srcSet and fallback */}
           <motion.div className="relative" variants={itemVariants}>
             <div className="aspect-[4/3] rounded-xl overflow-hidden shadow-xl relative">
-              <Image
-                src="https://www.bornfree.org.uk/wp-content/uploads/2023/10/keyur-nandaniya-vu0gvM5he8o-unsplash-11.jpg"
-                alt="Safari experience with wildlife and guide"
-                fill
-                className="object-cover"
-                unoptimized
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/Destinations/destination-discover-1080.webp"
+                srcSet="/images/Destinations/destination-discover-480.webp 480w, /images/Destinations/destination-discover-720.webp 720w, /images/Destinations/destination-discover-1080.webp 1080w"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                alt="Wild Bengal tiger walking through golden hour grasslands on an Indian safari tour"
+                title="Golden hour safari with a Bengal tiger in India – wildlife travel experience"
+                className="object-cover w-full h-full"
+                style={{ width: "100%", height: "100%" }}
+                loading="lazy"
               />
             </div>
 

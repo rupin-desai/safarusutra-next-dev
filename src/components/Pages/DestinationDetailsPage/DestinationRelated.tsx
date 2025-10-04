@@ -103,27 +103,38 @@ const rotateReverseAnimation: Variants = {
   },
 };
 
-const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId, allTours = [] }) => {
+const DestinationRelated: React.FC<Props> = ({
+  relatedTours = [],
+  currentTourId,
+  allTours = [],
+}) => {
   // Get randomly selected related tours based on current tour type (domestic/international)
   const selectedTours = useMemo((): SharedTour[] => {
-    if (!allTours || allTours.length === 0) return (relatedTours ?? []).slice(0, 3);
+    if (!allTours || allTours.length === 0)
+      return (relatedTours ?? []).slice(0, 3);
 
     // Find current tour to determine if it's domestic or international
-    const currentTour = allTours.find((tour) => String(tour.id ?? "") === String(currentTourId ?? ""));
+    const currentTour = allTours.find(
+      (tour) => String(tour.id ?? "") === String(currentTourId ?? "")
+    );
     if (!currentTour) return (relatedTours ?? []).slice(0, 3);
 
-    const isDomestic = String((currentTour.location ?? "")).toLowerCase() === "india";
+    const isDomestic =
+      String(currentTour.location ?? "").toLowerCase() === "india";
 
     const sameCategoryTours = allTours.filter(
       (tour) =>
         String(tour.id ?? "") !== String(currentTourId ?? "") &&
-        (isDomestic ? String(tour.location ?? "").toLowerCase() === "india" : String(tour.location ?? "").toLowerCase() !== "india")
+        (isDomestic
+          ? String(tour.location ?? "").toLowerCase() === "india"
+          : String(tour.location ?? "").toLowerCase() !== "india")
     );
 
     // derive numeric seed from currentTourId (stable)
     const seedStr = String(currentTourId ?? String(currentTour.id ?? ""));
     let seed = 0;
-    for (let i = 0; i < seedStr.length; i++) seed = (seed * 31 + seedStr.charCodeAt(i)) >>> 0;
+    for (let i = 0; i < seedStr.length; i++)
+      seed = (seed * 31 + seedStr.charCodeAt(i)) >>> 0;
 
     // deterministically shuffle and pick first 3
     return seededShuffle(sameCategoryTours, seed).slice(0, 3);
@@ -171,13 +182,17 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
           variants={fadeIn}
         >
           {selectedTours.map((tour, index) => {
-            // normalize to DestinationCard's Tour shape to satisfy prop types
             const cardTour: DestinationCardTour = {
               id: tour.id as string | number,
               title: String(tour.title ?? ""),
-              image: String(tour.image ?? "/graphics/placeholder.jpg"),
+              srcSetWebp: String(tour.srcSetWebp ?? ""),
+              srcFallback: String(tour.srcFallback ?? ""),
+              alt: String(tour.alt ?? tour.title ?? ""),
+              imageTitle: String(tour.imageTitle ?? tour.title ?? ""),
               location: String(tour.location ?? ""),
-              caption: String(tour.caption ?? "Unforgettable Safari Experience"),
+              caption: String(
+                tour.caption ?? "Unforgettable Safari Experience"
+              ),
               price: String(tour.price ?? ""),
               duration: String(tour.duration ?? ""),
             };
@@ -191,7 +206,11 @@ const DestinationRelated: React.FC<Props> = ({ relatedTours = [], currentTourId,
                 whileInView="animate"
                 viewport={{ once: true }}
               >
-                <DestinationCard tour={cardTour} index={index} isNewlyLoaded={false} />
+                <DestinationCard
+                  tour={cardTour}
+                  index={index}
+                  isNewlyLoaded={false}
+                />
               </motion.div>
             );
           })}
