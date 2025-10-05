@@ -51,7 +51,9 @@ interface Breadcrumb {
 
 interface HeroSectionProps {
   title?: string;
-  backgroundImage: string;
+  backgroundImage?: string;
+  srcSetWebp?: string;
+  alt?: string;
   overlay?: number;
   titleSize?: string;
   customBreadcrumbs?: Breadcrumb[] | null;
@@ -61,6 +63,8 @@ interface HeroSectionProps {
 const HeroSection: React.FC<HeroSectionProps> = ({
   title,
   backgroundImage,
+  srcSetWebp,
+  alt,
   overlay = 0.2,
   titleSize = "text-4xl md:text-6xl lg:text-7xl",
   customBreadcrumbs = null,
@@ -77,13 +81,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     return () => window.clearTimeout(t);
   }, []);
 
-  const backgroundImageSrc = backgroundImage;
-
-  // ensure typed breadcrumbs
   const breadcrumbs: Breadcrumb[] =
     (customBreadcrumbs ?? (getBreadcrumbs(pathname) as Breadcrumb[])) || [];
 
-  // Check if this is a blog slug page (not the main /blogs page)
   const isBlogSlugPage =
     pathname.startsWith("/blogs/") &&
     pathname !== "/blogs" &&
@@ -100,8 +100,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({
         <div className="absolute inset-0 z-0 overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={backgroundImageSrc}
-            alt={`${title || "Page"} background image`}
+            srcSet={srcSetWebp}
+            src={backgroundImage}
+            alt={alt || `${title || "Page"} background image`}
             className="w-full h-full object-cover"
             loading="eager"
           />

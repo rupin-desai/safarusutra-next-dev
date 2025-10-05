@@ -12,10 +12,67 @@ import DestinationPackages from "@/components/Pages/DestinationDetailsPage/Desti
 import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/DestinationFAQs";
 import ScrollProvider from "@/components/Pages/DestinationDetailsPage/ScrollProvider.client";
 
-import destinationDetailsRaw from "@/data/DestinatonDetails.json"; // per-destination details (map or array)
-import destinationsRaw from "@/data/Destinations.json"; // main array of destinations
+import destinationDetailsRaw from "@/data/DestinatonDetails.json";
+import destinationsRaw from "@/data/Destinations.json";
 
-/* Narrow runtime-friendly type for destination items */
+// --- Helpers ---
+const getString = (v: unknown) =>
+  typeof v === "string" ? v : v == null ? "" : String(v);
+
+function getHeroImageObj(val: unknown): {
+  srcSetWebp?: string;
+  srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
+} {
+  if (val && typeof val === "object") {
+    const o = val as Record<string, unknown>;
+    return {
+      srcSetWebp: typeof o.srcSetWebp === "string" ? o.srcSetWebp : "",
+      srcFallback: typeof o.srcFallback === "string" ? o.srcFallback : "",
+      alt: typeof o.alt === "string" ? o.alt : "",
+      imageTitle: typeof o.imageTitle === "string" ? o.imageTitle : "",
+    };
+  }
+  if (typeof val === "string") {
+    return { srcFallback: val };
+  }
+  return {};
+}
+
+function getImageObj(val: unknown): {
+  srcSetWebp?: string;
+  srcFallback?: string;
+} {
+  if (val && typeof val === "object") {
+    const o = val as Record<string, unknown>;
+    return {
+      srcSetWebp: typeof o.srcSetWebp === "string" ? o.srcSetWebp : "",
+      srcFallback: typeof o.srcFallback === "string" ? o.srcFallback : "",
+    };
+  }
+  if (typeof val === "string") {
+    return { srcFallback: val };
+  }
+  return {};
+}
+
+function parseRating(val: unknown): number | undefined {
+  if (typeof val === "number") return val;
+  if (typeof val === "string") {
+    const num = parseFloat(val);
+    return isNaN(num) ? undefined : num;
+  }
+  return undefined;
+}
+
+const createSlug = (text: string) =>
+  String(text || "")
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .trim()
+    .replace(/\s+/g, "-");
+
 type Destination = {
   id?: string | number;
   title?: string;
@@ -31,15 +88,6 @@ type Destination = {
   tourWhy?: unknown;
 } & Record<string, unknown>;
 
-/* Utility to create consistent simple slugs */
-const createSlug = (text: string) =>
-  String(text || "")
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .trim()
-    .replace(/\s+/g, "-");
-
-/* Normalize the imported JSON to an array (handles both object map and array JSON shapes) */
 const getDestinationsArray = (): Destination[] => {
   const raw: unknown = destinationsRaw;
   if (Array.isArray(raw)) return raw as Destination[];
@@ -48,11 +96,9 @@ const getDestinationsArray = (): Destination[] => {
   return [];
 };
 
-/* Resolve per-destination details (map or array) by id or slug */
 const resolveDetailsForIdOrSlug = (idOrSlug: string) => {
   const raw: unknown = destinationDetailsRaw;
   if (Array.isArray(raw)) {
-    // try id match first, then slug/title fallback
     const byId = (raw as unknown[]).find((entry) => {
       if (!entry || typeof entry !== "object") return false;
       const e = entry as Record<string, unknown>;
@@ -71,14 +117,11 @@ const resolveDetailsForIdOrSlug = (idOrSlug: string) => {
   }
   if (raw && typeof raw === "object") {
     const map = raw as Record<string, unknown>;
-    // direct key
     if (map[idOrSlug]) return (map[idOrSlug] as Record<string, unknown>) ?? {};
-    // try numeric key
     const numericKey = Object.keys(map).find(
       (k) => String(k) === String(idOrSlug)
     );
     if (numericKey) return (map[numericKey] as Record<string, unknown>) ?? {};
-    // try finding by id/slug within values
     const found = Object.values(map).find((entry) => {
       if (!entry || typeof entry !== "object") return false;
       const e = entry as Record<string, unknown>;
@@ -145,15 +188,15 @@ export async function generateMetadata({
         canonical: "https://thesafarisutra.com/destination",
       },
       openGraph: {
-        title: "Destination | Safari Sutra", // og:title
-        type: "website", // og:type
-        url: "https://thesafarisutra.com/destination", // og:url
-        description: "Discover destinations and travel guides at Safari Sutra.", // og:description
-        siteName: "Safari Sutra", // og:site_name
+        title: "Destination | Safari Sutra",
+        type: "website",
+        url: "https://thesafarisutra.com/destination",
+        description: "Discover destinations and travel guides at Safari Sutra.",
+        siteName: "Safari Sutra",
         images: [
           {
-            url: "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2", // og:image
-            alt: "Safari Sutra Destination", // og:image:alt
+            url: "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2",
+            alt: "Safari Sutra Destination",
           },
         ],
       },
@@ -168,7 +211,6 @@ export async function generateMetadata({
     return String(candidate) === String(slug);
   });
 
-  // fallback: try to resolve a detail entry that matches slug
   if (!destination) {
     const det = resolveDetailsForIdOrSlug(slug);
     if (det && Object.keys(det).length > 0) {
@@ -199,15 +241,15 @@ export async function generateMetadata({
         canonical: "https://thesafarisutra.com/destination",
       },
       openGraph: {
-        title: "Destination Not Found | Safari Sutra", // og:title
-        type: "website", // og:type
-        url: "https://thesafarisutra.com/destination", // og:url
-        description: "The destination you are looking for could not be found.", // og:description
-        siteName: "Safari Sutra", // og:site_name
+        title: "Destination Not Found | Safari Sutra",
+        type: "website",
+        url: "https://thesafarisutra.com/destination",
+        description: "The destination you are looking for could not be found.",
+        siteName: "Safari Sutra",
         images: [
           {
-            url: "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2", // og:image
-            alt: "Safari Sutra Destination Not Found", // og:image:alt
+            url: "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2",
+            alt: "Safari Sutra Destination Not Found",
           },
         ],
       },
@@ -257,15 +299,15 @@ export async function generateMetadata({
       canonical: url,
     },
     openGraph: {
-      title, // og:title
-      type: "website", // og:type
-      url, // og:url
-      description, // og:description
-      siteName: "Safari Sutra", // og:site_name
+      title,
+      type: "website",
+      url,
+      description,
+      siteName: "Safari Sutra",
       images: [
         {
-          url: image, // og:image
-          alt: String(completeData.title) || "Safari Sutra Destination", // og:image:alt
+          url: image,
+          alt: String(completeData.title) || "Safari Sutra Destination",
         },
       ],
     },
@@ -278,7 +320,6 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
   const destinations = getDestinationsArray();
 
-  // find by slug/title in primary destinations array
   let destination = destinations.find((d) => {
     const candidate = d?.slug
       ? String(d.slug)
@@ -286,7 +327,6 @@ export default function Page({ params }: { params: { slug?: string } }) {
     return String(candidate) === String(slug);
   });
 
-  // fallback: if not found in array, try destinationDetails map/array
   if (!destination) {
     const det = resolveDetailsForIdOrSlug(slug);
     if (det && Object.keys(det).length > 0) {
@@ -306,50 +346,10 @@ export default function Page({ params }: { params: { slug?: string } }) {
     ? String(destination.id)
     : String(destination.slug ?? "");
 
-  // get per-destination details
   const details = resolveDetailsForIdOrSlug(id);
   const completeData: Record<string, unknown> = { ...destination, ...details };
 
-  // helpers
-  const getString = (v: unknown) =>
-    typeof v === "string" ? v : v == null ? "" : String(v);
-
-  // JSON-LD Product schema for destination rich result
-  const getFullImageUrl = (src: string): string => {
-    if (!src)
-      return "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
-    if (src.startsWith("http")) return src;
-    const path = src.startsWith("/") ? src : `/${src}`;
-    return `https://thesafarisutra.com${path}`;
-  };
-
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Product",
-    name: getString(completeData.title),
-    description: getString(
-      completeData.metaDescription ||
-        completeData.description ||
-        completeData.caption
-    ),
-    image: getFullImageUrl(
-      getString(completeData.heroImage || completeData.image)
-    ),
-    brand: {
-      "@type": "Brand",
-      name: "Safari Sutra",
-    },
-    category: getString(completeData.location),
-    offers: {
-      "@type": "Offer",
-      price: "0", // If you have a price, use it here
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-      url: `https://thesafarisutra.com/destination/${slug}`,
-    },
-  };
-
-  // normalize FAQ into the shape DestinationFAQs expects: { items?: {question, answer}[] } | null
+  // --- FAQ ---
   type FAQLocal = { question: string; answer: string };
   const faqRaw = completeData.faq;
   const faqProp: { items?: FAQLocal[] } | null =
@@ -372,7 +372,7 @@ export default function Page({ params }: { params: { slug?: string } }) {
         })()
       : null;
 
-  // build detailsProp expected by DestinationDetailsOverview (Detail[])
+  // --- Details ---
   const detailsObj = (
     details && typeof details === "object"
       ? (details as Record<string, unknown>)
@@ -423,7 +423,7 @@ export default function Page({ params }: { params: { slug?: string } }) {
     }
   }
 
-  // attractions
+  // --- Attractions ---
   type AttractionLocal = {
     title?: string;
     image?: string;
@@ -448,7 +448,7 @@ export default function Page({ params }: { params: { slug?: string } }) {
       })
     : [];
 
-  // try to resolve rating from merged data, details, or destinations array fallback
+  // --- Tour Data ---
   const altFromArray =
     Array.isArray(destinationsRaw) && id
       ? (destinationsRaw as unknown[]).find((a) => {
@@ -478,8 +478,69 @@ export default function Page({ params }: { params: { slug?: string } }) {
       completeData.longDescription ?? completeData.long_description
     ),
     details: detailsProp,
-    // include normalized attractions so Sidebar can render the list
     attractions: attractionsProp,
+  };
+
+  // --- TourWhy ---
+  type TourWhyLocal = {
+    title?: string;
+    description?: string;
+    backgroundImage?: string;
+    srcSetWebp?: string;
+    srcFallback?: string;
+  };
+  const tourWhyRaw = completeData.tourWhy;
+  const tourWhyProp: TourWhyLocal | undefined =
+    tourWhyRaw && typeof tourWhyRaw === "object"
+      ? (() => {
+          const o = tourWhyRaw as Record<string, unknown>;
+          const bgObj = getImageObj(o.backgroundImage);
+          return {
+            title: getString(o.title),
+            description: getString(o.description),
+            backgroundImage: bgObj.srcFallback,
+            srcSetWebp: bgObj.srcSetWebp,
+            srcFallback: bgObj.srcFallback,
+          };
+        })()
+      : undefined;
+
+  // --- Hero Image ---
+  const heroImageObj = getHeroImageObj(completeData.heroImage);
+
+  // --- JSON-LD ---
+  const getFullImageUrl = (src: string): string => {
+    if (!src)
+      return "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+    if (src.startsWith("http")) return src;
+    const path = src.startsWith("/") ? src : `/${src}`;
+    return `https://thesafarisutra.com${path}`;
+  };
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: getString(completeData.title),
+    description: getString(
+      completeData.metaDescription ||
+        completeData.description ||
+        completeData.caption
+    ),
+    image: getFullImageUrl(
+      getString(completeData.heroImage || completeData.image)
+    ),
+    brand: {
+      "@type": "Brand",
+      name: "Safari Sutra",
+    },
+    category: getString(completeData.location),
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
+      url: `https://thesafarisutra.com/destination/${slug}`,
+    },
   };
 
   return (
@@ -490,18 +551,25 @@ export default function Page({ params }: { params: { slug?: string } }) {
       />
       <HeroSection
         title={String(completeData.title)}
-        backgroundImage={String(completeData.heroImage || completeData.image)}
+        backgroundImage={heroImageObj.srcFallback}
+        srcSetWebp={heroImageObj.srcSetWebp}
+        alt={
+          heroImageObj.alt ||
+          heroImageObj.imageTitle ||
+          String(completeData.title)
+        }
         overlay={0.4}
         titleSize="text-4xl md:text-6xl"
       />
 
-      {/* client helper that registers a global executeScroll without making this page a client component */}
       <ScrollProvider />
 
       <DestinationDetailsOverview tourData={tourDataProp} />
 
-      {!!completeData.tourWhy && (
-        <DestinationWhy tour={completeData as Record<string, unknown>} />
+      {!!tourWhyProp && (
+        <DestinationWhy
+          tour={{ title: getString(completeData.title), tourWhy: tourWhyProp }}
+        />
       )}
 
       <DestinationAttractions attractions={attractionsProp} />
@@ -525,14 +593,4 @@ export default function Page({ params }: { params: { slug?: string } }) {
       />
     </div>
   );
-}
-
-// Add this helper above your component
-function parseRating(val: unknown): number | undefined {
-  if (typeof val === "number") return val;
-  if (typeof val === "string") {
-    const num = parseFloat(val);
-    return isNaN(num) ? undefined : num;
-  }
-  return undefined;
 }
