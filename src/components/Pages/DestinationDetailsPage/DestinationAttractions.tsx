@@ -4,7 +4,7 @@ import React, { useMemo } from "react";
 import { motion, Variants } from "framer-motion";
 import { MapPin } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
-import Illustration from "../../UI/Illustations"; // use local Illustration component
+import Illustration from "../../UI/Illustations";
 
 type Attraction = {
   title: string;
@@ -12,18 +12,17 @@ type Attraction = {
   description?: string;
   srcSetWebp?: string;
   srcFallback?: string;
+  alt?: string;
+  imageTitle?: string;
 };
 
-// allow the prop to be unknown[] (normalized internally)
 interface Props {
   attractions?: unknown[] | Attraction[] | null;
 }
 
-// helper to coerce unknown to string safely
 const getString = (v: unknown) =>
   typeof v === "string" ? v : v == null ? "" : String(v);
 
-// typed variants (avoid `any`)
 const fadeIn: Variants = {
   initial: {
     opacity: 0,
@@ -89,11 +88,12 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
         description: getString(obj.description),
         srcSetWebp: getString(obj.srcSetWebp),
         srcFallback: getString(obj.srcFallback),
+        alt: getString(obj.alt),
+        imageTitle: getString(obj.imageTitle),
       };
     });
   }, [attractions]);
 
-  // these can safely run even for empty arrays
   const hasOddCount = attractionsList.length % 2 !== 0;
 
   const { randomIllustration, randomColor } = useMemo(() => {
@@ -115,7 +115,6 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
       "var(--color-dark-teal)",
     ];
 
-    // deterministic-ish selection based on titles
     const seedText = attractionsList
       .map((a) => String(a.title || ""))
       .join("|");
@@ -203,7 +202,12 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
               <img
                 srcSet={attraction.srcSetWebp}
                 src={attraction.srcFallback || attraction.image}
-                alt={attraction.title}
+                alt={
+                  attraction.alt || attraction.imageTitle || attraction.title
+                }
+                title={
+                  attraction.imageTitle || attraction.alt || attraction.title
+                }
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
 

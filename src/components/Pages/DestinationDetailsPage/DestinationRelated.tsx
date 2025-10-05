@@ -146,7 +146,8 @@ const DestinationRelated: React.FC<Props> = ({
     <section className="py-16 relative overflow-hidden" id="similar">
       <motion.img
         src="/graphics/star2.svg"
-        alt=""
+        alt="Decorative spinning star graphic"
+        title="Decorative Star for related section"
         className="absolute top-10 right-5 md:right-60 h-12 w-12 md:w-20 md:h-20 opacity-95 md:block"
         initial="initial"
         animate="animate"
@@ -156,7 +157,8 @@ const DestinationRelated: React.FC<Props> = ({
 
       <motion.img
         src="/graphics/star2.svg"
-        alt=""
+         alt="Decorative spinning star graphic"
+        title="Decorative Star for related section"
         className="absolute bottom-16 left-8 w-16 h-16 opacity-20 hidden md:block"
         initial="initial"
         animate="animate"

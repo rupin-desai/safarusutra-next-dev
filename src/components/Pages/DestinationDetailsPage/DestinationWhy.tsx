@@ -15,6 +15,8 @@ interface Props {
       backgroundImage?: string;
       srcSetWebp?: string;
       srcFallback?: string;
+      imageTitle?: string;
+      alt?: string;
     };
   } | null;
 }
@@ -30,8 +32,15 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
 
   if (!tour || !tour.tourWhy) return null;
 
-  const { title, description, backgroundImage, srcSetWebp, srcFallback } =
-    tour.tourWhy;
+  const {
+    title,
+    description,
+    backgroundImage,
+    srcSetWebp,
+    srcFallback,
+    imageTitle,
+    alt,
+  } = tour.tourWhy;
 
   const handleCustomBooking = () => {
     const subject = `Custom ${tour.title ?? ""} Tour Booking`;
@@ -55,7 +64,8 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
             <img
               srcSet={srcSetWebp}
               src={srcFallback || backgroundImage}
-              alt={`${tour.title ?? ""} landscape`}
+              alt={alt || imageTitle || `${tour.title ?? ""} landscape`}
+              title={imageTitle || alt || `${tour.title ?? ""} landscape`}
               className="object-cover w-full h-full"
               style={{ position: "absolute", inset: 0 }}
             />
@@ -64,7 +74,8 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
           <div className="absolute inset-0">
             <Image
               src={backgroundImage}
-              alt={`${tour.title ?? ""} landscape`}
+              alt={alt || imageTitle || `${tour.title ?? ""} landscape`}
+              title={imageTitle || alt || `${tour.title ?? ""} landscape`}
               fill
               className="object-cover"
             />

@@ -54,6 +54,7 @@ interface HeroSectionProps {
   backgroundImage?: string;
   srcSetWebp?: string;
   alt?: string;
+  imageTitle?: string;
   overlay?: number;
   titleSize?: string;
   customBreadcrumbs?: Breadcrumb[] | null;
@@ -65,6 +66,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   backgroundImage,
   srcSetWebp,
   alt,
+  imageTitle,
   overlay = 0.2,
   titleSize = "text-4xl md:text-6xl lg:text-7xl",
   customBreadcrumbs = null,
@@ -102,7 +104,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
           <img
             srcSet={srcSetWebp}
             src={backgroundImage}
-            alt={alt || `${title || "Page"} background image`}
+            alt={alt || imageTitle || `${title || "Page"} background image`}
+            title={imageTitle || alt || `${title || "Page"} background image`}
             className="w-full h-full object-cover"
             loading="eager"
           />

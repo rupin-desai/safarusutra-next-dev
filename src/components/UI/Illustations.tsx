@@ -8,6 +8,7 @@ interface IllustrationProps {
   color?: string;
   className?: string;
   alt?: string;
+  title?: string;
 }
 
 /**
@@ -19,7 +20,8 @@ const Illustration: React.FC<IllustrationProps> = ({
   size = 100,
   color = "#000000",
   className = "",
-  alt = "Illustration",
+  alt = "Decorative illustration",
+  title = "Decorative illustration",
 }) => {
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const svgPath = `/illustrations/${name}.svg`;
@@ -33,7 +35,8 @@ const Illustration: React.FC<IllustrationProps> = ({
     let mounted = true;
     fetch(svgPath)
       .then((response) => {
-        if (!response.ok) throw new Error(`Failed to load SVG: ${response.status}`);
+        if (!response.ok)
+          throw new Error(`Failed to load SVG: ${response.status}`);
         return response.text();
       })
       .then((svgText) => {
@@ -72,6 +75,16 @@ const Illustration: React.FC<IllustrationProps> = ({
           }
         });
 
+        // Set default title and alt for accessibility
+        if (!svgElement.querySelector("title")) {
+          const titleElem = svgDoc.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "title"
+          );
+          titleElem.textContent = title;
+          svgElement.insertBefore(titleElem, svgElement.firstChild);
+        }
+
         // Convert back to string
         const serializer = new XMLSerializer();
         const modifiedSvgString = serializer.serializeToString(svgElement);
@@ -86,13 +99,14 @@ const Illustration: React.FC<IllustrationProps> = ({
     return () => {
       mounted = false;
     };
-  }, [svgPath, color]);
+  }, [svgPath, color, title]);
 
   return (
     <div
       className={`illustration ${className}`}
       role="img"
       aria-label={alt}
+      title={title}
       style={{
         width: sizeInPx,
         height: sizeInPx,

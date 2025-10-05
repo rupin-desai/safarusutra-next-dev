@@ -263,6 +263,16 @@ export async function generateMetadata({
 
   const completeData = { ...destination, ...details };
 
+  // --- Hero Image ---
+  const heroImageObj = getHeroImageObj(completeData.heroImage);
+
+  // --- OG Image ---
+  const ogImageUrl = heroImageObj.srcFallback
+    ? `https://thesafarisutra.com${
+        heroImageObj.srcFallback.startsWith("/") ? "" : "/"
+      }${heroImageObj.srcFallback}`
+    : "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
+
   const title = completeData.title
     ? `${String(completeData.title)} | Safari Sutra Tours & Travels in India`
     : "Destination | Safari Sutra";
@@ -276,11 +286,6 @@ export async function generateMetadata({
       completeData.title
     )} with Safari Sutra — itineraries, highlights, packages and FAQs.`;
 
-  const image = String(
-    completeData.heroImage ||
-      completeData.image ||
-      "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"
-  );
   const url = `https://thesafarisutra.com/destination/${slug}`;
 
   return {
@@ -306,7 +311,7 @@ export async function generateMetadata({
       siteName: "Safari Sutra",
       images: [
         {
-          url: image,
+          url: ogImageUrl,
           alt: String(completeData.title) || "Safari Sutra Destination",
         },
       ],
@@ -488,6 +493,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
     backgroundImage?: string;
     srcSetWebp?: string;
     srcFallback?: string;
+    imageTitle?: string;
+    alt?: string;
   };
   const tourWhyRaw = completeData.tourWhy;
   const tourWhyProp: TourWhyLocal | undefined =
@@ -501,6 +508,18 @@ export default function Page({ params }: { params: { slug?: string } }) {
             backgroundImage: bgObj.srcFallback,
             srcSetWebp: bgObj.srcSetWebp,
             srcFallback: bgObj.srcFallback,
+            imageTitle: getString(
+              (o.backgroundImage &&
+                typeof o.backgroundImage === "object" &&
+                (o.backgroundImage as Record<string, unknown>).imageTitle) ||
+                ""
+            ),
+            alt: getString(
+              (o.backgroundImage &&
+                typeof o.backgroundImage === "object" &&
+                (o.backgroundImage as Record<string, unknown>).alt) ||
+                ""
+            ),
           };
         })()
       : undefined;
@@ -568,7 +587,10 @@ export default function Page({ params }: { params: { slug?: string } }) {
 
       {!!tourWhyProp && (
         <DestinationWhy
-          tour={{ title: getString(completeData.title), tourWhy: tourWhyProp }}
+          tour={{
+            title: getString(completeData.title),
+            tourWhy: tourWhyProp,
+          }}
         />
       )}
 

@@ -30,11 +30,6 @@ const cardVariants: Variants = {
   animate: (index = 0) => ({ opacity: 1, transform: "translate3d(0px, 0px, 0px)", transition: { type: "spring", stiffness: 300, damping: 20, delay: index * 0.08 } }),
 };
 
-const floatingAnimation: Variants = {
-  initial: { transform: "translate3d(0px, 0px, 0px)" },
-  animate: { transform: "translate3d(0px, -8px, 0px)", transition: { transform: { repeat: Infinity, duration: 3, ease: "easeInOut", repeatType: "reverse" } } },
-};
-
 interface Props {
   destinationName?: string;
   destinationId?: number | string;
@@ -127,7 +122,6 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
 
   return (
     <section className="py-16 relative overflow-hidden" id="destination-packages">
-      <motion.img src="/illustrations/suitcase.svg" alt="" className="absolute top-20 right-10 md:right-20 h-16 w-16 md:w-24 md:h-24 opacity-25 hidden md:block" initial="initial" animate="animate" variants={floatingAnimation} aria-hidden />
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionTitle icon={<PackageIcon size={16} />} pillText="Available Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />
