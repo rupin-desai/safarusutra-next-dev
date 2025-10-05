@@ -311,12 +311,15 @@ export async function generateMetadata({
   );
 
   // Use new responsive image properties or fallback to legacy
-  const image = String(
-    tour.srcFallback ??
-      tour.heroImage ??
-      tour.image ??
-      "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80"
+  const mainImage = String(
+    tour.srcFallback ?? tour.heroImage ?? tour.image ?? ""
   );
+  const ogImageUrl = mainImage.startsWith("http")
+    ? mainImage
+    : `https://thesafarisutra.com${mainImage.startsWith("/") ? "" : "/"}${
+        mainImage || "images/og-default.jpg"
+      }`;
+
   const url = `https://thesafarisutra.com/tour/${encodeURIComponent(slug)}`;
 
   return {
@@ -336,22 +339,22 @@ export async function generateMetadata({
       canonical: url,
     },
     openGraph: {
-      title, // og:title
-      type: "website", // og:type
-      url, // og:url
-      description, // og:description
-      siteName: "Safari Sutra", // og:site_name
+      title,
+      type: "website",
+      url,
+      description,
+      siteName: "Safari Sutra",
       images: [
         {
-          url: image, // og:image
-          alt: tour.alt ?? tour.title ?? "Safari Sutra Tours", // og:image:alt
+          url: ogImageUrl,
+          alt: tour.alt ?? tour.title ?? "Safari Sutra Tours",
         },
       ],
     },
     twitter: {
       title,
       description,
-      images: [image],
+      images: [ogImageUrl],
     },
   };
 }
