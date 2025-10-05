@@ -314,8 +314,13 @@ export default function TourPageClient(): React.ReactElement {
     <>
       <div>
         <HeroSection
-          title={isAllTours ? "Tours That Make Stories" : "Ready‑To‑Go Departures"}
-          backgroundImage="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          title={
+            isAllTours ? "Tours That Make Stories" : "Ready‑To‑Go Departures"
+          }
+          backgroundImage="/images/Hero/tour-hero-1080.webp"
+          srcSetWebp="/images/Hero/tour-hero-480.webp 480w, /images/Hero/tour-hero-720.webp 720w, /images/Hero/tour-hero-1080.webp 1080w"
+          alt="Safari Sutra tours – unforgettable journeys and group departures"
+          imageTitle="Choose your next adventure with Safari Sutra tours"
           overlay={0.6}
           titleSize="text-4xl md:text-5xl lg:text-6xl "
         />
@@ -324,7 +329,11 @@ export default function TourPageClient(): React.ReactElement {
           <SectionTitleWithIllustrations
             icon={<Compass size={18} />}
             pillText="Find Your Adventure"
-            title={isAllTours ? "All Journeys: Discover Every Expedition" : "Explore Our Curated Tour Collection"}
+            title={
+              isAllTours
+                ? "All Journeys: Discover Every Expedition"
+                : "Explore Our Curated Tour Collection"
+            }
             color="#f89b21"
             titleSize="large"
             containerClassName="mb-4"
@@ -339,11 +348,15 @@ export default function TourPageClient(): React.ReactElement {
 
           {isLoading ? (
             <div className="text-center py-12">
-              <p className="text-xl font-medium text-gray-600">Loading tours...</p>
+              <p className="text-xl font-medium text-gray-600">
+                Loading tours...
+              </p>
             </div>
           ) : filteredTours.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-xl font-medium text-gray-600 mb-4">No tours found matching your criteria</p>
+              <p className="text-xl font-medium text-gray-600 mb-4">
+                No tours found matching your criteria
+              </p>
               <button
                 onClick={() => {
                   setSearchQuery("");
@@ -357,7 +370,10 @@ export default function TourPageClient(): React.ReactElement {
               </button>
             </div>
           ) : isAllTours ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="packages-list">
+            <div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              id="packages-list"
+            >
               {filteredTours.map((tour, idx) => (
                 <div key={`${tour.id}-all-${idx}`} className="tour-card-item">
                   <TourCard tour={tour} />
@@ -365,13 +381,22 @@ export default function TourPageClient(): React.ReactElement {
               ))}
             </div>
           ) : (
-            <TourGrid tours={filteredTours} onSectionChange={handleSectionChange} showOthers={false} />
+            <TourGrid
+              tours={filteredTours}
+              onSectionChange={handleSectionChange}
+              showOthers={false}
+            />
           )}
         </div>
 
         <div className="container mx-auto px-4 pb-12">
           <div className="flex justify-center">
-            <SSButton to={isAllTours ? "/fixed-departures/" : "/tour/"} variant="primary" color="var(--color-green)" className="px-6 py-3">
+            <SSButton
+              to={isAllTours ? "/fixed-departures/" : "/tour/"}
+              variant="primary"
+              color="var(--color-green)"
+              className="px-6 py-3"
+            >
               {isAllTours ? "See Fixed Departures" : "Browse All Tours"}
             </SSButton>
           </div>

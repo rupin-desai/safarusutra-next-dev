@@ -20,7 +20,10 @@ export default function HirePageClient(): React.ReactElement {
     <div className="relative overflow-hidden">
       <HeroSection
         title="Join Our Team & Build Your Career in Travel!"
-        backgroundImage="https://images.unsplash.com/photo-1502085671122-2d218cd434e6?q=80&w=2126&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        backgroundImage="/images/Hero/hire-hero-1080.webp"
+        srcSetWebp="/images/Hero/hire-hero-480.webp 480w, /images/Hero/hire-hero-720.webp 720w, /images/Hero/hire-hero-1080.webp 1080w"
+        alt="Safari Sutra careers – join our passionate travel team"
+        imageTitle="Grow your career with Safari Sutra – travel industry jobs"
         overlay={0.5}
         titleSize="text-4xl md:text-5xl"
       />
@@ -124,10 +127,10 @@ export default function HirePageClient(): React.ReactElement {
             />
 
             <p className="text-gray-700 max-w-2xl mx-auto text-center mb-12">
-              At Safari Sutra, we&#39;re always looking for passionate individuals
-              who share our love for travel and creating unforgettable
-              experiences. Fill out the form below to start your journey with
-              us!
+              At Safari Sutra, we&#39;re always looking for passionate
+              individuals who share our love for travel and creating
+              unforgettable experiences. Fill out the form below to start your
+              journey with us!
             </p>
           </motion.div>
 

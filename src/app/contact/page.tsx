@@ -48,11 +48,14 @@ const ContactPage: React.FC = () => {
       {/* metadata exported via `export const metadata` */}
 
       <HeroSection
-        title="Contact Us"
-        backgroundImage="https://images.unsplash.com/photo-1485424103497-0c883b9b2953?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        overlay={0.4}
-        titleSize="text-5xl md:text-6xl"
-      />
+      title="Contact Us"
+      backgroundImage="/images/Hero/contact-hero-1080.webp"
+      srcSetWebp="/images/Hero/contact-hero-480.webp 480w, /images/Hero/contact-hero-720.webp 720w, /images/Hero/contact-hero-1080.webp 1080w"
+      alt="Get in touch with Safari Sutra – Contact Us page hero image"
+      imageTitle="Reach out to Safari Sutra for your travel plans"
+      overlay={0.4}
+      titleSize="text-5xl md:text-6xl"
+    />
       <ContactSection />
       <HomeHighlight />
     </div>

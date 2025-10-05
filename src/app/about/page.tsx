@@ -77,7 +77,10 @@ export default function AboutPage(): React.ReactElement {
     <div>
       <HeroSection
         title="About Us"
-        backgroundImage="https://images.unsplash.com/photo-1416432506697-b1045ba8a3da?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        backgroundImage="/images/Hero/about-hero-1080.webp"
+        srcSetWebp="/images/Hero/about-hero-480.webp 480w, /images/Hero/about-hero-720.webp 720w, /images/Hero/about-hero-1080.webp 1080w"
+        alt="Safari Sutra team on an adventure – About Us page hero image"
+        imageTitle="Meet the Safari Sutra team – passionate travel experts"
         overlay={0.6}
       />
 

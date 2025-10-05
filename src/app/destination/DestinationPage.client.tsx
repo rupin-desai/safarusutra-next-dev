@@ -101,11 +101,14 @@ export default function DestinationPageClient(): React.ReactElement {
   return (
     <div>
       <HeroSection
-        title="Where To Next?"
-        backgroundImage="https://images.unsplash.com/photo-1516426122078-c23e76319801?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80"
-        overlay={0.4}
-        titleSize="text-4xl md:text-6xl"
-      />
+      title="Where To Next?"
+      backgroundImage="/images/Hero/destination-hero-1080.webp"
+      srcSetWebp="/images/Hero/destination-hero-480.webp 480w, /images/Hero/destination-hero-720.webp 720w, /images/Hero/destination-hero-1080.webp 1080w"
+      alt="Explore new destinations with Safari Sutra – inspiring travel hero image"
+      imageTitle="Discover your next adventure with Safari Sutra"
+      overlay={0.4}
+      titleSize="text-4xl md:text-6xl"
+    />
 
       <section className="py-12 px-4 md:px-8" id="destinations">
         <div className="container mx-auto max-w-7xl">

@@ -323,7 +323,10 @@ const FixedDeparturesPageClient: React.FC = () => {
       <div key="fixed-departures">
         <HeroSection
           title="Ready‑To‑Go Departures"
-          backgroundImage="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          backgroundImage="/images/Hero/fixed-hero-1080.webp"
+          srcSetWebp="/images/Hero/fixed-hero-480.webp 480w, /images/Hero/fixed-hero-720.webp 720w, /images/Hero/fixed-hero-1080.webp 1080w"
+          alt="Safari Sutra group departures – travel made easy"
+          imageTitle="Join a ready-to-go group tour with Safari Sutra"
           overlay={0.6}
           titleSize="text-4xl md:text-5xl lg:text-6xl "
         />
@@ -338,15 +341,24 @@ const FixedDeparturesPageClient: React.FC = () => {
             containerClassName="mb-4"
           />
 
-          <TourSearchFilter searchQuery={searchQuery} handleSearch={handleSearch} activeFilter={activeFilter} handleFilterChange={handleFilterChange} />
+          <TourSearchFilter
+            searchQuery={searchQuery}
+            handleSearch={handleSearch}
+            activeFilter={activeFilter}
+            handleFilterChange={handleFilterChange}
+          />
 
           {isLoading ? (
             <div className="text-center py-12">
-              <p className="text-xl font-medium text-gray-600">Loading tours...</p>
+              <p className="text-xl font-medium text-gray-600">
+                Loading tours...
+              </p>
             </div>
           ) : filteredTours.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-xl font-medium text-gray-600 mb-4">No tours found matching your criteria</p>
+              <p className="text-xl font-medium text-gray-600 mb-4">
+                No tours found matching your criteria
+              </p>
               <button
                 onClick={() => {
                   setSearchQuery("");
@@ -360,13 +372,22 @@ const FixedDeparturesPageClient: React.FC = () => {
               </button>
             </div>
           ) : (
-            <TourGrid tours={filteredTours} onSectionChange={handleSectionChange} showOthers={false} />
+            <TourGrid
+              tours={filteredTours}
+              onSectionChange={handleSectionChange}
+              showOthers={false}
+            />
           )}
         </div>
 
         <div className="container mx-auto px-4 pb-12">
           <div className="flex justify-center">
-            <SSButton to="/tour/" variant="primary" color="var(--color-green)" className="px-6 py-3">
+            <SSButton
+              to="/tour/"
+              variant="primary"
+              color="var(--color-green)"
+              className="px-6 py-3"
+            >
               Browse All Tours
             </SSButton>
           </div>
