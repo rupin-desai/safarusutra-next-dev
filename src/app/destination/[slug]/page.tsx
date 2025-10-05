@@ -428,6 +428,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
     title?: string;
     image?: string;
     description?: string;
+    srcSetWebp?: string;
+    srcFallback?: string;
   };
   const attractionsProp: AttractionLocal[] = Array.isArray(
     completeData.attractions
@@ -440,6 +442,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
           title: getString(o.title),
           image: getString(o.image),
           description: getString(o.description),
+          srcSetWebp: getString(o.srcSetWebp),
+          srcFallback: getString(o.srcFallback),
         };
       })
     : [];

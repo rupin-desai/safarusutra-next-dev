@@ -10,6 +10,8 @@ type Attraction = {
   title: string;
   image: string;
   description?: string;
+  srcSetWebp?: string;
+  srcFallback?: string;
 };
 
 // allow the prop to be unknown[] (normalized internally)
@@ -18,7 +20,8 @@ interface Props {
 }
 
 // helper to coerce unknown to string safely
-const getString = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
+const getString = (v: unknown) =>
+  typeof v === "string" ? v : v == null ? "" : String(v);
 
 // typed variants (avoid `any`)
 const fadeIn: Variants = {
@@ -78,11 +81,14 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
   const attractionsList = useMemo<Attraction[]>(() => {
     const arr = Array.isArray(attractions) ? attractions : [];
     return arr.map((a) => {
-      const obj = a && typeof a === "object" ? (a as Record<string, unknown>) : {};
+      const obj =
+        a && typeof a === "object" ? (a as Record<string, unknown>) : {};
       return {
         title: getString(obj.title) || "Attraction",
         image: getString(obj.image) || "/graphics/placeholder.jpg",
         description: getString(obj.description),
+        srcSetWebp: getString(obj.srcSetWebp),
+        srcFallback: getString(obj.srcFallback),
       };
     });
   }, [attractions]);
@@ -91,7 +97,15 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
   const hasOddCount = attractionsList.length % 2 !== 0;
 
   const { randomIllustration, randomColor } = useMemo(() => {
-    const illustrations = ["camera", "cocktail", "hotAirBallon", "pouch", "seashell1", "suitcase", "umbrella"];
+    const illustrations = [
+      "camera",
+      "cocktail",
+      "hotAirBallon",
+      "pouch",
+      "seashell1",
+      "suitcase",
+      "umbrella",
+    ];
     const colors = [
       "var(--color-dark-brown)",
       "var(--color-medium-brown)",
@@ -102,7 +116,9 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
     ];
 
     // deterministic-ish selection based on titles
-    const seedText = attractionsList.map((a) => String(a.title || "")).join("|");
+    const seedText = attractionsList
+      .map((a) => String(a.title || ""))
+      .join("|");
     let seed = 0;
     for (let i = 0; i < seedText.length; i++) {
       seed = (seed * 31 + seedText.charCodeAt(i)) >>> 0;
@@ -110,7 +126,10 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
     const illustrationIndex = seed % illustrations.length;
     const colorIndex = seed % colors.length;
 
-    return { randomIllustration: illustrations[illustrationIndex], randomColor: colors[colorIndex] };
+    return {
+      randomIllustration: illustrations[illustrationIndex],
+      randomColor: colors[colorIndex],
+    };
   }, [attractionsList]);
 
   if (attractionsList.length === 0) return null;
@@ -182,7 +201,8 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={attraction.image}
+                srcSet={attraction.srcSetWebp}
+                src={attraction.srcFallback || attraction.image}
                 alt={attraction.title}
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
@@ -198,7 +218,9 @@ const DestinationAttractions: React.FC<Props> = ({ attractions }) => {
                 </h3>
 
                 <div className="max-h-0 overflow-hidden opacity-0 group-hover:opacity-100 group-hover:max-h-40 transition-all duration-500">
-                  <p className="text-white/90 text-base line-clamp-4">{attraction.description}</p>
+                  <p className="text-white/90 text-base line-clamp-4">
+                    {attraction.description}
+                  </p>
                 </div>
               </div>
             </motion.div>
