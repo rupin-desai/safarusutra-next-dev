@@ -20,13 +20,19 @@ type TopTour = {
   excerpt?: string;
 };
 type Testimonial = { text: string; author: string };
+type ToursFromImage = {
+  srcSetWebp?: string;
+  srcFallback: string;
+  alt?: string;
+  imageTitle?: string;
+};
 type Contact = {
   office?: string;
   email?: string;
   cta?: string;
   title?: string;
   text?: string;
-  backgroundImage?: string;
+  backgroundImage?: string | ToursFromImage;
 };
 
 type CityData = {
@@ -38,12 +44,9 @@ type CityData = {
   localTips?: Tip[];
   topTours?: TopTour[];
   testimonials?: Testimonial[];
-  // new optional hero image for the page (use in HeroSection)
-  heroimg?: string;
-  // intro image used by ToursFromIntro
-  introimg?: string;
-  // tips image used by ToursFromTips
-  tipsimg?: string;
+  heroimg?: string | ToursFromImage;
+  introimg?: string | ToursFromImage;
+  tipsimg?: string | ToursFromImage;
   contact?: Contact;
 };
 
@@ -79,10 +82,18 @@ export async function generateMetadata({
     `Explore curated tours departing from ${cityKey} with Safari Sutra.`
   ).toString();
 
-  const heroImg: string | undefined =
-    data?.heroimg ??
-    data?.contact?.backgroundImage ??
-    `/images/tours-from-${cityKey}/hero.jpg`;
+  // Use srcFallback for og:image if heroimg is an object
+  let heroImg: string | undefined;
+  if (typeof data?.heroimg === "object" && data.heroimg !== null) {
+    heroImg = data.heroimg.srcFallback;
+  } else {
+    heroImg =
+      (typeof data?.heroimg === "string" ? data.heroimg : undefined) ??
+      (typeof data?.contact?.backgroundImage === "object"
+        ? data.contact.backgroundImage.srcFallback
+        : data?.contact?.backgroundImage) ??
+      `/images/tours-from-${cityKey}/hero.jpg`;
+  }
   const image = heroImg ?? "/og-default.jpg";
   const canonical = `${siteUrl}/tours-from-${encodeURIComponent(cityKey)}`;
 
@@ -91,15 +102,15 @@ export async function generateMetadata({
     description: description.slice(0, 160),
     metadataBase: new URL(siteUrl),
     openGraph: {
-      title: cityTitle, // og:title
-      type: "website", // og:type
-      url: canonical, // og:url
-      description: description.slice(0, 160), // og:description
-      siteName: "Safari Sutra", // og:site_name
+      title: cityTitle,
+      type: "website",
+      url: canonical,
+      description: description.slice(0, 160),
+      siteName: "Safari Sutra",
       images: [
         {
-          url: image, // og:image
-          alt: cityTitle, // og:image:alt
+          url: image,
+          alt: cityTitle,
         },
       ],
     },
@@ -159,11 +170,32 @@ export default function ToursFromCityPage({ params }: PageProps) {
   };
 
   const heroTitle = data.title ?? `Tours from ${cityKey}`;
-  // prefer heroimg from data, then contact.backgroundImage, then convention path
-  const heroBg: string =
-    data?.heroimg ??
-    data.contact?.backgroundImage ??
-    `/images/tours-from-${cityKey}/hero.jpg`;
+  // Prepare hero image props for HeroSection
+  let heroBg = "";
+  let srcSetWebp = "";
+  let alt = "";
+  let imageTitle = "";
+
+  if (typeof data.heroimg === "object" && data.heroimg !== null) {
+    heroBg = data.heroimg.srcFallback;
+    srcSetWebp = data.heroimg.srcSetWebp ?? "";
+    alt = data.heroimg.alt ?? "";
+    imageTitle = data.heroimg.imageTitle ?? "";
+  } else if (typeof data.heroimg === "string") {
+    heroBg = data.heroimg;
+  } else if (
+    typeof data.contact?.backgroundImage === "object" &&
+    data.contact.backgroundImage !== null
+  ) {
+    heroBg = data.contact.backgroundImage.srcFallback;
+    srcSetWebp = data.contact.backgroundImage.srcSetWebp ?? "";
+    alt = data.contact.backgroundImage.alt ?? "";
+    imageTitle = data.contact.backgroundImage.imageTitle ?? "";
+  } else if (typeof data.contact?.backgroundImage === "string") {
+    heroBg = data.contact.backgroundImage;
+  } else {
+    heroBg = `/images/tours-from-${cityKey}/hero.jpg`;
+  }
 
   // Build JSON-LD for LocalBusiness + Organization + BreadcrumbList for local SEO
   const siteUrl =
@@ -196,7 +228,15 @@ export default function ToursFromCityPage({ params }: PageProps) {
       {
         "@type": "LocalBusiness",
         name: "Safari Sutra",
-        image: [data?.heroimg ?? data.contact?.backgroundImage ?? heroBg],
+        image: [
+          typeof data?.heroimg === "object" && data.heroimg !== null
+            ? data.heroimg.srcFallback
+            : typeof data?.heroimg === "string"
+            ? data.heroimg
+            : typeof data?.contact?.backgroundImage === "object"
+            ? data.contact.backgroundImage.srcFallback
+            : data?.contact?.backgroundImage ?? heroBg,
+        ],
         description:
           data.subtitle ??
           data.intro ??
@@ -242,6 +282,9 @@ export default function ToursFromCityPage({ params }: PageProps) {
       <HeroSection
         title={heroTitle}
         backgroundImage={heroBg}
+        srcSetWebp={srcSetWebp}
+        alt={alt}
+        imageTitle={imageTitle}
         overlay={0.6}
         titleSize="text-4xl md:text-6xl"
       />
@@ -251,16 +294,13 @@ export default function ToursFromCityPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <>
-        {/* pass intro image (introimg) to ToursFromIntro */}
         <ToursFromIntro
           subtitle={data.subtitle}
           intro={data.intro}
           imageSrc={data.introimg}
         />
         <ToursFromTopTours tours={topTours} cityName={cityKey} />
-        {/* pass normalized slug (cityKey) so WhyChoose can format and display the city name */}
         <ToursFromWhyChoose items={whyChoose} cityName={cityKey} />
-        {/* prefer city-specific tips image (tipsimg), fall back to contact backgroundImage; pass slug for city name */}
         <ToursFromTips
           tips={data.localTips ?? []}
           imageSrc={data.tipsimg ?? data.contact?.backgroundImage}
@@ -268,8 +308,6 @@ export default function ToursFromCityPage({ params }: PageProps) {
         />
         <ToursFromTestimonials items={testimonials} cityName={cityKey} />
         <ToursFromContact contact={contact} />
-
-        {/* Home page highlight section (Instagram gallery) — appended at bottom */}
         <HomeHighlight />
       </>
     </>

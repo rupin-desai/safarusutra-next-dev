@@ -1,3 +1,10 @@
+type ToursFromImage = {
+  srcSetWebp?: string;
+  srcFallback: string;
+  alt?: string;
+  imageTitle?: string;
+};
+
 export default function ToursFromIntro({
   intro,
   subtitle,
@@ -5,7 +12,7 @@ export default function ToursFromIntro({
 }: {
   intro?: string;
   subtitle?: string;
-  imageSrc?: string;
+  imageSrc?: string | ToursFromImage;
 }) {
   if (!intro && !subtitle && !imageSrc) return null;
 
@@ -39,8 +46,7 @@ export default function ToursFromIntro({
               className="font-extrabold ml-1"
               style={{
                 color: dotColors[i % dotColors.length],
-                marginRight:
-                  i < words.length - 1 ? 6 : 0,
+                marginRight: i < words.length - 1 ? 6 : 0,
               }}
             >
               .
@@ -49,6 +55,32 @@ export default function ToursFromIntro({
           </span>
         ))}
       </span>
+    );
+  }
+
+  // Support new srcSetWebp/fallback format
+  function renderImage(img: string | ToursFromImage | undefined) {
+    if (!img) return null;
+    if (typeof img === "string") {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={img}
+          alt="Departure"
+          className="w-full h-64 md:h-80 object-cover rounded-lg shadow-sm"
+        />
+      );
+    }
+    return (
+      <picture>
+        {img.srcSetWebp && <source srcSet={img.srcSetWebp} type="image/webp" />}
+        <img
+          src={img.srcFallback}
+          alt={img.alt ?? "Departure"}
+          title={img.imageTitle ?? ""}
+          className="w-full h-64 md:h-80 object-cover rounded-lg shadow-sm"
+        />
+      </picture>
     );
   }
 
@@ -90,18 +122,7 @@ export default function ToursFromIntro({
             </div>
 
             {/* right: image (hidden on small screens) */}
-            <div className="hidden md:block">
-              {imageSrc ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={imageSrc}
-                  alt="Departure"
-                  className="w-full h-64 md:h-80 object-cover rounded-lg shadow-sm"
-                />
-              ) : (
-                <div className="w-full h-64 md:h-80 rounded-lg bg-gradient-to-br from-gray-100 to-gray-200 border border-gray-100" />
-              )}
-            </div>
+            <div className="hidden md:block">{renderImage(imageSrc)}</div>
           </div>
         </div>
       </div>

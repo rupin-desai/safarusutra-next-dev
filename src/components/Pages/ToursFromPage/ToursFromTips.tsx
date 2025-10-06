@@ -2,13 +2,20 @@ import React from "react";
 import { MapPin, Info } from "lucide-react";
 import SectionTitle from "../../UI/SectionTitle";
 
+type ToursFromImage = {
+  srcSetWebp?: string;
+  srcFallback: string;
+  alt?: string;
+  imageTitle?: string;
+};
+
 export default function ToursFromTips({
   tips,
   imageSrc,
   cityName,
 }: {
   tips: { title: string; text: string }[];
-  imageSrc?: string;
+  imageSrc?: string | ToursFromImage;
   cityName?: string;
 }) {
   if (!tips || tips.length === 0) return null;
@@ -26,6 +33,34 @@ export default function ToursFromTips({
   const title = cityDisplay
     ? `Local Tips for ${cityDisplay} Travelers`
     : "Local Tips for Travelers";
+
+  function renderImage(img: string | ToursFromImage | undefined) {
+    if (!img)
+      return (
+        <div className="w-full max-w-3xl h-full rounded-md bg-gray-100 border border-gray-100" />
+      );
+    if (typeof img === "string") {
+      return (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={img}
+          alt="Local tips illustration"
+          className="w-full max-w-3xl rounded-md object-cover shadow-sm max-h-[80%]"
+        />
+      );
+    }
+    return (
+      <picture>
+        {img.srcSetWebp && <source srcSet={img.srcSetWebp} type="image/webp" />}
+        <img
+          src={img.srcFallback}
+          alt={img.alt ?? "Local tips illustration"}
+          title={img.imageTitle ?? ""}
+          className="w-full max-w-3xl rounded-md object-cover shadow-sm max-h-[80%]"
+        />
+      </picture>
+    );
+  }
 
   return (
     <section className="mx-auto max-w-[80rem] px-4 pb-24">
@@ -66,16 +101,7 @@ export default function ToursFromTips({
 
         {/* right: image centered vertically relative to left — increased max width */}
         <div className="hidden md:flex items-center justify-center h-full">
-          {imageSrc ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={imageSrc}
-              alt="Local tips illustration"
-              className="w-full max-w-3xl rounded-md object-cover shadow-sm max-h-[80%]"
-            />
-          ) : (
-            <div className="w-full max-w-3xl h-full rounded-md bg-gray-100 border border-gray-100" />
-          )}
+          {renderImage(imageSrc)}
         </div>
       </div>
     </section>
