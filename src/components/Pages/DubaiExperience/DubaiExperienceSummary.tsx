@@ -59,24 +59,24 @@ export default function DubaiExperienceSummary() {
               </p>
             </div>
 
-            <div className="mt-8 flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-center">
-              <Link
-                href="https://dubaisafari.ae/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <SSButton variant="primary" color="var(--color-orange)">
-                  Visit Official Website
-                </SSButton>
-              </Link>
-              <SSButton
-                variant="outline"
-                color="var(--color-dark-teal)"
-                onClick={handleBookNowClick}
-              >
-                Book Now
+           <div className="mt-8 flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-center">
+            <SSButton
+              variant="primary"
+              color="var(--color-orange)"
+              onClick={handleBookNowClick}
+            >
+              Book Now
+            </SSButton>
+            <Link
+              href="https://dubaisafari.ae/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <SSButton variant="outline" color="var(--color-dark-teal)">
+                Visit Official Website
               </SSButton>
-            </div>
+            </Link>
+          </div>
           </motion.div>
 
           {/* Image Section */}

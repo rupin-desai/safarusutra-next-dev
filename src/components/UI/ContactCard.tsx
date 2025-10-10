@@ -144,8 +144,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
 
       // Also directly update DOM elements for mobile compatibility
       setTimeout(() => {
-        const subjectField = document.getElementById("subject") as HTMLInputElement | null;
-        const messageField = document.getElementById("message") as HTMLTextAreaElement | null;
+        const subjectField = document.getElementById(
+          "subject"
+        ) as HTMLInputElement | null;
+        const messageField = document.getElementById(
+          "message"
+        ) as HTMLTextAreaElement | null;
 
         if (subjectField && storedSubject) {
           subjectField.value = storedSubject;
@@ -168,7 +172,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
     if (shouldScroll) {
       localStorage.removeItem("scrollToContactForm");
 
-      const behavior = (localStorage.getItem("contactFormScrollBehavior") as ScrollBehavior) || "smooth";
+      const behavior =
+        (localStorage.getItem("contactFormScrollBehavior") as ScrollBehavior) ||
+        "smooth";
       localStorage.removeItem("contactFormScrollBehavior");
 
       setTimeout(() => {
@@ -177,20 +183,23 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
     }
   }, []);
 
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
 
-    setErrors((prev) => {
-      if (!prev[name]) return prev;
-      const newErrors = { ...prev };
-      delete newErrors[name];
-      return newErrors;
-    });
-  }, []);
+      setErrors((prev) => {
+        if (!prev[name]) return prev;
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
+    },
+    []
+  );
 
   const validate = useCallback(() => {
     const newErrors: Record<string, string> = {};
@@ -262,7 +271,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         }, 5000);
       } catch (error: unknown) {
         setIsSubmitting(false);
-        setSubmitError(getErrorMessage(error) || "Failed to send message. Please try again.");
+        setSubmitError(
+          getErrorMessage(error) || "Failed to send message. Please try again."
+        );
 
         setTimeout(() => {
           setSubmitError(null);
@@ -281,8 +292,12 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         animate="animate"
       >
         <CheckCircle size={48} className="text-green-500 mx-auto mb-4" />
-        <h3 className="text-xl font-semibold text-green-800 mb-2">Message Sent!</h3>
-        <p className="text-green-700">Thank you for contacting us. We&apos;ll get back to you shortly.</p>
+        <h3 className="text-xl font-semibold text-green-800 mb-2">
+          Message Sent!
+        </h3>
+        <p className="text-green-700">
+          Thank you for contacting us. We&apos;ll get back to you shortly.
+        </p>
       </motion.div>
     );
   }
@@ -306,7 +321,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
       </AnimatePresence>
 
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="name"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Name
         </label>
         <input
@@ -315,15 +333,22 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           name="name"
           value={formData.name}
           onChange={handleChange}
-          className={`w-full px-4 py-3 rounded-xl border ${errors.name ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
+          className={`w-full px-4 py-3 rounded-xl border ${
+            errors.name ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
           placeholder="Your name"
         />
-        {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
+        {errors.name && (
+          <p className="mt-1 text-sm text-red-500">{errors.name}</p>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Email
           </label>
           <input
@@ -332,14 +357,21 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border ${errors.email ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
+            className={`w-full px-4 py-3 rounded-xl border ${
+              errors.email ? "border-red-500" : "border-gray-300"
+            } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
             placeholder="your.email@example.com"
           />
-          {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
+          {errors.email && (
+            <p className="mt-1 text-sm text-red-500">{errors.email}</p>
+          )}
         </div>
 
         <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
+          <label
+            htmlFor="phone"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
             Phone
           </label>
           <input
@@ -348,15 +380,22 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border ${errors.phone ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
+            className={`w-full px-4 py-3 rounded-xl border ${
+              errors.phone ? "border-red-500" : "border-gray-300"
+            } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
             placeholder="+91 9876543210"
           />
-          {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
+          {errors.phone && (
+            <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
+          )}
         </div>
       </div>
 
       <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="subject"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Subject
         </label>
         <input
@@ -371,7 +410,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+        <label
+          htmlFor="message"
+          className="block text-sm font-medium text-gray-700 mb-1"
+        >
           Message
         </label>
         <textarea
@@ -380,14 +422,24 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           value={formData.message}
           onChange={handleChange}
           rows={5}
-          className={`w-full px-4 py-3 rounded-xl border ${errors.message ? "border-red-500" : "border-gray-300"} focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
+          className={`w-full px-4 py-3 rounded-xl border ${
+            errors.message ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
           placeholder="How can we help you?"
         />
-        {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
+        {errors.message && (
+          <p className="mt-1 text-sm text-red-500">{errors.message}</p>
+        )}
       </div>
 
       <div>
-        <SSButton variant="primary" color="var(--color-dark-teal)" className="w-full" type="submit" disabled={isSubmitting}>
+        <SSButton
+          variant="primary"
+          color="var(--color-dark-teal)"
+          className="w-full"
+          type="submit"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Sending..." : "Send Message"}
         </SSButton>
       </div>
@@ -399,38 +451,78 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
 const ContactInfo: React.FC = () => (
   <>
     {/* Logo for desktop - only visible on md screens and up */}
-    <motion.div className="hidden md:flex flex-col items-center mb-10" variants={logoVariants}>
-      <div className="bg-white p-3 rounded-xl shadow-md mb-2">
+    <motion.div
+      className="hidden md:flex flex-col items-center"
+      variants={logoVariants}
+    >
+      <div className="bg-white p-1 rounded-full mb-4 shadow-md">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logos/logo.svg" title="Logo of Safari Sutra" alt="SafariSutra" className="h-10 md:h-16 w-auto" />
+        <img
+          src="/logos/logo.png"
+          title="Logo of Safari Sutra"
+          alt="SafariSutra"
+          className="h-10 md:h-18 w-auto"
+        />
       </div>
-      <p className="font-thin text-center tracking-wide">SAFARI SUTRA</p>
     </motion.div>
 
     {/* Contact information section - centered vertically and horizontally */}
     <div className="space-y-6 max-w-xs flex-grow flex flex-col justify-center">
+      {/* Main Mumbai Address */}
       <div className="flex items-start">
         <MapPin className="mr-4 mt-1 flex-shrink-0" />
         <p>
-          WeWork, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai, Maharashtra 400059
+          WeWork, Chromium, 186/1 We, Jogeshwari - Vikhroli Link Rd, Vidya
+          Milind Nagar, Raje Sambhaji Nagar, Marol, Powai, Mumbai, Maharashtra
+          400059
         </p>
+      </div>
+      {/* Hyderabad Address */}
+      <div className="flex items-start">
+        <MapPin className="mr-4 mt-1 flex-shrink-0" />
+        <div>
+          <p>
+            Madhapur, Building no.9, Raheja Mindspace IT Park, Mindspace -
+            Madhapur road, HITEC city, Hyderabad, Telangana State, Telangana,
+            IN, 500079
+          </p>
+        </div>
+      </div>
+      {/* Mumbai Aarey Colony Address */}
+      <div className="flex items-start">
+        <MapPin className="mr-4 mt-1 flex-shrink-0" />
+        <div>
+          <p>
+            No 2, 1 Mohan Gokhale Rd, 1st & 20th Floor, Colony, 20th floor,
+            Aarey Milk Colony, Mumbai, Maharashtra 400063
+          </p>
+        </div>
       </div>
 
       <div className="flex items-start">
         <Phone className="mr-4 mt-1 flex-shrink-0" />
         <div>
           <p>
-            <a href="tel:+919967572970" className="hover:underline transition-all">
+            <a
+              href="tel:+919967572970"
+              className="hover:underline transition-all"
+            >
               +91 9967572970
             </a>
           </p>
           <p>
-            <a href="tel:+919860415774" className="hover:underline transition-all">
+            <a
+              href="tel:+919860415774"
+              className="hover:underline transition-all"
+            >
               +91 9860415774
             </a>
           </p>
           <p>
-            <a href="tel:+919429690981" className="hover:underline transition-all">
+            <a
+              href="tel:+919429690981"
+              className="hover:underline transition-all"
+            >
               +91 9429690981
             </a>
           </p>
@@ -445,24 +537,49 @@ const ContactInfo: React.FC = () => (
           <p className="hover:underline transition-all">
             <a href="mailto:hello@safarisutra.com">hello@safarisutra.com</a>
           </p>
-          <p className="text-sm italic">We reply faster than you can say &quot;chalo nikalte hain!&quot;</p>
+          <p className="text-sm italic">
+            We reply faster than you can say &quot;chalo nikalte hain!&quot;
+          </p>
         </div>
       </div>
     </div>
 
-    <div className="mt-10">
-      <p className="mb-3 text-sm font-medium text-center">Follow Us</p>
+    <div className="mt-3">
       <div className="flex space-x-4 justify-center">
-        <a href="https://www.facebook.com/profile.php?id=61560936836457" target="_blank" rel="noreferrer" className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors" aria-label="Facebook">
+        <a
+          href="https://www.facebook.com/profile.php?id=61560936836457"
+          target="_blank"
+          rel="noreferrer"
+          className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors"
+          aria-label="Facebook"
+        >
           <Facebook size={18} />
         </a>
-        <a href="https://www.instagram.com/safarisutra/" target="_blank" rel="noreferrer" className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors" aria-label="Instagram">
+        <a
+          href="https://www.instagram.com/safarisutra/"
+          target="_blank"
+          rel="noreferrer"
+          className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors"
+          aria-label="Instagram"
+        >
           <Instagram size={18} />
         </a>
-        <a href="https://x.com/SafariSutra" target="_blank" rel="noreferrer" className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors" aria-label="X (formerly Twitter)">
+        <a
+          href="https://x.com/SafariSutra"
+          target="_blank"
+          rel="noreferrer"
+          className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors"
+          aria-label="X (formerly Twitter)"
+        >
           <Twitter size={18} />
         </a>
-        <a href="https://www.linkedin.com/company/103599001" target="_blank" rel="noreferrer" className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors" aria-label="LinkedIn">
+        <a
+          href="https://www.linkedin.com/company/103599001"
+          target="_blank"
+          rel="noreferrer"
+          className="bg-white/20 p-2 rounded-full hover:bg-white/30 transition-colors"
+          aria-label="LinkedIn"
+        >
           <Linkedin size={18} />
         </a>
       </div>
@@ -494,12 +611,19 @@ const ContactCard: React.FC = () => {
     >
       <div className="flex flex-col md:flex-row h-full">
         {/* Left column - Contact information */}
-        <motion.div className="order-2 md:order-1 p-6 md:p-12 md:w-5/12 text-white flex flex-col items-center" style={{ backgroundColor: "#F89B21" }} variants={leftColVariants}>
+        <motion.div
+          className="order-2 md:order-1 p-6 md:p-8 md:w-5/12 text-white flex flex-col items-center"
+          style={{ backgroundColor: "#F89B21" }}
+          variants={leftColVariants}
+        >
           <ContactInfo />
         </motion.div>
 
         {/* Right column - Contact form */}
-        <motion.div className="order-1 md:order-2 px-6 py-6 md:px-10 md:py-12 md:w-7/12 flex items-center justify-center" variants={rightColVariants}>
+        <motion.div
+          className="order-1 md:order-2 px-6 py-6 md:px-10 md:py-12 md:w-7/12 flex items-center justify-center"
+          variants={rightColVariants}
+        >
           <div className="w-full max-w-lg">
             <ContactForm onSubmit={handleFormSubmit} />
           </div>
