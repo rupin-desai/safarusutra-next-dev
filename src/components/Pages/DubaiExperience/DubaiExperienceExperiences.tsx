@@ -1,4 +1,7 @@
+"use client";
 import { PawPrint } from "lucide-react";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 // Experiences and attractions (except "Map & Navigation" and "Facilities of the Park")
 const experiences = [
@@ -117,9 +120,38 @@ const experiencesJsonLd = {
   })),
 };
 
+// Animation variants
+const sectionVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
+const cardVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  animate: (i: number) => ({
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: {
+      delay: i * 0.08,
+      type: "spring",
+      stiffness: 300,
+      damping: 24,
+    },
+  }),
+};
+
 export default function DubaiExperienceExperiences() {
   return (
-    <section className="py-16 px-4">
+    <motion.section
+      className="py-16 px-4"
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.18 }}
+      variants={sectionVariants}
+    >
       {/* JSON-LD for ItemList */}
       <script
         type="application/ld+json"
@@ -127,7 +159,13 @@ export default function DubaiExperienceExperiences() {
       />
       <div className="container mx-auto">
         {/* Mobile/Tablet: Title at top, centered, no sticky */}
-        <div className="block lg:hidden mb-10">
+        <motion.div
+          className="block lg:hidden mb-10"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.18 }}
+          variants={sectionVariants}
+        >
           <div className="flex flex-col items-center text-center">
             <span
               className="inline-flex items-center px-5 py-2 rounded-full font-semibold text-lg gap-2 mb-6"
@@ -152,11 +190,17 @@ export default function DubaiExperienceExperiences() {
               comprehensive visit possible.
             </p>
           </div>
-        </div>
+        </motion.div>
         {/* Desktop: Sticky title left, cards right */}
         <div className="flex flex-col lg:flex-row gap-12">
           {/* Sticky Title Pill on the left for lg+ */}
-          <div className="hidden lg:block lg:w-1/3 flex-shrink-0">
+          <motion.div
+            className="hidden lg:block lg:w-1/3 flex-shrink-0"
+            initial="initial"
+            whileInView="animate"
+            viewport={{ once: true, amount: 0.18 }}
+            variants={sectionVariants}
+          >
             <div className="sticky top-32">
               <div className="flex flex-col items-start">
                 <span
@@ -183,15 +227,20 @@ export default function DubaiExperienceExperiences() {
                 </p>
               </div>
             </div>
-          </div>
+          </motion.div>
           {/* Experiences Cards on the right */}
           <div className="w-full lg:w-2/3">
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
               {experiences.map((experience, index) => (
-                <div
+                <motion.div
                   key={index}
                   id={experience.title.toLowerCase().replace(/\s+/g, "-")}
                   className="relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group h-96"
+                  custom={index}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.18 }}
+                  variants={cardVariants}
                 >
                   <picture>
                     <source srcSet={experience.srcSet} type="image/webp" />
@@ -213,12 +262,12 @@ export default function DubaiExperienceExperiences() {
                       {experience.description}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

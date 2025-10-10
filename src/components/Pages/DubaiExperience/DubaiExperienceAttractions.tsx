@@ -2,6 +2,8 @@
 import React from "react";
 import { Eye } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
 
 // Facility data (update your actual image paths)
 const facilities = [
@@ -71,6 +73,29 @@ const facilitiesJsonLd = {
   })),
 };
 
+// Animation variants
+const sectionVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
+const cardVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  animate: (i: number) => ({
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: {
+      delay: i * 0.08,
+      type: "spring",
+      stiffness: 300,
+      damping: 24,
+    },
+  }),
+};
+
 export default function DestinationAttractions() {
   // Open full image in new tab
   const openFullMap = (e: React.MouseEvent) => {
@@ -86,7 +111,13 @@ export default function DestinationAttractions() {
   }
 
   return (
-    <section className="w-full">
+    <motion.section
+      className="w-full"
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.18 }}
+      variants={sectionVariants}
+    >
       {/* JSON-LD for Map and Facilities */}
       <script
         type="application/ld+json"
@@ -98,7 +129,14 @@ export default function DestinationAttractions() {
       />
 
       {/* Full-width Map Preview */}
-      <div className="relative w-full" id="park-map">
+      <motion.div
+        className="relative w-full"
+        id="park-map"
+        initial="initial"
+        whileInView="animate"
+        viewport={{ once: true, amount: 0.18 }}
+        variants={sectionVariants}
+      >
         <picture>
           <source srcSet={MAP_PREVIEW_SRCSET} type="image/webp" />
           <img
@@ -118,7 +156,7 @@ export default function DestinationAttractions() {
         >
           <Eye size={28} />
         </button>
-      </div>
+      </motion.div>
 
       {/* Facilities Section for md+ */}
       <div className="container mx-auto px-4 py-16 hidden sm:block">
@@ -148,13 +186,18 @@ export default function DestinationAttractions() {
                   : undefined
               }
             >
-              {row.map((facility) => (
-                <div
+              {row.map((facility, i) => (
+                <motion.div
                   key={facility.name}
                   id={`facility-${facility.name
                     .toLowerCase()
                     .replace(/\s+/g, "-")}`}
                   className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden min-w-[260px] max-w-[400px] h-[340px] flex flex-col justify-end items-center"
+                  custom={i}
+                  initial="initial"
+                  whileInView="animate"
+                  viewport={{ once: true, amount: 0.18 }}
+                  variants={cardVariants}
                 >
                   <picture>
                     <source srcSet={facility.srcSet} type="image/webp" />
@@ -170,7 +213,7 @@ export default function DestinationAttractions() {
                       {facility.name}
                     </span>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           ))}
@@ -189,13 +232,18 @@ export default function DestinationAttractions() {
           as="h2"
         />
         <div className="flex flex-col gap-8">
-          {facilities.map((facility) => (
-            <div
+          {facilities.map((facility, i) => (
+            <motion.div
               key={facility.name}
               id={`facility-${facility.name
                 .toLowerCase()
                 .replace(/\s+/g, "-")}`}
               className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden min-w-[260px] max-w-[400px] h-[340px] mx-auto flex flex-col justify-end items-center"
+              custom={i}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, amount: 0.18 }}
+              variants={cardVariants}
             >
               <picture>
                 <source srcSet={facility.srcSet} type="image/webp" />
@@ -211,10 +259,10 @@ export default function DestinationAttractions() {
                   {facility.name}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

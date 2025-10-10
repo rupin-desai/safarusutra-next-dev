@@ -1,9 +1,28 @@
+"use client";
 import Link from "next/link";
 import SSButton from "@/components/UI/SSButton";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+// Animation variants
+const sectionVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
 
 export default function DubaiExperiencePartnerBanner() {
   return (
-    <section className="py-16 mb-16 px-4 relative">
+    <motion.section
+      className="py-16 mb-16 px-4 relative"
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.18 }}
+      variants={sectionVariants}
+    >
       {/* Responsive background image with srcSet */}
       <div className="absolute inset-0 -z-10 w-full h-full">
         <picture>
@@ -51,6 +70,6 @@ export default function DubaiExperiencePartnerBanner() {
           </Link>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }

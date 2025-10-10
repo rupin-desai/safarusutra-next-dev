@@ -1,5 +1,18 @@
+"use client";
 import SectionTitle from "@/components/UI/SectionTitle";
 import { Video } from "lucide-react";
+import { motion } from "framer-motion";
+import type { Variants } from "framer-motion";
+
+// Animation variants
+const sectionVariants: Variants = {
+  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: { type: "spring", stiffness: 300, damping: 24 },
+  },
+};
 
 export default function DubaiExperienceVideos() {
   // VideoObject JSON-LD
@@ -26,7 +39,13 @@ export default function DubaiExperienceVideos() {
   };
 
   return (
-    <section className="py-16 px-4">
+    <motion.section
+      className="py-16 px-4"
+      initial="initial"
+      whileInView="animate"
+      viewport={{ once: true, amount: 0.18 }}
+      variants={sectionVariants}
+    >
       {/* VideoObject JSON-LD */}
       <script
         type="application/ld+json"
@@ -41,7 +60,13 @@ export default function DubaiExperienceVideos() {
           centered
         />
 
-        <div className="max-w-6xl mx-auto mt-10">
+        <motion.div
+          className="max-w-6xl mx-auto mt-10"
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true, amount: 0.18 }}
+          variants={sectionVariants}
+        >
           <div className="rounded-xl overflow-hidden shadow-lg">
             <video
               controls
@@ -56,8 +81,8 @@ export default function DubaiExperienceVideos() {
               Your browser does not support the video tag.
             </video>
           </div>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
