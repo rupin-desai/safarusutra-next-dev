@@ -191,10 +191,10 @@ export default function DubaiExperiencePackages() {
     <section className="py-16 px-0 bg-white w-full">
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
         <SectionTitle
-          icon={<Crown size={22} className="text-[var(--color-orange)]" />}
+          icon={<Crown size={22} className="text-[#F89B21]" />}
           pillText="Dubai Exclusive"
           title="Dubai Safari Park Experience Packages"
-          color="var(--color-orange)"
+          color="#F89B21"
           centered
           containerClassName="mb-10"
           titleSize="large"
