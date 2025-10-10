@@ -1,7 +1,6 @@
-import SectionTitle from "@/components/UI/SectionTitle";
 import { PawPrint } from "lucide-react";
 
-// Added attractions (except "Map & Navigation" and "Facilities of the Park") to the experiences array
+// Experiences and attractions (except "Map & Navigation" and "Facilities of the Park")
 const experiences = [
   {
     title: "African Village",
@@ -51,7 +50,6 @@ const experiences = [
     srcSet:
       "/images/dubai-safari/animal-feeding-480.webp 480w, /images/dubai-safari/animal-feeding-720.webp 720w, /images/dubai-safari/animal-feeding-1080.webp 1080w",
   },
-  // Attractions added below
   {
     title: "Birds of Prey",
     description:
@@ -100,59 +98,102 @@ const experiences = [
     srcSet:
       "/images/dubai-safari/solar-panel-480.webp 480w, /images/dubai-safari/solar-panel-720.webp 720w, /images/dubai-safari/solar-panel-1080.webp 1080w",
   },
-  {
-    title: "Walking Trails",
-    description:
-      "Stroll along scenic walking trails that connect the park’s diverse habitats and attractions.",
-    image: "/images/dubai-safari/walking-trails-1080.webp",
-    srcSet:
-      "/images/dubai-safari/walking-trails-480.webp 480w, /images/dubai-safari/walking-trails-720.webp 720w, /images/dubai-safari/walking-trails-1080.webp 1080w",
-  },
 ];
 
 export default function DubaiExperienceExperiences() {
   return (
-    <section className="py-16 px-4 bg-gray-50">
+    <section className="py-16 px-4">
       <div className="container mx-auto">
-        <SectionTitle
-          icon={<PawPrint size={16} />}
-          pillText="Discover"
-          title="Safari Experiences"
-          color="#f3ad3c"
-          centered
-        />
-
-        <p className="text-center text-gray-700 max-w-3xl mx-auto mt-4 mb-12">
-          Explore the diverse zones and attractions at Dubai Safari Park, each
-          offering unique wildlife encounters and educational experiences. Our
-          partnership ensures you get the most comprehensive visit possible.
-        </p>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-          {experiences.map((experience, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+        {/* Mobile/Tablet: Title at top, centered, no sticky */}
+        <div className="block lg:hidden mb-10">
+          <div className="flex flex-col items-center text-center">
+            <span
+              className="inline-flex items-center px-5 py-2 rounded-full font-semibold text-lg gap-2 mb-6"
+              style={{
+                color: "var(--color-yellow-orange)",
+                background: "rgba(243, 173, 60, 0.08)",
+              }}
             >
-              <div className="h-56 overflow-hidden">
-                <picture>
-                  <source srcSet={experience.srcSet} type="image/webp" />
-                  <img
-                    src={experience.image}
-                    alt={`${experience.title} at Dubai Safari Park`}
-                    title={`Experience ${experience.title} at Dubai Safari Park`}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </picture>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-[var(--color-dark-brown)] mb-3">
-                  {experience.title}
-                </h3>
-                <p className="text-gray-700">{experience.description}</p>
+              <PawPrint size={28} className="mr-2" />
+              Discover
+            </span>
+            <h2
+              className="text-3xl md:text-5xl font-family-oswald font-bold mb-6 text-[var(--color-dark-brown)]"
+              style={{ fontFamily: "var(--font-family-oswald)" }}
+            >
+              Safari Experiences
+            </h2>
+            <p className="text-lg text-gray-700 mt-2 max-w-2xl">
+              Explore the diverse zones and attractions at Dubai Safari Park,
+              each offering unique wildlife encounters and educational
+              experiences. Our partnership ensures you get the most
+              comprehensive visit possible.
+            </p>
+          </div>
+        </div>
+        {/* Desktop: Sticky title left, cards right */}
+        <div className="flex flex-col lg:flex-row gap-12">
+          {/* Sticky Title Pill on the left for lg+ */}
+          <div className="hidden lg:block lg:w-1/3 flex-shrink-0">
+            <div className="sticky top-32">
+              <div className="flex flex-col items-start">
+                <span
+                  className="inline-flex items-center px-5 py-2 rounded-full font-semibold text-lg gap-2 mb-6"
+                  style={{
+                    color: "var(--color-yellow-orange)",
+                    background: "rgba(243, 173, 60, 0.08)",
+                  }}
+                >
+                  <PawPrint size={28} className="mr-2" />
+                  Discover
+                </span>
+                <h2
+                  className="text-3xl md:text-5xl lg:text-6xl font-family-oswald font-bold mb-6 text-[var(--color-dark-brown)]"
+                  style={{ fontFamily: "var(--font-family-oswald)" }}
+                >
+                  Safari Experiences
+                </h2>
+                <p className="text-lg text-gray-700 mt-2">
+                  Explore the diverse zones and attractions at Dubai Safari
+                  Park, each offering unique wildlife encounters and educational
+                  experiences. Our partnership ensures you get the most
+                  comprehensive visit possible.
+                </p>
               </div>
             </div>
-          ))}
+          </div>
+          {/* Experiences Cards on the right */}
+          <div className="w-full lg:w-2/3">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+              {experiences.map((experience, index) => (
+                <div
+                  key={index}
+                  className="relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group h-96"
+                >
+                  <picture>
+                    <source srcSet={experience.srcSet} type="image/webp" />
+                    <img
+                      src={experience.image}
+                      alt={`${experience.title} at Dubai Safari Park`}
+                      title={`Experience ${experience.title} at Dubai Safari Park`}
+                      className="w-full h-full object-cover"
+                    />
+                  </picture>
+                  {/* Black gradient overlay at bottom */}
+                  <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-black/80 via-black/40 to-transparent pointer-events-none" />
+                  {/* Text content over gradient */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
+                    <h3 className="text-2xl font-bold text-white mb-2 drop-shadow-lg">
+                      {experience.title}
+                    </h3>
+                    <p className="text-white text-base drop-shadow-lg">
+                      {experience.description}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
