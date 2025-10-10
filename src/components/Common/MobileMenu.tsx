@@ -3,13 +3,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
-import {
-  X,
-  Instagram,
-  Facebook,
-  Twitter,
-  Linkedin
-} from "lucide-react";
+import { X, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";
 import SSButton from "../UI/SSButton";
 import Image from "next/image";
 
@@ -107,7 +101,7 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
       )}
 
       <motion.aside
-        className="fixed top-0 right-0 h-full bg-white shadow-xl w-4/5 z-70 p-6 flex flex-col"
+        className="fixed top-0 right-0 h-full bg-white shadow-xl w-4/5 z-70 p-6 flex flex-col overflow-y-scroll"
         initial="closed"
         animate={isOpen ? "open" : "closed"}
         exit="exit"
