@@ -67,7 +67,7 @@ export default function DubaiExperiencePartnerBanner() {
             color="var(--color-orange)"
             onClick={handleBookNowClick}
           >
-            Book Dubai Safari Experience
+            Book Dubai Safari Park Experience
           </SSButton>
           <a
             href="https://dubaisafari.ae/"

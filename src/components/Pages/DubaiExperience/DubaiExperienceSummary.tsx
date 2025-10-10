@@ -1,5 +1,4 @@
 "use client";
-import SectionTitle from "@/components/UI/SectionTitle";
 import Link from "next/link";
 import SSButton from "@/components/UI/SSButton";
 import { TreePalm } from "lucide-react";
@@ -42,12 +41,37 @@ export default function DubaiExperienceSummary() {
             animate="animate"
             variants={sectionVariants}
           >
-            <SectionTitle
-              icon={<TreePalm size={16} />}
-              pillText="Our Partner"
-              title="Dubai Safari Park Experience"
-              color="#066959"
-            />
+            {/* Title Pill above partner logo */}
+            <div className="flex justify-center mb-2">
+              <span
+                className="inline-flex items-center px-4 py-1 rounded-full font-semibold text-base gap-2"
+                style={{
+                  color: "var(--color-dark-teal)",
+                  background: "rgba(6, 105, 89, 0.08)",
+                  fontFamily: "inherit",
+                }}
+              >
+                <TreePalm size={18} className="mr-1" />
+                Our Partner
+              </span>
+            </div>
+            {/* Partner Logo as link */}
+            <div className="flex justify-center mt-2 mb-2">
+              <a
+                href="https://dubaisafari.ae/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Dubai Safari Park Official Website"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="https://dubaisafari.ae/wp-content/uploads/2024/10/Logo-w105.svg"
+                  alt="Dubai Safari Park Logo"
+                  className="h-24 md:h-30 w-auto"
+                  loading="lazy"
+                />
+              </a>
+            </div>
 
             <div className="prose prose-lg mt-6 text-gray-700 max-w-xl mx-auto lg:mx-0 text-center">
               <p>
@@ -59,24 +83,24 @@ export default function DubaiExperienceSummary() {
               </p>
             </div>
 
-           <div className="mt-8 flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-center">
-            <SSButton
-              variant="primary"
-              color="var(--color-orange)"
-              onClick={handleBookNowClick}
-            >
-              Book Now
-            </SSButton>
-            <Link
-              href="https://dubaisafari.ae/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <SSButton variant="outline" color="var(--color-dark-teal)">
-                Visit Official Website
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-center">
+              <SSButton
+                variant="primary"
+                color="var(--color-orange)"
+                onClick={handleBookNowClick}
+              >
+                Book Now
               </SSButton>
-            </Link>
-          </div>
+              <Link
+                href="https://dubaisafari.ae/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <SSButton variant="outline" color="var(--color-dark-teal)">
+                  Visit Official Website
+                </SSButton>
+              </Link>
+            </div>
           </motion.div>
 
           {/* Image Section */}

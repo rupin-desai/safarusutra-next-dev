@@ -10,12 +10,12 @@ import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 
 // --- SEO/OG/Robots/Canonical/Keywords ---
 export const metadata: Metadata = {
-  title: "Dubai Safari Experience | Safari Sutra Tours & Travels",
+  title: "Dubai Safari Park Experience | Safari Sutra Tours & Travels",
   description:
     "Discover Dubai Safari Park with Safari Sutra: exclusive wildlife experiences, attractions, facilities, and official partnership.",
   keywords: [
     "dubai safari park",
-    "dubai safari experience",
+    "Dubai Safari Park Experience",
     "safari sutra dubai",
     "wildlife park dubai",
     "dubai attractions",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     canonical: "https://thesafarisutra.com/dubai-safari-experience",
   },
   openGraph: {
-    title: "Dubai Safari Experience | Safari Sutra Tours & Travels",
+    title: "Dubai Safari Park Experience | Safari Sutra Tours & Travels",
     description:
       "Discover Dubai Safari Park with Safari Sutra: exclusive wildlife experiences, attractions, facilities, and official partnership.",
     url: "https://thesafarisutra.com/dubai-safari-experience",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dubai Safari Experience | Safari Sutra Tours & Travels",
+    title: "Dubai Safari Park Experience | Safari Sutra Tours & Travels",
     description:
       "Discover Dubai Safari Park with Safari Sutra: exclusive wildlife experiences, attractions, facilities, and official partnership.",
     images: [
@@ -92,7 +92,7 @@ export default function Page() {
       {
         "@type": "ListItem",
         position: 2,
-        name: "Dubai Safari Experience",
+        name: "Dubai Safari Park Experience",
         item: "https://thesafarisutra.com/dubai-safari-experience",
       },
     ],

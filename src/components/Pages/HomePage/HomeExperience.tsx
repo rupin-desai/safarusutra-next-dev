@@ -46,7 +46,7 @@ export default function HomeExperience() {
             Featured Experience
           </span>
           <h2 className="text-3xl md:text-5xl lg:text-6xl font-semibold mb-6 text-gray-900 leading-tight">
-            Dubai Safari Park 
+            Dubai Safari Park
           </h2>
           <p className="text-gray-700 mb-8 max-w-lg text-lg md:text-xl">
             Journey into the wild at Dubai Safari Park with Safari Sutra.
@@ -56,7 +56,7 @@ export default function HomeExperience() {
           </p>
           <Link href="/dubai-safari-experience">
             <SSButton variant="primary" color="var(--color-orange)">
-              Explore Dubai Safari Experience
+              Explore Dubai Safari Park Experience
             </SSButton>
           </Link>
         </div>
