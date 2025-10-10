@@ -51,17 +51,42 @@ export const navigateToContactForm = ({
 };
 
 /**
- * Helper function to scroll to contact form
+ * Helper function to scroll to contact form and optionally autofill subject/message.
  *
  * @param {string} [formId="contact-form"]
  * @param {string} [behavior="smooth"]
+ * @param {{subject?: string, message?: string}} [autofill]
  * @returns {void}
  */
-export const scrollToContactForm = (formId = "contact-form", behavior = "smooth") => {
+export const scrollToContactForm = (formId = "contact-form", behavior = "smooth", autofill) => {
   try {
+    if (autofill) {
+      if (autofill.subject) {
+        localStorage.setItem("contactFormSubject", autofill.subject);
+      }
+      if (autofill.message) {
+        localStorage.setItem("contactFormMessage", autofill.message);
+      }
+    }
     const contactForm = document.getElementById(formId);
     if (contactForm) {
       contactForm.scrollIntoView({ behavior });
+      // Autofill fields if possible (for immediate effect)
+      setTimeout(() => {
+        if (autofill) {
+          if (autofill.subject) {
+            const subjectField = contactForm.querySelector("#subject");
+            if (subjectField) subjectField.value = autofill.subject;
+          }
+          if (autofill.message) {
+            const messageField = contactForm.querySelector("#message");
+            if (messageField) messageField.value = autofill.message;
+          }
+        }
+        // Optionally focus first input for accessibility
+        const firstInput = contactForm.querySelector("input,textarea,select,button");
+        if (firstInput) firstInput.focus();
+      }, 400);
     } else {
       // element not found — caller may handle via effect on contact page
       console.warn(`Contact form with ID "${formId}" not found`);

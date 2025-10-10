@@ -3,6 +3,7 @@ import React from "react";
 import HomeIntro from "./HomeIntro";
 import HomeStyle from "./HomeStyle";
 import HomeHighlight from "./HomeHighlight";
+import HomeExperience from "./HomeExperience";
 
 // Background is rendered statically here to avoid motion.* runtime issues.
 // Add motion back only after confirming framer-motion is available and compatible with your runtime.
@@ -22,11 +23,11 @@ const HomeSecond: React.FC = () => {
               select-none
               object-cover
               h-auto
-              w-[475%] -right-[1000px] top-[800px]
-              md:-right-[750px] md:w-[220%] md:top-[925px]
-              lg:-right-[700px] lg:w-[180%] lg:top-[950px]
-              xl:-right-[900px] xl:w-[180%] xl:top-[950px]
-              2xl:-right-[1200px] 2xl:w-[195%] 2xl:top-[900px]
+              w-[475%] -right-[1000px] top-[1300px]
+              md:-right-[750px] md:w-[220%] md:top-[1425px]
+              lg:-right-[700px] lg:w-[180%] lg:top-[1450px]
+              xl:-right-[900px] xl:w-[180%] xl:top-[1450px]
+              2xl:-right-[1200px] 2xl:w-[195%] 2xl:top-[1400px]
             `}
             aria-hidden="true"
             draggable={false}
@@ -39,6 +40,7 @@ const HomeSecond: React.FC = () => {
       </div>
       <div className="relative z-10">
         <HomeIntro />
+        <HomeExperience />
         <HomeStyle />
         <HomeHighlight />
       </div>

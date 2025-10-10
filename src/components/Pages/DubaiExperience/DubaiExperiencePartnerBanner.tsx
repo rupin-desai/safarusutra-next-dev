@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
 import SSButton from "@/components/UI/SSButton";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
+import { scrollToContactForm } from "@/utils/contact.utils";
 
 // Animation variants
 const sectionVariants: Variants = {
@@ -13,6 +13,14 @@ const sectionVariants: Variants = {
     transition: { type: "spring", stiffness: 300, damping: 24 },
   },
 };
+
+function handleBookNowClick() {
+  scrollToContactForm("contact-form", "smooth", {
+    subject: "Dubai Safari Park Booking Inquiry",
+    message:
+      "I'm interested in booking the Dubai Safari Park experience. Please share more details.",
+  });
+}
 
 export default function DubaiExperiencePartnerBanner() {
   return (
@@ -54,12 +62,14 @@ export default function DubaiExperiencePartnerBanner() {
           access.
         </p>
         <div className="flex justify-center gap-4 flex-wrap">
-          <Link href="/contact">
-            <SSButton variant="primary" color="var(--color-orange)">
-              Book Dubai Safari Experience
-            </SSButton>
-          </Link>
-          <Link
+          <SSButton
+            variant="primary"
+            color="var(--color-orange)"
+            onClick={handleBookNowClick}
+          >
+            Book Dubai Safari Experience
+          </SSButton>
+          <a
             href="https://dubaisafari.ae/"
             target="_blank"
             rel="noopener noreferrer"
@@ -67,7 +77,7 @@ export default function DubaiExperiencePartnerBanner() {
             <SSButton variant="outline" color="white">
               Visit Partner Website
             </SSButton>
-          </Link>
+          </a>
         </div>
       </div>
     </motion.section>
