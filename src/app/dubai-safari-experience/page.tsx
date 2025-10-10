@@ -7,6 +7,7 @@ import DubaiExperienceAttractions from "@/components/Pages/DubaiExperience/Dubai
 import DubaiExperienceVideos from "@/components/Pages/DubaiExperience/DubaiExperienceVideos";
 import DubaiExperiencePartnerBanner from "@/components/Pages/DubaiExperience/DubaiExperiencePartnerBanner";
 import ContactSection from "@/components/Pages/ContactPage/ContactSection";
+import DubaiExperiencePackages from "@/components/Pages/DubaiExperience/DubaiExperiencePackages";
 
 // --- SEO/OG/Robots/Canonical/Keywords ---
 export const metadata: Metadata = {
@@ -163,6 +164,7 @@ export default function Page() {
       <div>
         <DubaiExperienceHero />
         <DubaiExperienceSummary />
+        <DubaiExperiencePackages />
         <DubaiExperienceExperiences />
         <DubaiExperienceAttractions />
         <DubaiExperienceVideos />
