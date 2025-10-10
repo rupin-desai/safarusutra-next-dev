@@ -5,10 +5,11 @@ import { TreePalm } from "lucide-react";
 
 export default function DubaiExperienceSummary() {
   return (
-    <section className="py-16 px-4 bg-white">
+    <section className="py-10 md:py-16 px-4 md:px-16 bg-white">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div>
+        <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Text Section */}
+          <div className="w-full mt-8 lg:mt-0 flex flex-col items-center justify-center text-center">
             <SectionTitle
               icon={<TreePalm size={16} />}
               pillText="Our Partner"
@@ -16,26 +17,17 @@ export default function DubaiExperienceSummary() {
               color="#066959"
             />
 
-            <div className="prose prose-lg mt-6 text-gray-700">
+            <div className="prose prose-lg mt-6 text-gray-700 max-w-xl mx-auto lg:mx-0 text-center">
               <p>
-                Safari Sutra proudly partners with Dubai Safari Park to bring
-                you an unparalleled wildlife experience in the heart of the
-                UAE. Spanning over 119 hectares, this world-class facility
-                houses more than 3,000 animals across 78 species, creating a
-                remarkable ecosystem where desert meets savanna.
-              </p>
-              <p>
-                Our exclusive partnership allows Safari Sutra travelers
-                special access to unique experiences, guided tours, and
-                behind-the-scenes encounters that aren&#39;t available to
-                regular visitors. From the African Village to the Arabian
-                Desert Safari, immerse yourself in global wildlife habitats
-                meticulously recreated in Dubai&#39;s innovative conservation
-                park.
+                Discover a world where adventure meets nature at Dubai Safari
+                Park. Enjoy immersive wildlife encounters, vibrant
+                entertainment, unique dining, and lifestyle experiences—all in
+                one unforgettable destination. Explore diverse zones, meet
+                fascinating animals, and reconnect with nature on every visit.
               </p>
             </div>
 
-            <div className="mt-8 flex gap-4 flex-wrap">
+            <div className="mt-8 flex flex-col sm:flex-row gap-4 flex-wrap justify-center items-center">
               <Link
                 href="https://dubaisafari.ae/"
                 target="_blank"
@@ -53,19 +45,22 @@ export default function DubaiExperienceSummary() {
             </div>
           </div>
 
-          <div className="rounded-xl overflow-hidden shadow-lg">
-            <picture>
-              <source
-                srcSet="/images/dubai-safari/dubai-safari-intro-480.webp 480w, /images/dubai-safari/dubai-safari-intro-720.webp 720w, /images/dubai-safari/dubai-safari-intro-1080.webp 1080w"
-                type="image/webp"
-              />
-              <img
-                src="/images/dubai-safari/dubai-safari-intro-1080.webp"
-                alt="Visitors enjoying Dubai Safari Park experience"
-                className="w-full h-auto object-cover rounded-xl"
-                title="Discover the wonders of Dubai Safari Park with Safari Sutra"
-              />
-            </picture>
+          {/* Image Section */}
+          <div className="w-full flex justify-center">
+            <div className="rounded-xl overflow-hidden shadow-lg w-full max-w-md sm:max-w-lg lg:max-w-full">
+              <picture>
+                <source
+                  srcSet="/images/dubai-safari/dubai-safari-intro-480.webp 480w, /images/dubai-safari/dubai-safari-intro-720.webp 720w, /images/dubai-safari/dubai-safari-intro-1080.webp 1080w"
+                  type="image/webp"
+                />
+                <img
+                  src="/images/dubai-safari/dubai-safari-intro-1080.webp"
+                  alt="Visitors enjoying Dubai Safari Park experience"
+                  className="w-full h-auto object-cover rounded-xl"
+                  title="Discover the wonders of Dubai Safari Park with Safari Sutra"
+                />
+              </picture>
+            </div>
           </div>
         </div>
       </div>
