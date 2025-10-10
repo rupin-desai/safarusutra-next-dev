@@ -45,6 +45,32 @@ const MAP_FULL_SRC = "/images/dubai-safari/map-full.jpg";
 const MAP_ALT = "Dubai Safari Park Map";
 const MAP_TITLE = "Dubai Safari Park Map";
 
+// JSON-LD for Map (ImageObject) and Facilities (ItemList)
+const mapJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  contentUrl: `https://safarusutra.com${MAP_PREVIEW_SRC}`,
+  name: "Dubai Safari Park Map",
+  description: "Map of Dubai Safari Park showing all zones and facilities.",
+  url: "https://safarusutra.com/dubai-safari-experience#park-map",
+  representativeOfPage: true,
+};
+
+const facilitiesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Dubai Safari Park Facilities",
+  itemListElement: facilities.map((facility, idx) => ({
+    "@type": "ListItem",
+    position: idx + 1,
+    name: facility.name,
+    image: `https://safarusutra.com${facility.image}`,
+    url: `https://safarusutra.com/dubai-safari-experience#facility-${encodeURIComponent(
+      facility.name.toLowerCase().replace(/\s+/g, "-")
+    )}`,
+  })),
+};
+
 export default function DestinationAttractions() {
   // Open full image in new tab
   const openFullMap = (e: React.MouseEvent) => {
@@ -61,8 +87,18 @@ export default function DestinationAttractions() {
 
   return (
     <section className="w-full">
+      {/* JSON-LD for Map and Facilities */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(mapJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(facilitiesJsonLd) }}
+      />
+
       {/* Full-width Map Preview */}
-      <div className="relative w-full">
+      <div className="relative w-full" id="park-map">
         <picture>
           <source srcSet={MAP_PREVIEW_SRCSET} type="image/webp" />
           <img
@@ -115,6 +151,9 @@ export default function DestinationAttractions() {
               {row.map((facility) => (
                 <div
                   key={facility.name}
+                  id={`facility-${facility.name
+                    .toLowerCase()
+                    .replace(/\s+/g, "-")}`}
                   className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden min-w-[260px] max-w-[400px] h-[340px] flex flex-col justify-end items-center"
                 >
                   <picture>
@@ -153,6 +192,9 @@ export default function DestinationAttractions() {
           {facilities.map((facility) => (
             <div
               key={facility.name}
+              id={`facility-${facility.name
+                .toLowerCase()
+                .replace(/\s+/g, "-")}`}
               className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden min-w-[260px] max-w-[400px] h-[340px] mx-auto flex flex-col justify-end items-center"
             >
               <picture>

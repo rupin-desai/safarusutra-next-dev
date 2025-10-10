@@ -106,7 +106,6 @@ const Illustration: React.FC<IllustrationProps> = ({
       className={`illustration ${className}`}
       role="img"
       aria-label={alt}
-      title={title}
       style={{
         width: sizeInPx,
         height: sizeInPx,

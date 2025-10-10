@@ -100,9 +100,31 @@ const experiences = [
   },
 ];
 
+// JSON-LD for ItemList of attractions/experiences
+const experiencesJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  name: "Dubai Safari Park Attractions and Experiences",
+  itemListElement: experiences.map((exp, idx) => ({
+    "@type": "ListItem",
+    position: idx + 1,
+    name: exp.title,
+    description: exp.description,
+    image: `https://safarusutra.com${exp.image}`,
+    url: `https://safarusutra.com/dubai-safari-experience#${encodeURIComponent(
+      exp.title.toLowerCase().replace(/\s+/g, "-")
+    )}`,
+  })),
+};
+
 export default function DubaiExperienceExperiences() {
   return (
     <section className="py-16 px-4">
+      {/* JSON-LD for ItemList */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(experiencesJsonLd) }}
+      />
       <div className="container mx-auto">
         {/* Mobile/Tablet: Title at top, centered, no sticky */}
         <div className="block lg:hidden mb-10">
@@ -168,6 +190,7 @@ export default function DubaiExperienceExperiences() {
               {experiences.map((experience, index) => (
                 <div
                   key={index}
+                  id={experience.title.toLowerCase().replace(/\s+/g, "-")}
                   className="relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group h-96"
                 >
                   <picture>
