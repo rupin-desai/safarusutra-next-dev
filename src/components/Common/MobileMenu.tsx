@@ -3,7 +3,14 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { motion, Variants } from "framer-motion";
-import { X, Instagram, Facebook, Twitter, Linkedin } from "lucide-react";
+import {
+  X,
+  Instagram,
+  Facebook,
+  Twitter,
+  Linkedin,
+  ChevronDown,
+} from "lucide-react";
 import SSButton from "../UI/SSButton";
 import Image from "next/image";
 
@@ -85,6 +92,9 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
   const hoverColor = isLegalPage
     ? "text-[var(--color-orange)]"
     : "text-green-600";
+
+  // Experience dropdown state
+  const [expOpen, setExpOpen] = React.useState(false);
 
   return (
     <>
@@ -193,6 +203,59 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
             </Link>
           </motion.div>
 
+          {/* Experiences Dropdown */}
+          <motion.div variants={linkVariants} className="text-right">
+            <button
+              type="button"
+              className={`text-3xl font-medium text-gray-800 transition-colors ${hoverColor} flex items-center justify-end w-full`}
+              onClick={() => setExpOpen((v) => !v)}
+              aria-expanded={expOpen}
+              aria-controls="mobile-experiences-menu"
+            >
+              Experiences
+              <motion.span
+                animate={{
+                  rotate: expOpen ? 180 : 0,
+                  transition: { type: "spring", stiffness: 260, damping: 28 },
+                }}
+                className="ml-2 flex items-center"
+              >
+                <ChevronDown size={22} />
+              </motion.span>
+            </button>
+            <motion.div
+              initial={false}
+              animate={
+                expOpen
+                  ? {
+                      height: "auto",
+                      opacity: 1,
+                      transform: "translate3d(0,0,0)",
+                    }
+                  : {
+                      height: 0,
+                      opacity: 0,
+                      transform: "translate3d(0,12px,0)",
+                    }
+              }
+              transition={{ type: "spring", stiffness: 260, damping: 28 }}
+              id="mobile-experiences-menu"
+              className="overflow-hidden mt-2 flex flex-col space-y-2"
+              style={{ alignItems: "flex-end" }}
+            >
+              {expOpen && (
+                <Link
+                  href="/dubai-safari-experience"
+                  className="text-lg text-gray-700 hover:text-[var(--color-orange)] transition-colors"
+                  onClick={toggleMenu}
+                  style={{ textAlign: "right" }}
+                >
+                  Dubai Safari Park
+                </Link>
+              )}
+            </motion.div>
+          </motion.div>
+
           <motion.div variants={linkVariants} className="text-right">
             <Link
               href="/hire/"
@@ -202,8 +265,6 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
               Hire
             </Link>
           </motion.div>
-
-
         </nav>
 
         <div className="mt-auto space-y-4">

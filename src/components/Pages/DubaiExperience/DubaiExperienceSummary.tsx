@@ -33,7 +33,7 @@ export default function DubaiExperienceSummary() {
       animate="animate"
       variants={sectionVariants}
     >
-      <div className="container mx-auto">
+      <div className="mx-auto">
         <div className="flex flex-col-reverse lg:grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           {/* Text Section */}
           <motion.div

@@ -94,12 +94,16 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [toursOpen, setToursOpen] = useState(false);
+  const [experiencesOpen, setExperiencesOpen] = useState(false); // NEW
   const pathname = usePathname() ?? "/";
 
   // improved dropdown usability: refs + open/close timers + focus handling
   const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const experiencesDropdownRef = useRef<HTMLDivElement | null>(null); // NEW
   const openTimerRef = useRef<number | null>(null);
   const closeTimerRef = useRef<number | null>(null);
+  const expOpenTimerRef = useRef<number | null>(null); // NEW
+  const expCloseTimerRef = useRef<number | null>(null); // NEW
 
   // open with small delay (prevents flicker when mouse briefly passes)
   const scheduleOpen = (delay = 120) => {
@@ -118,24 +122,74 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
     closeTimerRef.current = window.setTimeout(() => setToursOpen(false), delay);
   };
 
+  // Experiences dropdown open/close
+  const scheduleExpOpen = (delay = 120) => {
+    if (expCloseTimerRef.current) {
+      window.clearTimeout(expCloseTimerRef.current);
+      expCloseTimerRef.current = null;
+    }
+    expOpenTimerRef.current = window.setTimeout(
+      () => setExperiencesOpen(true),
+      delay
+    );
+  };
+  const scheduleExpClose = (delay = 260) => {
+    if (expOpenTimerRef.current) {
+      window.clearTimeout(expOpenTimerRef.current);
+      expOpenTimerRef.current = null;
+    }
+    expCloseTimerRef.current = window.setTimeout(
+      () => setExperiencesOpen(false),
+      delay
+    );
+  };
+
   // if focus moves into dropdown keep it open; close when focus leaves
   useEffect(() => {
     const onFocusIn = (e: FocusEvent) => {
-      if (!dropdownRef.current) return;
+      if (!dropdownRef.current && !experiencesDropdownRef.current) return;
       const target = e.target as Node | null;
-      if (target && dropdownRef.current.contains(target)) {
+      if (
+        (dropdownRef.current &&
+          target &&
+          dropdownRef.current.contains(target)) ||
+        (experiencesDropdownRef.current &&
+          target &&
+          experiencesDropdownRef.current.contains(target))
+      ) {
         if (closeTimerRef.current) {
           window.clearTimeout(closeTimerRef.current);
           closeTimerRef.current = null;
         }
-        setToursOpen(true);
+        if (expCloseTimerRef.current) {
+          window.clearTimeout(expCloseTimerRef.current);
+          expCloseTimerRef.current = null;
+        }
+        if (
+          dropdownRef.current &&
+          target &&
+          dropdownRef.current.contains(target)
+        )
+          setToursOpen(true);
+        if (
+          experiencesDropdownRef.current &&
+          target &&
+          experiencesDropdownRef.current.contains(target)
+        )
+          setExperiencesOpen(true);
       }
     };
     const onFocusOut = (e: FocusEvent) => {
-      if (!dropdownRef.current) return;
+      if (!dropdownRef.current && !experiencesDropdownRef.current) return;
       requestAnimationFrame(() => {
         const active = document.activeElement;
-        if (!dropdownRef.current!.contains(active)) scheduleClose();
+        if (dropdownRef.current && !dropdownRef.current.contains(active))
+          scheduleClose();
+        if (
+          experiencesDropdownRef.current &&
+          !experiencesDropdownRef.current.contains(active)
+        )
+          scheduleExpClose();
       });
     };
     document.addEventListener("focusin", onFocusIn);
@@ -143,14 +197,11 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
     return () => {
       document.removeEventListener("focusin", onFocusIn);
       document.removeEventListener("focusout", onFocusOut);
-      if (openTimerRef.current) {
-        window.clearTimeout(openTimerRef.current);
-        openTimerRef.current = null;
-      }
-      if (closeTimerRef.current) {
-        window.clearTimeout(closeTimerRef.current);
-        closeTimerRef.current = null;
-      }
+      if (openTimerRef.current) window.clearTimeout(openTimerRef.current);
+      if (closeTimerRef.current) window.clearTimeout(closeTimerRef.current);
+      if (expOpenTimerRef.current) window.clearTimeout(expOpenTimerRef.current);
+      if (expCloseTimerRef.current)
+        window.clearTimeout(expCloseTimerRef.current);
     };
   }, []);
 
@@ -281,94 +332,165 @@ const Navbar: React.FC<NavbarProps> = ({ isLegalPage = false }) => {
             variants={navLinksVariants}
           >
             <div className="flex space-x-8">
-              {[
-                { href: "/", label: "Home" },
-                { href: "/about/", label: "About" },
-                { href: "/destination/", label: "Destinations" },
-                { href: "/fixed-departures/", label: "Tours" },
-                { href: "/hire/", label: "Hire" }
-              ].map((link) => {
-                if (link.href === "/fixed-departures/") {
-                  const isActive =
+              {/* Home */}
+              <Link
+                key="/"
+                href="/"
+                className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                  pathname === "/" ? "active" : ""
+                }`}
+              >
+                Home
+              </Link>
+              {/* About */}
+              <Link
+                key="/about/"
+                href="/about/"
+                className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                  pathname === "/about/" ? "active" : ""
+                }`}
+              >
+                About
+              </Link>
+              {/* Destinations */}
+              <Link
+                key="/destination/"
+                href="/destination/"
+                className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                  pathname === "/destination/" ? "active" : ""
+                }`}
+              >
+                Destinations
+              </Link>
+              {/* Tours Dropdown */}
+              <div
+                key="tours-dropdown"
+                ref={dropdownRef}
+                className="relative"
+                onMouseEnter={() => scheduleOpen()}
+                onMouseLeave={() => scheduleClose()}
+              >
+                <button
+                  onClick={() => setToursOpen((v) => !v)}
+                  className={`nav-link uppercase font-medium transition-colors ${textColor} ${
                     pathname.startsWith("/fixed-departures/") ||
-                    pathname.startsWith("/tour/");
-                  return (
-                    <div
-                      key={link.href}
-                      ref={dropdownRef}
-                      className="relative"
-                      onMouseEnter={() => scheduleOpen()}
+                    pathname.startsWith("/tour/")
+                      ? "active"
+                      : ""
+                  }`}
+                  aria-expanded={toursOpen}
+                  aria-haspopup="true"
+                  aria-controls="tours-menu"
+                  style={{ background: "transparent", border: "none" }}
+                >
+                  Tours
+                </button>
+                <AnimatePresence>
+                  {toursOpen && (
+                    <motion.div
+                      id="tours-menu"
+                      role="menu"
+                      initial={{ opacity: 0, scale: 0.95, y: -6 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.98, y: -6 }}
+                      transition={{ duration: 0.18, ease: "easeOut" }}
+                      className="absolute left-0 mt-2 bg-white rounded shadow-md"
+                      style={{
+                        minWidth: 180,
+                        zIndex: 100,
+                        padding: "6px 0",
+                        transformOrigin: "top left",
+                      }}
+                      onMouseEnter={() => {
+                        if (closeTimerRef.current) {
+                          window.clearTimeout(closeTimerRef.current);
+                          closeTimerRef.current = null;
+                        }
+                      }}
                       onMouseLeave={() => scheduleClose()}
                     >
-                      <button
-                        onClick={() => setToursOpen((v) => !v)}
-                        className={`nav-link uppercase font-medium transition-colors ${textColor} ${
-                          isActive ? "active" : ""
-                        }`}
-                        aria-expanded={toursOpen}
-                        aria-haspopup="true"
-                        aria-controls="tours-menu"
-                        style={{ background: "transparent", border: "none" }}
+                      <Link
+                        href="/fixed-departures/"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       >
-                        {link.label}
-                      </button>
-
-                      <AnimatePresence>
-                        {toursOpen && (
-                          <motion.div
-                            id="tours-menu"
-                            role="menu"
-                            initial={{ opacity: 0, scale: 0.95, y: -6 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.98, y: -6 }}
-                            transition={{ duration: 0.18, ease: "easeOut" }}
-                            className="absolute left-0 mt-2 bg-white rounded shadow-md"
-                            style={{
-                              minWidth: 180,
-                              zIndex: 100,
-                              padding: "6px 0",
-                              transformOrigin: "top left",
-                            }}
-                            onMouseEnter={() => {
-                              if (closeTimerRef.current) {
-                                window.clearTimeout(closeTimerRef.current);
-                                closeTimerRef.current = null;
-                              }
-                            }}
-                            onMouseLeave={() => scheduleClose()}
-                          >
-                            <Link
-                              href="/fixed-departures/"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              Fixed Departures
-                            </Link>
-                            <Link
-                              href="/tour/"
-                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                            >
-                              All Tours
-                            </Link>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                }
-
-                const isActive = pathname === link.href;
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`nav-link uppercase font-medium transition-colors ${textColor} ${
-                      isActive ? "active" : ""
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
+                        Fixed Departures
+                      </Link>
+                      <Link
+                        href="/tour/"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        All Tours
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              {/* Experiences Dropdown */}
+              <div
+                key="experiences-dropdown"
+                ref={experiencesDropdownRef}
+                className="relative"
+                onMouseEnter={() => scheduleExpOpen()}
+                onMouseLeave={() => scheduleExpClose()}
+              >
+                <button
+                  onClick={() => setExperiencesOpen((v) => !v)}
+                  className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                    pathname.startsWith("/dubai-safari-experience")
+                      ? "active"
+                      : ""
+                  }`}
+                  aria-expanded={experiencesOpen}
+                  aria-haspopup="true"
+                  aria-controls="experiences-menu"
+                  style={{ background: "transparent", border: "none" }}
+                >
+                  Experiences
+                </button>
+                <AnimatePresence>
+                  {experiencesOpen && (
+                    <motion.div
+                      id="experiences-menu"
+                      role="menu"
+                      initial={{ opacity: 0, scale: 0.95, y: -6 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.98, y: -6 }}
+                      transition={{ duration: 0.18, ease: "easeOut" }}
+                      className="absolute left-0 mt-2 bg-white rounded shadow-md"
+                      style={{
+                        minWidth: 180,
+                        zIndex: 100,
+                        padding: "6px 0",
+                        transformOrigin: "top left",
+                      }}
+                      onMouseEnter={() => {
+                        if (expCloseTimerRef.current) {
+                          window.clearTimeout(expCloseTimerRef.current);
+                          expCloseTimerRef.current = null;
+                        }
+                      }}
+                      onMouseLeave={() => scheduleExpClose()}
+                    >
+                      <Link
+                        href="/dubai-safari-experience"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      >
+                        Dubai Safari Park
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              {/* Hire */}
+              <Link
+                key="/hire/"
+                href="/hire/"
+                className={`nav-link uppercase font-medium transition-colors ${textColor} ${
+                  pathname === "/hire/" ? "active" : ""
+                }`}
+              >
+                Hire
+              </Link>
             </div>
           </motion.div>
 

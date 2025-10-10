@@ -1,4 +1,5 @@
 "use client";
+import { useRef, useEffect, useState } from "react";
 import { PawPrint } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
@@ -120,22 +121,27 @@ const experiencesJsonLd = {
   })),
 };
 
-// Animation variants
+// Animation variants with more dramatic initial state
 const sectionVariants: Variants = {
-  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  initial: { opacity: 0, transform: "translate3d(0px, 60px, 0px)" },
   animate: {
     opacity: 1,
     transform: "translate3d(0px, 0px, 0px)",
-    transition: { type: "spring", stiffness: 300, damping: 24 },
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 24,
+      delay: 0.1, // Small delay to ensure animation is noticeable
+    },
   },
 };
 const cardVariants: Variants = {
-  initial: { opacity: 0, transform: "translate3d(0px, 40px, 0px)" },
+  initial: { opacity: 0, transform: "translate3d(0px, 60px, 0px)" },
   animate: (i: number) => ({
     opacity: 1,
     transform: "translate3d(0px, 0px, 0px)",
     transition: {
-      delay: i * 0.08,
+      delay: 0.1 + i * 0.08,
       type: "spring",
       stiffness: 300,
       damping: 24,
@@ -143,28 +149,87 @@ const cardVariants: Variants = {
   }),
 };
 
+// Robust animation trigger using correct ref type
+function useRobustInView(ref: React.RefObject<HTMLDivElement | null>) {
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    if (!ref.current) return;
+
+    // IntersectionObserver
+    let observer: IntersectionObserver | null = null;
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting) {
+            setInView(true);
+            observer?.disconnect();
+          }
+        },
+        { threshold: 0.1, rootMargin: "0px 0px -100px 0px" } // More aggressive threshold
+      );
+      observer.observe(ref.current);
+    } catch {
+      setInView(true);
+    }
+
+    // Scroll fallback
+    const checkPosition = () => {
+      if (!ref.current || inView) return;
+      const rect = ref.current.getBoundingClientRect();
+      const viewHeight = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight
+      );
+      if (rect.top <= viewHeight * 0.8) {
+        setInView(true);
+        window.removeEventListener("scroll", checkPosition);
+      }
+    };
+    window.addEventListener("scroll", checkPosition, { passive: true });
+    checkPosition();
+
+    // Timeout fallback
+    const timeoutId = setTimeout(() => {
+      setInView(true);
+    }, 1200); // Trigger after 1.2 seconds regardless
+
+    return () => {
+      observer?.disconnect();
+      window.removeEventListener("scroll", checkPosition);
+      clearTimeout(timeoutId);
+    };
+  }, [ref, inView]);
+
+  return inView;
+}
+
 export default function DubaiExperienceExperiences() {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const isInView = useRobustInView(sectionRef);
+
   return (
     <motion.section
+      ref={sectionRef}
       className="py-16 px-4"
       initial="initial"
-      whileInView="animate"
-      viewport={{ once: true, amount: 0.18 }}
+      animate={isInView ? "animate" : "initial"}
       variants={sectionVariants}
+      style={{ willChange: "opacity, transform" }}
     >
       {/* JSON-LD for ItemList */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(experiencesJsonLd) }}
       />
-      <div className="container mx-auto">
+      <div className="mx-auto">
         {/* Mobile/Tablet: Title at top, centered, no sticky */}
         <motion.div
           className="block lg:hidden mb-10"
           initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, amount: 0.18 }}
+          animate={isInView ? "animate" : "initial"}
           variants={sectionVariants}
+          style={{ willChange: "opacity, transform" }}
         >
           <div className="flex flex-col items-center text-center">
             <span
@@ -197,9 +262,9 @@ export default function DubaiExperienceExperiences() {
           <motion.div
             className="hidden lg:block lg:w-1/3 flex-shrink-0"
             initial="initial"
-            whileInView="animate"
-            viewport={{ once: true, amount: 0.18 }}
+            animate={isInView ? "animate" : "initial"}
             variants={sectionVariants}
+            style={{ willChange: "opacity, transform" }}
           >
             <div className="sticky top-32">
               <div className="flex flex-col items-start">
@@ -229,8 +294,8 @@ export default function DubaiExperienceExperiences() {
             </div>
           </motion.div>
           {/* Experiences Cards on the right */}
-          <div className="w-full lg:w-2/3">
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="w-full lg:w-2/3 2xl:w-3/4">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 xl:gap-3">
               {experiences.map((experience, index) => (
                 <motion.div
                   key={index}
@@ -238,9 +303,9 @@ export default function DubaiExperienceExperiences() {
                   className="relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group h-96"
                   custom={index}
                   initial="initial"
-                  whileInView="animate"
-                  viewport={{ once: true, amount: 0.18 }}
+                  animate={isInView ? "animate" : "initial"}
                   variants={cardVariants}
+                  style={{ willChange: "opacity, transform" }}
                 >
                   <picture>
                     <source srcSet={experience.srcSet} type="image/webp" />

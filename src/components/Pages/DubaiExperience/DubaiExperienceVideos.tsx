@@ -72,7 +72,7 @@ export default function DubaiExperienceVideos() {
               controls
               width="100%"
               className="rounded-xl w-full h-full min-h-[500px] object-cover bg-black"
-              poster="/images/video-poster.jpg"
+              // poster removed
             >
               <source
                 src="/videos/dubai-safari/dubai_video_safari_1.webm"
