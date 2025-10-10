@@ -26,10 +26,10 @@ const facilities = [
       "/images/dubai-safari/facilities/mobility-480.webp 480w, /images/dubai-safari/facilities/mobility-720.webp 720w, /images/dubai-safari/facilities/mobility-1080.webp 1080w",
   },
   {
-    name: "Prayer Room",
-    image: "/images/dubai-safari/facilities/prayer-room.webp",
+    name: "Exclusive Wildlife Parks",
+    image: "/images/dubai-safari/facilities/wildlife.webp",
     srcSet:
-      "/images/dubai-safari/facilities/prayer-room-480.webp 480w, /images/dubai-safari/facilities/prayer-room-720.webp 720w, /images/dubai-safari/facilities/prayer-room-1080.webp 1080w",
+      "/images/dubai-safari/facilities/wildlife-480.webp 480w, /images/dubai-safari/facilities/wildlife-720.webp 720w, /images/dubai-safari/facilities/wildlife-1080.webp 1080w",
   },
   {
     name: "Retail Store",
@@ -41,8 +41,8 @@ const facilities = [
 
 // Map preview and full image sources
 const MAP_PREVIEW_SRCSET =
-  "/images/dubai-safari/map-preview-480.webp 480w, /images/dubai-safari/map-preview-720.webp 720w, /images/dubai-safari/map-preview-1080.webp 1080w";
-const MAP_PREVIEW_SRC = "/images/dubai-safari/map-preview-1080.webp";
+  "/images/dubai-safari/map-full.jpg 480w, /images/dubai-safari/map-full.jpg 720w, /images/dubai-safari/map-full.jpg 1080w";
+const MAP_PREVIEW_SRC = "/images/dubai-safari/map-full.jpg";
 const MAP_FULL_SRC = "/images/dubai-safari/map-full.jpg";
 const MAP_ALT = "Dubai Safari Park Map";
 const MAP_TITLE = "Dubai Safari Park Map";

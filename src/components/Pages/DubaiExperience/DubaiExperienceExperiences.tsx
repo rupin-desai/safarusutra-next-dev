@@ -9,7 +9,7 @@ const experiences = [
   {
     title: "African Village",
     description:
-      "Encounter magnificent African wildlife including lions, cheetahs, and giraffes in a recreated savanna landscape.",
+      "Encounter magnificent African wildlife including lions, cheetahs, and giraffes in a recreated savanna landscape. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/african-village-1080.webp",
     srcSet:
       "/images/dubai-safari/african-village-480.webp 480w, /images/dubai-safari/african-village-720.webp 720w, /images/dubai-safari/african-village-1080.webp 1080w",
@@ -17,7 +17,7 @@ const experiences = [
   {
     title: "Arabian Desert Safari",
     description:
-      "Discover native Arabian species adapted to desert life, including the majestic Arabian oryx and desert foxes.",
+      "Discover native Arabian species adapted to desert life, including the majestic Arabian oryx and desert foxes. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/arabian-desert-1080.webp",
     srcSet:
       "/images/dubai-safari/arabian-desert-480.webp 480w, /images/dubai-safari/arabian-desert-720.webp 720w, /images/dubai-safari/arabian-desert-1080.webp 1080w",
@@ -25,7 +25,7 @@ const experiences = [
   {
     title: "Asian Village",
     description:
-      "Explore Asia's diverse wildlife from Bengal tigers to Asian elephants in authentically designed habitats.",
+      "Explore Asia's diverse wildlife from Bengal tigers to Asian elephants in authentically designed habitats. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/asian-village-1080.webp",
     srcSet:
       "/images/dubai-safari/asian-village-480.webp 480w, /images/dubai-safari/asian-village-720.webp 720w, /images/dubai-safari/asian-village-1080.webp 1080w",
@@ -33,7 +33,7 @@ const experiences = [
   {
     title: "Bird Kingdom",
     description:
-      "Walk through aviaries featuring colorful exotic birds from around the world in a lush tropical setting.",
+      "Walk through aviaries featuring colorful exotic birds from around the world in a lush tropical setting. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/bird-kingdom-1080.webp",
     srcSet:
       "/images/dubai-safari/bird-kingdom-480.webp 480w, /images/dubai-safari/bird-kingdom-720.webp 720w, /images/dubai-safari/bird-kingdom-1080.webp 1080w",
@@ -41,7 +41,7 @@ const experiences = [
   {
     title: "Explorer Village",
     description:
-      "Interactive educational zone perfect for families and children to learn about wildlife conservation.",
+      "Interactive educational zone perfect for families and children to learn about wildlife conservation. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/explorer-village-1080.webp",
     srcSet:
       "/images/dubai-safari/explorer-village-480.webp 480w, /images/dubai-safari/explorer-village-720.webp 720w, /images/dubai-safari/explorer-village-1080.webp 1080w",
@@ -49,7 +49,7 @@ const experiences = [
   {
     title: "Animal Feeding",
     description:
-      "Participate in scheduled feeding sessions and get closer to your favorite animals under expert guidance.",
+      "Participate in scheduled feeding sessions and get closer to your favorite animals under expert guidance. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/animal-feeding-1080.webp",
     srcSet:
       "/images/dubai-safari/animal-feeding-480.webp 480w, /images/dubai-safari/animal-feeding-720.webp 720w, /images/dubai-safari/animal-feeding-1080.webp 1080w",
@@ -57,7 +57,7 @@ const experiences = [
   {
     title: "Birds of Prey",
     description:
-      "Marvel at the agility and power of raptors in dynamic flight demonstrations and educational shows.",
+      "Marvel at the agility and power of raptors in dynamic flight demonstrations and educational shows. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/birds-of-prey-1080.webp",
     srcSet:
       "/images/dubai-safari/birds-of-prey-480.webp 480w, /images/dubai-safari/birds-of-prey-720.webp 720w, /images/dubai-safari/birds-of-prey-1080.webp 1080w",
@@ -65,7 +65,7 @@ const experiences = [
   {
     title: "Echoes of the Wild",
     description:
-      "Enjoy immersive audio-visual shows that celebrate the diversity and beauty of wildlife from around the globe.",
+      "Enjoy immersive audio-visual shows that celebrate the diversity and beauty of wildlife from around the globe. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/echoes-of-the-wild-1080.webp",
     srcSet:
       "/images/dubai-safari/echoes-of-the-wild-480.webp 480w, /images/dubai-safari/echoes-of-the-wild-720.webp 720w, /images/dubai-safari/echoes-of-the-wild-1080.webp 1080w",
@@ -73,7 +73,7 @@ const experiences = [
   {
     title: "Glass Building",
     description:
-      "Discover unique flora and fauna in a climate-controlled environment designed for education and exploration.",
+      "Discover unique flora and fauna in a climate-controlled environment designed for education and exploration. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/glass-building-1080.webp",
     srcSet:
       "/images/dubai-safari/glass-building-480.webp 480w, /images/dubai-safari/glass-building-720.webp 720w, /images/dubai-safari/glass-building-1080.webp 1080w",
@@ -81,7 +81,7 @@ const experiences = [
   {
     title: "Kids Farm",
     description:
-      "A fun and interactive area where children can meet and learn about farm animals in a safe setting.",
+      "A fun and interactive area where children can meet and learn about farm animals in a safe setting. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/kids-farm-1080.webp",
     srcSet:
       "/images/dubai-safari/kids-farm-480.webp 480w, /images/dubai-safari/kids-farm-720.webp 720w, /images/dubai-safari/kids-farm-1080.webp 1080w",
@@ -89,7 +89,7 @@ const experiences = [
   {
     title: "POD Experience",
     description:
-      "Relax and observe wildlife from comfortable, eco-friendly pods located throughout the park.",
+      "Relax and observe wildlife from comfortable, eco-friendly pods located throughout the park. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/pod-experience-1080.webp",
     srcSet:
       "/images/dubai-safari/pod-experience-480.webp 480w, /images/dubai-safari/pod-experience-720.webp 720w, /images/dubai-safari/pod-experience-1080.webp 1080w",
@@ -97,7 +97,7 @@ const experiences = [
   {
     title: "Solar Panel Initiative",
     description:
-      "Learn about Dubai Safari Park’s commitment to sustainability through its innovative solar energy installations.",
+      "Learn about Dubai Safari Park’s commitment to sustainability through its innovative solar energy installations. Discover more wonders at Dubai Safari Park.",
     image: "/images/dubai-safari/solar-panel-1080.webp",
     srcSet:
       "/images/dubai-safari/solar-panel-480.webp 480w, /images/dubai-safari/solar-panel-720.webp 720w, /images/dubai-safari/solar-panel-1080.webp 1080w",
@@ -295,12 +295,12 @@ export default function DubaiExperienceExperiences() {
           </motion.div>
           {/* Experiences Cards on the right */}
           <div className="w-full lg:w-2/3 2xl:w-3/4">
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-8 xl:gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-8">
               {experiences.map((experience, index) => (
                 <motion.div
                   key={index}
                   id={experience.title.toLowerCase().replace(/\s+/g, "-")}
-                  className="relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group h-96"
+                  className="relative rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 group h-[32rem]"
                   custom={index}
                   initial="initial"
                   animate={isInView ? "animate" : "initial"}
