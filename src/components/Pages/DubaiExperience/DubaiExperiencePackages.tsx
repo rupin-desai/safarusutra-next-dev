@@ -1,6 +1,7 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import type { Variants } from "framer-motion";
 import SectionTitle from "@/components/UI/SectionTitle";
 import SSButton from "@/components/UI/SSButton";
 import { Crown, ChevronLeft, ChevronRight } from "lucide-react";
@@ -89,53 +90,50 @@ const packages = [
   },
 ];
 
+// Use type Variants and translate3d for animation
+const containerVariants: Variants = {
+  initial: {
+    opacity: 0,
+    transform: "translate3d(0px, 20px, 0px)",
+  },
+  animate: {
+    opacity: 1,
+    transform: "translate3d(0px, 0px, 0px)",
+    transition: {
+      type: "spring",
+      stiffness: 300,
+      damping: 20,
+    },
+  },
+  exit: {
+    opacity: 0,
+    transform: "translate3d(0px, -20px, 0px)",
+    transition: { duration: 0.2 },
+  },
+};
+
 export default function DubaiExperiencePackages() {
   const [current, setCurrent] = useState(0);
-  const [arrowOpacity, setArrowOpacity] = useState(1); // Full opacity by default
-  const fadeTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const userInteractedRef = useRef(false);
 
-  // Set up the fade effect
-  useEffect(() => {
-    // Initial fade out after component mounts
-    fadeTimeoutRef.current = setTimeout(() => {
-      if (!userInteractedRef.current) {
-        setArrowOpacity(0.2); // Fade to 20% opacity
+  // Touch swipe logic (like HomeHero)
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    touchEndX.current = e.changedTouches[0].clientX;
+    const distance = touchStartX.current - touchEndX.current;
+    if (Math.abs(distance) > minSwipeDistance) {
+      if (distance > 0) {
+        handleNext();
+      } else {
+        handlePrev();
       }
-    }, 2000);
-
-    return () => {
-      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
-    };
-  }, []);
-
-  // Reset fade when current slide changes
-  useEffect(() => {
-    handleUserInteraction();
-
-    // Set fade timeout again
-    fadeTimeoutRef.current = setTimeout(() => {
-      setArrowOpacity(0.2); // Fade to 20% opacity
-      userInteractedRef.current = false;
-    }, 2000);
-
-    return () => {
-      if (fadeTimeoutRef.current) clearTimeout(fadeTimeoutRef.current);
-    };
-  }, [current]);
-
-  const handleUserInteraction = () => {
-    userInteractedRef.current = true;
-    setArrowOpacity(1); // Full opacity
-
-    if (fadeTimeoutRef.current) {
-      clearTimeout(fadeTimeoutRef.current);
     }
-
-    fadeTimeoutRef.current = setTimeout(() => {
-      setArrowOpacity(0.2); // Fade to 20% opacity
-      userInteractedRef.current = false;
-    }, 2000);
   };
 
   const handleBook = () => {
@@ -178,12 +176,10 @@ export default function DubaiExperiencePackages() {
   };
 
   const handlePrev = () => {
-    handleUserInteraction();
     setCurrent((prev) => (prev === 0 ? packages.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    handleUserInteraction();
     setCurrent((prev) => (prev === packages.length - 1 ? 0 : prev + 1));
   };
 
@@ -202,24 +198,25 @@ export default function DubaiExperiencePackages() {
         <div
           id="ds-carousel-area"
           className="relative w-full"
-          onMouseMove={handleUserInteraction}
-          onTouchStart={handleUserInteraction}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
         >
           <AnimatePresence mode="wait">
             <motion.div
               key={packages[current].title}
-              className={`
-                flex bg-white border border-gray-200 rounded-xl overflow-hidden w-full
-                flex-col items-center
-                md:flex-row md:items-stretch
-              `}
-              initial={{ opacity: 0, transform: "translate3d(0,40px,0)" }}
-              animate={{ opacity: 1, transform: "translate3d(0,0,0)" }}
-              exit={{ opacity: 0, transform: "translate3d(0,-40px,0)" }}
-              transition={{ type: "spring", stiffness: 220, damping: 28 }}
+              variants={containerVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
               style={{
                 minHeight: 420,
               }}
+              className={`
+                flex bg-white border border-gray-200 rounded-xl overflow-visible w-full
+                flex-col items-center
+                md:flex-row md:items-stretch
+                relative
+              `}
             >
               {/* Left: Title above Image */}
               <div
@@ -275,43 +272,38 @@ export default function DubaiExperiencePackages() {
                   </SSButton>
                 </div>
               </div>
+              {/* Card-contained Carousel Controls */}
+              <button
+                aria-label="Previous"
+                onClick={handlePrev}
+                className="absolute -left-3 md:left-2 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+                style={{
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  transition: "background-color 0.3s, color 0.3s",
+                }}
+              >
+                <ChevronLeft size={28} />
+              </button>
+              <button
+                aria-label="Next"
+                onClick={handleNext}
+                className="absolute -right-3 md:right-2 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+                style={{
+                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+                  transition: "background-color 0.3s, color 0.3s",
+                }}
+              >
+                <ChevronRight size={28} />
+              </button>
             </motion.div>
           </AnimatePresence>
-          {/* Carousel Controls with Lucide icons */}
-          <button
-            aria-label="Previous"
-            onClick={handlePrev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer"
-            style={{
-              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-              transition: "opacity 0.5s, background-color 0.3s, color 0.3s",
-              opacity: arrowOpacity,
-            }}
-          >
-            <ChevronLeft size={28} />
-          </button>
-          <button
-            aria-label="Next"
-            onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer"
-            style={{
-              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-              transition: "opacity 0.5s, background-color 0.3s, color 0.3s",
-              opacity: arrowOpacity,
-            }}
-          >
-            <ChevronRight size={28} />
-          </button>
         </div>
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-7">
           {packages.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => {
-                handleUserInteraction();
-                setCurrent(idx);
-              }}
+              onClick={() => setCurrent(idx)}
               className={`w-2.5 h-2.5 rounded-full border border-[var(--color-orange)] transition ${
                 current === idx ? "bg-[var(--color-orange)]" : "bg-white"
               }`}
