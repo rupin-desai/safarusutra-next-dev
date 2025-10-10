@@ -3,6 +3,40 @@ import React from "react";
 import { Eye } from "lucide-react";
 import SectionTitle from "@/components/UI/SectionTitle";
 
+// Facility data (update your actual image paths)
+const facilities = [
+  {
+    name: "Eco Taxi",
+    image: "/images/dubai-safari/facilities/eco-taxi.webp",
+    srcSet:
+      "/images/dubai-safari/facilities/eco-taxi-480.webp 480w, /images/dubai-safari/facilities/eco-taxi-720.webp 720w, /images/dubai-safari/facilities/eco-taxi-1080.webp 1080w",
+  },
+  {
+    name: "Main Parking",
+    image: "/images/dubai-safari/facilities/main-parking.webp",
+    srcSet:
+      "/images/dubai-safari/facilities/main-parking-480.webp 480w, /images/dubai-safari/facilities/main-parking-720.webp 720w, /images/dubai-safari/facilities/main-parking-1080.webp 1080w",
+  },
+  {
+    name: "Mobility",
+    image: "/images/dubai-safari/facilities/mobility.webp",
+    srcSet:
+      "/images/dubai-safari/facilities/mobility-480.webp 480w, /images/dubai-safari/facilities/mobility-720.webp 720w, /images/dubai-safari/facilities/mobility-1080.webp 1080w",
+  },
+  {
+    name: "Prayer Room",
+    image: "/images/dubai-safari/facilities/prayer-room.webp",
+    srcSet:
+      "/images/dubai-safari/facilities/prayer-room-480.webp 480w, /images/dubai-safari/facilities/prayer-room-720.webp 720w, /images/dubai-safari/facilities/prayer-room-1080.webp 1080w",
+  },
+  {
+    name: "Retail Store",
+    image: "/images/dubai-safari/facilities/retail-store.webp",
+    srcSet:
+      "/images/dubai-safari/facilities/retail-store-480.webp 480w, /images/dubai-safari/facilities/retail-store-720.webp 720w, /images/dubai-safari/facilities/retail-store-1080.webp 1080w",
+  },
+];
+
 // Map preview and full image sources
 const MAP_PREVIEW_SRCSET =
   "/images/dubai-safari/map-preview-480.webp 480w, /images/dubai-safari/map-preview-720.webp 720w, /images/dubai-safari/map-preview-1080.webp 1080w";
@@ -10,30 +44,6 @@ const MAP_PREVIEW_SRC = "/images/dubai-safari/map-preview-1080.webp";
 const MAP_FULL_SRC = "/images/dubai-safari/map-full.jpg";
 const MAP_ALT = "Dubai Safari Park Map";
 const MAP_TITLE = "Dubai Safari Park Map";
-
-// Facility data (add your actual image paths)
-const facilities = [
-  {
-    name: "Eco Taxi",
-    image: "/images/dubai-safari/facilities/eco-taxi.webp",
-  },
-  {
-    name: "Main Parking",
-    image: "/images/dubai-safari/facilities/main-parking.webp",
-  },
-  {
-    name: "Mobility",
-    image: "/images/dubai-safari/facilities/mobility.webp",
-  },
-  {
-    name: "Prayer Room",
-    image: "/images/dubai-safari/facilities/prayer-room.webp",
-  },
-  {
-    name: "Retail Store",
-    image: "/images/dubai-safari/facilities/retail-store.webp",
-  },
-];
 
 export default function DestinationAttractions() {
   // Open full image in new tab
@@ -44,7 +54,7 @@ export default function DestinationAttractions() {
 
   // Split facilities into rows of 3 for centering logic
   const columns = 3;
-  const rows: { name: string; image: string }[][] = [];
+  const rows: { name: string; image: string; srcSet: string }[][] = [];
   for (let i = 0; i < facilities.length; i += columns) {
     rows.push(facilities.slice(i, i + columns));
   }
@@ -97,7 +107,7 @@ export default function DestinationAttractions() {
                   ? {
                       justifyContent: "center",
                       display: "grid",
-                      gridTemplateColumns: `repeat(${row.length}, minmax(260px, 340px))`,
+                      gridTemplateColumns: `repeat(${row.length}, minmax(260px, 400px))`,
                     }
                   : undefined
               }
@@ -105,17 +115,22 @@ export default function DestinationAttractions() {
               {row.map((facility) => (
                 <div
                   key={facility.name}
-                  className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col items-center px-8 py-10 min-w-[260px] max-w-[400px] h-[340px]"
+                  className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden min-w-[260px] max-w-[400px] h-[340px] flex flex-col justify-end items-center"
                 >
-                  <img
-                    src={facility.image}
-                    alt={facility.name}
-                    className="w-20 h-20 object-contain mb-6"
-                    loading="lazy"
-                  />
-                  <span className="text-xl font-bold text-gray-900 text-center mb-2">
-                    {facility.name}
-                  </span>
+                  <picture>
+                    <source srcSet={facility.srcSet} type="image/webp" />
+                    <img
+                      src={facility.image}
+                      alt={facility.name}
+                      className="absolute inset-0 w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </picture>
+                  <div className="relative z-10 w-full bg-gradient-to-t from-black/90 via-black/60 to-transparent pt-20 pb-6 flex flex-col items-center">
+                    <span className="text-xl font-bold text-white text-center drop-shadow">
+                      {facility.name}
+                    </span>
+                  </div>
                 </div>
               ))}
             </div>
@@ -138,17 +153,22 @@ export default function DestinationAttractions() {
           {facilities.map((facility) => (
             <div
               key={facility.name}
-              className="bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col items-center px-8 py-10 min-w-[260px] max-w-[400px] h-[340px] mx-auto"
+              className="relative bg-white border border-gray-200 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300 overflow-hidden min-w-[260px] max-w-[400px] h-[340px] mx-auto flex flex-col justify-end items-center"
             >
-              <img
-                src={facility.image}
-                alt={facility.name}
-                className="w-20 h-20 object-contain mb-6"
-                loading="lazy"
-              />
-              <span className="text-xl font-bold text-gray-900 text-center mb-2">
-                {facility.name}
-              </span>
+              <picture>
+                <source srcSet={facility.srcSet} type="image/webp" />
+                <img
+                  src={facility.image}
+                  alt={facility.name}
+                  className="absolute inset-0 w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </picture>
+              <div className="relative z-10 w-full bg-gradient-to-t from-black/90 via-black/60 to-transparent pt-20 pb-6 flex flex-col items-center">
+                <span className="text-xl font-bold text-white text-center drop-shadow">
+                  {facility.name}
+                </span>
+              </div>
             </div>
           ))}
         </div>
