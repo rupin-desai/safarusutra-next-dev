@@ -90,34 +90,43 @@ const packages = [
   },
 ];
 
-// Use type Variants and translate3d for animation
-const containerVariants: Variants = {
-  initial: {
+// Only animate the content (title, image, features, button)
+const contentVariants: Variants = {
+  enter: (direction: number) => ({
     opacity: 0,
-    transform: "translate3d(0px, 20px, 0px)",
-  },
-  animate: {
+    transform: `translate3d(${direction > 0 ? "100%" : "-100%"}, 0, 0)`,
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+  }),
+  center: {
     opacity: 1,
-    transform: "translate3d(0px, 0px, 0px)",
+    transform: "translate3d(0, 0, 0)",
+    position: "relative",
+    width: "100%",
+    height: "100%",
     transition: {
       type: "spring",
-      stiffness: 300,
-      damping: 20,
+      stiffness: 200,
+      damping: 30,
     },
   },
-  exit: {
+  exit: (direction: number) => ({
     opacity: 0,
-    transform: "translate3d(0px, -20px, 0px)",
+    transform: `translate3d(${direction < 0 ? "100%" : "-100%"}, 0, 0)`,
+    position: "absolute",
+    width: "100%",
+    height: "100%",
     transition: { duration: 0.2 },
-  },
+  }),
 };
 
 export default function DubaiExperiencePackages() {
   const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   // Touch swipe logic (like HomeHero)
   const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
   const minSwipeDistance = 50;
 
   const handleTouchStart = (e: React.TouchEvent) => {
@@ -125,8 +134,8 @@ export default function DubaiExperiencePackages() {
   };
 
   const handleTouchEnd = (e: React.TouchEvent) => {
-    touchEndX.current = e.changedTouches[0].clientX;
-    const distance = touchStartX.current - touchEndX.current;
+    const touchEndX = e.changedTouches[0].clientX;
+    const distance = touchStartX.current - touchEndX;
     if (Math.abs(distance) > minSwipeDistance) {
       if (distance > 0) {
         handleNext();
@@ -176,15 +185,22 @@ export default function DubaiExperiencePackages() {
   };
 
   const handlePrev = () => {
+    setDirection(-1);
     setCurrent((prev) => (prev === 0 ? packages.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
+    setDirection(1);
     setCurrent((prev) => (prev === packages.length - 1 ? 0 : prev + 1));
   };
 
+  // Set your desired heights here:
+  const mobileHeight = 950; // for mobile (sm)
+  const mdHeight = 760; // for md screens
+  const lgHeight = 640; // for lg and above
+
   return (
-    <section className="py-16 px-0 bg-white w-full">
+    <section className="py-16 px-0 bg-white w-full overflow-hidden">
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-8">
         <SectionTitle
           icon={<Crown size={22} className="text-[#F89B21]" />}
@@ -195,115 +211,275 @@ export default function DubaiExperiencePackages() {
           containerClassName="mb-10"
           titleSize="large"
         />
+        {/* Desktop/Tablet View */}
         <div
           id="ds-carousel-area"
-          className="relative w-full"
+          className="relative w-full hidden md:block"
+          style={{
+            height: `${lgHeight}px`,
+            maxWidth: 1100,
+            margin: "0 auto",
+          }}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
         >
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={packages[current].title}
-              variants={containerVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              style={{
-                minHeight: 420,
-              }}
-              className={`
-                flex bg-white border border-gray-200 rounded-xl overflow-visible w-full
-                flex-col items-center
-                md:flex-row md:items-stretch
-                relative
-              `}
-            >
-              {/* Left: Title above Image */}
-              <div
-                className={`
-                  flex flex-col items-center justify-start bg-gray-50 w-full
-                  pt-8 pb-6 px-6 md:px-10
-                  md:min-w-[320px] md:max-w-[600px] md:w-full
-                `}
+          {/* Arrows are outside and not animated */}
+          <button
+            aria-label="Previous"
+            onClick={handlePrev}
+            className="absolute -left-3 md:left-2 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+            style={{
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              transition: "background-color 0.3s, color 0.3s",
+            }}
+          >
+            <ChevronLeft size={28} />
+          </button>
+          <button
+            aria-label="Next"
+            onClick={handleNext}
+            className="absolute -right-3 md:right-2 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+            style={{
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              transition: "background-color 0.3s, color 0.3s",
+            }}
+          >
+            <ChevronRight size={28} />
+          </button>
+          <div
+            className={`
+              flex bg-white border border-gray-200 rounded-xl overflow-visible w-full h-full
+              flex-row items-stretch
+              relative
+            `}
+            style={{
+              height: `${lgHeight}px`,
+              width: "100%",
+              maxWidth: 1100,
+              margin: "0 auto",
+              position: "relative",
+            }}
+          >
+            <AnimatePresence custom={direction} mode="wait">
+              <motion.div
+                key={packages[current].title}
+                custom={direction}
+                variants={contentVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                style={{
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
+                }}
               >
-                <h3 className="text-3xl md:text-5xl lg:text-6xl text-[var(--color-dark-brown)] font-family-oswald text-center mb-4">
-                  {packages[current].title}
-                </h3>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={packages[current].image}
-                  alt={packages[current].alt}
-                  className="rounded-lg w-full max-w-2xl object-cover border border-gray-200"
-                  loading="lazy"
+                {/* Left: Title above Image */}
+                <div
+                  className={`
+                    flex flex-col items-center justify-center bg-gray-50 w-full
+                    pt-8 pb-6 px-6 md:px-10
+                    md:min-w-[400px] md:max-w-[600px] md:w-full
+                  `}
                   style={{
-                    minHeight: 260,
-                    maxHeight: 520,
-                    objectFit: "cover",
+                    maxWidth: 600,
+                    flex: "1 1 400px",
+                    height: "100%",
                   }}
-                />
-              </div>
-              {/* Right: Content */}
-              <div
-                className={`
-                  flex flex-col justify-center w-full
-                  p-6 md:p-10
-                  items-start
-                  text-left
-                  md:items-start
-                  md:text-left
-                `}
-              >
-                <ul className="mb-4 space-y-2 text-[var(--color-dark-brown)] text-base w-full max-w-xl">
-                  {packages[current].features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="text-[var(--color-orange)] mt-1">•</span>
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex flex-wrap items-center gap-4 mt-2 justify-start">
-                  <SSButton
-                    variant="primary"
-                    color="var(--color-orange)"
-                    className="text-base font-semibold px-5 py-2 rounded-xl"
-                    onClick={handleBook}
-                  >
-                    {packages[current].button.text}
-                  </SSButton>
+                >
+                  <h3 className="text-3xl md:text-5xl lg:text-6xl text-[var(--color-dark-brown)] font-family-oswald text-center mb-4">
+                    {packages[current].title}
+                  </h3>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={packages[current].image}
+                    alt={packages[current].alt}
+                    className="rounded-lg w-full max-w-2xl object-cover border border-gray-200"
+                    loading="lazy"
+                    style={{
+                      minHeight: 260,
+                      maxHeight: 400,
+                      objectFit: "cover",
+                    }}
+                  />
                 </div>
-              </div>
-              {/* Card-contained Carousel Controls */}
-              <button
-                aria-label="Previous"
-                onClick={handlePrev}
-                className="absolute -left-3 md:left-2 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+                {/* Right: Content */}
+                <div
+                  className={`
+                    flex flex-col justify-center w-full
+                    p-6 md:p-10
+                    items-start
+                    text-left
+                    md:items-start
+                    md:text-left
+                  `}
+                  style={{
+                    flex: "2 1 500px",
+                    maxWidth: 700,
+                    overflowY: "auto",
+                  }}
+                >
+                  <ul className="mb-4 space-y-2 text-[var(--color-dark-brown)] text-base w-full max-w-xl">
+                    {packages[current].features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-[var(--color-orange)] mt-1">
+                          •
+                        </span>
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap items-center gap-4 mt-2 justify-start">
+                    <SSButton
+                      variant="primary"
+                      color="var(--color-orange)"
+                      className="text-base font-semibold px-5 py-2 rounded-xl"
+                      onClick={handleBook}
+                    >
+                      {packages[current].button.text}
+                    </SSButton>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </div>
+        {/* Mobile View */}
+        <div
+          id="ds-carousel-area-mobile"
+          className="relative w-full block md:hidden"
+          style={{
+            height: `${mobileHeight}px`,
+            maxWidth: 600,
+            margin: "0 auto",
+          }}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
+          {/* Arrows are outside and not animated */}
+          <button
+            aria-label="Previous"
+            onClick={handlePrev}
+            className="absolute -left-3 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+            style={{
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              transition: "background-color 0.3s, color 0.3s",
+            }}
+          >
+            <ChevronLeft size={24} />
+          </button>
+          <button
+            aria-label="Next"
+            onClick={handleNext}
+            className="absolute -right-3 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-10 h-10 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
+            style={{
+              boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
+              transition: "background-color 0.3s, color 0.3s",
+            }}
+          >
+            <ChevronRight size={24} />
+          </button>
+          <div
+            className={`
+              flex flex-col bg-white border border-gray-200 rounded-xl overflow-visible w-full h-full
+              items-center relative
+            `}
+            style={{
+              height: `${mobileHeight}px`,
+              width: "100%",
+              maxWidth: 600,
+              margin: "0 auto",
+              position: "relative",
+            }}
+          >
+            <AnimatePresence custom={direction} mode="wait">
+              <motion.div
+                key={packages[current].title}
+                custom={direction}
+                variants={contentVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
                 style={{
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                  transition: "background-color 0.3s, color 0.3s",
+                  height: "100%",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  position: "absolute",
+                  left: 0,
+                  top: 0,
                 }}
               >
-                <ChevronLeft size={28} />
-              </button>
-              <button
-                aria-label="Next"
-                onClick={handleNext}
-                className="absolute -right-3 md:right-2 top-1/2 -translate-y-1/2 bg-white text-[var(--color-orange)] rounded-full w-11 h-11 flex items-center justify-center shadow hover:bg-[var(--color-orange)] hover:text-white cursor-pointer z-10 border-2 border-[var(--color-orange)]"
-                style={{
-                  boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                  transition: "background-color 0.3s, color 0.3s",
-                }}
-              >
-                <ChevronRight size={28} />
-              </button>
-            </motion.div>
-          </AnimatePresence>
+                <div
+                  className={`
+                    flex flex-col items-center justify-start bg-gray-50 w-full
+                    pt-6 pb-4 px-4
+                  `}
+                >
+                  <h3 className="text-2xl text-[var(--color-dark-brown)] font-family-oswald text-center mb-3">
+                    {packages[current].title}
+                  </h3>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={packages[current].image}
+                    alt={packages[current].alt}
+                    className="rounded-lg w-full object-cover border border-gray-200"
+                    loading="lazy"
+                    style={{
+                      minHeight: 120,
+                      maxHeight: 180,
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+                <div
+                  className={`
+                    flex flex-col justify-center w-full
+                    p-4
+                    items-start
+                    text-left
+                  `}
+                  style={{
+                    overflowY: "auto",
+                  }}
+                >
+                  <ul className="mb-3 space-y-2 text-[var(--color-dark-brown)] text-sm w-full">
+                    {packages[current].features.map((f, i) => (
+                      <li key={i} className="flex items-start gap-2">
+                        <span className="text-[var(--color-orange)] mt-1">
+                          •
+                        </span>
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex flex-wrap items-center gap-3 mt-2 justify-start">
+                    <SSButton
+                      variant="primary"
+                      color="var(--color-orange)"
+                      className="text-sm font-semibold px-4 py-2 rounded-xl"
+                      onClick={handleBook}
+                    >
+                      {packages[current].button.text}
+                    </SSButton>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
         {/* Dots */}
         <div className="flex justify-center gap-2 mt-7">
           {packages.map((_, idx) => (
             <button
               key={idx}
-              onClick={() => setCurrent(idx)}
+              onClick={() => {
+                setDirection(idx > current ? 1 : -1);
+                setCurrent(idx);
+              }}
               className={`w-2.5 h-2.5 rounded-full border border-[var(--color-orange)] transition ${
                 current === idx ? "bg-[var(--color-orange)]" : "bg-white"
               }`}
@@ -312,6 +488,32 @@ export default function DubaiExperiencePackages() {
           ))}
         </div>
       </div>
+      <style jsx global>{`
+        @media (min-width: 768px) and (max-width: 1023px) {
+          #ds-carousel-area {
+            height: ${mdHeight}px !important;
+          }
+          #ds-carousel-area > div {
+            height: ${mdHeight}px !important;
+          }
+        }
+        @media (min-width: 1024px) {
+          #ds-carousel-area {
+            height: ${lgHeight}px !important;
+          }
+          #ds-carousel-area > div {
+            height: ${lgHeight}px !important;
+          }
+        }
+        @media (max-width: 767px) {
+          #ds-carousel-area-mobile {
+            height: ${mobileHeight}px !important;
+          }
+          #ds-carousel-area-mobile > div {
+            height: ${mobileHeight}px !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
