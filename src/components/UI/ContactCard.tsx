@@ -111,6 +111,33 @@ type ContactFormProps = {
   onSubmit: (data: ContactFormData) => Promise<unknown>;
 };
 
+// Anti-spam utilities
+const checkSpamPatterns = (text: string): boolean => {
+  const spamKeywords = [
+    /\b(viagra|cialis|lottery|prize|winner|click here|buy now|limited time|act now)\b/gi,
+    /\b(earn money|work from home|make \$|casino|poker|betting)\b/gi,
+    /\b(free money|get paid|earn cash|mlm|bitcoin|crypto)\b/gi,
+    /(http[s]?:\/\/[^\s]+){3,}/gi, // Multiple URLs
+  ];
+
+  return spamKeywords.some((pattern) => pattern.test(text));
+};
+
+const checkSuspiciousEmail = (email: string): boolean => {
+  // Check for disposable email domains
+  const disposableDomains = [
+    "tempmail.com",
+    "throwaway.email",
+    "guerrillamail.com",
+    "10minutemail.com",
+    "mailinator.com",
+    "trashmail.com",
+  ];
+
+  const domain = email.split("@")[1]?.toLowerCase();
+  return disposableDomains.includes(domain);
+};
+
 // Create separate form component to isolate renders
 const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -125,10 +152,37 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  // Initialize EmailJS on component mount
+  // Anti-spam states
+  const [honeypot, setHoneypot] = useState("");
+  const [formLoadTime, setFormLoadTime] = useState<number>(0);
+  const [interactionCount, setInteractionCount] = useState(0);
+  const [hasUserInteraction, setHasUserInteraction] = useState(false);
+
+  // Initialize EmailJS and anti-spam measures on component mount
   useEffect(() => {
     initEmailJS();
+    setFormLoadTime(Date.now());
   }, []);
+
+  // Track user interactions
+  useEffect(() => {
+    const handleInteraction = () => {
+      if (!hasUserInteraction) {
+        setHasUserInteraction(true);
+        setInteractionCount((prev) => prev + 1);
+      }
+    };
+
+    window.addEventListener("mousemove", handleInteraction, { once: true });
+    window.addEventListener("keydown", handleInteraction, { once: true });
+    window.addEventListener("touchstart", handleInteraction, { once: true });
+
+    return () => {
+      window.removeEventListener("mousemove", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+      window.removeEventListener("touchstart", handleInteraction);
+    };
+  }, [hasUserInteraction]);
 
   // Effect to check for stored form data on component mount
   useEffect(() => {
@@ -186,6 +240,10 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
+
+      // Track interaction
+      setInteractionCount((prev) => prev + 1);
+
       setFormData((prev) => ({
         ...prev,
         [name]: value,
@@ -206,12 +264,18 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
 
     if (!formData.name.trim()) {
       newErrors.name = "Name is required";
+    } else if (formData.name.trim().length < 2) {
+      newErrors.name = "Name must be at least 2 characters";
+    } else if (formData.name.trim().length > 100) {
+      newErrors.name = "Name is too long";
     }
 
     if (!formData.email.trim()) {
       newErrors.email = "Email is required";
     } else if (!/^\S+@\S+\.\S+$/.test(formData.email)) {
       newErrors.email = "Email is invalid";
+    } else if (checkSuspiciousEmail(formData.email)) {
+      newErrors.email = "Please use a valid email address";
     }
 
     if (formData.phone && !/^[0-9+\-\s()]{10,15}$/.test(formData.phone)) {
@@ -220,10 +284,55 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
 
     if (!formData.message.trim()) {
       newErrors.message = "Message is required";
+    } else if (formData.message.trim().length < 10) {
+      newErrors.message = "Message must be at least 10 characters";
+    } else if (formData.message.trim().length > 1000) {
+      newErrors.message = "Message is too long (max 1000 characters)";
+    } else if (checkSpamPatterns(formData.message)) {
+      newErrors.message = "Message contains suspicious content";
+    }
+
+    // Check spam patterns in subject
+    if (formData.subject && checkSpamPatterns(formData.subject)) {
+      newErrors.subject = "Subject contains suspicious content";
     }
 
     return newErrors;
   }, [formData]);
+
+  // Additional spam checks
+  const checkAntiSpam = (): string | null => {
+    // 1. Honeypot check
+    if (honeypot) {
+      console.warn("Honeypot triggered");
+      return "Invalid submission detected";
+    }
+
+    // 2. Time-based check (must take at least 3 seconds)
+    const timeTaken = Date.now() - formLoadTime;
+    if (timeTaken < 3000) {
+      console.warn("Form submitted too quickly");
+      return "Please take your time to fill the form";
+    }
+
+    // 3. Interaction check
+    if (interactionCount < 3) {
+      console.warn("Insufficient user interaction");
+      return "Please interact with the form naturally";
+    }
+
+    // 4. Check for rapid-fire submissions (rate limiting)
+    const lastSubmitTime = localStorage.getItem("lastContactSubmit");
+    if (lastSubmitTime) {
+      const timeSinceLastSubmit = Date.now() - parseInt(lastSubmitTime);
+      if (timeSinceLastSubmit < 60000) {
+        // 1 minute
+        return "Please wait a minute before submitting again";
+      }
+    }
+
+    return null;
+  };
 
   // small helper to safely extract a message from unknown errors
   const getErrorMessage = (error: unknown): string => {
@@ -250,6 +359,16 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         return;
       }
 
+      // Anti-spam checks
+      const spamError = checkAntiSpam();
+      if (spamError) {
+        setSubmitError(spamError);
+        setTimeout(() => {
+          setSubmitError(null);
+        }, 5000);
+        return;
+      }
+
       setIsSubmitting(true);
       setSubmitError(null);
 
@@ -257,6 +376,9 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         await onSubmit(formData);
         setIsSubmitting(false);
         setIsSuccess(true);
+
+        // Store submission timestamp
+        localStorage.setItem("lastContactSubmit", Date.now().toString());
 
         setFormData({
           name: "",
@@ -280,7 +402,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
         }, 5000);
       }
     },
-    [formData, validate, onSubmit]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [formData, validate, onSubmit, honeypot, formLoadTime, interactionCount]
   );
 
   if (isSuccess) {
@@ -304,6 +427,20 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+      {/* Honeypot field - hidden from real users */}
+      <div style={{ position: "absolute", left: "-9999px" }} aria-hidden="true">
+        <label htmlFor="website">Website</label>
+        <input
+          type="text"
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+          value={honeypot}
+          onChange={(e) => setHoneypot(e.target.value)}
+        />
+      </div>
+
       <AnimatePresence>
         {submitError && (
           <motion.div
@@ -325,7 +462,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           htmlFor="name"
           className="block text-sm font-medium text-gray-700 mb-1"
         >
-          Name
+          Name <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -337,6 +474,8 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
             errors.name ? "border-red-500" : "border-gray-300"
           } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
           placeholder="Your name"
+          autoComplete="name"
+          maxLength={100}
         />
         {errors.name && (
           <p className="mt-1 text-sm text-red-500">{errors.name}</p>
@@ -349,7 +488,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
             htmlFor="email"
             className="block text-sm font-medium text-gray-700 mb-1"
           >
-            Email
+            Email <span className="text-red-500">*</span>
           </label>
           <input
             type="email"
@@ -361,6 +500,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
               errors.email ? "border-red-500" : "border-gray-300"
             } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
             placeholder="your.email@example.com"
+            autoComplete="email"
           />
           {errors.email && (
             <p className="mt-1 text-sm text-red-500">{errors.email}</p>
@@ -384,6 +524,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
               errors.phone ? "border-red-500" : "border-gray-300"
             } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
             placeholder="+91 9876543210"
+            autoComplete="tel"
           />
           {errors.phone && (
             <p className="mt-1 text-sm text-red-500">{errors.phone}</p>
@@ -404,9 +545,15 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           name="subject"
           value={formData.subject}
           onChange={handleChange}
-          className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors"
+          className={`w-full px-4 py-3 rounded-xl border ${
+            errors.subject ? "border-red-500" : "border-gray-300"
+          } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
           placeholder="What is this about?"
+          maxLength={200}
         />
+        {errors.subject && (
+          <p className="mt-1 text-sm text-red-500">{errors.subject}</p>
+        )}
       </div>
 
       <div>
@@ -414,7 +561,7 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
           htmlFor="message"
           className="block text-sm font-medium text-gray-700 mb-1"
         >
-          Message
+          Message <span className="text-red-500">*</span>
         </label>
         <textarea
           id="message"
@@ -426,10 +573,17 @@ const ContactForm: React.FC<ContactFormProps> = ({ onSubmit }) => {
             errors.message ? "border-red-500" : "border-gray-300"
           } focus:outline-none focus:ring-2 focus:ring-[var(--color-green)] transition-colors`}
           placeholder="How can we help you?"
+          maxLength={1000}
         />
-        {errors.message && (
-          <p className="mt-1 text-sm text-red-500">{errors.message}</p>
-        )}
+        <div className="flex justify-between items-center mt-1">
+          {errors.message ? (
+            <p className="text-sm text-red-500">{errors.message}</p>
+          ) : (
+            <span className="text-xs text-gray-500">
+              {formData.message.length}/1000 characters
+            </span>
+          )}
+        </div>
       </div>
 
       <div>
