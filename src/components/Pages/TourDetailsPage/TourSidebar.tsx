@@ -211,7 +211,7 @@ const TourSidebar = ({
         initialMessage={modalData.message}
         title={tour.title}
         price={tour.price}
-        image={tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"}
+        image={tour.srcFallback || tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"}
       />
 
       {/* Share button at top right */}

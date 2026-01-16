@@ -135,7 +135,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
                     {/* Modal Content */}
                     <motion.div
-                        className="relative bg-white w-full md:max-w-lg overflow-hidden flex flex-col h-[90vh] md:h-auto md:max-h-[90vh] rounded-t-2xl md:rounded-2xl shadow-2xl"
+                        className="relative bg-white w-full md:max-w-2xl overflow-hidden flex flex-col h-[90vh] md:h-auto md:max-h-[85vh] rounded-t-2xl md:rounded-2xl shadow-2xl"
                         variants={isMobile ? mobileModalVariants : desktopModalVariants}
                         initial="hidden"
                         animate="visible"
@@ -171,7 +171,24 @@ const BookingModal: React.FC<BookingModalProps> = ({
                         </div>
 
                         {/* Body */}
-                        <div className="p-6 overflow-y-auto flex-1">
+                        <div className="p-6 overflow-y-auto flex-1 modal-scrollbar">
+                            <style jsx>{`
+                                .modal-scrollbar::-webkit-scrollbar {
+                                    width: 8px;
+                                }
+                                .modal-scrollbar::-webkit-scrollbar-track {
+                                    background: transparent;
+                                }
+                                .modal-scrollbar::-webkit-scrollbar-thumb {
+                                    background-color: rgba(156, 163, 175, 0.5);
+                                    border-radius: 20px;
+                                    border: 3px solid transparent;
+                                    background-clip: content-box;
+                                }
+                                .modal-scrollbar::-webkit-scrollbar-thumb:hover {
+                                    background-color: rgba(107, 114, 128, 0.8);
+                                }
+                            `}</style>
                             {status === "success" ? (
                                 <div className="flex flex-col items-center justify-center py-8 text-center h-full">
                                     <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
