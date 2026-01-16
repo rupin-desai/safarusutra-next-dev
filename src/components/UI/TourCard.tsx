@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import SSButton from "../UI/SSButton";
 import { generateTourBookingInquiry } from "@/utils/contact.utils";
+import BookingModal from "./BookingModal";
 
 // export or declare the Tour shape used by TourCard
 export type Tour = {
@@ -173,6 +174,8 @@ interface TourCardProps {
 
 const TourCard: React.FC<TourCardProps> = ({ tour }) => {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [modalData, setModalData] = React.useState({ subject: "", message: "" });
 
   const formattedPrice =
     typeof tour.price === "number"
@@ -209,9 +212,8 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
     tour.srcSetWebp && tour.srcSetWebp.includes(",")
       ? tour.srcSetWebp // Already contains multiple sizes
       : generateResponsiveSrcSet(
-          tour.srcSetWebp || tour.srcFallback || tour.image
-        );
-
+        tour.srcSetWebp || tour.srcFallback || tour.image
+      );
   // Fix: define imageSrc, imageAlt, imageTitle for <img>
   const imageSrc = getSmallestImageSrc(baseSrc);
   const imageAlt = tour.alt || displayTitle || "Safari Sutra Tour";
@@ -222,12 +224,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
       subject?: string;
       message?: string;
     };
-    const subject = result.subject ?? "";
-    const message = result.message ?? "";
-    const params = new URLSearchParams();
-    if (subject) params.set("subject", subject);
-    if (message) params.set("message", message);
-    router.push(`/contact?${params.toString()}`);
+    setModalData({
+      subject: result.subject ?? "",
+      message: result.message ?? "",
+    });
+    setIsModalOpen(true);
   };
 
   // Use full URL only in metadata
@@ -256,6 +257,12 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
 
   return (
     <>
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialSubject={modalData.subject}
+        initialMessage={modalData.message}
+      />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

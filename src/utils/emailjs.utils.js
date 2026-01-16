@@ -38,7 +38,8 @@ export const sendContactEmail = async (formData) => {
     const result = await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       EMAILJS_CONFIG.templateId,
-      templateParams
+      templateParams,
+      EMAILJS_CONFIG.publicKey
     );
 
     console.log("Email sent successfully:", result);
@@ -81,7 +82,8 @@ export const sendNewsletterEmail = async (email) => {
     await emailjs.send(
       EMAILJS_CONFIG.serviceId,
       "newsletter_template_id", // You'll need to create this template
-      templateParams
+      templateParams,
+      EMAILJS_CONFIG.publicKey
     );
 
     return {

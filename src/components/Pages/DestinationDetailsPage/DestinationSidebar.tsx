@@ -5,6 +5,7 @@ import { motion, AnimatePresence, Variants } from "framer-motion";
 import { Share2, Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SSButton from "@/components/UI/SSButton";
+import BookingModal from "@/components/UI/BookingModal";
 
 interface Attraction {
   title?: string;
@@ -40,6 +41,8 @@ const toastVariants: Variants = {
 const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
   const router = useRouter();
   const [copied, setCopied] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({ subject: "", message: "" });
 
   const attractionsList: Attraction[] = useMemo(() => {
     if (Array.isArray(tourData?.attractions)) return tourData.attractions as Attraction[];
@@ -65,7 +68,7 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
       pendingTimeouts.current.forEach((t) => {
         try {
           window.clearTimeout(t);
-        } catch {}
+        } catch { }
       });
       pendingTimeouts.current = [];
     };
@@ -118,14 +121,14 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
         // Use scrollIntoView first for browser-native behavior, then adjust to offset if needed
         try {
           el.scrollIntoView({ behavior: "smooth", block: "start" });
-        } catch {}
+        } catch { }
         // Ensure precise offset using window.scrollTo after a tick
         const t = window.setTimeout(() => {
           window.scrollTo({ top: Math.max(0, targetY), behavior: "smooth" });
           try {
             // move focus for accessibility (only if focusable)
             (el as HTMLElement).focus?.();
-          } catch {}
+          } catch { }
         }, 60) as unknown as number;
         pendingTimeouts.current.push(t);
       };
@@ -188,11 +191,10 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
   );
 
   const handleCustomDestination = () => {
-    const subject = encodeURIComponent(`Custom Destination Request: ${tourData?.title ?? ""}`);
-    const message = encodeURIComponent(
-      `I'm interested in creating a custom travel plan for ${tourData?.title ?? ""}. I would like to discuss my preferences and requirements for this destination.`
-    );
-    router.push(`/contact?subject=${subject}&message=${message}`);
+    const subject = `Custom Destination Request: ${tourData?.title ?? ""}`;
+    const message = `I'm interested in creating a custom travel plan for ${tourData?.title ?? ""}. I would like to discuss my preferences and requirements for this destination.`;
+    setModalData({ subject, message });
+    setIsModalOpen(true);
   };
 
   const copyToClipboard = async () => {
@@ -207,6 +209,13 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
 
   return (
     <div className="w-full sticky" style={{ top: "24px", height: "fit-content" }}>
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialSubject={modalData.subject}
+        initialMessage={modalData.message}
+      />
+
       <motion.div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm" variants={contentFadeIn} initial="initial" animate="animate">
         <h3 className="text-xl font-bold mb-4">On This Page</h3>
         <nav>

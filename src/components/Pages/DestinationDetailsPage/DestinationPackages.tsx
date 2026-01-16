@@ -7,6 +7,7 @@ import SectionTitle from "@/components/UI/SectionTitle";
 import TourCard, { type Tour } from "@/components/UI/TourCard";
 import SSButton from "@/components/UI/SSButton";
 import ToursDataRaw from "@/data/TourDetails.json";
+import BookingModal from "@/components/UI/BookingModal";
 
 type PackageItem = {
   id?: string | number;
@@ -37,6 +38,8 @@ interface Props {
 
 const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinationId }) => {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [modalData, setModalData] = React.useState({ subject: "", message: "" });
 
   const destinationPackages = useMemo(() => {
     const raw = ToursDataRaw as unknown;
@@ -83,14 +86,22 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
   }, [destinationName, destinationId]);
 
   const handleCustomPackageRequest = () => {
-    const subject = encodeURIComponent(`Custom ${destinationName} Package Request`);
-    const message = encodeURIComponent(`I am interested in a custom travel package for ${destinationName}. Please share options & pricing.`);
-    router.push(`/contact?subject=${subject}&message=${message}`);
+    setModalData({
+      subject: `Custom ${destinationName} Package Request`,
+      message: `I am interested in a custom travel package for ${destinationName}. Please share options & pricing.`,
+    });
+    setIsModalOpen(true);
   };
 
   if (!destinationPackages || destinationPackages.length === 0) {
     return (
       <section className="py-16 relative overflow-hidden" id="destination-packages">
+        <BookingModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          initialSubject={modalData.subject}
+          initialMessage={modalData.message}
+        />
         <div className="container mx-auto px-4 relative z-10">
           <SectionTitle icon={<PackageIcon size={16} />} pillText="Custom Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />
 
@@ -122,6 +133,12 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
 
   return (
     <section className="py-16 relative overflow-hidden" id="destination-packages">
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialSubject={modalData.subject}
+        initialMessage={modalData.message}
+      />
 
       <div className="container mx-auto px-4 relative z-10">
         <SectionTitle icon={<PackageIcon size={16} />} pillText="Available Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />

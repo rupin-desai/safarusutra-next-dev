@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import SSButton from "@/components/UI/SSButton";
 import { generateTourBookingInquiry } from "@/utils/contact.utils";
 import type { Tour as BaseTour } from "@/components/UI/TourCard";
+import BookingModal from "@/components/UI/BookingModal";
 
 type DateObj = {
   range: string;
@@ -50,6 +51,9 @@ const TourSidebar = ({
     useState<string>(selectedMonth);
   const [internalSelectedDate, setInternalSelectedDate] =
     useState<string>(selectedDateRange);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalData, setModalData] = useState({ subject: "", message: "" });
 
   // typed hover transition to satisfy TS when using "spring"
   const hoverTransition = {
@@ -158,13 +162,11 @@ const TourSidebar = ({
     }
 
     const { subject, message } = generateTourBookingInquiry(tour, dateInfo);
-
-    // Use Next.js router to navigate to contact page with encoded query params
-    const params = new URLSearchParams({
+    setModalData({
       subject: subject ?? "",
       message: message ?? "",
     });
-    router.push(`/contact?${params.toString()}`);
+    setIsModalOpen(true);
   };
 
   // Handle month selection
@@ -180,11 +182,10 @@ const TourSidebar = ({
   // Handle custom quote request
   const handleCustomQuote = () => {
     const subject = `Custom Quote Request: ${tour.title ?? ""}`;
-    const message = `I am interested in a custom quote for the "${
-      tour.title ?? ""
-    }" tour. I would like to discuss specific requirements and preferences.`;
-    const params = new URLSearchParams({ subject, message });
-    router.push(`/contact?${params.toString()}`);
+    const message = `I am interested in a custom quote for the "${tour.title ?? ""
+      }" tour. I would like to discuss specific requirements and preferences.`;
+    setModalData({ subject, message });
+    setIsModalOpen(true);
   };
 
   // Copy URL to clipboard with feedback
@@ -203,20 +204,26 @@ const TourSidebar = ({
 
   return (
     <div className=" bg-white rounded-xl shadow-md p-6 sticky top-24">
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialSubject={modalData.subject}
+        initialMessage={modalData.message}
+      />
+
       {/* Share button at top right */}
       <div className="absolute top-4 right-4 z-10">
         <motion.button
-          className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${
-            copied
+          className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${copied
               ? "bg-green-100 text-green-700"
               : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
-          }`}
+            }`}
           whileHover={
             !copied
               ? {
-                  transform: "translate3d(0px, -2px, 0px)",
-                  transition: hoverTransition,
-                }
+                transform: "translate3d(0px, -2px, 0px)",
+                transition: hoverTransition,
+              }
               : {}
           }
           whileTap={!copied ? { transform: "translate3d(0px, 1px, 0px)" } : {}}
