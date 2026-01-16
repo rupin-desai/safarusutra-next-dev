@@ -33,6 +33,8 @@ type TourData = {
   longDescription?: string;
   details?: Detail[];
   attractions?: Attraction[] | string | null;
+  price?: string | number;
+  image?: string;
 };
 
 interface Props {
@@ -220,7 +222,7 @@ const DestinationDetailsOverview: React.FC<Props> = ({
             <div className="w-full lg:hidden mb-10">
               <TourSidebar
                 tourData={tourData}
-                executeScroll={executeScroll ?? (() => {})}
+                executeScroll={executeScroll ?? (() => { })}
               />
             </div>
 
@@ -233,7 +235,7 @@ const DestinationDetailsOverview: React.FC<Props> = ({
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10 w-full">
               {Array.isArray(tourData.details) &&
-              tourData.details.length > 0 ? (
+                tourData.details.length > 0 ? (
                 tourData.details.map((detail, index) => {
                   const colorClass = getDetailStyles(detail.title, index);
                   return (
@@ -262,13 +264,13 @@ const DestinationDetailsOverview: React.FC<Props> = ({
               )}
             </div>
 
-        
+
           </div>
 
           <div className="hidden lg:block lg:w-1/3">
             <TourSidebar
               tourData={tourData}
-              executeScroll={executeScroll ?? (() => {})}
+              executeScroll={executeScroll ?? (() => { })}
             />
           </div>
         </div>

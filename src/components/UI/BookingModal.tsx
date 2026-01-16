@@ -12,6 +12,9 @@ interface BookingModalProps {
     onClose: () => void;
     initialSubject?: string;
     initialMessage?: string;
+    title?: string;
+    price?: string | number;
+    image?: string;
 }
 
 const overlayVariants = {
@@ -36,6 +39,9 @@ const BookingModal: React.FC<BookingModalProps> = ({
     onClose,
     initialSubject = "",
     initialMessage = "",
+    title = "Plan Your Trip",
+    price,
+    image,
 }) => {
     const [mounted, setMounted] = useState(false);
     const [isMobile, setIsMobile] = useState(false);
@@ -129,7 +135,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
                     {/* Modal Content */}
                     <motion.div
-                        className="relative bg-white w-full md:max-w-lg overflow-hidden flex flex-col h-[75vh] md:h-auto md:max-h-[90vh] rounded-t-2xl md:rounded-2xl shadow-2xl"
+                        className="relative bg-white w-full md:max-w-lg overflow-hidden flex flex-col h-[90vh] md:h-auto md:max-h-[90vh] rounded-t-2xl md:rounded-2xl shadow-2xl"
                         variants={isMobile ? mobileModalVariants : desktopModalVariants}
                         initial="hidden"
                         animate="visible"
@@ -137,16 +143,30 @@ const BookingModal: React.FC<BookingModalProps> = ({
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                     >
                         {/* Header */}
-                        <div className="flex items-center justify-between py-3 px-4 md:p-4 border-b border-white/10 bg-[var(--color-orange)] shrink-0">
-                            <h3 className="text-lg font-bold text-white font-family-baloo leading-none">
-                                Plan Your Trip
-                            </h3>
+                        <div className="flex items-center justify-between py-4 px-5 md:p-6 border-b border-gray-100 bg-white shrink-0 gap-4">
+                            <div className="flex items-center gap-4 overflow-hidden">
+                                {image && (
+                                    <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 shadow-sm">
+                                        <img src={image} alt={title} className="w-full h-full object-cover" />
+                                    </div>
+                                )}
+                                <div className="flex flex-col min-w-0 justify-center">
+                                    <h3 className="text-xl font-bold text-gray-900 font-family-baloo leading-tight truncate">
+                                        {title}
+                                    </h3>
+                                    {price && (
+                                        <p className="text-base text-gray-600 font-medium truncate mt-0.5">
+                                            {typeof price === 'number' ? `₹${price.toLocaleString()}` : price}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
                             <button
                                 onClick={onClose}
-                                className="p-1.5 text-white/80 hover:text-white hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                                className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors cursor-pointer flex-shrink-0 self-start md:self-center"
                                 aria-label="Close modal"
                             >
-                                <X size={20} />
+                                <X size={24} />
                             </button>
                         </div>
 

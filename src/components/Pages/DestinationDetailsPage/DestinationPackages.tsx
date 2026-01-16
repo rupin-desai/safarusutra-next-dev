@@ -34,9 +34,11 @@ const cardVariants: Variants = {
 interface Props {
   destinationName?: string;
   destinationId?: number | string;
+  price?: string | number;
+  image?: string;
 }
 
-const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinationId }) => {
+const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinationId, price, image }) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [modalData, setModalData] = React.useState({ subject: "", message: "" });
@@ -101,6 +103,9 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
           onClose={() => setIsModalOpen(false)}
           initialSubject={modalData.subject}
           initialMessage={modalData.message}
+          title={`Custom ${destinationName} Package`}
+          price={price}
+          image={image}
         />
         <div className="container mx-auto px-4 relative z-10">
           <SectionTitle icon={<PackageIcon size={16} />} pillText="Custom Packages" title={`${destinationName} Travel Packages`} color="#F89B21" centered containerClassName="mb-12" />
@@ -138,6 +143,9 @@ const DestinationPackages: React.FC<Props> = ({ destinationName = "", destinatio
         onClose={() => setIsModalOpen(false)}
         initialSubject={modalData.subject}
         initialMessage={modalData.message}
+        title={`Custom ${destinationName} Package`}
+        price={price}
+        image={image}
       />
 
       <div className="container mx-auto px-4 relative z-10">

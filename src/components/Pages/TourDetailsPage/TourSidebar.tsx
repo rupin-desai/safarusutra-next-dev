@@ -209,14 +209,17 @@ const TourSidebar = ({
         onClose={() => setIsModalOpen(false)}
         initialSubject={modalData.subject}
         initialMessage={modalData.message}
+        title={tour.title}
+        price={tour.price}
+        image={tour.image || tour.heroImage || "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2"}
       />
 
       {/* Share button at top right */}
       <div className="absolute top-4 right-4 z-10">
         <motion.button
           className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200 cursor-pointer ${copied
-              ? "bg-green-100 text-green-700"
-              : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
+            ? "bg-green-100 text-green-700"
+            : "bg-[var(--color-orange)]/10 text-[var(--color-orange)] hover:bg-[var(--color-orange)]/20"
             }`}
           whileHover={
             !copied

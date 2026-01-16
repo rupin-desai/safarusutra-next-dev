@@ -262,6 +262,9 @@ const TourCard: React.FC<TourCardProps> = ({ tour }) => {
         onClose={() => setIsModalOpen(false)}
         initialSubject={modalData.subject}
         initialMessage={modalData.message}
+        title={displayTitle}
+        price={tour.price}
+        image={imageSrc}
       />
       <script
         type="application/ld+json"

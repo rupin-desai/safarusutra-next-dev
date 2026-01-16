@@ -6,9 +6,13 @@ import Image from "next/image";
 import SSButton from "@/components/UI/SSButton";
 import { useRouter } from "next/navigation";
 
+import BookingModal from "@/components/UI/BookingModal";
+
 interface Props {
   tour?: {
     title?: string;
+    price?: string | number;
+    image?: string;
     tourWhy?: {
       title?: string;
       description?: string;
@@ -29,6 +33,8 @@ const containerAnim: Variants = {
 
 const DestinationWhy: React.FC<Props> = ({ tour }) => {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
+  const [modalData, setModalData] = React.useState({ subject: "", message: "" });
 
   if (!tour || !tour.tourWhy) return null;
 
@@ -44,18 +50,23 @@ const DestinationWhy: React.FC<Props> = ({ tour }) => {
 
   const handleCustomBooking = () => {
     const subject = `Custom ${tour.title ?? ""} Tour Booking`;
-    const message = `I'm interested in booking a custom tour to ${
-      tour.title ?? ""
-    }. I would like to discuss my specific requirements and preferences.`;
-    router.push(
-      `/contact?subject=${encodeURIComponent(
-        subject
-      )}&message=${encodeURIComponent(message)}`
-    );
+    const message = `I'm interested in booking a custom tour to ${tour.title ?? ""
+      }. I would like to discuss my specific requirements and preferences.`;
+    setModalData({ subject, message });
+    setIsModalOpen(true);
   };
 
   return (
     <section className="relative w-full py-8 md:py-12 overflow-hidden">
+      <BookingModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialSubject={modalData.subject}
+        initialMessage={modalData.message}
+        title={`Book ${tour.title ?? "Custom"} Tour`}
+        price={tour.price}
+        image={tour.image}
+      />
       <div className="absolute inset-0 z-0">
         {srcSetWebp || srcFallback ? (
           <div className="absolute inset-0">

@@ -15,6 +15,8 @@ interface Attraction {
 interface TourData {
   title?: string;
   attractions?: Attraction[] | string | null;
+  price?: string | number;
+  image?: string;
   [key: string]: unknown;
 }
 
@@ -214,6 +216,9 @@ const DestinationSidebar: React.FC<Props> = ({ tourData, executeScroll }) => {
         onClose={() => setIsModalOpen(false)}
         initialSubject={modalData.subject}
         initialMessage={modalData.message}
+        title={tourData?.title ?? "Custom Destination"}
+        price={tourData.price}
+        image={tourData.image}
       />
 
       <motion.div className="bg-gray-50 rounded-xl p-6 border border-gray-100 shadow-sm" variants={contentFadeIn} initial="initial" animate="animate">

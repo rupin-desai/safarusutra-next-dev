@@ -463,6 +463,22 @@ export default function Page({ params }: { params: { slug?: string } }) {
       })
       : undefined;
 
+  // --- Hero Image ---
+  // --- Hero Image ---
+  const heroImageObj = getHeroImageObj(completeData.heroImage);
+
+  const rawPrice =
+    completeData.price ??
+    (altFromArray ? (altFromArray as Record<string, unknown>).price : undefined);
+
+  const price = rawPrice
+    ? typeof rawPrice === "number"
+      ? `From ₹${rawPrice.toLocaleString()}`
+      : `From ${rawPrice}`
+    : undefined;
+
+  const heroImageSrc = heroImageObj.srcFallback;
+
   const tourDataProp = {
     title: getString(completeData.title),
     rating:
@@ -484,6 +500,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
     ),
     details: detailsProp,
     attractions: attractionsProp,
+    price: price,
+    image: heroImageSrc,
   };
 
   // --- TourWhy ---
@@ -525,7 +543,7 @@ export default function Page({ params }: { params: { slug?: string } }) {
       : undefined;
 
   // --- Hero Image ---
-  const heroImageObj = getHeroImageObj(completeData.heroImage);
+  // const heroImageObj = getHeroImageObj(completeData.heroImage); // Already defined above
 
   // --- JSON-LD ---
   const getFullImageUrl = (src: string): string => {
@@ -590,6 +608,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
           tour={{
             title: getString(completeData.title),
             tourWhy: tourWhyProp,
+            price: price,
+            image: heroImageSrc,
           }}
         />
       )}
@@ -599,6 +619,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
       <DestinationPackages
         destinationName={String(completeData.title)}
         destinationId={id ? Number(id) : undefined}
+        price={price}
+        image={heroImageSrc}
       />
 
       <DestinationRelated
