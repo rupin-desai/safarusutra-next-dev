@@ -10,6 +10,7 @@ import DestinationWhy from "@/components/Pages/DestinationDetailsPage/Destinatio
 import ContactSection from "@/components/Pages/ContactPage/ContactSection";
 import DestinationPackages from "@/components/Pages/DestinationDetailsPage/DestinationPackages";
 import DestinationFAQs from "@/components/Pages/DestinationDetailsPage/DestinationFAQs";
+import DestinationReviews from "@/components/Pages/DestinationDetailsPage/DestinationReviews";
 import ScrollProvider from "@/components/Pages/DestinationDetailsPage/ScrollProvider.client";
 
 import destinationDetailsRaw from "@/data/DestinatonDetails.json";
@@ -128,8 +129,8 @@ const resolveDetailsForIdOrSlug = (idOrSlug: string) => {
       return (
         String(
           e.id ??
-            e.slug ??
-            (typeof e.title === "string" ? createSlug(e.title) : "")
+          e.slug ??
+          (typeof e.title === "string" ? createSlug(e.title) : "")
         ) === String(idOrSlug)
       );
     });
@@ -150,8 +151,8 @@ export async function generateStaticParams() {
       const slugFallback = title
         ? createSlug(title)
         : d.id
-        ? String(d.id)
-        : undefined;
+          ? String(d.id)
+          : undefined;
       const slug = slugFromField ?? slugFallback;
       return slug ? { slug } : null;
     })
@@ -268,9 +269,8 @@ export async function generateMetadata({
 
   // --- OG Image ---
   const ogImageUrl = heroImageObj.srcFallback
-    ? `https://thesafarisutra.com${
-        heroImageObj.srcFallback.startsWith("/") ? "" : "/"
-      }${heroImageObj.srcFallback}`
+    ? `https://thesafarisutra.com${heroImageObj.srcFallback.startsWith("/") ? "" : "/"
+    }${heroImageObj.srcFallback}`
     : "https://images.unsplash.com/photo-1668537824956-ef29a3d910b2";
 
   const title = completeData.title
@@ -279,8 +279,8 @@ export async function generateMetadata({
   const description =
     String(
       completeData.metaDescription ||
-        completeData.description ||
-        completeData.caption
+      completeData.description ||
+      completeData.caption
     ) ||
     `Explore ${String(
       completeData.title
@@ -360,21 +360,21 @@ export default function Page({ params }: { params: { slug?: string } }) {
   const faqProp: { items?: FAQLocal[] } | null =
     faqRaw && typeof faqRaw === "object"
       ? (() => {
-          const items = (faqRaw as Record<string, unknown>).items;
-          if (!Array.isArray(items)) return null;
-          const mapped = (items as unknown[])
-            .map((it) => {
-              const o =
-                it && typeof it === "object"
-                  ? (it as Record<string, unknown>)
-                  : {};
-              const question = getString(o.question ?? o.q ?? "");
-              const answer = getString(o.answer ?? o.a ?? "");
-              return { question, answer };
-            })
-            .filter((x) => x.question || x.answer);
-          return mapped.length ? { items: mapped } : null;
-        })()
+        const items = (faqRaw as Record<string, unknown>).items;
+        if (!Array.isArray(items)) return null;
+        const mapped = (items as unknown[])
+          .map((it) => {
+            const o =
+              it && typeof it === "object"
+                ? (it as Record<string, unknown>)
+                : {};
+            const question = getString(o.question ?? o.q ?? "");
+            const answer = getString(o.answer ?? o.a ?? "");
+            return { question, answer };
+          })
+          .filter((x) => x.question || x.answer);
+        return mapped.length ? { items: mapped } : null;
+      })()
       : null;
 
   // --- Details ---
@@ -440,27 +440,27 @@ export default function Page({ params }: { params: { slug?: string } }) {
     completeData.attractions
   )
     ? (completeData.attractions as unknown[]).map((a) => {
-        const o = (
-          a && typeof a === "object" ? (a as Record<string, unknown>) : {}
-        ) as Record<string, unknown>;
-        return {
-          title: getString(o.title),
-          image: getString(o.image),
-          description: getString(o.description),
-          srcSetWebp: getString(o.srcSetWebp),
-          srcFallback: getString(o.srcFallback),
-        };
-      })
+      const o = (
+        a && typeof a === "object" ? (a as Record<string, unknown>) : {}
+      ) as Record<string, unknown>;
+      return {
+        title: getString(o.title),
+        image: getString(o.image),
+        description: getString(o.description),
+        srcSetWebp: getString(o.srcSetWebp),
+        srcFallback: getString(o.srcFallback),
+      };
+    })
     : [];
 
   // --- Tour Data ---
   const altFromArray =
     Array.isArray(destinationsRaw) && id
       ? (destinationsRaw as unknown[]).find((a) => {
-          if (!a || typeof a !== "object") return false;
-          const o = a as Record<string, unknown>;
-          return String(o.id ?? "") === String(id);
-        })
+        if (!a || typeof a !== "object") return false;
+        const o = a as Record<string, unknown>;
+        return String(o.id ?? "") === String(id);
+      })
       : undefined;
 
   const tourDataProp = {
@@ -468,9 +468,9 @@ export default function Page({ params }: { params: { slug?: string } }) {
     rating:
       parseRating(
         completeData.rating ??
-          completeData.Rating ??
-          details.rating ??
-          details.Rating
+        completeData.Rating ??
+        details.rating ??
+        details.Rating
       ) ??
       parseRating(
         altFromArray
@@ -500,28 +500,28 @@ export default function Page({ params }: { params: { slug?: string } }) {
   const tourWhyProp: TourWhyLocal | undefined =
     tourWhyRaw && typeof tourWhyRaw === "object"
       ? (() => {
-          const o = tourWhyRaw as Record<string, unknown>;
-          const bgObj = getImageObj(o.backgroundImage);
-          return {
-            title: getString(o.title),
-            description: getString(o.description),
-            backgroundImage: bgObj.srcFallback,
-            srcSetWebp: bgObj.srcSetWebp,
-            srcFallback: bgObj.srcFallback,
-            imageTitle: getString(
-              (o.backgroundImage &&
-                typeof o.backgroundImage === "object" &&
-                (o.backgroundImage as Record<string, unknown>).imageTitle) ||
-                ""
-            ),
-            alt: getString(
-              (o.backgroundImage &&
-                typeof o.backgroundImage === "object" &&
-                (o.backgroundImage as Record<string, unknown>).alt) ||
-                ""
-            ),
-          };
-        })()
+        const o = tourWhyRaw as Record<string, unknown>;
+        const bgObj = getImageObj(o.backgroundImage);
+        return {
+          title: getString(o.title),
+          description: getString(o.description),
+          backgroundImage: bgObj.srcFallback,
+          srcSetWebp: bgObj.srcSetWebp,
+          srcFallback: bgObj.srcFallback,
+          imageTitle: getString(
+            (o.backgroundImage &&
+              typeof o.backgroundImage === "object" &&
+              (o.backgroundImage as Record<string, unknown>).imageTitle) ||
+            ""
+          ),
+          alt: getString(
+            (o.backgroundImage &&
+              typeof o.backgroundImage === "object" &&
+              (o.backgroundImage as Record<string, unknown>).alt) ||
+            ""
+          ),
+        };
+      })()
       : undefined;
 
   // --- Hero Image ---
@@ -542,8 +542,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
     name: getString(completeData.title),
     description: getString(
       completeData.metaDescription ||
-        completeData.description ||
-        completeData.caption
+      completeData.description ||
+      completeData.caption
     ),
     image: getFullImageUrl(
       getString(completeData.heroImage || completeData.image)
@@ -606,6 +606,8 @@ export default function Page({ params }: { params: { slug?: string } }) {
         currentTourId={id ? Number(id) : undefined}
         allTours={destinations}
       />
+
+      <DestinationReviews />
 
       <ContactSection />
 
