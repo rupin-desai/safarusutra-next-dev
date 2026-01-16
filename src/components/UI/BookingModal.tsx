@@ -135,7 +135,7 @@ const BookingModal: React.FC<BookingModalProps> = ({
 
                     {/* Modal Content */}
                     <motion.div
-                        className="relative bg-white w-full md:max-w-2xl overflow-hidden flex flex-col h-[75vh] md:h-auto md:max-h-[85vh] rounded-t-2xl md:rounded-2xl shadow-2xl"
+                        className="relative bg-white w-full md:max-w-2xl overflow-hidden flex flex-col h-full max-h-[75vh] md:h-auto md:max-h-[85vh] rounded-t-2xl md:rounded-2xl shadow-2xl"
                         variants={isMobile ? mobileModalVariants : desktopModalVariants}
                         initial="hidden"
                         animate="visible"
